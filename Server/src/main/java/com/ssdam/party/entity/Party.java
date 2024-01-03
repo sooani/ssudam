@@ -1,19 +1,20 @@
 package com.ssdam.party.entity;
 
+import com.ssdam.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-public class Party {
+public class Party extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long partyId;
@@ -37,18 +38,15 @@ public class Party {
 
     private int hits; //조회수
 
-    @CreationTimestamp
-    private LocalDateTime createdAt; //글 작성날짜
-
-    @UpdateTimestamp
-    private LocalDateTime lastModifiedAt; //글 수정날짜
+    @OneToMany(mappedBy = "party")
+    private List<PartyMember> partyMembers = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private PartyStatus partyStatus = PartyStatus.PARTY_OPENED;
 
     public enum PartyStatus {
-        PARTY_OPENED("모임 모집중 상태"),
-        PARTY_CLOSED("모집 완료 상태");
+        PARTY_OPENED("모집중"),
+        PARTY_CLOSED("모집완료");
 
         @Getter
         private final String description;
