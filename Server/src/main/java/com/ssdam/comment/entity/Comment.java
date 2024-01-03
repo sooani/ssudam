@@ -1,5 +1,6 @@
 package com.ssdam.comment.entity;
 
+import com.ssdam.audit.Auditable;
 import com.ssdam.member.entity.Member;
 import com.ssdam.party.entity.Party;
 import com.ssdam.reply.entity.Reply;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Comment {
+public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
