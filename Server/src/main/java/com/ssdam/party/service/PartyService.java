@@ -1,5 +1,7 @@
 package com.ssdam.party.service;
 
+import com.ssdam.exception.BusinessLogicException;
+import com.ssdam.exception.ExceptionCode;
 import com.ssdam.party.entity.Party;
 import com.ssdam.party.repository.PartyRepository;
 import org.springframework.data.domain.Page;
@@ -64,7 +66,7 @@ public class PartyService {
                 partyRepository.findById(partyId);
         Party findParty =
                 optionalParty.orElseThrow(() ->
-                        new RuntimeException());
+                        new BusinessLogicException(ExceptionCode.PARTY_NOT_FOUND));
         return findParty;
     }
 }

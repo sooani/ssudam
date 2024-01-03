@@ -9,6 +9,7 @@ public class PartyMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long partyMemberId;
+
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
