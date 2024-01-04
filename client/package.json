@@ -11,6 +11,7 @@
     "react-icons": "^4.12.0",
     "react-js-pagination": "^3.0.3",
     "react-kakao-maps-sdk": "^1.1.24",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
