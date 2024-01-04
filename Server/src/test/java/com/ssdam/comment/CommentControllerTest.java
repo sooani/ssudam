@@ -180,7 +180,6 @@ public class CommentControllerTest {
                                        fieldWithPath("data.comment").type(JsonFieldType.STRING).description("댓글 내용"),
                                        fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                        fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜")
-
                                )
                         )
                 ));
