@@ -1,0 +1,50 @@
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 5vh;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.header h1 {
+  padding-left: 10%;
+}
+
+/* 링크 밑줄 없애기, 실제 HTML에서는 <router-link>라는 태그를 <a> 태그로 인식 */
+a {
+  text-decoration: none;
+  color: #008224;
+}
+
+/* 새 글 쓰기, 로그인, 회원가입 버튼 관련 */
+.loginElement {
+  padding-right: 10%;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.postRegister {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.login {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.join {
+  font-weight: 600;
+  font-size: 1rem;
+}

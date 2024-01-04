@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  overflow-x: hidden;
+}
+/* 배너 이미지 */
+.bannerImage {
+  position: relative;
+  height: 25vh;
+  width: 100vw;
+  display: flex;
+}
+/* 메인 섹션 */
+.main {
+  background-color: orange;
+  height: 80vh;
+  width: 100vw;
+  position: relative;
+}
+
+.todoListAndNewSection {
+  /* background-color: aqua; */
+  width: 100vw;
+  min-height: 20vh;
+  display: flex;
+  overflow-y: hidden;
+}

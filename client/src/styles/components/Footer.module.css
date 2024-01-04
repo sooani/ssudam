@@ -1,0 +1,24 @@
+.footer {
+  height: 10vh;
+  width: 100vw;
+  background-color: green;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.logoContainer > img {
+  width: 2.5rem;
+}
+p {
+  padding-top: 10px;
+}
