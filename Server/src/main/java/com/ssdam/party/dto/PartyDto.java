@@ -1,7 +1,10 @@
 package com.ssdam.party.dto;
 
 import com.ssdam.party.entity.Party;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +14,7 @@ import java.time.LocalDateTime;
 public class PartyDto {
 
     @Getter
+    @AllArgsConstructor
     public static class Post {
 
         @NotBlank(message = "제목을 입력해주세요.")
@@ -61,13 +65,21 @@ public class PartyDto {
     }
 
     @Getter
+    @Builder
+    @AllArgsConstructor
     public static class Response {
         private long partyId;
         private String title;
+        private LocalDateTime meetingDate;
+        private String location;
         private String content;
         private int maxCapacity;
         private int currentCapacity;
         private Party.PartyStatus partyStatus;
+
+        public String getPartyStatus(){
+            return partyStatus.getDescription();
+        }
 
     }
 }

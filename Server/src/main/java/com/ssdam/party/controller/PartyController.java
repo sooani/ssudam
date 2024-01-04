@@ -6,6 +6,7 @@ import com.ssdam.party.dto.PartyDto;
 import com.ssdam.party.entity.Party;
 import com.ssdam.party.mapper.PartyMapper;
 import com.ssdam.party.service.PartyService;
+import com.ssdam.utils.UriCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,7 @@ public class PartyController {
         Party party = mapper.partyPostDtoToParty(requestBody);
         Party createdParty = partyService.createParty(party);
 
-        URI location = UriComponentsBuilder
-                .newInstance()
-                .path(PARTY_DEFAULT_URL + "/{party-id}")
-                .buildAndExpand(createdParty.getPartyId())
-                .toUri();
+        URI location = UriCreator.createUri(PARTY_DEFAULT_URL, createdParty.getPartyId());
 
         return ResponseEntity.created(location).build();
     }

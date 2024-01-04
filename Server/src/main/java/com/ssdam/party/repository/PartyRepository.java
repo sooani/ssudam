@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PartyRepository extends JpaRepository<Party, Long> {
-    List<Party> findByMember_MemberId(Long memberId);
+    List<Party> findByPartyMembers_Member_MemberId(Long memberId);
 }

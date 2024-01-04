@@ -1,7 +1,13 @@
 package com.ssdam.party.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 
-class PartyControllerTest {
+@AutoConfigureRestDocs
+@MockBean(JpaMetamodelMappingContext.class)
+@WebMvcTest(PartyController.class)
+public class PartyControllerTest {
 
 }
