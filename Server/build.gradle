@@ -20,6 +20,7 @@ configurations {
 	asciidoctorExtensions
 }
 
+apply plugin: 'war'
 repositories {
 	mavenCentral()
 }
