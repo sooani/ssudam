@@ -3,18 +3,16 @@ import Meeting from "./components/Meeting/Meeting";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MakePost from "./pages/MakePost";
-//테스트용 주석입니다 안민주안민주 지워도됩니다.
-//테스트용 주석입니다 2 한번더 커밋&푸시 지워도됩니다.
-//테스트용 주석입니다 3
-// 테스트4
-//테스트5
-
+import MainPage from './pages/MainPage';
+import LogIn from "./pages/LogIn";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<MainPage />} />
         <Route path="/meetings/new" element={<MakePost />} />
+        <Route path='/login' element={<LogIn />} />
       </Routes>
     </BrowserRouter>
   );
