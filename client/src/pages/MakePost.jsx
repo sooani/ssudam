@@ -2,10 +2,21 @@ import { useState, useEffect } from "react";
 import classes from "./MakePost.module.css";
 import Layout from "../components/Layout/Layout";
 import MakeMap from "../components/Map/MakeMap";
+import SearchMap from "../components/Map/SearchMap";
 import { MdSearch } from "react-icons/md";
 const MakePost = () => {
   const [address, setAddress] = useState({});
+  const [searchkeyword, setSearchkeyword] = useState("");
   const addressHandler = () => {};
+  const onKeywordHandler = (e) => {
+    setSearchkeyword(e.target.value);
+    console.log(searchkeyword);
+  };
+  const onSearchHandler = () => {
+    // setSearchkeyword("");
+    console.log("입력 완료");
+  };
+  useEffect(() => {}, [searchkeyword]);
   return (
     <Layout>
       <div className={classes.container}>
@@ -48,10 +59,19 @@ const MakePost = () => {
           </div>
           <div className={classes.map}>
             <div className={classes.search}>
-              <input type="text" placeholder="검색할 장소를 입력하세요..." />
-              <MdSearch style={{ width: "1.5rem", height: "1.5rem" }} />
+              <input
+                type="text"
+                placeholder="검색할 장소를 입력하세요..."
+                value={searchkeyword}
+                onChange={onKeywordHandler}
+              />
+              <MdSearch
+                style={{ width: "1.5rem", height: "1.5rem" }}
+                onClick={onSearchHandler}
+              />
             </div>
-            <MakeMap setAddress={setAddress} />
+            {/* <MakeMap setAddress={setAddress} searchkeyword={searchkeyword} /> */}
+            <SearchMap setAddress={setAddress} searchkeyword={searchkeyword} />
           </div>
         </div>
         <div className={classes.comment}>

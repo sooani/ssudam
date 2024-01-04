@@ -69,7 +69,8 @@
 }
 .map {
   position: relative;
-  /* top: 4.5rem; */
+  margin-top: 1rem;
+  /* margin-bottom: 5rem; */
   border: 1px solid gray;
   flex-basis: 70%;
   /* height: 350px; */

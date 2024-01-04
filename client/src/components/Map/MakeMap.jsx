@@ -4,6 +4,45 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import classes from "./MakeMap.module.css";
 const MakeMap = (props) => {
   const { kakao } = window;
+  const keyword = props.searchkeyword;
+
+  useEffect(() => {
+    console.log(keyword);
+  }, [keyword]);
+  const [info, setInfo] = useState();
+  const [markers, setMarkers] = useState([]);
+  const [map, setMap] = useState();
+
+  useEffect(() => {
+    if (!map) return;
+    const ps = new kakao.maps.services.Places();
+
+    ps.keywordSearch(keyword, (data, status, _pagination) => {
+      if (status === kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        const bounds = new kakao.maps.LatLngBounds();
+        let markers = [];
+
+        for (var i = 0; i < data.length; i++) {
+          // @ts-ignore
+          markers.push({
+            position: {
+              lat: data[i].y,
+              lng: data[i].x,
+            },
+            content: data[i].place_name,
+          });
+          // @ts-ignore
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+        setMarkers(markers);
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      }
+    });
+  }, [map, keyword]);
   //position은 위도 경도
   const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
   //address는 주소
@@ -26,7 +65,6 @@ const MakeMap = (props) => {
     getAddress(position.lat, position.lng);
   };
 
-  useEffect(() => {}, []);
   useEffect(() => {
     getAddress(position.lat, position.lng);
   }, [position]);
@@ -38,7 +76,7 @@ const MakeMap = (props) => {
           lat: position.lat,
           lng: position.lng,
         }}
-        style={{ width: "95%", height: "32vh" }}
+        style={{ width: "95%", height: "34vh" }}
         level={3} // 지도의 확대 레벨
         onClick={(_t, mouseEvent) =>
           setFullAddress({
@@ -47,9 +85,20 @@ const MakeMap = (props) => {
           })
         }
       >
-        {position && <MapMarker position={position} />}
+        {/* 마커 */}
+        {/* {position && <MapMarker position={position} />} */}
+        {markers.map((marker) => (
+          <MapMarker
+            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+            position={marker.position}
+            onClick={() => setInfo(marker)}
+          >
+            {info && info.content === marker.content && (
+              <div style={{ color: "#000" }}>{marker.content}</div>
+            )}
+          </MapMarker>
+        ))}
       </Map>
-      {/* <button>선택</button> */}
     </div>
   );
 };
