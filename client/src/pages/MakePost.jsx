@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import classes from "./MakePost.module.css";
-import Layout from "../Layout/Layout";
-import MakeMap from "../Map/MakeMap";
+import Layout from "../components/Layout/Layout";
+import MakeMap from "../components/Map/MakeMap";
 const MakePost = () => {
   const [address, setAddress] = useState({});
   const addressHandler = () => {};
