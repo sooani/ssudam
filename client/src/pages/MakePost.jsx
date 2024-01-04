@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import classes from "./MakePost.module.css";
 import Layout from "../components/Layout/Layout";
 import MakeMap from "../components/Map/MakeMap";
+import { MdSearch } from "react-icons/md";
 const MakePost = () => {
   const [address, setAddress] = useState({});
   const addressHandler = () => {};
@@ -46,11 +47,20 @@ const MakePost = () => {
             </div>
           </div>
           <div className={classes.map}>
+            <div className={classes.search}>
+              <input type="text" placeholder="검색할 장소를 입력하세요..." />
+              <MdSearch style={{ width: "1.5rem", height: "1.5rem" }} />
+            </div>
             <MakeMap setAddress={setAddress} />
           </div>
         </div>
         <div className={classes.comment}>
           <h2>내용</h2>
+          <textarea placeholder="내용을 작성해주세요..." />
+          <div className={classes.btnCon}>
+            <button>취소</button>
+            <button>글 등록</button>
+          </div>
         </div>
       </div>
     </Layout>

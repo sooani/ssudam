@@ -38,7 +38,7 @@ const MakeMap = (props) => {
           lat: position.lat,
           lng: position.lng,
         }}
-        style={{ width: "90%", height: "50vh" }}
+        style={{ width: "95%", height: "32vh" }}
         level={3} // 지도의 확대 레벨
         onClick={(_t, mouseEvent) =>
           setFullAddress({
