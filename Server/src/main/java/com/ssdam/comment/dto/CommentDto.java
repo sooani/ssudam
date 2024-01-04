@@ -17,7 +17,7 @@ public class CommentDto {
         @Positive
         private long memberId;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
-        private String content;
+        private String comment;
 
     }
 
@@ -27,7 +27,7 @@ public class CommentDto {
         @Positive
         private long commentId;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
-        private String content;
+        private String comment;
 
         public void setCommentId(long commentId) {
             this.commentId = commentId;
@@ -38,6 +38,7 @@ public class CommentDto {
     @Getter
     public static class Response {
         private long commentId;
+        private long partyId;
         private long memberId;
         private String comment;
         private LocalDateTime createdAt;
