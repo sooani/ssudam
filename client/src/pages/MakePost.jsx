@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import classes from "./MakePost.module.css";
-import Layout from "../components/Layout/Layout";
+import classes from "../styles/pages/MakePost.module.css";
 import MakeMap from "../components/Map/MakeMap";
 import SearchMap from "../components/Map/SearchMap";
 import { MdSearch } from "react-icons/md";
+import Header from "../components/Layout/Header";
 const MakePost = () => {
   const [address, setAddress] = useState({});
   const [searchkeyword, setSearchkeyword] = useState("");
@@ -18,7 +18,8 @@ const MakePost = () => {
   };
   useEffect(() => {}, [searchkeyword]);
   return (
-    <Layout>
+    <>
+      <Header />
       <div className={classes.container}>
         <h1>모임 글 등록</h1>
         <div className={classes.title}>
@@ -83,7 +84,7 @@ const MakePost = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 export default MakePost;
