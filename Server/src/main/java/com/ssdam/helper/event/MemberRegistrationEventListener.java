@@ -1,7 +1,7 @@
 package com.ssdam.helper.event;
 
 
-import com.ssdam.helper.EmailSender;
+import com.ssdam.helper.email.EmailSender;
 import com.ssdam.member.entity.Member;
 import com.ssdam.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;

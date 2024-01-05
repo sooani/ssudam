@@ -1,4 +1,4 @@
-package com.ssdam.helper;
+package com.ssdam.helper.email;
 
 import com.ssdam.helper.email.EmailSendable;
 import org.springframework.mail.MailSendException;
