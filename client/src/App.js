@@ -5,6 +5,8 @@ import "./App.css";
 import MakePost from "./pages/MakePost";
 import MainPage from './pages/MainPage';
 import LogIn from "./pages/LogIn";
+import MyPage from "./pages/MyPage";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/meetings/new" element={<MakePost />} />
         <Route path='/login' element={<LogIn />} />
+        <Route path='/mypage' element={<MyPage />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   );
