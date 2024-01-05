@@ -122,7 +122,7 @@ const SignUp = () => {
                     </div>
                 </form>
                 <div className={classes.caption}>
-                    이미 가입하셨나요? <Link to="/LogIn">로그인</Link>
+                    이미 가입하셨나요? <Link to="/login">로그인</Link>
                 </div>
             </section>
         </div>

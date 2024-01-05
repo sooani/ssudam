@@ -47,13 +47,18 @@ body {
 }
 
 .inputArea label.warning {
-    color: red;
     animation: warning .3s ease 3; /* animation-iteration-count를 animation 속성에 직접 설정 */
 }
 
 @keyframes warning {
-    0%, 50%, 100% {transform: translateX(0);} /* 초기 위치로 되돌리도록 수정 */
-    25%, 75% {transform: translateX(8px);}
+    0%, 50%, 100% {
+        transform: translateX(0);     
+        color: red;
+    }
+    25%, 75% {
+        transform: translateX(8px);    
+        color: red;
+    }
 }
 
 
