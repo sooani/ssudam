@@ -1,4 +1,9 @@
-* {margin: 0; padding: 0; box-sizing: border-box;}
+.page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -40,6 +45,17 @@ body {
     font-size: 20px;
     transition: all .5s ease;
 }
+
+.inputArea label.warning {
+    color: red;
+    animation: warning .3s ease 3; /* animation-iteration-count를 animation 속성에 직접 설정 */
+}
+
+@keyframes warning {
+    0%, 50%, 100% {transform: translateX(0);} /* 초기 위치로 되돌리도록 수정 */
+    25%, 75% {transform: translateX(8px);}
+}
+
 
 .inputArea input:focus + label,
 .inputArea input:valid + label {

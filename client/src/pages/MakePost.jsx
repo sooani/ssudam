@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import classes from "./MakePost.module.css";
-import Layout from "../components/Layout/Layout";
+import classes from "../styles/pages/MakePost.module.css";
 import MakeMap from "../components/Map/MakeMap";
 const MakePost = () => {
   const [address, setAddress] = useState({});
   const addressHandler = () => {};
   return (
-    <Layout>
       <div className={classes.container}>
         <h1>모임 글 등록</h1>
         <div className={classes.title}>
@@ -53,7 +51,6 @@ const MakePost = () => {
           <h2>내용</h2>
         </div>
       </div>
-    </Layout>
   );
 };
 export default MakePost;
