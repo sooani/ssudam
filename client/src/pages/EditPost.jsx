@@ -6,7 +6,7 @@ import { MdSearch } from "react-icons/md";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import KakaoMap from "../components/Map/KakaoMap";
-const MakePost = () => {
+const EditPost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({});
   // 검색용 키워드
@@ -29,7 +29,7 @@ const MakePost = () => {
   };
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    e.preventdefault();
     console.log("submit 완료");
   };
   return (
@@ -105,7 +105,7 @@ const MakePost = () => {
             <textarea placeholder="내용을 작성해 주세요..." />
             <div className={classes.btnCon}>
               <button>취소</button>
-              <button type="submit">글 등록</button>
+              <button type="submit">글 수정</button>
             </div>
           </div>
         </div>
@@ -114,4 +114,4 @@ const MakePost = () => {
     </div>
   );
 };
-export default MakePost;
+export default EditPost;

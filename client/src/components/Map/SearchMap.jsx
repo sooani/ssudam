@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import classes from "../../styles/components/SearchMap.module.css";
+import classes from "../../styles/components/Map.module.css";
 const SearchMap = (props) => {
   const { kakao } = window;
+  // 마커가 위치한 장소의 정보
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
   const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
-  //   const [keyword, setKeyword] = useState(props.searchkeyword);
+
+  // props로 받은 검색 키워드
   const keyword = props.searchkeyword;
+
   const getAddress = (lat, lng) => {
     const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
     const coord = new kakao.maps.LatLng(lat, lng); // 주소로 변환할 좌표 입력
@@ -21,14 +24,11 @@ const SearchMap = (props) => {
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
     // console.log(address);
   };
+
   const handleMarkerClick = (position) => {
     // 클릭된 마커의 위도와 경도 출력
-    console.log("클릭된 마커의 위도:", position.lat);
-    console.log("클릭된 마커의 경도:", position.lng);
     setPosition(position.lat, position.lng);
     getAddress(position.lat, position.lng);
-    // 다른 작업 수행 가능
-    // ...
   };
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const SearchMap = (props) => {
 
   return (
     <div className={classes.container}>
-      <Map // 로드뷰를 표시할 Container
+      <Map
         center={{
           lat: 37.566826,
           lng: 126.9786567,
@@ -88,14 +88,13 @@ const SearchMap = (props) => {
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
-            // onClick={() => setInfo(marker)}
             onClick={() => {
               handleMarkerClick(marker.position);
               setInfo(marker);
             }}
           >
             {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
+              <div className={classes.info}>{marker.content}</div>
             )}
           </MapMarker>
         ))}
