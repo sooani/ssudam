@@ -1,0 +1,72 @@
+/* LeaveModal.css */
+/* 회원탈퇴 확인 모달창입니다. (작업자: 안민주) */
+
+/* LeaveModal.css */
+.custom-modal {
+    width: 400px; 
+    height: 180px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* border: 2px solid violet; */
+    padding: 20px;
+    background-color: rgba(65, 65, 65, 1);
+    border-radius: 10px;
+}
+
+.custom-overlay { /*모달 창 바깥영역*/
+    position: fixed;
+    top:0; left: 0; bottom: 0; right: 0;
+    /* background-color: rgba(0, 0, 0, 0.8); */
+    background-color : rgba(63, 68, 75, 0.5);
+}
+
+.X {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    cursor: pointer; 
+    font-size: 20px;
+    background-color: rgba(65, 65, 65, 1);
+    color: white;
+    border: 0;
+}
+
+.leave-message{
+    /* position: absolute; */
+    font-size: 25px;
+    /* font-weight: bold; */
+    text-align: center;
+    color: white;
+    margin-top: 50px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid blue; */
+    height: 40px;
+    width : 300px;
+    margin: 50px auto 0px;
+}
+
+.Yes {
+    border: 1px solid white;
+    background-color: rgba(65, 65, 65, 1);
+    color: white;
+    width : 120px;
+    font-size: 20px;
+    cursor: pointer; 
+    border-radius: 5px;
+}
+
+.No {
+    border: 1px solid white;
+    color: white;
+    background-color: rgba(0, 130, 36, 1);
+    width : 120px;
+    font-size: 20px;
+    cursor: pointer; 
+    border-radius: 5px;
+}

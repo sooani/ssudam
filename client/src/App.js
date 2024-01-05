@@ -1,11 +1,10 @@
-// import Header from './components/Layout/Header';
-// import Meeting from './components/Meeting/Meeting';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import MakePost from './pages/MakePost';
+import Header from "./components/Layout/Header";
+import Meeting from "./components/Meeting/Meeting";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import MakePost from "./pages/MakePost";
 import MainPage from './pages/MainPage';
+import LogIn from "./pages/LogIn";
 
 function App() {
   return (
@@ -13,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/meetings/new" element={<MakePost />} />
+        <Route path='/login' element={<LogIn />} />
       </Routes>
     </BrowserRouter>
   );
