@@ -1,1 +1,11 @@
-
+.ListCard img {
+  height: 30px;
+  width: 30px;
+}
+.ListCard {
+  margin: 10px 0 0 10px;
+  height: 150px;
+  width: 200px;
+  border: 1px solid black;
+  text-align: left;
+}

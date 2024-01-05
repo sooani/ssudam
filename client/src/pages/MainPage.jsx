@@ -3,7 +3,8 @@ import Footer from '../components/Layout/Footer';
 import classes from '../styles/pages/MainPage.module.css';
 import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
-import ListSlider from '../components/MainPage/ListSlider';
+// import ListSlider from '../components/MainPage/ListSlider';
+import ListCard from '../components/MainPage/ListCard';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -15,31 +16,37 @@ import ListSlider from '../components/MainPage/ListSlider';
 
 const MainPage = () => {
   return (
-    <div className={classes.test}>
+    <main>
       {/* 헤더 */}
       <Header />
 
       {/* 배너 이미지 출력 */}
-      <div className={classes.banner}>
+      <section className={classes.banner}>
         <img
           className={classes.bannerImage}
           alt="배너 이미지 구역"
           src={banner}
         />
-      </div>
-
-      {/* 투두 리스트와 새로운 모임 출력하는 섹션 */}
-      <section className={classes.todoListAndNewSection}>
-        <TodoList />
-        <ListSlider />
       </section>
 
-      {/* 메인 페이지 */}
-      <div className={classes.main}></div>
+      {/* 투두리스트와 새로운 모임 출력 섹션 */}
+      <section className={classes.todoAndNewSection}>
+        {/* 투두 리스트  */}
+        <div className={classes.todoList}>
+          <TodoList />
+        </div>
+        {/* 새로운 모임 */}
+        <div className={classes.newPost}>
+          <ListCard />
+        </div>
+      </section>
+
+      {/* 메인 구역 */}
+      <section className={classes.mainContainer}>ddd</section>
 
       {/* 푸터 */}
       <Footer />
-    </div>
+    </main>
   );
 };
 export default MainPage;

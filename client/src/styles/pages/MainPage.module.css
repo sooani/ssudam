@@ -4,25 +4,48 @@
   box-sizing: inherit;
   overflow-x: hidden;
 } */
+
+main {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  overflow-x: hidden;
+}
+
 /* 배너 이미지 */
 .bannerImage {
   position: relative;
-  height: 25vh;
+  height: 20vh;
   width: 100vw;
   display: flex;
 }
+
 /* 메인 섹션 */
-.main {
+.mainContainer {
   background-color: orange;
   height: 80vh;
   width: 100vw;
   position: relative;
 }
 
-.todoListAndNewSection {
-  /* background-color: aqua; */
-  width: 100vw;
-  min-height: 20vh;
+.todoAndNewSection {
   display: flex;
-  overflow-y: hidden;
+  height: 20vh;
+}
+
+.todoList {
+  background-color: aqua;
+  width: 20vw;
+  min-height: 1vh;
+  overflow-x: hidden;
+}
+
+.newPost {
+  background-color: blueviolet;
+  width: 80vw;
+  min-height: 1vh;
+  text-align: right;
 }
