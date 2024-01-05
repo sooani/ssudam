@@ -7,7 +7,7 @@ import classes from "../styles/pages/SignUp.module.css"
 // 빈 칸이 있을 때 회원가입 버튼 누르면 애니메이션 나와야하는데 안나옴
 // 각 칸에 유효하지 않은 정보 입력 시 오류메시지 나오는 코드 작성(이메일, 닉네임, 비밀번호 형식 / 비밀번호 확인이 비밀번호와 일치해야함)
 // axios(확정x)로 회원가입 정보 보내는 코드 작성
-// 더 추가될 수도 있음
+// 더 추가될 수도 있음 유효성 검사 백엔드에서 다 하면 되는건지 확인
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
