@@ -1,6 +1,7 @@
 package com.ssdam.comment;
 
 import com.google.gson.Gson;
+import com.jayway.jsonpath.JsonPath;
 import com.ssdam.comment.controller.CommentController;
 import com.ssdam.comment.dto.CommentDto;
 import com.ssdam.comment.entity.Comment;
@@ -14,28 +15,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -63,7 +73,7 @@ public class CommentControllerTest {
         Member member = new Member();
         member.setMemberId(1L);
 
-        CommentDto.Post post = new CommentDto.Post(1L, 1L, "Sample Comment");
+        CommentDto.Post post = (CommentDto.Post) CommentStub.getRequestBody(HttpMethod.POST);
         String content = gson.toJson(post);
 
         given(mapper.commentPostDtoToComment(Mockito.any(CommentDto.Post.class))).willReturn(new Comment());
@@ -105,33 +115,14 @@ public class CommentControllerTest {
 
 
     @Test
-    public void patchCommentTest () throws Exception {
+    public void patchCommentTest() throws Exception {
         //given
-        Party party = new Party();
-        party.setPartyId(1L);
-
-        Member member = new Member();
-        member.setMemberId(1L);
-
         long commentId = 1L;
 
-        CommentDto.Patch patch
-                = CommentDto.Patch.builder()
-                .commentId(commentId)
-                .comment("Patched Comment")
-                .build();
-
+        CommentDto.Patch patch = (CommentDto.Patch) CommentStub.getRequestBody(HttpMethod.PATCH);
         String content = gson.toJson(patch);
 
-        CommentDto.Response responseDto
-                = CommentDto.Response.builder()
-                .commentId(commentId)
-                .partyId(party.getPartyId())
-                .memberId(member.getMemberId())
-                .comment("Patched Comment")
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
-                .build();
+        CommentDto.Response responseDto = CommentStub.getSingleResponseBody();
 
         given(mapper.commentPatchDtoToComment(Mockito.any(CommentDto.Patch.class))).willReturn(new Comment());
         given(commentService.updateComment(Mockito.any(Comment.class))).willReturn(new Comment());
@@ -184,5 +175,232 @@ public class CommentControllerTest {
                         )
                 ));
     }
+    @Test
+    public void getCommentTest() throws Exception {
+        //given
+        Party party = new Party();
+        party.setPartyId(1L);
 
+        Member member = new Member();
+        member.setMemberId(1L);
+
+        long commentId = 1L;
+        CommentDto.Response responseDto = CommentStub.getSingleResponseBody();
+
+        given(commentService.findComment(Mockito.anyLong())).willReturn(new Comment());
+        given(mapper.commentToCommentResponse(Mockito.any(Comment.class))).willReturn(responseDto);
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/v1/comments/{comment-id}", commentId)
+                                .accept(MediaType.APPLICATION_JSON)
+                );
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.commentId").value(commentId))
+                .andExpect(jsonPath("$.data.partyId").value(responseDto.getPartyId()))
+                .andExpect(jsonPath("$.data.memberId").value(responseDto.getMemberId()))
+                .andExpect(jsonPath("$.data.comment").value(responseDto.getComment()))
+                .andExpect(jsonPath("$.data.createdAt").value(responseDto.getCreatedAt().toString()))
+                .andExpect(jsonPath("$.data.modifiedAt").value(responseDto.getModifiedAt().toString()))
+                .andDo(document("get-comment",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                List.of(parameterWithName("comment-id").description("댓글 식별자 ID"))
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터").optional(),
+                                        fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                        fieldWithPath("data.comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                        fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
+                                        fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜")
+                                )
+                        )
+                ));
+    }
+    @Test
+    public void getCommentsTest() throws Exception {
+        //given
+        String page = "1";
+        String size = "10";
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+
+        Page<Comment> comments = CommentStub.getMultiResultComments();
+        List<CommentDto.Response> responses = CommentStub.getMultiResponseBody();
+
+        given(commentService.findComments(Mockito.anyInt(), Mockito.anyInt())).willReturn(comments);
+        given(mapper.commentsToCommentResponses(Mockito.anyList())).willReturn(responses);
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/v1/comments")
+                        .params(queryParams)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        //then
+        MvcResult result =
+                actions.andExpect(status().isOk())
+                        .andDo(
+                                document(
+                                        "get-comments",
+                                        preprocessRequest(prettyPrint()),
+                                        preprocessResponse(prettyPrint()),
+                                        requestParameters(
+                                                List.of(
+                                                        parameterWithName("page").description("Page 번호"),
+                                                        parameterWithName("size").description("Page Size")
+                                                )
+                                        ),
+                                        responseFields(
+                                                List.of(
+                                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
+                                                        fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                                        fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
+                                                        fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
+                                                        fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
+                                                        fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                                        fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("페이지 사이즈"),
+                                                        fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("전체 건 수"),
+                                                        fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 수")
+                                                )
+                                        )
+
+                                )
+                        )
+                        .andReturn();
+        List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
+        assertThat(list.size(), is(3));
+    }
+    @Test
+    public void getCommentsByMemberTest() throws Exception {
+        //given
+        String page = "1";
+        String size = "10";
+        String memberId = "1";
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+        queryParams.add("memberId", memberId);
+
+        Page<Comment> comments = CommentStub.getMultiResultCommentsByMember();
+        List<CommentDto.Response> responses = CommentStub.getMultiResponseBodyByMember();
+
+        given(commentService.findCommentsByMember(Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt())).willReturn(comments);
+        given(mapper.commentsToCommentResponses(Mockito.anyList())).willReturn(responses);
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/v1/comments")
+                        .params(queryParams)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        //then
+        MvcResult result =
+                actions.andExpect(status().isOk())
+                        .andDo(
+                                document(
+                                        "get-comments-by-member",
+                                        preprocessRequest(prettyPrint()),
+                                        preprocessResponse(prettyPrint()),
+                                        requestParameters(
+                                                List.of(
+                                                        parameterWithName("page").description("Page 번호"),
+                                                        parameterWithName("size").description("Page Size"),
+                                                        parameterWithName("memberId").description("회원 식별자 ID")
+                                                )
+                                        ),
+                                        responseFields(
+                                                List.of(
+                                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
+                                                        fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                                        fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
+                                                        fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
+                                                        fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
+                                                        fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                                        fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("페이지 사이즈"),
+                                                        fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("전체 건 수"),
+                                                        fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 수")
+                                                )
+                                        )
+
+                                )
+                        )
+                        .andReturn();
+        List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
+        assertThat(list.size(), is(2));
+    }
+    @Test
+    public void getCommentsByPartyTest() throws Exception {
+        //given
+        String page = "1";
+        String size = "10";
+        String partyId = "1";
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+        queryParams.add("partyId", partyId);
+
+        Page<Comment> comments = CommentStub.getMultiResultCommentsByParty();
+        List<CommentDto.Response> responses = CommentStub.getMultiResponseBodyByParty();
+
+        given(commentService.findCommentsByParty(Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt())).willReturn(comments);
+        given(mapper.commentsToCommentResponses(Mockito.anyList())).willReturn(responses);
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/v1/comments")
+                        .params(queryParams)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        //then
+        MvcResult result =
+                actions.andExpect(status().isOk())
+                        .andDo(
+                                document(
+                                        "get-comments-by-party",
+                                        preprocessRequest(prettyPrint()),
+                                        preprocessResponse(prettyPrint()),
+                                        requestParameters(
+                                                List.of(
+                                                        parameterWithName("page").description("Page 번호"),
+                                                        parameterWithName("size").description("Page Size"),
+                                                        parameterWithName("partyId").description("모임 식별자 ID")
+                                                )
+                                        ),
+                                        responseFields(
+                                                List.of(
+                                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
+                                                        fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                                        fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
+                                                        fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
+                                                        fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
+                                                        fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                                        fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("페이지 사이즈"),
+                                                        fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("전체 건 수"),
+                                                        fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 수")
+                                                )
+                                        )
+
+                                )
+                        )
+                        .andReturn();
+        List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
+        assertThat(list.size(), is(2));
+    }
 }
