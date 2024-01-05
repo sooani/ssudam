@@ -1,18 +1,28 @@
+.con {
+  display: block;
+  width: 100vw;
+  min-width: 650px;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  overflow-x: hidden;
+}
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   /* background-color: pink; */
   width: 80%;
   /* height: 100vh; */
   margin: 0 auto;
   gap: 1rem;
   position: relative;
-  margin-top: 8rem;
+  margin-top: 2rem;
   min-width: 450px;
-  margin-bottom: 10rem;
+  margin-bottom: 2rem;
 }
 .container h1 {
 }
@@ -22,7 +32,7 @@
   /* top: 8rem; */
   width: 100%;
   height: 130px;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -41,7 +51,7 @@
   /* margin-top: 4rem; */
   width: 100%;
   /* height: 450px; */
-  border: 1px solid green;
+  /* border: 1px solid green; */
   display: flex;
   flex-direction: row;
   /* gap: 1rem; */
@@ -50,7 +60,7 @@
   }
 }
 .inputs {
-  border: 1px solid violet;
+  /* border: 1px solid violet; */
   flex-basis: 40%;
 }
 
@@ -71,7 +81,7 @@
   position: relative;
   margin-top: 1rem;
   /* margin-bottom: 5rem; */
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   flex-basis: 70%;
   /* height: 350px; */
   display: flex;
@@ -112,7 +122,7 @@
   /* top: 1rem; */
   width: 100%;
   height: 200px;
-  border: 1px solid orange;
+  /* border: 1px solid orange; */
   display: flex;
   flex-direction: column;
 }
@@ -133,5 +143,5 @@
   position: relative;
   margin-right: 2rem;
   margin-top: 1rem;
-  border: 1px solid orange;
+  /* border: 1px solid orange; */
 }

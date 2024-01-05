@@ -4,10 +4,13 @@ import MakeMap from "../components/Map/MakeMap";
 import SearchMap from "../components/Map/SearchMap";
 import { MdSearch } from "react-icons/md";
 import Header from "../components/Layout/Header";
+import Footer from "../components/Layout/Footer";
 const MakePost = () => {
   const [address, setAddress] = useState({});
   const [searchkeyword, setSearchkeyword] = useState("");
-  const addressHandler = () => {};
+  const addressHandler = (e) => {
+    setAddress({ ...e.target.value });
+  };
   const onKeywordHandler = (e) => {
     setSearchkeyword(e.target.value);
     console.log(searchkeyword);
@@ -18,7 +21,7 @@ const MakePost = () => {
   };
   useEffect(() => {}, [searchkeyword]);
   return (
-    <>
+    <div className={classes.con}>
       <Header />
       <div className={classes.container}>
         <h1>모임 글 등록</h1>
@@ -84,7 +87,8 @@ const MakePost = () => {
           </div>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 export default MakePost;
