@@ -1,11 +1,25 @@
 import { useState, useEffect } from "react";
-import classes from "../styles/pages/MakePost.module.css"
+import classes from "../styles/pages/MakePost.module.css";
 import MakeMap from "../components/Map/MakeMap";
-
+import SearchMap from "../components/Map/SearchMap";
+import { MdSearch } from "react-icons/md";
+import Header from "../components/Layout/Header";
 const MakePost = () => {
   const [address, setAddress] = useState({});
+  const [searchkeyword, setSearchkeyword] = useState("");
   const addressHandler = () => {};
+  const onKeywordHandler = (e) => {
+    setSearchkeyword(e.target.value);
+    console.log(searchkeyword);
+  };
+  const onSearchHandler = () => {
+    // setSearchkeyword("");
+    console.log("입력 완료");
+  };
+  useEffect(() => {}, [searchkeyword]);
   return (
+    <>
+      <Header />
       <div className={classes.container}>
         <h1>모임 글 등록</h1>
         <div className={classes.title}>
@@ -45,13 +59,32 @@ const MakePost = () => {
             </div>
           </div>
           <div className={classes.map}>
-            <MakeMap setAddress={setAddress} />
+            <div className={classes.search}>
+              <input
+                type="text"
+                placeholder="검색할 장소를 입력하세요..."
+                value={searchkeyword}
+                onChange={onKeywordHandler}
+              />
+              <MdSearch
+                style={{ width: "1.5rem", height: "1.5rem" }}
+                onClick={onSearchHandler}
+              />
+            </div>
+            {/* <MakeMap setAddress={setAddress} searchkeyword={searchkeyword} /> */}
+            <SearchMap setAddress={setAddress} searchkeyword={searchkeyword} />
           </div>
         </div>
         <div className={classes.comment}>
           <h2>내용</h2>
+          <textarea placeholder="내용을 작성해주세요..." />
+          <div className={classes.btnCon}>
+            <button>취소</button>
+            <button>글 등록</button>
+          </div>
         </div>
       </div>
+    </>
   );
 };
 export default MakePost;
