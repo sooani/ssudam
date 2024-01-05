@@ -5,9 +5,11 @@ import SearchMap from "../components/Map/SearchMap";
 import { MdSearch } from "react-icons/md";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
+import KakaoMap from "../components/Map/KakaoMap";
 const MakePost = () => {
   const [address, setAddress] = useState({});
   const [searchkeyword, setSearchkeyword] = useState("");
+  const today = new Date().toISOString().split("T")[0];
   const addressHandler = (e) => {
     setAddress({ ...e.target.value });
   };
@@ -24,7 +26,7 @@ const MakePost = () => {
     <div className={classes.con}>
       <Header />
       <div className={classes.container}>
-        <h1>모임 글 등록</h1>
+        {/* <h1>모임 글 등록</h1> */}
         <div className={classes.title}>
           <h2>제목</h2>
           <input type="text" placeholder="글 제목을 입력하세요..." />
@@ -33,11 +35,11 @@ const MakePost = () => {
           <div className={classes.inputs}>
             <h2>상세 정보</h2>
             <div className={classes.field}>
-              <h3>모임 이름</h3>
+              <h4>모임 이름</h4>
               <input type="text" />
             </div>
             <div className={classes.field}>
-              <h3>모임 장소</h3>
+              <h4>모임 장소</h4>
               <input
                 type="text"
                 value={address.address_name}
@@ -45,19 +47,24 @@ const MakePost = () => {
               />
             </div>
             <div className={classes.field}>
-              <h3>모임 인원</h3>
-              <input type="number" />
+              <h4>모임 인원</h4>
+              <input
+                type="number"
+                placeholder="2명 이상~50명 이하"
+                min={2}
+                max={50}
+              />
             </div>
             <div className={classes.field}>
-              <h3>모임 날짜</h3>
-              <input type="date" />
+              <h4>모임 날짜</h4>
+              <input type="date" min={today} />
             </div>
             <div className={classes.field}>
-              <h3>모임 마감일</h3>
-              <input type="date" />
+              <h4>모임 마감일</h4>
+              <input type="date" min={today} />
             </div>
             <div className={classes.field}>
-              <h3>연락 방법</h3>
+              <h4>연락 방법</h4>
               <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
             </div>
           </div>
@@ -74,13 +81,14 @@ const MakePost = () => {
                 onClick={onSearchHandler}
               />
             </div>
+            {/* <KakaoMap /> */}
             {/* <MakeMap setAddress={setAddress} searchkeyword={searchkeyword} /> */}
             <SearchMap setAddress={setAddress} searchkeyword={searchkeyword} />
           </div>
         </div>
         <div className={classes.comment}>
           <h2>내용</h2>
-          <textarea placeholder="내용을 작성해주세요..." />
+          <textarea placeholder="내용을 작성해 주세요..." />
           <div className={classes.btnCon}>
             <button>취소</button>
             <button>글 등록</button>

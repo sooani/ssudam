@@ -5,7 +5,7 @@
   align-items: center;
   gap: 0.5rem;
   /* position: relative; */
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-right: 0.5rem;
   @media screen and (max-width: 1070px) {
     margin-top: 1rem;
