@@ -48,7 +48,7 @@ public class MemberService {
         member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
-        publisher.publishEvent(new MemberRegistrationEvent(savedMember));
+        publisher.publishEvent(new MemberRegistrationEvent(this, savedMember));
         return savedMember;
     }
 

@@ -5,6 +5,7 @@ import com.ssdam.helper.email.EmailSender;
 import com.ssdam.member.entity.Member;
 import com.ssdam.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.MailSendException;
 import org.springframework.scheduling.annotation.Async;
@@ -15,6 +16,12 @@ import org.springframework.stereotype.Component;
 @EnableAsync
 @Component
 public class MemberRegistrationEventListener {
+    @Value("Thank you for joining our site!")
+    private String subject;
+
+    @Value("email-registration-member")
+    private String templateName;
+
     private final EmailSender emailSender;
     private final MemberService memberService;
 
@@ -27,8 +34,9 @@ public class MemberRegistrationEventListener {
     @EventListener
     public void listen(MemberRegistrationEvent event) throws Exception {
         try {
-            String message = "any email message";
-            emailSender.sendEmail(message);
+            String[] to = new String[]{event.getMember().getEmail()};
+            String message = event.getMember().getEmail() + "님, 회원 가입이 성공적으로 완료되었습니다.";
+            emailSender.sendEmail(to, subject, message, templateName);
         } catch (MailSendException e) {
             e.printStackTrace();
             log.error("MailSendException: rollback for Member Registration:");
