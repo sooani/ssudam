@@ -22,7 +22,6 @@ public class PartyDto {
         private String title;
 
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
-        @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime meetingDate; //모임일자
 
         private String location;
