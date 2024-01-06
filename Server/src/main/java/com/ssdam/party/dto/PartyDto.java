@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -23,7 +24,11 @@ public class PartyDto {
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate; //모임일자
 
-        private String location;
+        private String longitude; //경도
+
+        private String latitude; //위도
+
+        private String address;
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -46,7 +51,11 @@ public class PartyDto {
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate;
 
-        private String location;
+        private String longitude; //경도
+
+        private String latitude; //위도
+
+        private String address;
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -71,7 +80,9 @@ public class PartyDto {
         private long partyId;
         private String title;
         private LocalDateTime meetingDate;
-        private String location;
+        private String longitude; //경도
+        private String latitude; //위도
+        private String address; //주소
         private String content;
         private int maxCapacity;
         private int currentCapacity;
