@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class jwtTokenizer {
+public class JwtTokenizer {
     @Getter
     @Value("${jwt.key")
     private String secretKey;

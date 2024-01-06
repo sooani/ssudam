@@ -42,7 +42,7 @@ mail:
       enable: true
   subject:
     member:
-      registration: Thank you for joining our cafe!
+      registration: Thank you for joining our site!
   template:
     name:
       member:
