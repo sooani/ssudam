@@ -10,10 +10,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Location {
+public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long locationId;
+    private long weatherId;
 
     @OneToOne
     private Party party;
