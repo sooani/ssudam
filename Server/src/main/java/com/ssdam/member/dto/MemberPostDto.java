@@ -12,8 +12,11 @@ public class MemberPostDto {
     @Email
     private String email;
 
-    @NotBlank
-    private String password;
+    @NotBlank(message = "비밀번호는 필수 항목입니다.")
+    private String password1;
+
+    @NotBlank(message = "비밀번호는 확인은 필수 항목입니다.")
+    private String password2;
 
     @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
     private String nickname;
