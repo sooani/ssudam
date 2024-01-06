@@ -15,12 +15,6 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-  cache:
-    type: redis # Redis 캐시를 사용하기 위해 cache 타입을 redis로 정해줌
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: mock
 logging:
   level:
     org:
