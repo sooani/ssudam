@@ -12,12 +12,159 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
+  border: 1px solid red;
   /* background-color: pink; */
-  width: 70%;
+  width: 65%;
   margin: 0 auto;
   gap: 1rem;
   position: relative;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+.infoAndBtn {
+  border: 1px solid blue;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  @media screen and (max-width: 1070px) {
+    flex-direction: column;
+  }
+}
+.info {
+  border: 1px solid violet;
+  padding: 1rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+.title {
+  /* border: 1px solid gray; */
+}
+.writerAndDate {
+  /* border: 1px solid orange; */
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.writerAndDate h4 {
+  margin: 0rem auto;
+}
+.writer {
+  /* border: 1px solid pink; */
+  border-right: 2px solid gray;
+  padding-right: 1rem;
+}
+
+.date {
+  /* border: 1px solid skyblue; */
+}
+.btnCon {
+  margin: 1rem;
+  border: 2px solid gray;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+  }
+}
+.btnCon button {
+  margin-right: 0.5rem;
+  /* border: 1px solid black; */
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 700;
+  @media screen and (max-width: 1070px) {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+.btnCon .joinBtn {
+  background-color: green;
+  color: white;
+}
+.detailInfo {
+  border: 1px solid gold;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  padding: 1rem;
+  gap: 1rem;
+  @media screen and (max-width: 1070px) {
+    flex-direction: column;
+  }
+}
+.detail {
+  border: 1px solid teal;
+  flex-basis: 70%;
+}
+.info .info1 {
+  border: 1px solid red;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  @media screen and (max-width: 1070px) {
+    height: 400px;
+    flex-direction: column;
+  }
+}
+.info1 .info1_1 {
+  border: 1px solid black;
+  flex-basis: 50%;
+}
+.info1 .info1_2 {
+  border: 1px solid orange;
+  flex-basis: 50%;
+}
+.info .info2 {
+  border: 1px solid blue;
+  height: 100px;
+}
+.info h2 {
+  padding: 1rem 0;
+  border-bottom: 2px solid gray;
+}
+.map {
+  border: 1px solid coral;
+  flex-basis: 30%;
+  display: flex;
+  flex-direction: column;
+}
+.btnCon_1 {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 0.5rem;
+  margin-top: 1rem;
+  @media screen and (max-width: 1070px) {
+    gap: 1rem;
+    flex-direction: column;
+    margin-right: 0rem;
+  }
+}
+.btnCon_1 button {
+  margin-right: 0.5rem;
+  /* border: 1px solid black; */
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 700;
+  @media screen and (max-width: 1070px) {
+    margin-right: 0rem;
+  }
+}
+.btnCon_1 .joinBtn {
+  background-color: green;
+  color: white;
 }
