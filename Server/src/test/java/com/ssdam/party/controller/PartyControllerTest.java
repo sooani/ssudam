@@ -62,7 +62,8 @@ public class PartyControllerTest {
         PartyDto.Post post = new PartyDto.Post(
                 "줍깅 모집 합니다!",
                 LocalDateTime.parse("2024-02-21T15:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                "양산",
+                "129.026370491329", "35.3368478896222",
+                "경남 양산시 양산역6길 12",
                 "2024년 2월 21일 오후 3시에 만나서 줍깅 하실분?",
                 5,
                 2);
@@ -80,7 +81,8 @@ public class PartyControllerTest {
 //                new PartyDto.Response(1L,
 //                        "줍깅 모집합니다!",
 //                        LocalDateTime.parse("2024-02-21T15:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-//                        "양산",
+//                        "129.026370491329","35.3368478896222",
+//                        "경남 양산시 양산역6길 12",
 //                        "2424년 2월 21일 오후 3시에 만나서 줍깅 하실분?",
 //                        5,
 //                        2, Party.PartyStatus.PARTY_OPENED);

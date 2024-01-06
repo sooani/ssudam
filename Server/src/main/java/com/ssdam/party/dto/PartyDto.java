@@ -1,11 +1,9 @@
 package com.ssdam.party.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssdam.party.entity.Party;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +22,11 @@ public class PartyDto {
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate; //모임일자
 
-        private String location;
+        private String longitude; //경도
+
+        private String latitude; //위도
+
+        private String address; //도로명주소
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -47,7 +49,11 @@ public class PartyDto {
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate;
 
-        private String location;
+        private String longitude; //경도
+
+        private String latitude; //위도
+
+        private String address; //도로명주소
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -72,7 +78,9 @@ public class PartyDto {
         private long partyId;
         private String title;
         private LocalDateTime meetingDate;
-        private String location;
+        private String longitude;
+        private String latitude;
+        private String address;
         private String content;
         private int maxCapacity;
         private int currentCapacity;

@@ -24,7 +24,13 @@ public class Party extends Auditable {
     private LocalDateTime meetingDate; //모임일자
 
     @Column(nullable = false)
-    private String location; //모임장소
+    private String longitude; //경도
+
+    @Column(nullable = false)
+    private String latitude; //위도
+
+    @Column(nullable = false)
+    private String address; //도로명주소
 
     @Column(nullable = false, length = 30)
     private String title;
