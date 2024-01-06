@@ -1,6 +1,8 @@
 package com.ssdam.config;
 
 import com.ssdam.auth.filter.JwtAuthenticationFilter;
+import com.ssdam.auth.handler.MemberAuthenticationFailureHandler;
+import com.ssdam.auth.handler.MemberAuthenticationSuccessHandler;
 import com.ssdam.auth.jwt.JwtTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,6 +67,8 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("/v1/auth/login");
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             builder.addFilter(jwtAuthenticationFilter);
         }
