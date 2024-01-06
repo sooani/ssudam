@@ -2,6 +2,8 @@ package com.ssdam.config;
 
 import com.ssdam.auth.filter.JwtAuthenticationFilter;
 import com.ssdam.auth.filter.JwtVerificationFilter;
+import com.ssdam.auth.handler.MemberAccessDeniedHandler;
+import com.ssdam.auth.handler.MemberAuthenticationEntryPoint;
 import com.ssdam.auth.handler.MemberAuthenticationFailureHandler;
 import com.ssdam.auth.handler.MemberAuthenticationSuccessHandler;
 import com.ssdam.auth.jwt.JwtTokenizer;
@@ -46,6 +48,10 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
