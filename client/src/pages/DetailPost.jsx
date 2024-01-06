@@ -5,6 +5,10 @@ import Footer from "../components/Layout/Footer";
 import { IoIosArrowBack } from "react-icons/io";
 import SearchMap from "../components/Map/SearchMap";
 import MakeMap from "../components/Map/MakeMap";
+import { FaUsers } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 const DetailPost = () => {
   return (
     <div className={classes.wrapper}>
@@ -13,7 +17,7 @@ const DetailPost = () => {
         <div className={classes.infoAndBtn}>
           <div className={classes.info}>
             <div className={classes.title}>
-              <IoIosArrowBack style={{ fontSize: "2rem", color: "gray" }} />
+              <IoIosArrowBack style={{ fontSize: "2rem" }} />
               <h1>제목</h1>
             </div>
             <div className={classes.writerAndDate}>
@@ -26,7 +30,12 @@ const DetailPost = () => {
             </div>
           </div>
           <div className={classes.btnCon}>
-            <button className={classes.joinBtn}>참여하기</button>
+            <button className={classes.joinBtn}>
+              참여
+              <FaUsers style={{ fontSize: "1.5rem" }} />
+            </button>
+            {/* <button className={classes.joinBtn}>참여하기</button>
+            <button className={classes.joinBtn}>참여하기</button> */}
           </div>
         </div>
         <div className={classes.detailInfo}>
@@ -54,9 +63,25 @@ const DetailPost = () => {
           <div className={classes.map}>
             <MakeMap />
             <div className={classes.btnCon_1}>
-              <button className={classes.joinBtn}>글 수정</button>
-              <button className={classes.joinBtn}>글 삭제</button>
+              <button className={classes.joinBtn}>
+                수정
+                <FaEdit style={{ fontSize: "1.5rem" }} />
+              </button>
+              <button className={classes.deleteBtn}>
+                삭제
+                <FaTrash style={{ fontSize: "1.5rem" }} />
+              </button>
             </div>
+          </div>
+        </div>
+        <div className={classes.comment}>
+          <h2>댓글 0</h2>
+          <textarea placeholder="댓글 내용을 입력하세요..." />
+          <div className={classes.btnCon_2}>
+            <button className={classes.joinBtn}>
+              댓글 등록
+              {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
+            </button>
           </div>
         </div>
       </div>
