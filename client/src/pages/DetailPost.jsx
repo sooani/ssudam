@@ -17,28 +17,69 @@ const DetailPost = () => {
   const [comments, setComments] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [meetingInfo, setMeetingInfo] = useState(null);
+  const [enteredComment, setEnteredComment] = useState("");
   const meetingId = 1;
   // const meetingId = useParams();
-  useEffect(() => {
+
+  const commentSubmitHandler = () => {
+    let commentDTO = {
+      id: Math.random() * 1000,
+      meetingId: meetingId,
+      userId: 225,
+      useremail: "hye25@example.com",
+      edited: new Date(),
+      created: new Date(),
+      content: enteredComment,
+    };
+
     axios
-      // .get(`/comments`, {
-      //   params: {
-      //     meetingId: 1,
-      //   },
-      // })
-      .get(`/meetings/${meetingId}/comments`)
+      .post(`/meetings/${meetingId}/comments`, commentDTO)
       .then((response) => {
-        setIsLoading(true);
-        console.log(response);
-        setComments(response.data);
-        setIsLoading(false);
+        console.log(response.data);
+        getComments();
+        setEnteredComment("");
       })
       .catch((error) => {
-        console.error("Error getting comment datas: ", error);
-        setIsLoading(false);
+        console.error("Error posting comment data: ", error);
       });
     console.log(comments);
-  }, [isLoading]);
+  };
+  const getComments = async () => {
+    try {
+      const res = await axios.get(`/meetings/${meetingId}/comments`);
+      const comments = res.data;
+      console.log("comments are updated successfully");
+      setComments(comments);
+    } catch (error) {
+      console.error("Error fetching comment datas: ", error);
+    }
+  };
+  useEffect(() => {
+    getComments();
+  }, []);
+  const commentChangeHandler = (e) => {
+    setEnteredComment(e.target.value);
+  };
+  // useEffect(() => {
+  //   axios
+  //     // .get(`/comments`, {
+  //     //   params: {
+  //     //     meetingId: 1,
+  //     //   },
+  //     // })
+  //     .get(`/meetings/${meetingId}/comments`)
+  //     .then((response) => {
+  //       setIsLoading(true);
+  //       console.log(response);
+  //       setComments(response.data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting comment datas: ", error);
+  //       setIsLoading(false);
+  //     });
+  //   console.log(comments);
+  // }, [isLoading]);
   useEffect(() => {
     axios
       .get(`/meetings/${meetingId}`)
@@ -88,15 +129,40 @@ const DetailPost = () => {
               <h2>상세 정보</h2>
               <div className={classes.info1}>
                 <div className={classes.info1_1}>
-                  <h4>모임 이름 {meetingInfo.meetingname}</h4>
-                  <h4>모집 인원 {meetingInfo.numofpeople}</h4>
-                  <h4>모임 장소 {meetingInfo.place}</h4>
-                  <h4>현재 인원 {meetingInfo.presentnum}</h4>
+                  <h4>
+                    모임 이름
+                    <div className={classes.emp}>{meetingInfo.meetingname}</div>
+                  </h4>
+                  <h4>
+                    모집 인원
+                    <div className={classes.emp}>{meetingInfo.numofpeople}</div>
+                  </h4>
+                  <h4>
+                    모임 장소
+                    <div className={classes.emp}>{meetingInfo.place}</div>
+                  </h4>
+                  <h4>
+                    현재 인원
+                    <div className={classes.emp}>{meetingInfo.presentnum}</div>
+                  </h4>
                 </div>
                 <div className={classes.info1_2}>
-                  <h4>모임 날짜 {meetingInfo.meetingdate.split("T")[0]}</h4>
-                  <h4>모임 마감일 {meetingInfo.duedate.split("T")[0]}</h4>
-                  <h4>연락 방법 {meetingInfo.contact}</h4>
+                  <h4>
+                    모임 날짜
+                    <div className={classes.emp}>
+                      {meetingInfo.meetingdate.split("T")[0]}
+                    </div>
+                  </h4>
+                  <h4>
+                    모임 마감일
+                    <div className={classes.emp}>
+                      {meetingInfo.duedate.split("T")[0]}
+                    </div>
+                  </h4>
+                  <h4>
+                    연락 방법
+                    <div className={classes.emp}>{meetingInfo.contact}</div>
+                  </h4>
                 </div>
               </div>
               <h2>모임 소개</h2>
@@ -118,9 +184,16 @@ const DetailPost = () => {
           </div>
           <div className={classes.comment}>
             {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
-            <textarea placeholder="댓글 내용을 입력하세요..." />
+            <textarea
+              placeholder="댓글 내용을 입력하세요..."
+              value={enteredComment}
+              onChange={commentChangeHandler}
+            />
             <div className={classes.btnCon_2}>
-              <button className={classes.joinBtn}>
+              <button
+                className={classes.joinBtn}
+                onClick={commentSubmitHandler}
+              >
                 댓글 등록
                 {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
               </button>
