@@ -29,7 +29,7 @@ const EditPost = () => {
   };
 
   const submitHandler = (e) => {
-    e.preventdefault();
+    e.preventDefault();
     console.log("submit 완료");
   };
   return (
@@ -68,11 +68,11 @@ const EditPost = () => {
               </div>
               <div className={classes.field}>
                 <h4>모임 날짜</h4>
-                <input type="date" min={today} />
+                <input type="date" min={today} defaultValue={today} />
               </div>
               <div className={classes.field}>
                 <h4>모임 마감일</h4>
-                <input type="date" min={today} />
+                <input type="date" min={today} defaultValue={today} />
               </div>
               <div className={classes.field}>
                 <h4>연락 방법</h4>
@@ -81,15 +81,12 @@ const EditPost = () => {
             </div>
             <div className={classes.map}>
               <div className={classes.search}>
+                <MdSearch className={classes.icon} onClick={onSearchHandler} />
                 <input
                   type="text"
                   placeholder="검색할 장소를 입력하세요..."
                   value={searchkeyword}
                   onChange={onKeywordHandler}
-                />
-                <MdSearch
-                  style={{ width: "1.5rem", height: "1.5rem" }}
-                  onClick={onSearchHandler}
                 />
               </div>
               {/* <KakaoMap /> */}
@@ -104,8 +101,10 @@ const EditPost = () => {
             <h2>내용</h2>
             <textarea placeholder="내용을 작성해 주세요..." />
             <div className={classes.btnCon}>
-              <button>취소</button>
-              <button type="submit">글 수정</button>
+              <button className={classes.cancelBtn}>취소</button>
+              <button type="submit" className={classes.postBtn}>
+                글 수정
+              </button>
             </div>
           </div>
         </div>

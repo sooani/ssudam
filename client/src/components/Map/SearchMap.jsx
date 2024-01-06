@@ -72,8 +72,8 @@ const SearchMap = (props) => {
           lng: 126.9786567,
         }}
         style={{
-          width: "95%",
-          height: "35vh",
+          width: "90%",
+          height: "37vh",
         }}
         level={3}
         onCreate={setMap}
