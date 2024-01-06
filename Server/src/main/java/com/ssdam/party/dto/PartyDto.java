@@ -1,5 +1,6 @@
 package com.ssdam.party.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssdam.party.entity.Party;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class PartyDto {
         private String title;
 
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
+        @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime meetingDate; //모임일자
 
         private String location;
@@ -77,7 +79,7 @@ public class PartyDto {
         private int currentCapacity;
         private Party.PartyStatus partyStatus;
 
-        public String getPartyStatus(){
+        public String getPartyStatus() {
             return partyStatus.getDescription();
         }
 

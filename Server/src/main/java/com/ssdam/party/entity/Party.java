@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,14 @@ public class Party extends Auditable {
     private String content;
 
     @Column(nullable = false)
+    @Min(value = 1)
     private int maxCapacity; //최대 인원
 
-    private int currentCapacity; //현재 인원
+    @Column(nullable = false)
+    private int currentCapacity = 1; //현재 인원
 
-    private int hits; //조회수
+    @Column(nullable = false)
+    private int hits = 0; //조회수
 
     @OneToMany(mappedBy = "party")
     private List<PartyMember> partyMembers = new ArrayList<>();

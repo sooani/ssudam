@@ -40,12 +40,12 @@ public class PartyService {
 
     // 특정 멤버가 작성한 모든 모임 조회
     @Transactional(readOnly = true)
-    public Page<Party> findPartiesByMember (long memberId, int page, int size) {
+    public Page<Party> findPartiesByMember(long memberId, int page, int size) {
         List<Party> parties = partyRepository.findByPartyMembers_Member_MemberId(memberId);
         Page<Party> pageParties =
                 new PageImpl<>(parties,
                         PageRequest.of(page, size,
-                Sort.by("createdAt").descending()), parties.size());
+                                Sort.by("createdAt").descending()), parties.size());
         return pageParties;
     }
 
