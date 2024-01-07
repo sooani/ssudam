@@ -129,6 +129,24 @@ const MakePost = () => {
       // hits 필요
       party_status: "모집중", //
     };
+    setPostedInfo({
+      postedtitle: "",
+      meetingname: "",
+      numofpeople: "",
+      meetingdate: today,
+      duedate: today,
+      contact: "",
+      content: "",
+    });
+    setAddress({ address_name: "" });
+    setLatLng({
+      lat: 33.450701,
+      lng: 126.570667,
+    });
+
+    setSearchkeyword("");
+    setLatLng({ lat: 33.450701, lng: 126.570667 });
+    console.log(postedInfo);
     axios
       .post(`/meetings`, postDTO)
       .then((response) => {
@@ -153,6 +171,7 @@ const MakePost = () => {
               placeholder="글 제목을 입력하세요..."
               required
               onChange={titleHandler}
+              value={postedInfo.postedtitle}
             />
           </div>
           <div className={classes.info}>
@@ -160,7 +179,12 @@ const MakePost = () => {
               <h2>상세 정보</h2>
               <div className={classes.field}>
                 <h4>모임 이름</h4>
-                <input type="text" required onChange={nameHandler} />
+                <input
+                  type="text"
+                  required
+                  onChange={nameHandler}
+                  value={postedInfo.meetingname}
+                />
               </div>
               <div className={classes.field}>
                 <h4>모임 장소</h4>
@@ -180,6 +204,7 @@ const MakePost = () => {
                   max={50}
                   required
                   onChange={numberHandler}
+                  value={postedInfo.numofpeople}
                 />
               </div>
               <div className={classes.field}>
@@ -190,6 +215,7 @@ const MakePost = () => {
                   defaultValue={today}
                   required
                   onChange={dateHandler}
+                  value={postedInfo.meetingdate}
                 />
               </div>
               <div className={classes.field}>
@@ -200,6 +226,7 @@ const MakePost = () => {
                   defaultValue={today}
                   required
                   onChange={dueHandler}
+                  value={postedInfo.duedate}
                 />
               </div>
               <div className={classes.field}>
@@ -209,6 +236,7 @@ const MakePost = () => {
                   pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
                   required
                   onChange={contactHandler}
+                  value={postedInfo.contact}
                 />
               </div>
             </div>
@@ -239,6 +267,7 @@ const MakePost = () => {
               placeholder="내용을 작성해 주세요..."
               required
               onChange={contentHandler}
+              value={postedInfo.content}
             />
             <div className={classes.btnCon}>
               <button className={classes.cancelBtn}>취소</button>

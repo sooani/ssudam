@@ -18,7 +18,7 @@ const DetailPost = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [meetingInfo, setMeetingInfo] = useState(null);
   const [enteredComment, setEnteredComment] = useState("");
-  const meetingId = 493.05454988892893;
+  const meetingId = 460.2232965296056;
   // const meetingId = useParams();
 
   const commentSubmitHandler = () => {
@@ -190,23 +190,27 @@ const DetailPost = () => {
               </div>
             </div>
           </div>
-          <div className={classes.comment}>
+
+          <form onSubmit={commentSubmitHandler} className={classes.comment}>
             {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
             <textarea
               placeholder="댓글 내용을 입력하세요..."
               value={enteredComment}
               onChange={commentChangeHandler}
+              required
             />
             <div className={classes.btnCon_2}>
               <button
                 className={classes.joinBtn}
-                onClick={commentSubmitHandler}
+                type="submit"
+                // onClick={commentSubmitHandler}
               >
                 댓글 등록
                 {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
               </button>
             </div>
-          </div>
+          </form>
+
           <div className={classes.comments}>
             {!isLoading &&
               comments &&

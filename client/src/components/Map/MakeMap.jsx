@@ -26,7 +26,7 @@ const MakeMap = (props) => {
 
   const setFullAddress = (lat, lng) => {
     // 마우스 이벤트로 얻은 lat과 lng으로 position 설정하고 도로명 주소를 얻는 getAddress 호출
-    setPosition(lat, lng);
+    // setPosition(lat, lng);
     getAddress(position.lat, position.lng);
   };
 
