@@ -17,8 +17,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -30,20 +33,24 @@ import static com.ssdam.util.ApiDocumentUtils.getRequestPreProcessor;
 import static com.ssdam.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @AutoConfigureRestDocs
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(PartyController.class)
+@TestPropertySource(properties = "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration")
 public class PartyControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -59,14 +66,7 @@ public class PartyControllerTest {
     void postPartyTest() throws Exception {
         System.out.println("postParty 테스트 시작");
         //given
-        PartyDto.Post post = new PartyDto.Post(
-                "줍깅 모집 합니다!",
-                LocalDateTime.parse("2024-02-21T15:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                "129.026370491329", "35.3368478896222",
-                "경남 양산시 양산역6길 12",
-                "2024년 2월 21일 오후 3시에 만나서 줍깅 하실분?",
-                5,
-                2);
+        PartyDto.Post post = (PartyDto.Post) PartyStub.MockParty.getRequestBody(HttpMethod.POST);
 
         //직렬화 할때 nano 속성 제거해서 포함하지 않는 문자열 생성
         Gson gson = new GsonBuilder()
@@ -76,16 +76,6 @@ public class PartyControllerTest {
 
         String content = gson.toJson(post);
         System.out.println("전송하는 JSON 데이터: " + content);
-
-//        PartyDto.Response responseDto =
-//                new PartyDto.Response(1L,
-//                        "줍깅 모집합니다!",
-//                        LocalDateTime.parse("2024-02-21T15:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-//                        "129.026370491329","35.3368478896222",
-//                        "경남 양산시 양산역6길 12",
-//                        "2424년 2월 21일 오후 3시에 만나서 줍깅 하실분?",
-//                        5,
-//                        2, Party.PartyStatus.PARTY_OPENED);
 
         given(mapper.partyPostDtoToParty(Mockito.any(PartyDto.Post.class)))
                 .willReturn(new Party());
@@ -115,9 +105,11 @@ public class PartyControllerTest {
                         getResponsePreProcessor(),
                         requestFields(
                                 List.of(
-                                        fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 날짜"),
-                                        fieldWithPath("location").type(JsonFieldType.STRING).description("모임 장소"),
+                                        fieldWithPath("longitude").type(JsonFieldType.STRING).description("경도"),
+                                        fieldWithPath("latitude").type(JsonFieldType.STRING).description("위도"),
+                                        fieldWithPath("address").type(JsonFieldType.STRING).description("도로명 주소"),
+                                        fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("본문 내용"),
                                         fieldWithPath("maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
                                         fieldWithPath("currentCapacity").type(JsonFieldType.NUMBER).description("현재 인원")
@@ -127,5 +119,115 @@ public class PartyControllerTest {
                                 headerWithName(HttpHeaders.LOCATION).description("Location header. 등록된 리소스의 URI")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("patchParty 테스트")
+    public void patchPartyTest() throws Exception {
+        System.out.println("patchParty 테스트 시작!");
+        //given
+        long partyId = 1L;
+        PartyDto.Patch patch = (PartyDto.Patch) PartyStub.MockParty.getRequestBody(HttpMethod.PATCH);
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) ->
+                        new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .create();
+
+        String content = gson.toJson(patch);
+
+        PartyDto.Response responseDto = PartyStub.MockParty.getSingleResponseBody();
+
+        given(mapper.partyPatchDtoToParty(Mockito.any(PartyDto.Patch.class)))
+                .willReturn(new Party());
+        given(partyService.updateParty(Mockito.any(Party.class)))
+                .willReturn(new Party());
+        given(mapper.partyToPartyResponse(Mockito.any(Party.class)))
+                .willReturn(responseDto);
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders.patch("/v1/parties/{party-id}", partyId)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                );
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.partyId").value(patch.getPartyId()))
+                .andExpect(jsonPath("$.data.title").value(patch.getTitle()))
+                .andExpect(jsonPath("$.data.meetingDate").value(patch.getMeetingDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .andExpect(jsonPath("$.data.longitude").value(patch.getLongitude()))
+                .andExpect(jsonPath("$.data.latitude").value(patch.getLatitude()))
+                .andExpect(jsonPath("$.data.address").value(patch.getAddress()))
+                .andExpect(jsonPath("$.data.content").value(patch.getContent()))
+                .andExpect(jsonPath("$.data.maxCapacity").value(patch.getMaxCapacity()))
+                .andExpect(jsonPath("$.data.currentCapacity").value(patch.getCurrentCapacity()))
+                .andExpect(jsonPath("$.data.partyStatus").value(patch.getPartyStatus().toString()))
+                .andDo(document("patch-party",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("party-id").description("모임 식별자")
+                        ),
+                        requestFields(
+                                List.of(
+                                        fieldWithPath("partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
+                                        fieldWithPath("longitude").type(JsonFieldType.STRING).description("경도"),
+                                        fieldWithPath("latitude").type(JsonFieldType.STRING).description("위도"),
+                                        fieldWithPath("address").type(JsonFieldType.STRING).description("도로명 주소"),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
+                                        fieldWithPath("currentCapacity").type(JsonFieldType.NUMBER).description("현재 인원"),
+                                        fieldWithPath("partyStatus").type(JsonFieldType.STRING).description("글 상태 : PARTY_OPENED / PARTY_CLOSED")
+                                )
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
+                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("data.meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
+                                        fieldWithPath("data.longitude").type(JsonFieldType.STRING).description("경도"),
+                                        fieldWithPath("data.latitude").type(JsonFieldType.STRING).description("위도"),
+                                        fieldWithPath("data.address").type(JsonFieldType.STRING).description("도로명 주소"),
+                                        fieldWithPath("data.content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("data.maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
+                                        fieldWithPath("data.currentCapacity").type(JsonFieldType.NUMBER).description("현재 인원"),
+                                        fieldWithPath("data.partyStatus").type(JsonFieldType.STRING).description("글 상태 : 모집중 / 모집완료 "),
+                                        fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("글 작성 날짜"),
+                                        fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("글 수정 날짜")
+                                )
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("deleteParty 테스트")
+    public void deletePartyTest() throws Exception {
+        System.out.println("deleteParty 테스트 시작");
+
+        //given
+        long partyId = 1L;
+
+        doNothing().when(partyService).deleteParty(any(long.class));
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/v1/parties/{partyId}", partyId));
+
+        //then
+        actions
+                .andExpect(status().isNoContent())
+                .andDo(document("delete-party",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("partyId").description("모임 식별자")
+                        )));
     }
 }

@@ -39,6 +39,7 @@ public class PartyDto {
     }
 
     @Getter
+    @AllArgsConstructor
     public static class Patch {
 
         private long partyId;
@@ -85,10 +86,8 @@ public class PartyDto {
         private int maxCapacity;
         private int currentCapacity;
         private Party.PartyStatus partyStatus;
-
-        public String getPartyStatus() {
-            return partyStatus.getDescription();
-        }
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
 
     }
 }

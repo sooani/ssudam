@@ -55,8 +55,12 @@ public class PartyService {
 
         Optional.ofNullable(party.getMeetingDate())
                 .ifPresent(findParty::setMeetingDate);
-        Optional.ofNullable(party.getLocation())
-                .ifPresent(findParty::setLocation);
+        Optional.ofNullable(party.getLongitude())
+                .ifPresent(findParty::setLongitude);
+        Optional.ofNullable(party.getLatitude())
+                .ifPresent(findParty::setLatitude);
+        Optional.ofNullable(party.getAddress())
+                .ifPresent(findParty::setAddress);
         Optional.ofNullable(party.getTitle())
                 .ifPresent(findParty::setTitle);
         Optional.ofNullable(party.getContent())
