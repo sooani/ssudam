@@ -4,9 +4,11 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import classes from "../../styles/components/Map.module.css";
 const MakeMap = (props) => {
   const { kakao } = window;
-
+  // const lat = props.lat;
+  // const lng = props.lng;
+  // console.log(lat, lng);
   // position은 위도 경도
-  const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
+  const [position, setPosition] = useState({ lat: props.lat, lng: props.lng });
   // address는 주소 > 지금은 props로 받음!
   // const [address, setAddress] = useState({});
 
@@ -39,6 +41,8 @@ const MakeMap = (props) => {
           // 지도의 중심좌표
           lat: position.lat,
           lng: position.lng,
+          // lat: lat,
+          // lng: lng,
         }}
         style={{ width: "90%", height: "34vh" }}
         level={3} // 지도의 확대 레벨

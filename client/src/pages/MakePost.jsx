@@ -10,6 +10,9 @@ import axios from "../axios";
 const MakePost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({});
+  // 위도와 경도
+  // const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
+  const [latlng, setLatLng] = useState({});
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
   // 오늘 날짜에서 년/월/일 도출
@@ -17,6 +20,9 @@ const MakePost = () => {
 
   const [postedInfo, setPostedInfo] = useState({});
 
+  // useEffect(() => {
+  //   console.log(position);
+  // }, [position]);
   // map 에서 추출한 주소 뒤에 상세 주소 붙이는 function
   const addressHandler = (e) => {
     console.log(address);
@@ -93,6 +99,7 @@ const MakePost = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(postedInfo);
+    // console.log(position);
     let postDTO = {
       id: Math.random() * 1000, //
       // memberId 하나로 가져오기!
@@ -101,6 +108,8 @@ const MakePost = () => {
       member_id: 1, //
       meeting_date: postedInfo.meetingdate,
       location: address.address_name,
+      lat: latlng.lat,
+      lng: latlng.lng,
       title: postedInfo.postedtitle,
 
       content: postedInfo.content,
@@ -217,7 +226,10 @@ const MakePost = () => {
               {/* <MakeMap setAddress={setAddress} searchkeyword={searchkeyword} /> */}
               <SearchMap
                 setAddress={setAddress}
+                // position={position}
+                // setPosition={setPosition}
                 searchkeyword={searchkeyword}
+                setLatLng={setLatLng}
               />
             </div>
           </div>

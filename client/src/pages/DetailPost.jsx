@@ -18,7 +18,7 @@ const DetailPost = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [meetingInfo, setMeetingInfo] = useState(null);
   const [enteredComment, setEnteredComment] = useState("");
-  const meetingId = 1;
+  const meetingId = 493.05454988892893;
   // const meetingId = useParams();
 
   const commentSubmitHandler = () => {
@@ -104,14 +104,14 @@ const DetailPost = () => {
             <div className={classes.info}>
               <div className={classes.title}>
                 <IoIosArrowBack style={{ fontSize: "2rem" }} />
-                <h1>{meetingInfo.postedtitle}</h1>
+                <h1>{meetingInfo.title}</h1>
               </div>
               <div className={classes.writerAndDate}>
                 <div className={classes.writer}>
                   <h4>{meetingInfo.owneremail}</h4>
                 </div>
                 <div className={classes.date}>
-                  <h4>{meetingInfo.posteddate.split("T")[0]}</h4>
+                  <h4>{meetingInfo.created_at.split("T")[0]}</h4>
                 </div>
               </div>
             </div>
@@ -135,22 +135,26 @@ const DetailPost = () => {
                   </h4>
                   <h4>
                     모집 인원
-                    <div className={classes.emp}>{meetingInfo.numofpeople}</div>
+                    <div className={classes.emp}>
+                      {meetingInfo.max_capacity}
+                    </div>
                   </h4>
                   <h4>
                     모임 장소
-                    <div className={classes.emp}>{meetingInfo.place}</div>
+                    <div className={classes.emp}>{meetingInfo.location}</div>
                   </h4>
                   <h4>
                     현재 인원
-                    <div className={classes.emp}>{meetingInfo.presentnum}</div>
+                    <div className={classes.emp}>
+                      {meetingInfo.current_capacity}
+                    </div>
                   </h4>
                 </div>
                 <div className={classes.info1_2}>
                   <h4>
                     모임 날짜
                     <div className={classes.emp}>
-                      {meetingInfo.meetingdate.split("T")[0]}
+                      {meetingInfo.meeting_date.split("T")[0]}
                     </div>
                   </h4>
                   <h4>
@@ -169,7 +173,11 @@ const DetailPost = () => {
               <div className={classes.info2}>{meetingInfo.content}</div>
             </div>
             <div className={classes.map}>
-              <MakeMap setAddress={setAddress} />
+              <MakeMap
+                setAddress={setAddress}
+                lat={meetingInfo.lat}
+                lng={meetingInfo.lng}
+              />
               <div className={classes.btnCon_1}>
                 <button className={classes.joinBtn}>
                   수정

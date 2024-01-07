@@ -9,15 +9,18 @@ const SearchMap = (props) => {
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
   const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
-
+  // const position = props.position;
+  // const setPosition = props.setPosition;
+  // console.log(position);
   // props로 받은 검색 키워드
   const keyword = props.searchkeyword;
-
+  const setLatLng = props.setLatLng;
   const getAddress = (lat, lng) => {
     const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
     const coord = new kakao.maps.LatLng(lat, lng); // 주소로 변환할 좌표 입력
     const callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
+        // console.log(position.lat, position.lng);
         props.setAddress(result[0].address);
       }
     };
@@ -28,6 +31,11 @@ const SearchMap = (props) => {
   const handleMarkerClick = (position) => {
     // 클릭된 마커의 위도와 경도 출력
     setPosition(position.lat, position.lng);
+    setLatLng({
+      lat: position.lat,
+      lng: position.lng,
+    });
+    console.log(position);
     getAddress(position.lat, position.lng);
   };
 
