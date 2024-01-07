@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,9 +43,9 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -204,6 +207,134 @@ public class PartyControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("getParty 테스트")
+    public void getPartyTest() throws Exception {
+        System.out.println("단일 모임 조회 테스트 시작!");
+        //given
+        long partyId = 1L;
+        PartyDto.Patch patch = (PartyDto.Patch) PartyStub.MockParty.getRequestBody(HttpMethod.PATCH);
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) ->
+                        new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .create();
+
+        String content = gson.toJson(patch);
+
+        PartyDto.Response responseDto = PartyStub.MockParty.getSingleResponseBody();
+
+        given(partyService.findParty(Mockito.anyLong()))
+                .willReturn(new Party());
+        given(mapper.partyToPartyResponse(Mockito.any(Party.class)))
+                .willReturn(responseDto);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/v1/parties/{party-id}", partyId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        //then
+
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.partyId").value(responseDto.getPartyId()))
+                .andExpect(jsonPath("$.data.title").value(patch.getTitle()))
+                .andExpect(jsonPath("$.data.meetingDate").value(patch.getMeetingDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .andExpect(jsonPath("$.data.longitude").value(patch.getLongitude()))
+                .andExpect(jsonPath("$.data.latitude").value(patch.getLatitude()))
+                .andExpect(jsonPath("$.data.address").value(patch.getAddress()))
+                .andExpect(jsonPath("$.data.content").value(patch.getContent()))
+                .andExpect(jsonPath("$.data.maxCapacity").value(patch.getMaxCapacity()))
+                .andExpect(jsonPath("$.data.currentCapacity").value(patch.getCurrentCapacity()))
+                .andExpect(jsonPath("$.data.partyStatus").value(patch.getPartyStatus().toString()))
+                .andDo(document("get-party",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("party-id").description("파티 식별자")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
+                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("data.meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
+                                        fieldWithPath("data.longitude").type(JsonFieldType.STRING).description("경도"),
+                                        fieldWithPath("data.latitude").type(JsonFieldType.STRING).description("위도"),
+                                        fieldWithPath("data.address").type(JsonFieldType.STRING).description("도로명 주소"),
+                                        fieldWithPath("data.content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("data.maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
+                                        fieldWithPath("data.currentCapacity").type(JsonFieldType.NUMBER).description("현재 인원"),
+                                        fieldWithPath("data.partyStatus").type(JsonFieldType.STRING).description("글 상태 : 모집중 / 모집완료 "),
+                                        fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("글 작성 날짜"),
+                                        fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("글 수정 날짜")
+                                )
+                        )));
+
+    }
+
+    @Test
+    @DisplayName("getParties 테스트")
+    public void getPartiesTest() throws Exception {
+        System.out.println("모든 모임 조회 테스트 시작!");
+        //given
+
+        Page<PartyDto.Response> pageParties = PartyStub.MockParty.getMultiResponseBody();
+        List<PartyDto.Response> responses = PartyStub.MockParty.getListResponseBody();
+
+        given(partyService.findParties(Mockito.anyInt(), Mockito.anyInt()))
+                .willReturn((Page)pageParties);
+        given(mapper.partiesToPartyResponses(Mockito.anyList()))
+                .willReturn(responses);
+
+        String page = "1";
+        String size = "10";
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/v1/parties")
+                        .params(queryParams)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isArray())
+                .andDo(document("get-parties",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestParameters(
+                                List.of(parameterWithName("page").description("페이지 번호"),
+                                        parameterWithName("size").description("페이지 크기"))
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
+                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별"),
+                                        fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("data[].meetingDate").type(JsonFieldType.STRING).description("모일 일자"),
+                                        fieldWithPath("data[].longitude").type(JsonFieldType.STRING).description("경도"),
+                                        fieldWithPath("data[].latitude").type(JsonFieldType.STRING).description("위도"),
+                                        fieldWithPath("data[].address").type(JsonFieldType.STRING).description("도로명 주소"),
+                                        fieldWithPath("data[].content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("data[].maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
+                                        fieldWithPath("data[].currentCapacity").type(JsonFieldType.NUMBER).description("현재 인원"),
+                                        fieldWithPath("data[].partyStatus").type(JsonFieldType.STRING).description("글 상태 : 모집중 / 모집완료 "),
+                                        fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("글 작성 날짜"),
+                                        fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("글 수정 날짜"),
+                                        fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 데이터"),
+                                        fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                        fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("페이지 크기"),
+                                        fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("페이지 총 개수"),
+                                        fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("페이지 총 번호")
+                                ))));
     }
 
     @Test
