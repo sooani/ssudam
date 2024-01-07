@@ -9,16 +9,25 @@ import KakaoMap from "../components/Map/KakaoMap";
 import axios from "../axios";
 const MakePost = () => {
   // 도로명 주소
-  const [address, setAddress] = useState({});
+  const [address, setAddress] = useState({ address_name: "" });
+
   // 위도와 경도
   // const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
-  const [latlng, setLatLng] = useState({});
+  const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
   // 오늘 날짜에서 년/월/일 도출
   const today = new Date().toISOString().split("T")[0];
 
-  const [postedInfo, setPostedInfo] = useState({});
+  const [postedInfo, setPostedInfo] = useState({
+    postedtitle: "",
+    meetingname: "",
+    numofpeople: "",
+    meetingdate: today,
+    duedate: today,
+    contact: "",
+    content: "",
+  });
 
   // useEffect(() => {
   //   console.log(position);
@@ -29,7 +38,7 @@ const MakePost = () => {
     console.log(address.address_name);
     setAddress((prevAddress) => ({
       ...prevAddress,
-      address_name: e.target.value,
+      address_name: prevAddress.address_name + e.target.value,
     }));
     console.log(address.address_name);
     // setPostedInfo((prevInfo) => ({
@@ -138,7 +147,7 @@ const MakePost = () => {
       contact: "",
       content: "",
     });
-    setAddress({ address_name: "" });
+    setAddress({});
     setLatLng({
       lat: 33.450701,
       lng: 126.570667,
@@ -212,7 +221,6 @@ const MakePost = () => {
                 <input
                   type="date"
                   min={today}
-                  defaultValue={today}
                   required
                   onChange={dateHandler}
                   value={postedInfo.meetingdate}
@@ -223,7 +231,6 @@ const MakePost = () => {
                 <input
                   type="date"
                   min={today}
-                  defaultValue={today}
                   required
                   onChange={dueHandler}
                   value={postedInfo.duedate}
