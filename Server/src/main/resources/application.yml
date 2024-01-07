@@ -47,5 +47,4 @@ mail:
     name:
       member:
         join: email-registration-member
-  openweathermap:
-    apikey: ${OWM_API_KEY}
+owmApiKey: ${OWM_API_KEY}
