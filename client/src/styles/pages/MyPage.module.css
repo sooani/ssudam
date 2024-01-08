@@ -3,17 +3,32 @@
 
 
 /* Mypage.module.css */
-.Mypageroom{
-    height: 100%;
-    width: 100%;
+.Mypageroom {
+    position: relative;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    overflow-x: hidden;
+    align-items: center;
     border: 4px solid blue;
 }
 
 .MypageContainer{
-    display: flex;
+    /* display: flex;
     flex-direction: column; 
     align-items: center; 
-    height : auto;
+    height : auto; */
+    width: 70vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin: auto;
+    padding: 10px;
 }
 
 .MyInfo{
@@ -22,38 +37,40 @@
     align-items: center; 
     justify-content: center; /* 수평 가운데 정렬을 위해 수정 */
     width: 80vw;
-    height: 40vh;
+    height: 90vh;
 }
 
 .Myprofile{
     display: flex; 
     border: 2px solid green;
-    height: 200px;
-    width:20%;
+    height: 50vh;
+    width:20vw;
     flex-direction: column; 
     align-items: center;
-    justify-content: space-around; /* 공간 나누기를 위해 수정 */
+    justify-content: space-around; 
 }
 
 .Btn_EditProfile{
-    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 130, 36, 1);
     color: white;
     background-color: rgba(0, 130, 36, 1);
-    height: 20%;
-    width : 90%;
-    font-size: 20px;
+    width : 180px;
+    height : 50px;
+    font-size: 18px;
     cursor: pointer; 
     border-radius: 5px;
-    margin-top: 10px; 
 }
 
 .ProfileImageContainer {
-    height: 100px; /* 높이 수정 */
-    width: 100%;
+    height: 25vh; 
+    width: 15vw;
     overflow: hidden;
     border: 1px solid black;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,14 +79,49 @@
 .ProfileImageContainer img {
     width: 100%;
     height: 100%; 
-    object-fit: cover; 
+    object-fit: contain; 
 }
+
+.MyData{
+    border: 2px solid black;
+    width: 60vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.NicknameContainer,
+.EmailContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.Email,
+.Nickname{
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.UserEmail,
+.UserNickname{
+    width : 50vw;
+    height: 5vh;
+    border-radius: 5px;
+    border:1px solid black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0.5vh;
+    margin-left: 1rem;
+}
+
 
 .MyEvent{
     border: 2px solid Orange;
     display: flex; 
     align-items: center; 
     width: 80vw;
-    /* height: 50vh; */
+    height: 100vh;
 }
 
