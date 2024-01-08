@@ -73,12 +73,19 @@
   margin-right: 1.5rem;
   /* border: 2px solid gray; */
   @media screen and (max-width: 1070px) {
-    width: 100%;
+    /* margin-right: 0rem; */
+    margin: 0 auto;
+    /* top: 1rem;
+    position: relative; */
+    /* height: 50px; */
+    /* width: 100%; */
   }
 }
 .btnCon button {
   /* margin-right: 0.5rem; */
   /* border: 1px solid black; */
+  /* display: flex;
+  flex-direction: row; */
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
   font-size: large;
@@ -87,7 +94,9 @@
   margin-right: 0.5rem;
   @media screen and (max-width: 1070px) {
     margin-right: 0;
-    width: 100%;
+    /* flex-direction: column; */
+    margin: 0 auto;
+    /* width: 100%; */
   }
 }
 .btnCon .joinBtn {
@@ -195,8 +204,9 @@
   text-align: center;
   @media screen and (max-width: 1070px) {
     gap: 1rem;
-    flex-direction: column;
+    /* flex-direction: column; */
     margin-right: 0rem;
+    margin: 1rem auto;
   }
 }
 .btnCon_1 button {
@@ -267,11 +277,15 @@
   align-items: center;
   @media screen and (max-width: 1070px) {
     gap: 1rem;
-    flex-direction: column;
+    /* flex-direction: column; */
     margin-right: 0rem;
+    margin: 1rem auto;
+    justify-content: center;
   }
 }
 .btnCon_2 button {
+  /* display: flex;
+  flex-direction: row; */
   margin-right: 0.5rem;
   /* border: 1px solid black; */
   padding: 0.3rem 0.6rem;
@@ -283,11 +297,12 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* margin-right: 1rem; */
+  /* margin-right: 2rem; */
   /* margin-top: 1rem; */
   align-items: center;
   gap: 0.5rem;
   @media screen and (max-width: 1070px) {
+    /* flex-direction: column; */
     margin-right: 0rem;
   }
 }
@@ -295,11 +310,25 @@
   margin-right: 1rem;
   background-color: green;
   color: white;
+  @media screen and (max-width: 1070px) {
+    margin-right: 0rem;
+  }
+}
+.btnCon_2 .joinBtn_1 {
+  margin-right: 2rem;
+  background-color: green;
+  color: white;
+  @media screen and (max-width: 1070px) {
+    margin-right: 0rem;
+  }
 }
 .btnCon_2 .deleteBtn {
   margin-right: 2rem;
   background-color: gray;
   color: black;
+  @media screen and (max-width: 1070px) {
+    margin-right: 0rem;
+  }
 }
 .comments {
   /* height: 100px; */

@@ -25,10 +25,11 @@ const DetailPost = () => {
   const meetingId = 536.4778332971678;
   // const meetingId = 906.8489342328219;
   // const meetingId = useParams();
-  const loggedInUser = localStorage.getItem("email");
+  // const loggedInUser = localStorage.getItem("email");
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   useEffect(() => {
-    if (loggedInUser && userInfo) {
+    if (loggedInUser && userInfo && loggedInUser.email === userInfo.email) {
       axios
         .get(`/meetings/${meetingId}/comments?useremail=${userInfo.email}`)
         .then((response) => {
@@ -62,11 +63,13 @@ const DetailPost = () => {
 
   const commentSubmitHandler = (e) => {
     e.preventDefault();
+    console.log(loggedInUser.nickname);
     let commentDTO = {
       id: Math.random() * 1000,
       meetingId: meetingId,
-      userId: 225,
-      useremail: loggedInUser,
+      userId: loggedInUser.id,
+      useremail: loggedInUser.email,
+      nickname: loggedInUser.nickname,
       edited: new Date(),
       created: new Date(),
       content: enteredComment,
@@ -77,6 +80,7 @@ const DetailPost = () => {
       .then((response) => {
         console.log(response.data);
         getComments();
+        setHasMyComment(true);
         setEnteredComment("");
       })
       .catch((error) => {
@@ -92,6 +96,26 @@ const DetailPost = () => {
       setComments(comments);
     } catch (error) {
       console.error("Error fetching comment datas: ", error);
+    }
+  };
+  const commentEditHandler = () => {};
+  const commentDeleteHandler = () => {
+    const userConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
+    // json-server에서는 조건이 있는 삭제가 안되나봄..?
+    // 백엔드와 연결했을때 테스트 가능할듯...
+    if (userConfirmed) {
+      axios
+        .delete(`/meetings/${meetingId}/comments?userId=${loggedInUser.id}`)
+
+        .then((response) => {
+          console.log(response.data);
+          alert("댓글이 삭제되었습니다!");
+          getComments();
+        })
+        .catch((error) => {
+          console.error("Error deleting comment data: ", error);
+          alert("오류가 발생했습니다!");
+        });
     }
   };
   useEffect(() => {
@@ -170,11 +194,11 @@ const DetailPost = () => {
             <div className={classes.info}>
               <div className={classes.title}>
                 <IoIosArrowBack style={{ fontSize: "2rem" }} />
-                <h1>{meetingInfo.title}</h1>
+                <h1>{meetingInfo.title}</h1>{" "}
               </div>
               <div className={classes.writerAndDate}>
                 <div className={classes.writer}>
-                  <h4>{userInfo.email}</h4>
+                  <h4>{userInfo.nickname}</h4>
                 </div>
                 <div className={classes.date}>
                   <h4>{meetingInfo.created_at.split("T")[0]}</h4>
@@ -183,8 +207,8 @@ const DetailPost = () => {
             </div>
             <div className={classes.btnCon}>
               <button className={classes.joinBtn}>
-                참여
                 <FaUsers style={{ fontSize: "1.5rem" }} />
+                참여
               </button>
               {/* <button className={classes.joinBtn}>참여하기</button>
             <button className={classes.joinBtn}>참여하기</button> */}
@@ -252,24 +276,25 @@ const DetailPost = () => {
                       window.location.href = `/meetings/${meetingId}/edit`;
                     }}
                   >
-                    수정
                     <FaEdit style={{ fontSize: "1.5rem" }} />
+                    수정
                   </button>
                   <button
                     className={classes.deleteBtn}
                     onClick={deleteMeetingHandler}
                   >
-                    삭제
+                    {" "}
                     <FaTrash style={{ fontSize: "1.5rem" }} />
+                    삭제
                   </button>
                 </div>
               )}
             </div>
           </div>
 
-          <form onSubmit={commentSubmitHandler} className={classes.comment}>
+          <div className={classes.comment}>
             {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
-            {hasMyComment && <h3>나의 댓글</h3>}
+            {hasMyComment && <h3>내가 쓴 댓글</h3>}
             <textarea
               placeholder="댓글 내용을 입력하세요..."
               value={hasMyComment ? myComment.content : enteredComment}
@@ -279,9 +304,9 @@ const DetailPost = () => {
             {!hasMyComment && (
               <div className={classes.btnCon_2}>
                 <button
-                  className={classes.joinBtn}
-                  type="submit"
-                  // onClick={commentSubmitHandler}
+                  className={classes.joinBtn_1}
+                  // type="submit"
+                  onClick={commentSubmitHandler}
                 >
                   댓글 등록
                   {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
@@ -290,15 +315,21 @@ const DetailPost = () => {
             )}
             {hasMyComment && (
               <div className={classes.btnCon_2}>
-                <button className={classes.joinBtn} type="submit">
+                <button
+                  className={classes.joinBtn}
+                  onClick={commentEditHandler}
+                >
                   댓글 수정
                 </button>
-                <button className={classes.deleteBtn} type="submit">
+                <button
+                  className={classes.deleteBtn}
+                  onClick={commentDeleteHandler}
+                >
                   댓글 삭제
                 </button>
               </div>
             )}
-          </form>
+          </div>
 
           <div className={classes.comments}>
             {!isLoading &&
@@ -314,7 +345,7 @@ const DetailPost = () => {
                         height="50px"
                       />
                       <div className={classes.user}>
-                        <div>{comment.useremail}</div>
+                        <div>{comment.nickname}</div>
                         <div>{comment.edited.split("T")[0]}</div>
                       </div>
                     </div>

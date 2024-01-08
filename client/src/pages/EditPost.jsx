@@ -6,7 +6,7 @@ import { MdSearch } from "react-icons/md";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import KakaoMap from "../components/Map/KakaoMap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../axios";
 const EditPost = () => {
   const { meetingId } = useParams();
@@ -25,6 +25,11 @@ const EditPost = () => {
     contact: "",
     content: "",
   });
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
 
   // useParams로 받은 meetingId로 meeting 조회
   useEffect(() => {
@@ -147,7 +152,9 @@ const EditPost = () => {
               value={meetingInfo.content}
             />
             <div className={classes.btnCon}>
-              <button className={classes.cancelBtn}>취소</button>
+              <button className={classes.cancelBtn} onClick={handleCancel}>
+                취소
+              </button>
               <button type="submit" className={classes.postBtn}>
                 글 수정
               </button>

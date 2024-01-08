@@ -2,15 +2,18 @@
   "members": [
     {
       "id": 1,
-      "email": "user1@example.com"
+      "email": "user1@example.com",
+      "nickname": "당근이"
     },
     {
       "id": 2,
-      "email": "user2@example.com"
+      "email": "user2@example.com",
+      "nickname": "별하나"
     },
     {
       "id": 3,
-      "email": "user3@example.com"
+      "email": "user3@example.com",
+      "nickname": "코코롱"
     }
   ],
   "meetings": [
@@ -43,23 +46,6 @@
       "hits": 0,
       "created_at": "2024-01-07T06:27:42.725Z",
       "last_modified_at": "2024-01-07T06:27:42.725Z",
-      "meetingname": "모임2",
-      "duedate": "2024-01-18",
-      "contact": "010-2222-3333",
-      "party_status": "모집중"
-    },
-    {
-      "id": 261.98469563231487,
-      "memberId": 1,
-      "meeting_date": "2024-01-20",
-      "location": "경남 밀양시 가곡동 821-18 장애인 복지관 앞",
-      "title": "모임2 사람 구합니다.",
-      "content": "장애인 복지관 앞에서 만나요!",
-      "max_capacity": "5",
-      "current_capacity": 5,
-      "hits": 0,
-      "created_at": "2024-01-07T06:30:15.214Z",
-      "last_modified_at": "2024-01-07T06:30:15.214Z",
       "meetingname": "모임2",
       "duedate": "2024-01-18",
       "contact": "010-2222-3333",
@@ -414,31 +400,14 @@
       "content": "리렌더링 테스트2"
     },
     {
-      "id": 688.0097447038036,
+      "id": 704.2611949639141,
       "meetingId": "536.4778332971678",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-08T05:00:04.792Z",
-      "created": "2024-01-08T05:00:04.792Z",
-      "content": "참여하고 싶습니다!"
-    },
-    {
-      "id": 641.3718332586819,
-      "meetingId": "536.4778332971678",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-08T06:37:28.614Z",
-      "created": "2024-01-08T06:37:28.614Z",
-      "content": "댓글 테스트"
-    },
-    {
-      "id": 339.45849262720463,
-      "meetingId": "536.4778332971678",
-      "userId": 225,
+      "userId": 1,
       "useremail": "user1@example.com",
-      "edited": "2024-01-08T06:45:24.866Z",
-      "created": "2024-01-08T06:45:24.866Z",
-      "content": "댓글 테스트"
+      "nickname": "당근이",
+      "edited": "2024-01-08T15:26:44.221Z",
+      "created": "2024-01-08T15:26:44.221Z",
+      "content": "참여할 수 있을까요?"
     }
   ]
 }
