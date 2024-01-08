@@ -1,1 +1,59 @@
-= 플로깅 모집 사이트 _ 쓰담
+= 플로깅 모집 사이트 쓰담
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+v1.0.0
+
+***
+API 문서 개요
+
+//
+ 이 문서를 통해 플로깅 모집 사이트 쓰담의 API 사용법을 알 수 있습니다.
+
+***
+
+== MemberController
+
+***
+
+=== 회원 등록
+
+=== 회원 정보 조회
+
+=== 다수의 회원 정보 조회
+
+=== 회원 정보 삭제
+
+***
+
+== PartyController
+=== 모임 등록
+.curl-request
+include::{snippets}/post-party/http-request.adoc[]
+
+.http-request
+include::{snippets}/post-party/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-party/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-party/http-response.adoc[]
+
+.response-headers
+include::{snippets}/post-party/response-headers.adoc[]
+
+=== 모임 정보 조회
+
+=== 다수의 모임 정보 조회
+
+=== 특정 멤버가 등록한 모든 모임 조회
+
+=== 모임 정보 삭제
+
+***
+
+== CommentController

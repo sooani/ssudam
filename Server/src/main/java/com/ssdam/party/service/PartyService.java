@@ -2,7 +2,10 @@ package com.ssdam.party.service;
 
 import com.ssdam.exception.BusinessLogicException;
 import com.ssdam.exception.ExceptionCode;
+import com.ssdam.member.entity.Member;
 import com.ssdam.party.entity.Party;
+import com.ssdam.party.entity.PartyMember;
+import com.ssdam.party.repository.PartyMemberRepository;
 import com.ssdam.party.repository.PartyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,8 +22,11 @@ import java.util.Optional;
 public class PartyService {
     private final PartyRepository partyRepository;
 
-    public PartyService(PartyRepository partyRepository) {
+    private final PartyMemberRepository partyMemberRepository;
+
+    public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository) {
         this.partyRepository = partyRepository;
+        this.partyMemberRepository = partyMemberRepository;
     }
 
     public Party createParty(Party party) {
@@ -88,5 +94,17 @@ public class PartyService {
                 optionalParty.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.PARTY_NOT_FOUND));
         return findParty;
+    }
+
+    //파티 참가, 권한 추가 필요
+    public void addPartyMember(long partyId, Member member) {
+        Party party = findVerifiedParty(partyId);
+        if (!partyMemberRepository.existsByMemberAndParty(member, party)) {
+            party.setCurrentCapacity(party.getCurrentCapacity() + 1);
+            partyMemberRepository.save(new PartyMember(member, party));
+        } else {
+            party.setCurrentCapacity(party.getCurrentCapacity() - 1);
+            partyMemberRepository.deleteByMemberAndParty(member, party);
+        }
     }
 }
