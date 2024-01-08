@@ -15,8 +15,12 @@ const Header = (props) => {
     navigate('/meetings/new');
   };
   const gotoLogin = () => {
-    navigate('/login');
+    navigate('/Login');
   };
+  const gotoSignUp = () => {
+    navigate('/SignUp');
+  };
+
   return (
     <header>
       <div className={classes.header}>
@@ -30,7 +34,9 @@ const Header = (props) => {
           <button className={classes.login} onClick={gotoLogin}>
             로그인
           </button>
-          <button className={classes.join}>회원가입</button>
+          <button className={classes.join} onClick={gotoSignUp}>
+            회원가입
+          </button>
         </div>
       </div>
     </header>
