@@ -26,6 +26,8 @@ public class Comment extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    private int likeCount;
+
     @ManyToOne
     @JoinColumn(name = "PARTY_ID")
     private Party party;
