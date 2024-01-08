@@ -22,6 +22,7 @@ const DetailPost = () => {
   const [isMyPost, setIsMyPost] = useState(false);
   const [hasMyComment, setHasMyComment] = useState(false);
   const [myComment, setMyComment] = useState("");
+  const [isRecruiting, setIsRecruiting] = useState(false);
   const meetingId = 536.4778332971678;
   // const meetingId = 906.8489342328219;
   // const meetingId = useParams();
@@ -177,6 +178,9 @@ const DetailPost = () => {
         // setIsLoading(true);
         console.log(response);
         setMeetingInfo(response.data);
+        if (response.data.party_status === "모집중s") {
+          setIsRecruiting(true);
+        }
         // setIsLoading(false);
       })
       .catch((error) => {
@@ -203,16 +207,28 @@ const DetailPost = () => {
                 <div className={classes.date}>
                   <h4>{meetingInfo.created_at.split("T")[0]}</h4>
                 </div>
+                {isRecruiting && (
+                  <div className={classes.isRecruiting}>
+                    <h4>모집중</h4>
+                  </div>
+                )}
+                {!isRecruiting && (
+                  <div className={classes.isNotRecruiting}>
+                    <h4>모집완료</h4>
+                  </div>
+                )}
               </div>
             </div>
-            <div className={classes.btnCon}>
-              <button className={classes.joinBtn}>
-                <FaUsers style={{ fontSize: "1.5rem" }} />
-                참여
-              </button>
-              {/* <button className={classes.joinBtn}>참여하기</button>
+            {isRecruiting && (
+              <div className={classes.btnCon}>
+                <button className={classes.joinBtn}>
+                  <FaUsers style={{ fontSize: "1.5rem" }} />
+                  참여
+                </button>
+                {/* <button className={classes.joinBtn}>참여하기</button>
             <button className={classes.joinBtn}>참여하기</button> */}
-            </div>
+              </div>
+            )}
           </div>
           <div className={classes.detailInfo}>
             <div className={classes.detail}>
@@ -292,45 +308,51 @@ const DetailPost = () => {
             </div>
           </div>
 
-          <div className={classes.comment}>
-            {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
-            {hasMyComment && <h3>내가 쓴 댓글</h3>}
-            <textarea
-              placeholder="댓글 내용을 입력하세요..."
-              value={hasMyComment ? myComment.content : enteredComment}
-              onChange={commentChangeHandler}
-              required
-            />
-            {!hasMyComment && (
-              <div className={classes.btnCon_2}>
-                <button
-                  className={classes.joinBtn_1}
-                  // type="submit"
-                  onClick={commentSubmitHandler}
-                >
-                  댓글 등록
-                  {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
-                </button>
-              </div>
-            )}
-            {hasMyComment && (
-              <div className={classes.btnCon_2}>
-                <button
-                  className={classes.joinBtn}
-                  onClick={commentEditHandler}
-                >
-                  댓글 수정
-                </button>
-                <button
-                  className={classes.deleteBtn}
-                  onClick={commentDeleteHandler}
-                >
-                  댓글 삭제
-                </button>
-              </div>
-            )}
-          </div>
-
+          {isRecruiting && (
+            <div className={classes.comment}>
+              {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
+              {hasMyComment && <h3>내가 쓴 댓글</h3>}
+              <textarea
+                placeholder="댓글 내용을 입력하세요..."
+                value={hasMyComment ? myComment.content : enteredComment}
+                onChange={commentChangeHandler}
+                required
+              />
+              {!hasMyComment && (
+                <div className={classes.btnCon_2}>
+                  <button
+                    className={classes.joinBtn_1}
+                    // type="submit"
+                    onClick={commentSubmitHandler}
+                  >
+                    댓글 등록
+                    {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
+                  </button>
+                </div>
+              )}
+              {hasMyComment && (
+                <div className={classes.btnCon_2}>
+                  <button
+                    className={classes.joinBtn}
+                    onClick={commentEditHandler}
+                  >
+                    댓글 수정
+                  </button>
+                  <button
+                    className={classes.deleteBtn}
+                    onClick={commentDeleteHandler}
+                  >
+                    댓글 삭제
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          {!isRecruiting && (
+            <div className={classes.comment}>
+              {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
+            </div>
+          )}
           <div className={classes.comments}>
             {!isLoading &&
               comments &&

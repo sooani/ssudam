@@ -68,6 +68,14 @@
 
 .date {
   /* border: 1px solid skyblue; */
+  border-right: 2px solid gray;
+  padding-right: 1rem;
+}
+.isRecruiting h4 {
+  color: green;
+}
+.isNotRecruiting h4 {
+  color: red;
 }
 .btnCon {
   margin-right: 1.5rem;
@@ -247,15 +255,18 @@
   flex-direction: column;
   /* padding: 0 auto; */
   /* height: 100px; */
+  margin-bottom: 1.5rem;
   @media screen and (max-width: 1070px) {
     margin-top: 1rem;
   }
 }
+
 .comment h2 {
   margin: 0 2rem;
 }
 .comment h3 {
   margin: 0.5rem 2rem;
+  margin-top: 2rem;
   color: green;
 }
 .comment textarea {
