@@ -2,6 +2,7 @@ package com.ssdam.party.controller;
 
 import com.ssdam.dto.MultiResponseDto;
 import com.ssdam.dto.SingleResponseDto;
+import com.ssdam.member.entity.Member;
 import com.ssdam.party.dto.PartyDto;
 import com.ssdam.party.entity.Party;
 import com.ssdam.party.mapper.PartyMapper;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -40,6 +40,14 @@ public class PartyController {
         URI location = UriCreator.createUri(PARTY_DEFAULT_URL, createdParty.getPartyId());
 
         return ResponseEntity.created(location).build();
+    }
+
+    //파티 참가
+    @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.POST)
+    public ResponseEntity addPartyMember(@PathVariable("party-id") @Positive long partyId, Member member,
+                                         @RequestParam @Positive long memberId) {
+        partyService.addPartyMember(partyId, member);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // 파티 조회

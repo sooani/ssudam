@@ -2,7 +2,10 @@ package com.ssdam.party.service;
 
 import com.ssdam.exception.BusinessLogicException;
 import com.ssdam.exception.ExceptionCode;
+import com.ssdam.member.entity.Member;
 import com.ssdam.party.entity.Party;
+import com.ssdam.party.entity.PartyMember;
+import com.ssdam.party.repository.PartyMemberRepository;
 import com.ssdam.party.repository.PartyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,8 +22,11 @@ import java.util.Optional;
 public class PartyService {
     private final PartyRepository partyRepository;
 
-    public PartyService(PartyRepository partyRepository) {
+    private final PartyMemberRepository partyMemberRepository;
+
+    public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository) {
         this.partyRepository = partyRepository;
+        this.partyMemberRepository = partyMemberRepository;
     }
 
     public Party createParty(Party party) {
@@ -40,12 +46,12 @@ public class PartyService {
 
     // 특정 멤버가 작성한 모든 모임 조회
     @Transactional(readOnly = true)
-    public Page<Party> findPartiesByMember (long memberId, int page, int size) {
+    public Page<Party> findPartiesByMember(long memberId, int page, int size) {
         List<Party> parties = partyRepository.findByPartyMembers_Member_MemberId(memberId);
         Page<Party> pageParties =
                 new PageImpl<>(parties,
                         PageRequest.of(page, size,
-                Sort.by("createdAt").descending()), parties.size());
+                                Sort.by("createdAt").descending()), parties.size());
         return pageParties;
     }
 
@@ -55,8 +61,12 @@ public class PartyService {
 
         Optional.ofNullable(party.getMeetingDate())
                 .ifPresent(findParty::setMeetingDate);
-        Optional.ofNullable(party.getLocation())
-                .ifPresent(findParty::setLocation);
+        Optional.ofNullable(party.getLongitude())
+                .ifPresent(findParty::setLongitude);
+        Optional.ofNullable(party.getLatitude())
+                .ifPresent(findParty::setLatitude);
+        Optional.ofNullable(party.getAddress())
+                .ifPresent(findParty::setAddress);
         Optional.ofNullable(party.getTitle())
                 .ifPresent(findParty::setTitle);
         Optional.ofNullable(party.getContent())
@@ -84,5 +94,17 @@ public class PartyService {
                 optionalParty.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.PARTY_NOT_FOUND));
         return findParty;
+    }
+
+    //파티 참가, 권한 추가 필요
+    public void addPartyMember(long partyId, Member member) {
+        Party party = findVerifiedParty(partyId);
+        if (!partyMemberRepository.existsByMemberAndParty(member, party)) {
+            party.setCurrentCapacity(party.getCurrentCapacity() + 1);
+            partyMemberRepository.save(new PartyMember(member, party));
+        } else {
+            party.setCurrentCapacity(party.getCurrentCapacity() - 1);
+            partyMemberRepository.deleteByMemberAndParty(member, party);
+        }
     }
 }

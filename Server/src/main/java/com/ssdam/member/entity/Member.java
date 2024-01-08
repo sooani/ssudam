@@ -1,6 +1,7 @@
 package com.ssdam.member.entity;
 
 import com.ssdam.audit.Auditable;
+import com.ssdam.party.entity.PartyMember;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class Member extends Auditable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>(); // 사용자의 권한을 등록하기 위한 권한 테이블
+
+    @OneToMany(mappedBy = "member")
+    private List<PartyMember> partyMembers = new ArrayList<>();
 
     public Member(String email) {
         this.email = email;

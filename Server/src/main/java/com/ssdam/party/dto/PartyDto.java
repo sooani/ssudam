@@ -4,9 +4,7 @@ import com.ssdam.party.entity.Party;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -28,7 +26,7 @@ public class PartyDto {
 
         private String latitude; //위도
 
-        private String address;
+        private String address; //도로명주소
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -41,6 +39,7 @@ public class PartyDto {
     }
 
     @Getter
+    @AllArgsConstructor
     public static class Patch {
 
         private long partyId;
@@ -55,7 +54,7 @@ public class PartyDto {
 
         private String latitude; //위도
 
-        private String address;
+        private String address; //도로명주소
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -87,10 +86,8 @@ public class PartyDto {
         private int maxCapacity;
         private int currentCapacity;
         private Party.PartyStatus partyStatus;
-
-        public String getPartyStatus(){
-            return partyStatus.getDescription();
-        }
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
 
     }
 }
