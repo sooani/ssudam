@@ -40,7 +40,7 @@ const EditPost = () => {
       .catch((error) => {
         console.error("Error getting meeting data: ", error);
       });
-  }, [meetingId, meetingInfo.lat]);
+  }, [meetingId]);
 
   // map 에서 추출한 주소 뒤에 상세 주소 붙이는 function
   const addressHandler = (e) => {

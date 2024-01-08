@@ -20,8 +20,32 @@ const DetailPost = () => {
   const [enteredComment, setEnteredComment] = useState("");
   const [userInfo, setUserInfo] = useState(null);
   const [isMyPost, setIsMyPost] = useState(false);
+  const [hasMyComment, setHasMyComment] = useState(false);
+  const [myComment, setMyComment] = useState("");
   const meetingId = 536.4778332971678;
+  // const meetingId = 906.8489342328219;
   // const meetingId = useParams();
+  const loggedInUser = localStorage.getItem("email");
+  // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
+  useEffect(() => {
+    if (loggedInUser && userInfo) {
+      axios
+        .get(`/meetings/${meetingId}/comments?useremail=${userInfo.email}`)
+        .then((response) => {
+          if (Array.isArray(response.data) && response.data.length === 0) {
+            console.log("응답 데이터가 빈 배열입니다.");
+          } else {
+            console.log("응답 데이터가 빈 배열이 아닙니다.");
+            setHasMyComment(true);
+            console.log(response.data[0]);
+            setMyComment(response.data[0]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching comments:", error);
+        });
+    }
+  }, [userInfo]);
   useEffect(() => {
     if (meetingInfo && meetingInfo.memberId) {
       axios
@@ -35,13 +59,14 @@ const DetailPost = () => {
       console.log(userInfo);
     }
   }, [meetingInfo]);
+
   const commentSubmitHandler = (e) => {
     e.preventDefault();
     let commentDTO = {
       id: Math.random() * 1000,
       meetingId: meetingId,
       userId: 225,
-      useremail: "hye25@example.com",
+      useremail: loggedInUser,
       edited: new Date(),
       created: new Date(),
       content: enteredComment,
@@ -85,6 +110,22 @@ const DetailPost = () => {
       }
     }
   }, [userInfo]);
+  const deleteMeetingHandler = () => {
+    const userConfirmed = window.confirm("해당 글을 삭제하시겠습니까?");
+
+    if (userConfirmed) {
+      axios
+        .delete(`/meetings/${meetingId}`)
+        .then((response) => {
+          alert("해당 글이 삭제되었습니다!");
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.error("Error deleting meeting data: ", error);
+          alert("오류가 발생하였습니다!");
+        });
+    }
+  };
   // useEffect(() => {
   //   axios
   //     // .get(`/comments`, {
@@ -214,7 +255,10 @@ const DetailPost = () => {
                     수정
                     <FaEdit style={{ fontSize: "1.5rem" }} />
                   </button>
-                  <button className={classes.deleteBtn}>
+                  <button
+                    className={classes.deleteBtn}
+                    onClick={deleteMeetingHandler}
+                  >
                     삭제
                     <FaTrash style={{ fontSize: "1.5rem" }} />
                   </button>
@@ -225,22 +269,35 @@ const DetailPost = () => {
 
           <form onSubmit={commentSubmitHandler} className={classes.comment}>
             {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
+            {hasMyComment && <h3>나의 댓글</h3>}
             <textarea
               placeholder="댓글 내용을 입력하세요..."
-              value={enteredComment}
+              value={hasMyComment ? myComment.content : enteredComment}
               onChange={commentChangeHandler}
               required
             />
-            <div className={classes.btnCon_2}>
-              <button
-                className={classes.joinBtn}
-                type="submit"
-                // onClick={commentSubmitHandler}
-              >
-                댓글 등록
-                {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
-              </button>
-            </div>
+            {!hasMyComment && (
+              <div className={classes.btnCon_2}>
+                <button
+                  className={classes.joinBtn}
+                  type="submit"
+                  // onClick={commentSubmitHandler}
+                >
+                  댓글 등록
+                  {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
+                </button>
+              </div>
+            )}
+            {hasMyComment && (
+              <div className={classes.btnCon_2}>
+                <button className={classes.joinBtn} type="submit">
+                  댓글 수정
+                </button>
+                <button className={classes.deleteBtn} type="submit">
+                  댓글 삭제
+                </button>
+              </div>
+            )}
           </form>
 
           <div className={classes.comments}>

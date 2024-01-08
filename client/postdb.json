@@ -217,25 +217,6 @@
       "party_status": "모집중"
     },
     {
-      "id": 906.8489342328219,
-      "memberId": 1,
-      "meeting_date": "2024-01-18",
-      "location": "서울 중구 만리동1가 61-2",
-      "lat": 37.556536723684246,
-      "lng": 126.96728676484831,
-      "title": "zzz",
-      "content": "zzz",
-      "max_capacity": "3",
-      "current_capacity": 5,
-      "hits": 0,
-      "created_at": "2024-01-07T07:27:15.631Z",
-      "last_modified_at": "2024-01-07T07:27:15.631Z",
-      "meetingname": "zzz",
-      "duedate": "2024-01-10",
-      "contact": "010-2222-3333",
-      "party_status": "모집중"
-    },
-    {
       "id": 460.2232965296056,
       "memberId": 1,
       "meeting_date": "2024-01-27",
@@ -352,171 +333,6 @@
   ],
   "comments": [
     {
-      "id": 1,
-      "meetingId": 1,
-      "userId": 1,
-      "useremail": "user1@example.com",
-      "edited": "2024-01-01T00:00:00",
-      "created": "2024-01-03T00:00:00",
-      "content": "참여하고 싶어요!"
-    },
-    {
-      "id": 2,
-      "meetingId": 1,
-      "userId": 2,
-      "useremail": "user2@example.com",
-      "edited": "2024-01-01T00:00:00",
-      "created": "2024-01-03T00:00:00",
-      "content": "너무 좋은 프로젝트입니다!"
-    },
-    {
-      "id": 3,
-      "meetingId": 1,
-      "userId": 3,
-      "useremail": "user3@example.com",
-      "edited": "2024-01-02T00:00:00",
-      "created": "2024-01-04T00:00:00",
-      "content": "참여하고 싶어요!"
-    },
-    {
-      "id": 4,
-      "meetingId": 1,
-      "userId": 4,
-      "useremail": "user4@example.com",
-      "edited": "2024-01-02T00:00:00",
-      "created": "2024-01-04T00:00:00",
-      "content": "음... 좋은 아이디어네요!"
-    },
-    {
-      "id": 5,
-      "meetingId": 3,
-      "userId": 5,
-      "edited": "2024-01-03T00:00:00",
-      "created": "2024-01-05T00:00:00",
-      "content": "참여하고 싶어요!"
-    },
-    {
-      "id": 6,
-      "meetingId": 3,
-      "userId": 6,
-      "edited": "2024-01-03T00:00:00",
-      "created": "2024-01-05T00:00:00",
-      "content": "좋은 아이디어입니다!"
-    },
-    {
-      "id": 7,
-      "meetingId": 4,
-      "userId": 7,
-      "edited": "2024-01-04T00:00:00",
-      "created": "2024-01-06T00:00:00",
-      "content": "참여하고 싶어요!"
-    },
-    {
-      "id": 8,
-      "meetingId": 4,
-      "userId": 8,
-      "edited": "2024-01-04T00:00:00",
-      "created": "2024-01-06T00:00:00",
-      "content": "매우 흥미로운 프로젝트입니다!"
-    },
-    {
-      "id": 9,
-      "meetingId": 5,
-      "userId": 9,
-      "edited": "2024-01-05T00:00:00",
-      "created": "2024-01-07T00:00:00",
-      "content": "참여하고 싶어요!"
-    },
-    {
-      "id": 10,
-      "meetingId": 5,
-      "userId": 10,
-      "edited": "2024-01-05T00:00:00",
-      "created": "2024-01-07T00:00:00",
-      "content": "좋은 아이디어입니다!"
-    },
-    {
-      "id": 68.53086848536738,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:12:55.345Z",
-      "created": "2024-01-06T17:12:55.345Z",
-      "content": ""
-    },
-    {
-      "id": 565.6512542395404,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:14:33.485Z",
-      "created": "2024-01-06T17:14:33.485Z",
-      "content": ""
-    },
-    {
-      "id": 936.3664905255163,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:16:11.036Z",
-      "created": "2024-01-06T17:16:11.036Z",
-      "content": "과연..?"
-    },
-    {
-      "id": 445.36790691664896,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:19:13.761Z",
-      "created": "2024-01-06T17:19:13.761Z",
-      "content": "테스트"
-    },
-    {
-      "id": 529.0580361859047,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:19:36.977Z",
-      "created": "2024-01-06T17:19:36.977Z",
-      "content": "테스트1"
-    },
-    {
-      "id": 218.5924169276643,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:22:42.937Z",
-      "created": "2024-01-06T17:22:42.937Z",
-      "content": "바로바로 댓글이 등록되는지..?"
-    },
-    {
-      "id": 509.1282716038077,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:24:32.524Z",
-      "created": "2024-01-06T17:24:32.524Z",
-      "content": "댓글이 등록되는순간 입력창이 비워져야 함!"
-    },
-    {
-      "id": 73.64495446683917,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:28:22.642Z",
-      "created": "2024-01-06T17:28:22.642Z",
-      "content": "참여하고 싶습니다!"
-    },
-    {
-      "id": 571.586930285118,
-      "meetingId": "1",
-      "userId": 225,
-      "useremail": "hye25@example.com",
-      "edited": "2024-01-06T17:38:00.868Z",
-      "created": "2024-01-06T17:38:00.868Z",
-      "content": "마감일을 늘려주실수 있을까요..?"
-    },
-    {
       "id": 226.74856947652344,
       "meetingId": "171.00479468556705",
       "userId": 225,
@@ -605,6 +421,24 @@
       "edited": "2024-01-08T05:00:04.792Z",
       "created": "2024-01-08T05:00:04.792Z",
       "content": "참여하고 싶습니다!"
+    },
+    {
+      "id": 641.3718332586819,
+      "meetingId": "536.4778332971678",
+      "userId": 225,
+      "useremail": "hye25@example.com",
+      "edited": "2024-01-08T06:37:28.614Z",
+      "created": "2024-01-08T06:37:28.614Z",
+      "content": "댓글 테스트"
+    },
+    {
+      "id": 339.45849262720463,
+      "meetingId": "536.4778332971678",
+      "userId": 225,
+      "useremail": "user1@example.com",
+      "edited": "2024-01-08T06:45:24.866Z",
+      "created": "2024-01-08T06:45:24.866Z",
+      "content": "댓글 테스트"
     }
   ]
 }

@@ -11,9 +11,13 @@ const SearchMap = (props) => {
   const [markers, setMarkers] = useState([]);
   const [level, setLevel] = useState(4);
   const [map, setMap] = useState();
+  // const [position, setPosition] = useState({
+  //   lat: props && props.lat ? props.lat : 33.450701,
+  //   lng: props && props.lng ? props.lng : 126.570667,
+  // });
   const [position, setPosition] = useState({
-    lat: props && props.lat ? props.lat : 33.450701,
-    lng: props && props.lng ? props.lng : 126.570667,
+    lat: 33.450701,
+    lng: 126.570667,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   // const position = props.position;
@@ -106,14 +110,14 @@ const SearchMap = (props) => {
   return (
     <div className={classes.container}>
       <Map
-        // center={{
-        //   lat: 37.566826,
-        //   lng: 126.9786567,
-        // }}
         center={{
-          lat: position.lat,
-          lng: position.lng,
+          lat: 37.566826,
+          lng: 126.9786567,
         }}
+        // center={{
+        //   lat: position.lat,
+        //   lng: position.lng,
+        // }}
         style={{
           width: "90%",
           height: "37vh",

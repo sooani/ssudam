@@ -244,6 +244,10 @@
 .comment h2 {
   margin: 0 2rem;
 }
+.comment h3 {
+  margin: 0.5rem 2rem;
+  color: green;
+}
 .comment textarea {
   /* width: 90%; */
   height: 100px;
@@ -274,7 +278,7 @@
   border-radius: 5px;
   font-size: large;
   font-weight: 700;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -288,8 +292,14 @@
   }
 }
 .btnCon_2 .joinBtn {
+  margin-right: 1rem;
   background-color: green;
   color: white;
+}
+.btnCon_2 .deleteBtn {
+  margin-right: 2rem;
+  background-color: gray;
+  color: black;
 }
 .comments {
   /* height: 100px; */
