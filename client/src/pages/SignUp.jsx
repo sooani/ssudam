@@ -19,9 +19,13 @@ const SignUp = () => {
     const [nicknameError, setNicknameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [emailMessage, setEmailMessage] = useState('')
+    const [nicknameMessage, setNicknameMessage] = useState('');
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
+
+        
 
         if (email === '') {
             setEmailError(true);

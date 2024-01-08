@@ -10,6 +10,7 @@ import MyPage from "./pages/MyPage";
 import EditProfile from "./pages/EditProfile";
 import EditPost from "./pages/EditPost";
 import DetailPost from "./pages/DetailPost";
+import SignUpModal from "./pages/SignUpModal";
 
 function App() {
   return (

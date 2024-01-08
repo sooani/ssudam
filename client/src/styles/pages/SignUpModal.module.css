@@ -1,0 +1,100 @@
+.page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(240, 240, 240, 1);
+}
+
+.modal {
+    background-color: rgba(181, 181, 181, 1);
+}
+
+.exit {
+    font-size: 30px;
+    text-align: right;
+}
+
+.signupForm h1{
+    font-size: 30px; 
+    color: rgba(0, 130, 36, 1);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.signupForm h3{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.inputArea {
+    width: 400px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.inputArea input {
+    width: 100%;
+    padding: 20px 10px 10px;
+    border: 1.5px solid black;
+    border-radius: 10px;
+}
+
+.inputArea label {
+    position: absolute; 
+    left: 10px;
+    top: 12px;
+    font-size: 20px;
+    transition: all .5s ease;
+}
+
+.inputArea label.warning {
+    animation: warning .3s ease 3; /* animation-iteration-count를 animation 속성에 직접 설정 */
+}
+
+@keyframes warning {
+    0%, 50%, 100% {
+        transform: translateX(0);     
+        color: red;
+    }
+    25%, 75% {
+        transform: translateX(8px);    
+        color: red;
+    }
+}
+
+.inputArea input:focus + label,
+.inputArea input:valid + label {
+    top: 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgba(0, 130, 36, 1);
+}
+
+.btnArea {
+    margin-top: 30px;
+}
+
+.btnArea button {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(0, 130, 36, 1);
+    color: white;
+    font-size: 20px;
+    font-weight: 550;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.caption {
+    margin-top: 20px;
+    text-align: center;
+}
