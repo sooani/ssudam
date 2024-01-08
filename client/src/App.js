@@ -3,11 +3,13 @@ import Meeting from "./components/Meeting/Meeting";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MakePost from "./pages/MakePost";
-import MainPage from './pages/MainPage';
+import MainPage from "./pages/MainPage";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import MyPage from "./pages/MyPage";
 import EditProfile from "./pages/EditProfile";
+import EditPost from "./pages/EditPost";
+import DetailPost from "./pages/DetailPost";
 
 function App() {
   return (
@@ -17,9 +19,12 @@ function App() {
         <Route path="/meetings/new" element={<MakePost />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path='/login' element={<LogIn />} />
-        <Route path='/mypage' element={<MyPage />} />
-        <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
+
+        <Route path="/meetings/edit" element={<EditPost />} />
+        <Route path="/meetings/:meetingId" element={<DetailPost />} />
       </Routes>
     </BrowserRouter>
   );

@@ -18,10 +18,11 @@ const DetailPost = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [meetingInfo, setMeetingInfo] = useState(null);
   const [enteredComment, setEnteredComment] = useState("");
-  const meetingId = 460.2232965296056;
+  const meetingId = 475.48359292726093;
   // const meetingId = useParams();
 
-  const commentSubmitHandler = () => {
+  const commentSubmitHandler = (e) => {
+    e.preventDefault();
     let commentDTO = {
       id: Math.random() * 1000,
       meetingId: meetingId,
