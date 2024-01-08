@@ -30,4 +30,18 @@ public class Like {
         this.member = member;
         this.comment = comment;
     }
+
+    public void addMember(Member member) {
+        this.member = member;
+        if (!this.member.getLikes().contains(this)) {
+            this.member.getLikes().add(this);
+        }
+    }
+
+    public void addComment(Comment comment) {
+        this.comment = comment;
+        if (!this.comment.getLikes().contains(this)) {
+            this.comment.getLikes().add(this);
+        }
+    }
 }

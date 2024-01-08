@@ -1,6 +1,7 @@
-package com.ssdam.party.entity;
+package com.ssdam.bookmark.entity;
 
 import com.ssdam.member.entity.Member;
+import com.ssdam.party.entity.Party;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,10 +12,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PartyMember {
+public class Bookmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long partyMemberId;
+    private long bookmarkId;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
@@ -24,22 +25,17 @@ public class PartyMember {
     @JoinColumn(name = "PARTY_ID")
     private Party party;
 
-    public PartyMember(Member member, Party party) {
-        this.member = member;
-        this.party = party;
-    }
-
     public void addMember(Member member) {
         this.member = member;
-        if (!this.member.getPartyMembers().contains(this)) {
-            this.member.getPartyMembers().add(this);
+        if (!this.member.getBookmarks().contains(this)) {
+            this.member.getBookmarks().add(this);
         }
     }
 
     public void addParty(Party party) {
         this.party = party;
-        if (!this.party.getPartyMembers().contains(this)) {
-            this.party.getPartyMembers().add(this);
+        if (!this.party.getBookmarks().contains(this)) {
+            this.party.getBookmarks().add(this);
         }
     }
 }
