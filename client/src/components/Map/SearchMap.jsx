@@ -11,12 +11,16 @@ const SearchMap = (props) => {
   const [markers, setMarkers] = useState([]);
   const [level, setLevel] = useState(4);
   const [map, setMap] = useState();
-  const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
+  const [position, setPosition] = useState({
+    lat: props && props.lat ? props.lat : 33.450701,
+    lng: props && props.lng ? props.lng : 126.570667,
+  });
   const [selectedMarker, setSelectedMarker] = useState(null);
   // const position = props.position;
   // const setPosition = props.setPosition;
   // console.log(position);
   // props로 받은 검색 키워드
+  console.log(position);
   const keyword = props.searchkeyword;
   const setLatLng = props.setLatLng;
   const getAddress = (lat, lng) => {
@@ -102,9 +106,13 @@ const SearchMap = (props) => {
   return (
     <div className={classes.container}>
       <Map
+        // center={{
+        //   lat: 37.566826,
+        //   lng: 126.9786567,
+        // }}
         center={{
-          lat: 37.566826,
-          lng: 126.9786567,
+          lat: position.lat,
+          lng: position.lng,
         }}
         style={{
           width: "90%",

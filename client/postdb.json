@@ -1,155 +1,22 @@
 {
-  "meetings": [
+  "members": [
     {
       "id": 1,
-      "owneruserId": 1,
-      "owneremail": "user1@example.com",
-      "posteddate": "2024-01-01T00:00:00",
-      "postedtitle": "모임1 인원 구해요.",
-      "meetingname": "모임1",
-      "numofpeople": 15,
-      "place": "수성못",
-      "presentnum": 5,
-      "meetingdate": "2024-01-04T00:00:00",
-      "duedate": "2024-01-03T00:00:00",
-      "contact": "010-1111-2222",
-      "content": "1시에 모여서 같이 달리면서 쓰레기 주워요 겁나 달려요, 주워요, 돌아가요"
+      "email": "user1@example.com"
     },
     {
       "id": 2,
-      "owneruserId": 2,
-      "owneremail": "user2@example.com",
-      "posteddate": "2024-01-02T00:00:00",
-      "postedtitle": "모임2 인원 구해요.",
-      "meetingname": "모임2",
-      "numofpeople": 20,
-      "place": "공원",
-      "presentnum": 8,
-      "meetingdate": "2024-01-05T00:00:00",
-      "duedate": "2024-01-04T00:00:00",
-      "contact": "010-2222-3333",
-      "content": "산책하면서 쓰레기를 주우고 싶어요!"
+      "email": "user2@example.com"
     },
     {
       "id": 3,
-      "owneruserId": 3,
-      "owneremail": "user3@example.com",
-      "posteddate": "2024-01-03T00:00:00",
-      "postedtitle": "모임3 인원 구해요.",
-      "meetingname": "모임3",
-      "numofpeople": 25,
-      "place": "산",
-      "presentnum": 10,
-      "meetingdate": "2024-01-06T00:00:00",
-      "duedate": "2024-01-05T00:00:00",
-      "contact": "010-3333-4444",
-      "content": "자연 속에서 함께 활동해요!"
-    },
-    {
-      "party-id": 875.1134553453181,
-      "member-id": 1,
-      "current-capacity": 5,
-      "hits": 5,
-      "created_at": "2024-01-07T05:58:53.834Z",
-      "last_modified_at": "2024-01-07T05:58:53.834Z",
-      "party-status": "모집중",
-      "id": 4
-    },
-    {
-      "id": 409.8024799205353,
-      "member-id": 1,
-      "current-capacity": 5,
-      "hits": 5,
-      "created_at": "2024-01-07T06:02:46.988Z",
-      "last_modified_at": "2024-01-07T06:02:46.988Z",
-      "party-status": "모집중"
-    },
-    {
-      "id": 179.2786889906133,
-      "member-id": 1,
-      "location": {
-        "0": "서",
-        "1": "울",
-        "2": " ",
-        "3": "중",
-        "4": "구",
-        "5": " ",
-        "6": "무",
-        "7": "교",
-        "8": "동",
-        "9": " ",
-        "10": "2",
-        "11": "4",
-        "12": "-",
-        "13": "2",
-        "14": " ",
-        "15": "큰",
-        "16": " ",
-        "17": "나",
-        "18": "무",
-        "19": " ",
-        "20": "앞"
-      },
-      "current-capacity": 5,
-      "hits": 5,
-      "created_at": "2024-01-07T06:03:23.376Z",
-      "last_modified_at": "2024-01-07T06:03:23.376Z",
-      "party-status": "모집중"
-    },
-    {
-      "id": 471.6029454561905,
-      "member-id": 1,
-      "current-capacity": 5,
-      "hits": 5,
-      "created_at": "2024-01-07T06:04:16.460Z",
-      "last_modified_at": "2024-01-07T06:04:16.460Z",
-      "party-status": "모집중"
-    },
-    {
-      "id": 939.6959123260926,
-      "member-id": 1,
-      "current-capacity": 5,
-      "hits": 5,
-      "created_at": "2024-01-07T06:04:53.890Z",
-      "last_modified_at": "2024-01-07T06:04:53.890Z",
-      "party-status": "모집중"
-    },
-    {
-      "id": 719.5947393812037,
-      "member-id": 1,
-      "meeting_date": "2024-01-12",
-      "title": "모임1 인원 구합니다 급해요",
-      "content": "요즘 쓰레기가 많아요 날씨도 좋은데 나오셔서 같이 쓰레기 주우면서 조깅해요 많은 참여 바랍니다!",
-      "max-capacity": "8",
-      "current-capacity": 5,
-      "hits": 5,
-      "created_at": "2024-01-07T06:07:13.538Z",
-      "last_modified_at": "2024-01-07T06:07:13.538Z",
-      "meetingname": "모임1",
-      "duedate": "2024-01-10",
-      "contact": "010-1111-2222",
-      "party-status": "모집중"
-    },
-    {
-      "id": 752.993289608144,
-      "member-id": 1,
-      "meeting_date": "2024-01-12",
-      "location": "서울 중구 무교동 44-1 큰 나무 앞",
-      "title": "모임1 인원 구합니다 급해요",
-      "content": "요즘 쓰레기가 많아요 날씨도 좋은데 나오셔서 같이 쓰레기 주우면서 조깅해요 많은 참여 바랍니다!",
-      "max-capacity": "8",
-      "current-capacity": 5,
-      "hits": 0,
-      "created_at": "2024-01-07T06:12:01.498Z",
-      "last_modified_at": "2024-01-07T06:12:01.498Z",
-      "meetingname": "모임1",
-      "duedate": "2024-01-10",
-      "contact": "010-1111-2222",
-      "party-status": "모집중"
-    },
+      "email": "user3@example.com"
+    }
+  ],
+  "meetings": [
     {
       "id": 905.6961085461239,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-12",
       "location": "서울 중구 무교동 44-1 큰 나무 앞",
       "title": "모임1 인원 구합니다 급해요",
@@ -166,7 +33,7 @@
     },
     {
       "id": 601.1503603596968,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-20",
       "location": "경남 밀양시 가곡동 821-18 장애인 복지관 앞",
       "title": "모임2 사람 구합니다.",
@@ -183,7 +50,7 @@
     },
     {
       "id": 261.98469563231487,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-20",
       "location": "경남 밀양시 가곡동 821-18 장애인 복지관 앞",
       "title": "모임2 사람 구합니다.",
@@ -200,7 +67,7 @@
     },
     {
       "id": 415.4809343909325,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-20",
       "location": "경남 밀양시 내이동 1565-16",
       "title": "모임2 사람 구합니다.",
@@ -217,7 +84,7 @@
     },
     {
       "id": 493.05454988892893,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-31",
       "location": "서울 중구 무교동 32-2 은행 앞",
       "lat": 37.56736485703972,
@@ -236,7 +103,7 @@
     },
     {
       "id": 558.7707289663855,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-31",
       "location": "서울 중구 무교동 32-2 은행 앞",
       "lat": 37.56736485703972,
@@ -255,7 +122,7 @@
     },
     {
       "id": 171.00479468556705,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-27",
       "location": "경남 밀양시 부북면 퇴로리 318 고가 근처",
       "lat": 35.55106541703506,
@@ -274,7 +141,7 @@
     },
     {
       "id": 502.3910166226668,
-      "member_id": 1,
+      "memberId": 1,
       "location": "경남 밀양시 부북면 퇴로리 318 고가 근처",
       "lat": 35.55106541703506,
       "lng": 128.6996451972891,
@@ -286,7 +153,7 @@
     },
     {
       "id": 569.833782841208,
-      "member_id": 1,
+      "memberId": 1,
       "location": "경남 밀양시 부북면 퇴로리 318 고가 근처",
       "lat": 35.55106541703506,
       "lng": 128.6996451972891,
@@ -298,7 +165,7 @@
     },
     {
       "id": 965.3438210314087,
-      "member_id": 1,
+      "memberId": 1,
       "lat": 35.55106541703506,
       "lng": 128.6996451972891,
       "current_capacity": 5,
@@ -309,7 +176,7 @@
     },
     {
       "id": 563.7106851481876,
-      "member_id": 1,
+      "memberId": 1,
       "lat": 35.55106541703506,
       "lng": 128.6996451972891,
       "current_capacity": 5,
@@ -320,7 +187,7 @@
     },
     {
       "id": 829.2156100084811,
-      "member_id": 1,
+      "memberId": 1,
       "lat": 35.55106541703506,
       "lng": 128.6996451972891,
       "title": "qa",
@@ -332,7 +199,7 @@
     },
     {
       "id": 553.603497596667,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-27",
       "location": "서울 중구 중림동 331-12 고등학교 정문앞",
       "lat": 37.55704125704777,
@@ -351,7 +218,7 @@
     },
     {
       "id": 906.8489342328219,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-18",
       "location": "서울 중구 만리동1가 61-2",
       "lat": 37.556536723684246,
@@ -370,7 +237,7 @@
     },
     {
       "id": 460.2232965296056,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-27",
       "location": "경남 창원시 성산구 용호동 71 중학교 정문 앞",
       "lat": 35.23128816774141,
@@ -389,7 +256,7 @@
     },
     {
       "id": 828.5970235072591,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-17",
       "location": "대구 달서구 두류동 산 302-11 이월드 앞",
       "lat": "35.85322716591636",
@@ -408,7 +275,7 @@
     },
     {
       "id": 744.0366672463383,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-17",
       "location": "대구 달성군 다사읍 죽곡리 806",
       "lat": "35.8411637749681",
@@ -427,7 +294,7 @@
     },
     {
       "id": 475.48359292726093,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-27",
       "location": "대구 중구 태평로1가 1-186 시장 정문",
       "lat": 35.87519827533903,
@@ -446,7 +313,7 @@
     },
     {
       "id": 536.4778332971678,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-31",
       "location": "서울 중구 봉래동2가 122-11 정문 앞",
       "lat": "37.5546788388674",
@@ -465,7 +332,7 @@
     },
     {
       "id": 160.57757681817387,
-      "member_id": 1,
+      "memberId": 1,
       "meeting_date": "2024-01-31",
       "location": "서울 중구 봉래동2가 122-11",
       "lat": "37.5546788388674",
@@ -729,6 +596,15 @@
       "edited": "2024-01-07T14:28:45.068Z",
       "created": "2024-01-07T14:28:45.068Z",
       "content": "리렌더링 테스트2"
+    },
+    {
+      "id": 688.0097447038036,
+      "meetingId": "536.4778332971678",
+      "userId": 225,
+      "useremail": "hye25@example.com",
+      "edited": "2024-01-08T05:00:04.792Z",
+      "created": "2024-01-08T05:00:04.792Z",
+      "content": "참여하고 싶습니다!"
     }
   ]
 }

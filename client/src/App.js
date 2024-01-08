@@ -23,7 +23,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit-profile" element={<EditProfile />} />
 
-        <Route path="/meetings/edit" element={<EditPost />} />
+        <Route path="/meetings/:meetingId/edit" element={<EditPost />} />
         <Route path="/meetings/:meetingId" element={<DetailPost />} />
       </Routes>
     </BrowserRouter>
