@@ -156,7 +156,7 @@ const MakePost = () => {
       contact: "",
       content: "",
     });
-    setAddress({ address_name: "" });
+    // setAddress({ address_name: "" });
     setLatLng({
       lat: 33.450701,
       lng: 126.570667,
@@ -169,12 +169,15 @@ const MakePost = () => {
       .post(`/meetings`, postDTO)
       .then((response) => {
         console.log(response.data);
+        console.log("submit 완료");
+        alert("모집글이 등록되었습니다!");
+        window.location.href = "/";
       })
       .catch((error) => {
         console.error("Error posting meeting data: ", error);
+        // error.message 판단하여 alert 메세지 던져주기
+        alert("오류가 발생했습니다!");
       });
-
-    console.log("submit 완료");
   };
   return (
     <div className={classes.wrapper}>
