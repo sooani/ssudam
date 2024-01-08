@@ -9,6 +9,7 @@ public enum ExceptionCode {
     COMMENT_NOT_FOUND(404, "Comment not found"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
+    TODOLIST_NOT_FOUND(404, "TodoList not found"),
     SERVER_UNAVAILABLE(503,"Service Unavailable");
 
     @Getter
