@@ -1,6 +1,5 @@
 package com.ssdam.todolist.entity;
 
-<<<<<<< HEAD
 import com.ssdam.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,5 @@ public class TodoList extends Auditable {
     public void setTodo_order(Integer todo_order) {
         this.todo_order = todo_order;
     }
-=======
-public class TodoList {
->>>>>>> 5a560cf4e7b5d229abae0589897d556dd0fa493b
+
 }
