@@ -15,7 +15,7 @@ const Header = (props) => {
     navigate('/meetings/new');
   };
   const gotoLogin = () => {
-    navigate('/Login');
+    navigate('/login');
   };
   return (
     <header>

@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import classes from "../styles/pages/SignUp.module.css"
 
 // 해결할 문제
-// 오류메시지 안나옴(비밀번호 확인과 회원가입 버튼 사이, 각 칸들 사이에 나와야함)
-// 빈 칸이 있을 때 회원가입 버튼 누르면 애니메이션 나와야하는데 안나옴
-// 각 칸에 유효하지 않은 정보 입력 시 오류메시지 나오는 코드 작성(이메일, 닉네임, 비밀번호 형식 / 비밀번호 확인이 비밀번호와 일치해야함)
+// 오류메시지 css 수정 
+// 빈 칸이 있을 때 회원가입 버튼 누르면 나오는 css 수정
 // axios(확정x)로 회원가입 정보 보내는 코드 작성
-// 더 추가될 수도 있음 유효성 검사 백엔드에서 다 하면 되는건지 확인
+// 유효성 검사 뭘 할지 결정(예시. 이메일, 닉네임 중복) (후순위 개발)
+// 더 추가될 수도 있음
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -68,53 +68,49 @@ const SignUp = () => {
                 <h1>쓰담</h1>
                 <h3>회원가입</h3>
                 <form onSubmit={handleSignUp}>
-                    <div className={`${classes.inputArea} ${emailError ? classes.warning : ''}`}>
+                    <div className={classes.inputArea}>
                         <input
                             type='text'
                             name='email'
                             id='email'
                             autoComplete='off'
-                            required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <label htmlFor='email'>이메일</label>
+                        <label htmlFor='email' className={emailError ? classes.warning : ''}>이메일</label>
                     </div>
-                    <div className={`${classes.inputArea} ${nicknameError ? classes.warning : ''}`}>
+                    <div className={classes.inputArea}>
                         <input
                             type='text'
                             name='nickname'
                             id='nickname'
                             autoComplete='off'
-                            required
                             value={nickname}
                             onChange={(e) => setNickname(e.target.value)}
                         />
-                        <label htmlFor='nickname'>닉네임</label>
+                        <label htmlFor='nickname' className={nicknameError ? classes.warning : ''}>닉네임</label>
                     </div>
-                    <div className={`${classes.inputArea} ${passwordError ? classes.warning : ''}`}>
+                    <div className={classes.inputArea}>
                         <input
                             type='password'
                             name='password'
                             id='pw'
                             autoComplete='off'
-                            required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <label htmlFor='pw'>비밀번호</label>
+                        <label htmlFor='pw' className={passwordError ? classes.warning : ''}>비밀번호</label>
                     </div>
-                    <div className={`${classes.inputArea} ${confirmPasswordError ? classes.warning : ''}`}>
+                    <div className={classes.inputArea}>
                         <input
                             type='password'
                             name='confirmPassword'
                             id='confirmPw'
                             autoComplete='off'
-                            required
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
-                        <label htmlFor='confirmPw'>비밀번호 확인</label>
+                        <label htmlFor='confirmPw' className={confirmPasswordError ? classes.warning : ''}>비밀번호 확인</label>
                     </div>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <div className={classes.btnArea}>
