@@ -47,3 +47,4 @@ mail:
     name:
       member:
         join: email-registration-member
+owmApiKey: ${OWM_API_KEY}
