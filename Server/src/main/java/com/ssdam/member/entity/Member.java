@@ -28,7 +28,7 @@ public class Member extends Auditable {
     private String nickname;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @ElementCollection(fetch = FetchType.EAGER)
