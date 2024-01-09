@@ -7,10 +7,11 @@ import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import KakaoMap from "../components/Map/KakaoMap";
 import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 const MakePost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({ address_name: "" });
-
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // 위도와 경도
   // const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
   const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
@@ -46,6 +47,12 @@ const MakePost = () => {
     //   place: ,
     // }));
   };
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   // const titleHandler = (e) => {
   //   setPostedInfo((prevInfo) => ({
   //     ...prevInfo,
@@ -123,7 +130,7 @@ const MakePost = () => {
       // memberId 하나로 가져오기!
       // owneruserId: 1,
       // owneremail: "user1@example.com",
-      memberId: 1, //
+      memberId: loggedInUser.id, //
       meeting_date: meetingdate,
       location: address.address_name,
       lat: latlng.lat,
@@ -132,7 +139,7 @@ const MakePost = () => {
 
       content: content,
       max_capacity: numofpeople,
-      current_capacity: 5, //
+      current_capacity: 0, //
       // 참여 기능 완성되면 수정 필요 // 글 등록할 때는 기본적으로 0 아님??
       hits: 0, //
 

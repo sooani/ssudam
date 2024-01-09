@@ -281,19 +281,57 @@
       "id": 504.38347989895107,
       "memberId": 1,
       "meeting_date": "2024-01-27",
-      "location": "충북 청주시 상당구 남문로2가 48-9",
-      "lat": "36.6331303808366",
-      "lng": "127.489761574741",
-      "title": "청주 성안길 플로깅 모집",
+      "location": "충북 청주시 상당구 남문로2가 49-1",
+      "lat": "36.6328794130233",
+      "lng": "127.489433505972",
+      "title": "청주 성안길 플로깅 모집 수정",
       "content": "용두사지 철당간에서 만나요 많참부",
-      "max_capacity": "8",
+      "max_capacity": "10",
       "current_capacity": 7,
       "hits": 0,
-      "created_at": "2024-01-09T03:44:05.745Z",
-      "last_modified_at": "2024-01-09T03:44:05.745Z",
+      "created_at": "2024-01-09T06:59:34.222Z",
+      "last_modified_at": "2024-01-09T06:59:34.222Z",
       "meetingname": "성안길 팀",
       "duedate": "2024-01-20",
       "contact": "010-1111-2222",
+      "party_status": "모집중"
+    },
+    {
+      "id": 748.1353133710471,
+      "memberId": 2,
+      "meeting_date": "2024-02-03",
+      "location": "대구 중구 공평동 72-2",
+      "lat": 35.86854082779384,
+      "lng": 128.59956951347488,
+      "title": "별하나~ 수정ㅂ",
+      "content": "별하나~수정",
+      "max_capacity": "6",
+      "current_capacity": 0,
+      "hits": 0,
+      "created_at": "2024-01-09T06:54:26.674Z",
+      "last_modified_at": "2024-01-09T06:54:26.674Z",
+      "meetingname": "별하나~ 수정",
+      "duedate": "2024-01-27",
+      "contact": "010-1111-2223",
+      "party_status": "모집중"
+    },
+    {
+      "id": 86.9990337900981,
+      "memberId": 2,
+      "meeting_date": "2024-02-03",
+      "location": "대구 중구 공평동 72-2",
+      "lat": 35.86854082779384,
+      "lng": 128.59956951347488,
+      "title": "별하나~ 수정ㅂ",
+      "content": "별하나~수정",
+      "max_capacity": "6",
+      "current_capacity": 0,
+      "hits": 0,
+      "created_at": "2024-01-09T06:54:26.674Z",
+      "last_modified_at": "2024-01-09T06:54:26.674Z",
+      "meetingname": "별하나~ 수정",
+      "duedate": "2024-01-27",
+      "contact": "010-1111-2223",
       "party_status": "모집중"
     }
   ],
@@ -394,9 +432,9 @@
       "userId": 1,
       "useremail": "user1@example.com",
       "nickname": "당근이",
-      "edited": "2024-01-09T06:03:17.241Z",
+      "edited": "2024-01-09T06:59:52.512Z",
       "created": "2024-01-09T03:44:42.670Z",
-      "content": "어디에서 만나나요? ㅋㅋㅋㅋ 수정 일자 테스트2",
+      "content": "어디에서 만나나요? ㅋㅋㅋㅋ 수정 일자 테스트22",
       "id": 705.2611949639141
     },
     {
@@ -408,6 +446,26 @@
       "created": "2024-01-09T06:20:35.878Z",
       "content": "댓글 테스트",
       "id": 706.2611949639141
+    },
+    {
+      "meetingId": "748.1353133710471",
+      "userId": 2,
+      "useremail": "user2@example.com",
+      "nickname": "별하나",
+      "edited": "2024-01-09T06:26:54.217Z",
+      "created": "2024-01-09T06:26:54.217Z",
+      "content": "댓글 테스트",
+      "id": 707.2611949639141
+    },
+    {
+      "meetingId": "86.9990337900981",
+      "userId": 2,
+      "useremail": "user2@example.com",
+      "nickname": "별하나",
+      "edited": "2024-01-09T06:51:37.872Z",
+      "created": "2024-01-09T06:51:37.872Z",
+      "content": "댓글 테스트",
+      "id": 708.2611949639141
     }
   ],
   "participations": [
@@ -591,6 +649,11 @@
       "member_id": 2,
       "party_id": 504.38347989895107,
       "id": 36
+    },
+    {
+      "member_id": 2,
+      "party_id": 86.9990337900981,
+      "id": 37
     }
   ]
 }

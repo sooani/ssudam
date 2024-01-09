@@ -32,6 +32,8 @@ const DetailPost = () => {
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
+
+  console.log(userInfo);
   useEffect(() => {
     if (loggedInUser && userInfo) {
       axios
