@@ -43,6 +43,7 @@ const EditPost = () => {
         console.log(response);
         setMeetingInfo(response.data);
         console.log(meetingInfo);
+        setLatLng({ lat: response.data.lat, lng: response.data.lng });
         setAddress({ address_name: response.data.location });
       })
       .catch((error) => {
@@ -170,6 +171,7 @@ const EditPost = () => {
       // hits 필요
       party_status: "모집중", //
     };
+    console.log(updatedDTO);
     setMeetingInfo({
       postedtitle: "",
       meetingname: "",
@@ -180,13 +182,10 @@ const EditPost = () => {
       content: "",
     });
     // setAddress({ address_name: "" });
-    setLatLng({
-      lat: 33.450701,
-      lng: 126.570667,
-    });
+    setLatLng({ lat: meetingInfo.lat, lng: meetingInfo.lng });
 
     setSearchkeyword("");
-    setLatLng({ lat: 33.450701, lng: 126.570667 });
+    // setLatLng({ lat: 33.450701, lng: 126.570667 });
     // console.log(postedInfo);
     axios
       .put(`/meetings/${meetingInfo.id}`, updatedDTO)

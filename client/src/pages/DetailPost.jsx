@@ -25,7 +25,7 @@ const DetailPost = () => {
   const [isRecruiting, setIsRecruiting] = useState(false);
   const [isParticipating, setIsParticipating] = useState(false);
   // const meetingId = 553.603497596667;
-  const meetingId = 504.38347989895107;
+  const meetingId = 973.6414635505148;
   // const meetingId = 906.8489342328219;
   // const meetingId = useParams();
   // const loggedInUser = localStorage.getItem("email");

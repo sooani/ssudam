@@ -281,16 +281,16 @@
       "id": 504.38347989895107,
       "memberId": 1,
       "meeting_date": "2024-01-27",
-      "location": "충북 청주시 상당구 남문로2가 49-1",
-      "lat": 33.450701,
-      "lng": 126.570667,
+      "location": "충북 청주시 상당구 남문로2가 48-9",
+      "lat": "36.6331303808366",
+      "lng": "127.489761574741",
       "title": "청주 성안길 플로깅 모집 수정",
       "content": "용두사지 철당간에서 만나요 많참부",
       "max_capacity": "10",
       "current_capacity": 7,
       "hits": 0,
-      "created_at": "2024-01-09T07:01:24.202Z",
-      "last_modified_at": "2024-01-09T07:01:24.202Z",
+      "created_at": "2024-01-09T07:08:31.320Z",
+      "last_modified_at": "2024-01-09T07:08:31.320Z",
       "meetingname": "성안길 팀",
       "duedate": "2024-01-20",
       "contact": "010-1111-2222",
@@ -332,6 +332,25 @@
       "meetingname": "별하나~ 수정",
       "duedate": "2024-01-27",
       "contact": "010-1111-2223",
+      "party_status": "모집중"
+    },
+    {
+      "id": 973.6414635505148,
+      "memberId": 1,
+      "meeting_date": "2024-01-27",
+      "location": "충북 청주시 상당구 남문로2가 48-9",
+      "lat": "36.6331303808366",
+      "lng": "127.489761574741",
+      "title": "용두사지 철당간",
+      "content": "용두사지 철당간 앞에서",
+      "max_capacity": "5",
+      "current_capacity": 1,
+      "hits": 0,
+      "created_at": "2024-01-09T07:25:31.860Z",
+      "last_modified_at": "2024-01-09T07:25:31.860Z",
+      "meetingname": "용철",
+      "duedate": "2024-01-20",
+      "contact": "010-1111-2222",
       "party_status": "모집중"
     }
   ],
@@ -654,6 +673,11 @@
       "member_id": 2,
       "party_id": 86.9990337900981,
       "id": 37
+    },
+    {
+      "member_id": 1,
+      "party_id": 973.6414635505148,
+      "id": 38
     }
   ]
 }
