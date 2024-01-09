@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import classes from "../styles/pages/LogIn.module.css"
 
 // 해결할 문제
-// 오류메시지 안나옴(비밀번호와 로그인 버튼 사이)
-// 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 애니메이션 안나옴
-// 이메일 또는 비밀번호 틀렸을 때 오류메시지 나오는 코드 작성
+// 오류메시지 css 수정
+// 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
 // axios(확정x)로 로그인 정보 보내는 코드 작성
+// 유효성검사 뭘 할지 결정 (후순위 개발)
 // 더 추가될 수 있음
 
 const LogIn = () => {
@@ -35,7 +35,6 @@ const LogIn = () => {
             setPasswordError(false);
         }
 
-        // 왜 오류 메시지가 안나오지? handleLogin이 호출이 되지 않는 것 같다.
         if (email === '' || password === '') {
             setError('이메일 또는 비밀번호를 입력하세요.');
             console.log('이메일 또는 비밀번호를 입력하세요.')
@@ -43,8 +42,9 @@ const LogIn = () => {
         }
 
         // 이메일이나 비밀번호가 틀릴 때 (이메일/비밀번호가 일치하지 않습니다.)
-
-        //로그인 처리 로직 axios?
+        setError('이메일/비밀번호가 일치하지 않습니다.');
+        
+        //로그인 처리 로직 axios
     }
 
     return (

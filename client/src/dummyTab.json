@@ -1,0 +1,14 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "category": "PARTY_OPENED",
+      "title": "모집중"
+    },
+    {
+      "id": 2,
+      "category": "PARTY_CLOSED",
+      "title": "모집완료"
+    }
+  ]
+}

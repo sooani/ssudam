@@ -4,7 +4,13 @@ import classes from '../styles/pages/MainPage.module.css';
 import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
 // import ListSlider from '../components/MainPage/ListSlider';
-import ListCard from '../components/MainPage/ListCard';
+// import ListCard from '../components/MainPage/ListCard';
+import ListSlider from '../components/MainPage/ListSlider';
+import CategoryTab from '../components/MainPage/CategoryTab';
+import CategoryBox from '../components/MainPage/CategoryBox';
+import Pagination from '../components/MainPage/Pagination';
+// import dummy from '../dummyTab.json';
+import { useState } from 'react';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -15,6 +21,11 @@ import ListCard from '../components/MainPage/ListCard';
 */
 
 const MainPage = () => {
+  const [categories, setCategories] = useState(null);
+  // const [selectedId, setSelectedId] = useState(null);
+  // useEffect(() => {
+  //   fetchData('categories').then((data) => setCategories(data));
+  // }, []);
   return (
     <main>
       {/* 헤더 */}
@@ -37,12 +48,16 @@ const MainPage = () => {
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>
-          <ListCard />
+          <ListSlider />
         </div>
       </section>
 
       {/* 메인 구역 */}
-      <section className={classes.mainContainer}>ddd</section>
+      <section className={classes.mainContainer}>
+        <CategoryTab categories={categories} />
+        <CategoryBox />
+        <Pagination />
+      </section>
 
       {/* 푸터 */}
       <Footer />

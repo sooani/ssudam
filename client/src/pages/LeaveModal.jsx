@@ -4,36 +4,36 @@
 // LeaveModal.jsx
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import '../styles/pages/LeaveModal.css'; 
+import classes from '../styles/pages/LeaveModal.module.css';
 
 function LeaveModal() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <div>
-      <button className="LeaveButton" onClick={() => setModalIsOpen(true)}>
+      <button className={classes.LeaveButton} onClick={() => setModalIsOpen(true)}>
         회원탈퇴
       </button>
       <Modal
         isOpen={modalIsOpen}
-        className="custom-modal" 
-        overlayClassName="custom-overlay" 
+        className={classes['custom-modal']} 
+        overlayClassName={classes['custom-overlay']}
       >
-        <button className="X" onClick={() => setModalIsOpen(false)}>
+        <button className={classes.X} onClick={() => setModalIsOpen(false)}>
           X
         </button>
-        <p className="leave-message">정말 탈퇴 하시겠습니까?</p>
-        <div className="buttons">
+        <p className={classes['leave-message']}>정말 탈퇴 하시겠습니까?</p>
+        <div className={classes.buttons}>
           <button
-            className="Yes"
+            className={classes.Yes}
             onClick={() => {
-              // 탈퇴후 메인으로 돌아감
+              // 탈퇴 후 메인으로 돌아감
               setModalIsOpen(false);
             }}
           >
             예
           </button>
-          <button className="No" onClick={() => setModalIsOpen(false)}>
+          <button className={classes.No} onClick={() => setModalIsOpen(false)}>
             아니오
           </button>
         </div>

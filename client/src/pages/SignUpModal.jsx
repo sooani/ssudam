@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
-import classes from "../styles/pages/SignUp.module.css"
+import classes from "../styles/pages/SignUpModal.module.css"
 
-// 해결할 문제
-// 오류메시지 css 수정 
-// 빈 칸이 있을 때 회원가입 버튼 누르면 나오는 css 수정
-// axios(확정x)로 회원가입 정보 보내는 코드 작성
-// 유효성 검사 뭘 할지 결정(예시. 이메일, 닉네임 중복) (후순위 개발)
-// 더 추가될 수도 있음
-
-const SignUp = () => {
+const SignUpModal = ({isOpen, onClose}) => {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
@@ -19,13 +13,10 @@ const SignUp = () => {
     const [nicknameError, setNicknameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [emailMessage, setEmailMessage] = useState('')
-    const [nicknameMessage, setNicknameMessage] = useState('');
 
-    const handleSignUp = async (e) => {
+
+    const handleSignUp = (e) => {
         e.preventDefault();
-
-        
 
         if (email === '') {
             setEmailError(true);
@@ -62,15 +53,18 @@ const SignUp = () => {
 
         // axios 등을 사용해 회원가입 로직 수행
 
-        // 회원가입 성공 시 메인페이지로 이동
+        // 회원가입 성공 시 모달 닫고 메인페이지로 이동
+        onClose();
 
     }
 
     return (
+        <Modal className={classes.modal} isOpen={isOpen} onRequestClose={onClose}>
         <div className={classes.page}>
+            <button className={classes.exit} onClick={onClose}>X</button>
             <section className={classes.signupForm}>
-                <h1>쓰담</h1>
-                <h3>회원가입</h3>
+                <h1>이 게시글에 관심이 있으신가요?</h1>
+                <h3>지금 쓰담에 가입하고 어떤 게시글인지 확인해보세요</h3>
                 <form onSubmit={handleSignUp}>
                     <div className={classes.inputArea}>
                         <input
@@ -126,7 +120,8 @@ const SignUp = () => {
                 </div>
             </section>
         </div>
-    )
+    </Modal>
+    );
 }
 
-export default SignUp;
+export default SignUpModal;

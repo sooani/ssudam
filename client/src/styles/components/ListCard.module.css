@@ -4,8 +4,12 @@
 }
 .ListCard {
   margin: 10px 0 0 10px;
-  height: 150px;
-  width: 200px;
+  height: 14vh;
+  width: 15vw;
   border: 1px solid black;
-  text-align: left;
+  text-align: center;
+  background-color: #b5ee63;
+}
+.ListCard:hover {
+  cursor: pointer;
 }

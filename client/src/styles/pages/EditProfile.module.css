@@ -15,7 +15,7 @@
 }
 
 .MainContainer{
-    border: 2px solid green;
+    /* border: 2px solid green; */
     width: 70vw;
     height: 100vh;
     display: flex;
@@ -35,7 +35,7 @@
   flex-direction: row;
   align-items: center;
   /* margin-bottom: 10px;  */
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 .Nickname,
@@ -48,21 +48,29 @@
 .UserCurrentPassword,
 .UserNewPassword,
 .UserConfirmPassword {
-  margin-right: 10px; 
+    margin-right: 1rem; 
 }
 
 .Nickname,
 .Email,
-.CurrentPassword,
 .NewPassword,
 .ConfirmPassword{
     font-weight: 700;
     width : 15vw;
-    border:2px solid red;
+    /* border:2px solid red; */
     padding: 0.5vh;
     height: 5vh;
     display: flex;
     align-items: center;
+}
+
+.CurrentPassword{
+    font-weight: 700;
+    width : 15vw;
+    /* border:2px solid red; */
+    padding: 0.5vh;
+    height: 13vh;
+    display: flex;
 }
 
 .UserNickname,
@@ -75,30 +83,36 @@
     border-radius: 5px;
     border:1px solid black;
     background-color: white;
-
     display: flex;
     align-items: center;
     padding: 0.5vh;
 }
 
-.EditButtons{
+.ConfirmCurrentPasswordContainer {
     display: flex;
-    justify-content: space-between;
-    border: 1px solid orange;
-    height: 70px;
-    width : 100%;
-    margin: 50px auto 0px;
+    flex-direction: column; 
 }
 
-.WithdrawalButton{
+.ConfirmCurrentPasswordButton{
     border: 1px solid black;
     color: black;
     background-color: white(0, 130, 36, 1);
-    width : 160px;
-    height : 50px;
+    width : 130px;
+    height : 40px;
     font-size: 18px;
     cursor: pointer; 
     border-radius: 5px;
+    margin : 0.5rem 0.5rem 0.5rem 0;
+}
+
+
+.EditButtons{
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid orange; */
+    height: 70px;
+    width : 100%;
+    margin: 50px auto 0px;
 }
 
 .EditChangeButton{
