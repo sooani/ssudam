@@ -83,7 +83,7 @@ public class CommentControllerTest {
         //when
         ResultActions actions =
                 mockMvc.perform(
-                        post("/v1/comments")
+                        post("/v1/parties/{party-id}/comments",party.getPartyId())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
@@ -143,7 +143,7 @@ public class CommentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.commentId").value(commentId))
                 .andExpect(jsonPath("$.data.partyId").value(responseDto.getPartyId()))
-                .andExpect(jsonPath("$.data.memberId").value(responseDto.getMemberId()))
+                .andExpect(jsonPath("$.data.memberId").value(responseDto.getNickname()))
                 .andExpect(jsonPath("$.data.comment").value(responseDto.getComment()))
                 .andExpect(jsonPath("$.data.createdAt").value(responseDto.getCreatedAt().toString()))
                 .andExpect(jsonPath("$.data.modifiedAt").value(responseDto.getModifiedAt().toString()))
@@ -200,7 +200,7 @@ public class CommentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.commentId").value(commentId))
                 .andExpect(jsonPath("$.data.partyId").value(responseDto.getPartyId()))
-                .andExpect(jsonPath("$.data.memberId").value(responseDto.getMemberId()))
+                .andExpect(jsonPath("$.data.nickname").value(responseDto.getNickname()))
                 .andExpect(jsonPath("$.data.comment").value(responseDto.getComment()))
                 .andExpect(jsonPath("$.data.createdAt").value(responseDto.getCreatedAt().toString()))
                 .andExpect(jsonPath("$.data.modifiedAt").value(responseDto.getModifiedAt().toString()))

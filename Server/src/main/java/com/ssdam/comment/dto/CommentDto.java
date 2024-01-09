@@ -1,6 +1,5 @@
 package com.ssdam.comment.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 
 public class CommentDto {
     @Getter
-    @AllArgsConstructor
     public static class Post {
         @Positive
         private long partyId;
@@ -19,12 +17,16 @@ public class CommentDto {
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String comment;
 
+        public Post(long memberId, String comment) {
+            this.memberId = memberId;
+            this.comment = comment;
+        }
     }
 
     @Getter
     @Builder
     public static class Patch {
-        @Positive
+
         private long commentId;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String comment;
@@ -39,7 +41,8 @@ public class CommentDto {
     public static class Response {
         private long commentId;
         private long partyId;
-        private long memberId;
+        private String nickname;
+        private int likeCount;
         private String comment;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

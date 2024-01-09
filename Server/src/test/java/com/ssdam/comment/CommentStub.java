@@ -20,7 +20,7 @@ public class CommentStub {
     static {
         stubRequestBody = new HashMap<>();
         stubRequestBody.put(HttpMethod.POST,
-                new CommentDto.Post(1L, 1L, "Sample Comment"));
+                new CommentDto.Post(1L,1L, "Sample Comment"));
         stubRequestBody.put(HttpMethod.PATCH,
                 CommentDto.Patch.builder()
                         .commentId(1L).comment("Comment").build());
@@ -33,7 +33,7 @@ public class CommentStub {
         return CommentDto.Response.builder()
                 .commentId(1L)
                 .partyId(1L)
-                .memberId(1L)
+                .nickname("쓰담")
                 .comment("Comment")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -46,7 +46,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(1L)
                 .partyId(1L)
-                .memberId(1L)
+                .nickname("쓰담1")
                 .comment("Comment1")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -55,7 +55,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(2L)
                 .partyId(1L)
-                .memberId(2L)
+                .nickname("쓰담2")
                 .comment("Comment2")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -64,7 +64,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(3L)
                 .partyId(2L)
-                .memberId(1L)
+                .nickname("쓰담3")
                 .comment("Comment3")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -76,7 +76,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(1L)
                 .partyId(1L)
-                .memberId(1L)
+                .nickname("쓰담1")
                 .comment("Comment1")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -85,7 +85,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(2L)
                 .partyId(1L)
-                .memberId(2L)
+                .nickname("쓰담2")
                 .comment("Comment2")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -97,7 +97,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(1L)
                 .partyId(1L)
-                .memberId(1L)
+                .nickname("쓰담1")
                 .comment("Comment1")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -106,7 +106,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(3L)
                 .partyId(2L)
-                .memberId(1L)
+                .nickname("쓰담1")
                 .comment("Comment3")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
