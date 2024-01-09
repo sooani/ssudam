@@ -34,6 +34,7 @@ public class CommentStub {
                 .commentId(1L)
                 .partyId(1L)
                 .nickname("쓰담")
+                .likeCount(0)
                 .comment("Comment")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -47,6 +48,7 @@ public class CommentStub {
                 .commentId(1L)
                 .partyId(1L)
                 .nickname("쓰담1")
+                .likeCount(1)
                 .comment("Comment1")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -56,6 +58,7 @@ public class CommentStub {
                 .commentId(2L)
                 .partyId(1L)
                 .nickname("쓰담2")
+                .likeCount(2)
                 .comment("Comment2")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -65,6 +68,7 @@ public class CommentStub {
                 .commentId(3L)
                 .partyId(2L)
                 .nickname("쓰담3")
+                .likeCount(3)
                 .comment("Comment3")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -77,6 +81,7 @@ public class CommentStub {
                 .commentId(1L)
                 .partyId(1L)
                 .nickname("쓰담1")
+                .likeCount(1)
                 .comment("Comment1")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -86,11 +91,35 @@ public class CommentStub {
                 .commentId(2L)
                 .partyId(1L)
                 .nickname("쓰담2")
+                .likeCount(2)
                 .comment("Comment2")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .build();
         return List.of(responseDto1,responseDto2);
+    }
+    public static List<CommentDto.Response> getMultiResponseBodyByPartyByLikeCount() {
+        CommentDto.Response responseDto1
+                = CommentDto.Response.builder()
+                .commentId(1L)
+                .partyId(1L)
+                .nickname("쓰담1")
+                .likeCount(1)
+                .comment("Comment1")
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        CommentDto.Response responseDto2
+                = CommentDto.Response.builder()
+                .commentId(2L)
+                .partyId(1L)
+                .nickname("쓰담2")
+                .likeCount(2)
+                .comment("Comment2")
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        return List.of(responseDto2,responseDto1);
     }
     public static List<CommentDto.Response> getMultiResponseBodyByMember() {
         CommentDto.Response responseDto1
@@ -98,6 +127,7 @@ public class CommentStub {
                 .commentId(1L)
                 .partyId(1L)
                 .nickname("쓰담1")
+                .likeCount(1)
                 .comment("Comment1")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -107,6 +137,7 @@ public class CommentStub {
                 .commentId(3L)
                 .partyId(2L)
                 .nickname("쓰담1")
+                .likeCount(3)
                 .comment("Comment3")
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
