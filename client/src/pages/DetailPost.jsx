@@ -33,7 +33,7 @@ const DetailPost = () => {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   useEffect(() => {
-    if (loggedInUser && userInfo && loggedInUser.email === userInfo.email) {
+    if (loggedInUser && userInfo) {
       axios
         .get(`/meetings/${meetingId}/comments?userId=${loggedInUser.id}`)
         .then((response) => {
@@ -127,11 +127,12 @@ const DetailPost = () => {
     // 백엔드와 연결했을때 테스트 가능할듯...
     if (userConfirmed) {
       axios
-        .delete(`/meetings/${meetingId}/comments?userId=${loggedInUser.id}`)
+        .delete(`/comments/${myComment.id}`)
 
         .then((response) => {
           console.log(response.data);
           alert("댓글이 삭제되었습니다!");
+          setHasMyComment(false);
           getComments();
         })
         .catch((error) => {
