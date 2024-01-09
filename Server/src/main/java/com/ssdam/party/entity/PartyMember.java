@@ -27,5 +27,21 @@ public class PartyMember {
     public PartyMember(Member member, Party party) {
         this.member = member;
         this.party = party;
+
+        member.getPartyMembers().add(this);
+    }
+
+    public void addMember(Member member) {
+        this.member = member;
+        if (!this.member.getPartyMembers().contains(this)) {
+            this.member.getPartyMembers().add(this);
+        }
+    }
+
+    public void addParty(Party party) {
+        this.party = party;
+        if (!this.party.getPartyMembers().contains(this)) {
+            this.party.getPartyMembers().add(this);
+        }
     }
 }

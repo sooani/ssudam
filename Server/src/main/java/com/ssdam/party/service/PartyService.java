@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +34,11 @@ public class PartyService {
         return partyRepository.save(party);
     }
 
-    @Transactional(readOnly = true)
     public Party findParty(long partyId) {
-        return findVerifiedParty(partyId);
+        Party findParty = findVerifiedParty(partyId);
+        // 파티 조회시 조회수 업데이트
+        updatePartyHits(findParty);
+        return findParty;
     }
 
     @Transactional(readOnly = true)
@@ -96,15 +99,62 @@ public class PartyService {
         return findParty;
     }
 
-    //파티 참가, 권한 추가 필요
-    public void addPartyMember(long partyId, Member member) {
-        Party party = findVerifiedParty(partyId);
-        if (!partyMemberRepository.existsByMemberAndParty(member, party)) {
-            party.setCurrentCapacity(party.getCurrentCapacity() + 1);
-            partyMemberRepository.save(new PartyMember(member, party));
-        } else {
-            party.setCurrentCapacity(party.getCurrentCapacity() - 1);
-            partyMemberRepository.deleteByMemberAndParty(member, party);
+    //조회수 업데이트
+    private void updatePartyHits(Party party) {
+        party.setHits(party.getHits() + 1);
+        partyRepository.save(party);
+    }
+
+
+    // 모임일자가 현재 날짜와 같거나 지났을 때 모집상태를 변경
+    @Transactional
+    public void updatePartyStatus() {
+        List<Party> parties = partyRepository
+                .findByMeetingDateBeforeAndPartyStatus(LocalDateTime.now(),
+                        Party.PartyStatus.PARTY_OPENED);
+        for (Party party : parties) {
+            if (party.getMeetingDate().isBefore(LocalDateTime.now()) || party.getMeetingDate().isEqual(LocalDateTime.now())) {
+                party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
+                partyRepository.save(party);
+            }
         }
+    }
+
+    // 파티 참가, 권한 추가 필요
+    public void addPartyMember(long partyId, Member member) {
+        Party party = findParty(partyId);
+
+        if (canJoinParty(member, party)) {
+            increasePartyCapacity(party);
+            addMemberToParty(member, party);
+        } else {
+            decreasePartyCapacity(party);
+            removeMemberFromParty(member, party);
+        }
+    }
+
+    // 파티에 가입한 멤버인지 검사
+    private boolean canJoinParty(Member member, Party party) {
+        return !partyMemberRepository.existsByMemberAndParty(member, party);
+    }
+
+    // 파티 참가인원 증가
+    private void increasePartyCapacity(Party party) {
+        party.setCurrentCapacity(party.getCurrentCapacity() + 1);
+    }
+
+    // 파티에 멤버 생성
+    private void addMemberToParty(Member member, Party party) {
+        partyMemberRepository.save(new PartyMember(member, party));
+    }
+
+    // 파티 참가인원 감소
+    private void decreasePartyCapacity(Party party) {
+        party.setCurrentCapacity(party.getCurrentCapacity() - 1);
+    }
+
+    // 파티에서 멤버 삭제
+    private void removeMemberFromParty(Member member, Party party) {
+        partyMemberRepository.deleteByMemberAndParty(member, party);
     }
 }

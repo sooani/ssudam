@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PartyMemberRepository extends JpaRepository<PartyMember, Long> {
     boolean existsByMemberAndParty(Member member, Party party);
+
     void deleteByMemberAndParty(Member member, Party party);
 }

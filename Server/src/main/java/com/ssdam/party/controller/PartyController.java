@@ -3,6 +3,7 @@ package com.ssdam.party.controller;
 import com.ssdam.dto.MultiResponseDto;
 import com.ssdam.dto.SingleResponseDto;
 import com.ssdam.member.entity.Member;
+import com.ssdam.member.service.MemberService;
 import com.ssdam.party.dto.PartyDto;
 import com.ssdam.party.entity.Party;
 import com.ssdam.party.mapper.PartyMapper;
@@ -24,17 +25,22 @@ import java.util.List;
 public class PartyController {
     private final static String PARTY_DEFAULT_URL = "/v1/parties";
     private final PartyService partyService;
+    private final MemberService memberService;
     private final PartyMapper mapper;
 
-    public PartyController(PartyService partyService, PartyMapper mapper) {
+    public PartyController(PartyService partyService, MemberService memberService, PartyMapper mapper) {
         this.partyService = partyService;
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
     // 파티 생성
     @RequestMapping(value = "/v1/parties", method = RequestMethod.POST)
     public ResponseEntity postParty(@RequestBody @Valid PartyDto.Post requestBody) {
+        Member member = memberService.findMember(requestBody.getMemberId());
         Party party = mapper.partyPostDtoToParty(requestBody);
+        party.setMember(member);
+
         Party createdParty = partyService.createParty(party);
 
         URI location = UriCreator.createUri(PARTY_DEFAULT_URL, createdParty.getPartyId());
@@ -43,17 +49,18 @@ public class PartyController {
     }
 
     //파티 참가
-    @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.POST)
-    public ResponseEntity addPartyMember(@PathVariable("party-id") @Positive long partyId, Member member,
-                                         @RequestParam @Positive long memberId) {
+    @RequestMapping(value = "/v1/parties/{party-id}")
+    public ResponseEntity<Void> addPartyMember(@PathVariable("party-id")
+                                               @Positive long partyId,
+                                               @RequestBody Member member) {
+
         partyService.addPartyMember(partyId, member);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // 파티 조회
     @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.GET)
-    public ResponseEntity getParty(
-            @PathVariable("party-id") @Positive long partyId) {
+    public ResponseEntity getParty(@PathVariable("party-id") @Positive long partyId) {
         Party party = partyService.findParty(partyId);
 
         return new ResponseEntity(

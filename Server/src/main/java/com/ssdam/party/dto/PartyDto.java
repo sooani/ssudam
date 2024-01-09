@@ -36,6 +36,9 @@ public class PartyDto {
 
         private int currentCapacity; //현재인원
 
+        @Positive
+        private long memberId;
+
     }
 
     @Getter
@@ -88,6 +91,7 @@ public class PartyDto {
         private Party.PartyStatus partyStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private long memberId;
 
     }
 }

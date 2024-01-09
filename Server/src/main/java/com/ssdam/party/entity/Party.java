@@ -1,6 +1,7 @@
 package com.ssdam.party.entity;
 
 import com.ssdam.audit.Auditable;
+import com.ssdam.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,6 +49,10 @@ public class Party extends Auditable {
     @Column(nullable = false)
     private int hits = 0; //조회수
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     @OneToMany(mappedBy = "party")
     private List<PartyMember> partyMembers = new ArrayList<>();
 
@@ -63,6 +68,20 @@ public class Party extends Auditable {
 
         PartyStatus(String description) {
             this.description = description;
+        }
+    }
+
+    public void addMember(Member member) {
+        this.member = member;
+        if (!this.member.getPartyLeaders().contains(this)) {
+            this.member.getPartyLeaders().add(this);
+        }
+    }
+
+    public void addPartyMember(PartyMember partyMember) {
+        this.partyMembers.add(partyMember);
+        if (partyMember.getParty() != this) {
+            partyMember.addParty(this);
         }
     }
 }
