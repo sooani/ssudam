@@ -11,6 +11,7 @@ import { FaTrash } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import footerLogo from "../images/footerLogo.png";
 import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 const DetailPost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({});
@@ -32,7 +33,7 @@ const DetailPost = () => {
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
-
+  const navigate = useNavigate();
   console.log(userInfo);
   useEffect(() => {
     if (loggedInUser && userInfo) {
@@ -231,7 +232,7 @@ const DetailPost = () => {
         // setIsLoading(false);
       });
     console.log(meetingInfo);
-  }, []);
+  }, [isParticipating]);
   const joinHandler = () => {
     const userConfirmed = window.confirm("해당 모임에 참여하시겠습니까?");
 
@@ -308,7 +309,12 @@ const DetailPost = () => {
           <div className={classes.infoAndBtn}>
             <div className={classes.info}>
               <div className={classes.title}>
-                <IoIosArrowBack style={{ fontSize: "2rem" }} />
+                <IoIosArrowBack
+                  style={{ fontSize: "2rem" }}
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                />
                 <h1>{meetingInfo.title}</h1>{" "}
               </div>
               <div className={classes.writerAndDate}>
@@ -397,7 +403,12 @@ const DetailPost = () => {
                   </h4>
                   <h4>
                     연락 방법
-                    <div className={classes.emp}>{meetingInfo.contact}</div>
+                    {isParticipating && (
+                      <div className={classes.emp}>{meetingInfo.contact}</div>
+                    )}
+                    {!isParticipating && (
+                      <div className={classes.alert}>참여 후 확인 가능</div>
+                    )}
                   </h4>
                 </div>
               </div>

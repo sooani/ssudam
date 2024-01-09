@@ -195,6 +195,11 @@
   font-size: large;
   font-weight: 700;
 }
+.info1_2 .alert {
+  color: red;
+  font-size: large;
+  font-weight: 700;
+}
 .info .info2 {
   /* border: 1px solid blue; */
   height: 100px;

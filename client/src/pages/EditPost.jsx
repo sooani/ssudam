@@ -169,7 +169,7 @@ const EditPost = () => {
       contact: contact,
 
       // hits 필요
-      party_status: "모집중", //
+      party_status: meetingInfo.party_status, //
     };
     console.log(updatedDTO);
     setMeetingInfo({
@@ -200,6 +200,18 @@ const EditPost = () => {
         // error.message 판단하여 alert 메세지 던져주기
         alert("오류가 발생했습니다!");
       });
+  };
+  const toggleOnHandler = () => {
+    setMeetingInfo((prevInfo) => ({
+      ...prevInfo,
+      party_status: "모집완료",
+    }));
+  };
+  const toggleOffHandler = () => {
+    setMeetingInfo((prevInfo) => ({
+      ...prevInfo,
+      party_status: "모집중",
+    }));
   };
   return (
     <div className={classes.wrapper}>
@@ -291,13 +303,14 @@ const EditPost = () => {
                   onChange={onKeywordHandler}
                 />
               </div>
+
               {/* <KakaoMap /> */}
               {/* <MakeMap setAddress={setAddress} searchkeyword={searchkeyword} /> */}
               <SearchMap
                 setAddress={setAddress}
                 searchkeyword={searchkeyword}
-                lat={meetingInfo.lat}
-                lng={meetingInfo.lng}
+                lat={latlng.lat}
+                lng={latlng.lng}
                 setLatLng={setLatLng}
               />
             </div>
@@ -311,6 +324,16 @@ const EditPost = () => {
               onChange={contentHandler}
             />
             <div className={classes.btnCon}>
+              {meetingInfo.party_status === "모집중" && (
+                <button className={classes.onBtn} onClick={toggleOnHandler}>
+                  현재 모집중
+                </button>
+              )}
+              {meetingInfo.party_status === "모집완료" && (
+                <button className={classes.offBtn} onClick={toggleOffHandler}>
+                  현재 모집완료
+                </button>
+              )}
               <button className={classes.cancelBtn} onClick={handleCancel}>
                 취소
               </button>

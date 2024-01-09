@@ -168,3 +168,11 @@
   background-color: green;
   color: white;
 }
+.btnCon .onBtn {
+  background-color: white;
+  color: green;
+}
+.btnCon .offBtn {
+  background-color: white;
+  color: red;
+}

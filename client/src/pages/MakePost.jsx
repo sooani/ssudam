@@ -304,7 +304,9 @@ const MakePost = () => {
               name="content"
             />
             <div className={classes.btnCon}>
-              <button className={classes.cancelBtn}>취소</button>
+              <button className={classes.cancelBtn} onClick={handleCancel}>
+                취소
+              </button>
               <button type="submit" className={classes.postBtn}>
                 글 등록
               </button>
