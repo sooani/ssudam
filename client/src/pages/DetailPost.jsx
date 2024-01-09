@@ -178,7 +178,7 @@ const DetailPost = () => {
         // setIsLoading(true);
         console.log(response);
         setMeetingInfo(response.data);
-        if (response.data.party_status === "모집중s") {
+        if (response.data.party_status === "모집중") {
           setIsRecruiting(true);
         }
         // setIsLoading(false);
