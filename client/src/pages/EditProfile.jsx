@@ -9,9 +9,36 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import LeaveModal from './LeaveModal';
 import classes from '../styles/pages/EditProfile.module.css';
+import axios from 'axios';
 
 function EditProfile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [nickname, setNickname] = useState("");
+    const [nicknameError, setNicknameError] = useState(null);
+
+    const handleNicknameChange = (event) => {
+        const newNickname = event.target.value;
+        setNickname(newNickname);
+        // 사용자가 새 닉네임을 입력하기 시작하면 에러 메시지 재설정
+        setNicknameError(null);
+    };
+
+    const handleNicknameValidation = async () => {
+        try {
+            // 'your-api-endpoint'는 엔드포인트 받으면 바꿔야함
+            const response = await axios.post('your-api-endpoint', { nickname: nickname });
+            
+            if (response.data.available) {
+                setNicknameError("사용 가능한 닉네임입니다.");
+            } else {
+                setNicknameError("이미 사용중인 닉네임입니다.");
+            }
+        } catch (error) {
+            console.error("닉네임 변경 오류:", error);
+        }
+    };
+
+
     return (
         <div className={classes.Main}>
             <Header />
@@ -20,7 +47,20 @@ function EditProfile() {
 
                 <div className={classes.NicknameContainer}>
                     <p className={classes.Nickname}>닉네임</p>
-                    <div className={classes.UserNickname}>유저 닉네임 출력</div>
+                    <div className={classes.UserNickname}>
+                        <input
+                            type="text"
+                            value={nickname}
+                            onChange={handleNicknameChange}
+                        />
+                        {nicknameError && <p className={classes.NicknameError}>{nicknameError}</p>}
+                    <button
+                        className={classes.CheckNicknameButton}
+                        onClick={handleNicknameValidation}
+                    >
+                        닉네임 확인
+                    </button>
+                    </div>
                 </div>
 
                 <div className={classes.EmailContainer}>
