@@ -46,7 +46,9 @@ const MyPage = () => {
 }
 export default MyPage;
 
-
+//푸시테스트
+//푸시 테스트
+//MyPage.jsx
 // import React, { useState, useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 // import axios from 'axios';
