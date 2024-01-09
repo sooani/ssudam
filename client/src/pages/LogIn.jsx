@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import classes from "../styles/pages/LogIn.module.css"
 
 // 해결할 문제
 // 오류메시지 css 수정
 // 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
-// axios(확정x)로 로그인 정보 보내는 코드 작성
+// jwt 토큰 관련 코드 수정
 // 유효성검사 뭘 할지 결정 (후순위 개발)
 // 더 추가될 수 있음
 
@@ -16,7 +17,9 @@ const LogIn = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    const handleLogin = (e) => {
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
         console.log('handleLogin 함수 호출')
         e.preventDefault();
 
@@ -41,10 +44,30 @@ const LogIn = () => {
             return;
         }
 
-        // 이메일이나 비밀번호가 틀릴 때 (이메일/비밀번호가 일치하지 않습니다.)
-        setError('이메일/비밀번호가 일치하지 않습니다.');
-        
-        //로그인 처리 로직 axios
+        try {
+            const response = await axios.post('/v1/auth/login', {
+                email: email,
+                password: password,
+            })
+
+            // jwt토큰 localstorage에 저장하는 코드 / 상황에 맞게 수정하기
+            localStorage.setItem('loginToken', response.data.token);
+
+            // 로그인 성공 시 입력 필드 초기화, 메인 페이지로 이동
+            setEmail('');
+            setPassword('');
+
+            navigate('/')
+        } catch (error) {
+            // 서버로부터 에러 응답이 온 경우
+            if (error.response) {
+                setError('이메일/비밀번호가 일치하지 않습니다.');
+            } else {
+                // 네트워크 오류 등으로 인한 경우
+                console.error('로그인 오류:', error.message);
+                setError('로그인 중 오류가 발생했습니다.');
+            }
+        }
     }
 
     return (

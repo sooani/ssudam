@@ -9,14 +9,19 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgba(240, 240, 240, 1);
+    background-color: rgba(217, 217, 217, 1);
 }
 
 .modal {
-    background-color: rgba(181, 181, 181, 1);
+    background-color: rgba(217, 217, 217, 1);
+    width: 450px; /* 모달의 너비 조절 */
+    margin: auto; /* 수평 가운데 정렬 */
+    padding: 20px; /* 내용과 모서리 사이 간격 조절 */
+    border-radius: 15px; /* 둥글게 모서리 조절 */
 }
 
 .exit {
+    background-color: rgba(217, 217, 217, 1);
     font-size: 30px;
     text-align: right;
 }
@@ -38,6 +43,7 @@ body {
     width: 400px;
     position: relative;
     margin-top: 10px;
+    text-align: center;
 }
 
 .inputArea input {

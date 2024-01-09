@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import classes from "../styles/pages/SignUpModal.module.css"
+
+// 해결할 문제
+// 모달창 X 버튼, 모달창 바깥부분 눌러도 안닫힘
+// 오류메시지 css 수정 
+// 빈 칸이 있을 때 회원가입 버튼 누르면 나오는 css 수정
+// 유효성 검사 뭘 할지 결정(예시. 이메일, 닉네임 중복) (후순위 개발)
+// 더 추가될 수도 있음
 
 const SignUpModal = ({isOpen, onClose}) => {
     const [email, setEmail] = useState('');
@@ -15,7 +23,7 @@ const SignUpModal = ({isOpen, onClose}) => {
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
 
         if (email === '') {
@@ -51,11 +59,27 @@ const SignUpModal = ({isOpen, onClose}) => {
             return;
         }
 
-        // axios 등을 사용해 회원가입 로직 수행
+        try {
+            // axios를 사용하여 서버에 회원가입 데이터 전송
+            await axios.post('/v1/members', {
+                email: email,
+                nickname: nickname,
+                password: password,
+                confirmPassword: confirmPassword,
+            });
 
-        // 회원가입 성공 시 모달 닫고 메인페이지로 이동
-        onClose();
+            // 회원가입 성공 시 입력 필드 초기화 및 모달 닫기
+            setEmail('');
+            setNickname('');
+            setPassword('');
+            setConfirmPassword('');
 
+            onClose();
+        } catch (error) {
+            // 회원가입 실패 처리 (기존 에러 처리와 유사)
+            console.error('회원가입 오류:', error.message);
+            setError('회원가입 중 오류가 발생했습니다.');
+        }
     }
 
     return (
@@ -63,8 +87,14 @@ const SignUpModal = ({isOpen, onClose}) => {
         <div className={classes.page}>
             <button className={classes.exit} onClick={onClose}>X</button>
             <section className={classes.signupForm}>
-                <h1>이 게시글에 관심이 있으신가요?</h1>
-                <h3>지금 쓰담에 가입하고 어떤 게시글인지 확인해보세요</h3>
+            <h1>
+                이 게시글에 <br />
+                관심이 있으신가요?
+            </h1>
+                <h3>
+                    지금 쓰담에 가입하고 <br />
+                    어떤 게시글인지 확인해보세요
+                </h3>
                 <form onSubmit={handleSignUp}>
                     <div className={classes.inputArea}>
                         <input
