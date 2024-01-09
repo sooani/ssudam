@@ -21,10 +21,11 @@ const DetailPost = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [isMyPost, setIsMyPost] = useState(false);
   const [hasMyComment, setHasMyComment] = useState(false);
-  const [myComment, setMyComment] = useState("");
+  const [myComment, setMyComment] = useState({});
   const [isRecruiting, setIsRecruiting] = useState(false);
   const [isParticipating, setIsParticipating] = useState(false);
-  const meetingId = 744.0366672463383;
+  // const meetingId = 553.603497596667;
+  const meetingId = 504.38347989895107;
   // const meetingId = 906.8489342328219;
   // const meetingId = useParams();
   // const loggedInUser = localStorage.getItem("email");
@@ -34,7 +35,7 @@ const DetailPost = () => {
   useEffect(() => {
     if (loggedInUser && userInfo && loggedInUser.email === userInfo.email) {
       axios
-        .get(`/meetings/${meetingId}/comments?useremail=${userInfo.email}`)
+        .get(`/meetings/${meetingId}/comments?userId=${loggedInUser.id}`)
         .then((response) => {
           if (Array.isArray(response.data) && response.data.length === 0) {
             console.log("응답 데이터가 빈 배열입니다.");
@@ -101,7 +102,25 @@ const DetailPost = () => {
       console.error("Error fetching comment datas: ", error);
     }
   };
-  const commentEditHandler = () => {};
+  const commentEditHandler = () => {
+    const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
+    let updatedDTO = myComment;
+    console.log(updatedDTO);
+    if (userConfirmed) {
+      axios
+        .put(`/comments/${myComment.id}`, updatedDTO)
+
+        .then((response) => {
+          console.log(response.data);
+          alert("댓글이 수정되었습니다!");
+          getComments();
+        })
+        .catch((error) => {
+          console.error("Error updating comment data: ", error);
+          alert("오류가 발생했습니다!");
+        });
+    }
+  };
   const commentDeleteHandler = () => {
     const userConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
     // json-server에서는 조건이 있는 삭제가 안되나봄..?
@@ -125,13 +144,21 @@ const DetailPost = () => {
     getComments();
   }, []);
   const commentChangeHandler = (e) => {
-    setEnteredComment(e.target.value);
+    if (hasMyComment) {
+      setMyComment((prev) => ({
+        ...prev,
+        content: e.target.value,
+        edited: new Date(),
+      }));
+    } else {
+      setEnteredComment(e.target.value);
+    }
   };
   // localStorage에서 사용자 email 가져와서 글의 사용자 email 과 비교하고 같을 경우 수정/삭제 버튼 띄우기
   // localStorage를 쓸지 함수를 쓸지 추후에 방식 변경 가능성 존재
   useEffect(() => {
     if (userInfo) {
-      if (userInfo.email === localStorage.getItem("email")) {
+      if (userInfo.id === loggedInUser.id) {
         setIsMyPost(true);
         console.log(isMyPost);
       }
@@ -186,14 +213,14 @@ const DetailPost = () => {
       .then((response) => {
         // setIsLoading(true);
         console.log(response);
-
+        setMeetingInfo(response.data);
         if (response.data.party_status === "모집중") {
           setIsRecruiting(true);
         }
         if (response.data.party_status === "모집완료") {
           setIsRecruiting(false);
         }
-        setMeetingInfo(response.data);
+
         // setIsLoading(false);
       })
       .catch((error) => {
@@ -268,7 +295,7 @@ const DetailPost = () => {
           alert("오류가 발생했습니다!");
         });
     }
-  }, [meetingInfo, isRecruiting]);
+  }, [meetingInfo]);
 
   return (
     <div className={classes.wrapper}>
