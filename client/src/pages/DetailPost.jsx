@@ -23,10 +23,12 @@ const DetailPost = () => {
   const [hasMyComment, setHasMyComment] = useState(false);
   const [myComment, setMyComment] = useState("");
   const [isRecruiting, setIsRecruiting] = useState(false);
-  const meetingId = 536.4778332971678;
+  const [isParticipating, setIsParticipating] = useState(false);
+  const meetingId = 744.0366672463383;
   // const meetingId = 906.8489342328219;
   // const meetingId = useParams();
   // const loggedInUser = localStorage.getItem("email");
+  // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   useEffect(() => {
@@ -61,12 +63,12 @@ const DetailPost = () => {
       console.log(userInfo);
     }
   }, [meetingInfo]);
-
+  // useEffect(() => {}, [isRecruiting]);
   const commentSubmitHandler = (e) => {
     e.preventDefault();
     console.log(loggedInUser.nickname);
     let commentDTO = {
-      id: Math.random() * 1000,
+      // id: Math.random() * 1000,
       meetingId: meetingId,
       userId: loggedInUser.id,
       useremail: loggedInUser.email,
@@ -135,6 +137,13 @@ const DetailPost = () => {
       }
     }
   }, [userInfo]);
+  // useEffect(() => {
+  //   if (meetingInfo.party_status === "모집중") {
+  //     setIsRecruiting(true);
+  //   } else {
+  //     setIsRecruiting(false);
+  //   }
+  // }, [meetingInfo]);
   const deleteMeetingHandler = () => {
     const userConfirmed = window.confirm("해당 글을 삭제하시겠습니까?");
 
@@ -177,10 +186,14 @@ const DetailPost = () => {
       .then((response) => {
         // setIsLoading(true);
         console.log(response);
-        setMeetingInfo(response.data);
+
         if (response.data.party_status === "모집중") {
           setIsRecruiting(true);
         }
+        if (response.data.party_status === "모집완료") {
+          setIsRecruiting(false);
+        }
+        setMeetingInfo(response.data);
         // setIsLoading(false);
       })
       .catch((error) => {
@@ -189,6 +202,74 @@ const DetailPost = () => {
       });
     console.log(meetingInfo);
   }, []);
+  const joinHandler = () => {
+    const userConfirmed = window.confirm("해당 모임에 참여하시겠습니까?");
+
+    // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
+    if (userConfirmed) {
+      console.log("참여되었습니다.");
+
+      let partDTO = {
+        // member_party_id: Math.random() * 1000,
+        member_id: loggedInUser.id,
+        party_id: meetingId,
+      };
+      // 해당 meeting의 current capacity가 max capacity - 1 이하일 경우 참여가 가능하다
+      // max capacity 랑 current capacity랑 같을 때 모임글 상태를 모집완료로 변경!
+      axios
+        .post(`/participations`, partDTO)
+        .then((response) => {
+          console.log(response);
+          // 참여중 여부는 db에 안들어가니까 새로고침할때마다 기존 상태가 유지 안됨 > useEffect로 participation 정보
+          // 가져와서 그거 기준으로 setIsParticipating 해야 함!
+          // setIsParticipating(true);
+          alert("해당 모임에 참여 완료 되었습니다!");
+        })
+        .catch((error) => {
+          console.error("Error posting participation data: ", error);
+        });
+      setMeetingInfo((prev) => ({
+        ...prev,
+        party_status:
+          prev.current_capacity + 1 == prev.max_capacity
+            ? "모집완료"
+            : "모집중",
+        current_capacity: prev.current_capacity + 1,
+      }));
+    }
+  };
+  useEffect(() => {
+    axios
+      .get(`/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`)
+      .then((response) => {
+        console.log(response.data);
+        // 뭔가 있을 경우 참여중
+        if (response.data.length > 0) {
+          setIsParticipating(true);
+        }
+        // 아니면 비참여중
+      })
+      .catch((error) => {
+        console.error("Error updating meeting data: ", error);
+        alert("오류가 발생했습니다!");
+      });
+  }, [meetingInfo]);
+  useEffect(() => {
+    if (meetingInfo) {
+      let updatedDTO = meetingInfo;
+      // if(meetingInfo.party_status === "모집완료")
+      axios
+        .put(`/meetings/${meetingId}`, updatedDTO)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("Error updating meeting data: ", error);
+          alert("오류가 발생했습니다!");
+        });
+    }
+  }, [meetingInfo, isRecruiting]);
+
   return (
     <div className={classes.wrapper}>
       <Header />
@@ -207,12 +288,12 @@ const DetailPost = () => {
                 <div className={classes.date}>
                   <h4>{meetingInfo.created_at.split("T")[0]}</h4>
                 </div>
-                {isRecruiting && (
+                {meetingInfo.party_status === "모집중" && (
                   <div className={classes.isRecruiting}>
                     <h4>모집중</h4>
                   </div>
                 )}
-                {!isRecruiting && (
+                {meetingInfo.party_status === "모집완료" && (
                   <div className={classes.isNotRecruiting}>
                     <h4>모집완료</h4>
                   </div>
@@ -221,10 +302,25 @@ const DetailPost = () => {
             </div>
             {isRecruiting && (
               <div className={classes.btnCon}>
-                <button className={classes.joinBtn}>
-                  <FaUsers style={{ fontSize: "1.5rem" }} />
-                  참여
-                </button>
+                {!isParticipating && (
+                  <button className={classes.joinBtn} onClick={joinHandler}>
+                    <FaUsers style={{ fontSize: "1.5rem" }} />
+                    참여
+                  </button>
+                )}
+                {isParticipating && (
+                  <button className={classes.joinBtn} disabled>
+                    <FaUsers style={{ fontSize: "1.5rem" }} />
+                    참여중
+                  </button>
+                )}
+                {/* 참여 취소가 가능해질 경우 아래를 state 관련으로 변경해야 함 (아마) */}
+                {/* {!isParticipating &&
+                  meetingInfo.max_capacity <= meetingInfo.current_capacity && (
+                    <button className={classes.limitBtn} disabled>
+                      인원 마감
+                    </button>
+                  )} */}
                 {/* <button className={classes.joinBtn}>참여하기</button>
             <button className={classes.joinBtn}>참여하기</button> */}
               </div>
@@ -368,7 +464,9 @@ const DetailPost = () => {
                       />
                       <div className={classes.user}>
                         <div>{comment.nickname}</div>
-                        <div>{comment.edited.split("T")[0]}</div>
+                        <div>
+                          {new Date(comment.edited).toLocaleString("ko-KR")}
+                        </div>
                       </div>
                     </div>
 

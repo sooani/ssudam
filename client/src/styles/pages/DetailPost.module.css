@@ -118,6 +118,17 @@
   gap: 0.5rem;
   margin-top: 6rem;
 }
+.btnCon .limitBtn {
+  background-color: red;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 6rem;
+}
 .detailInfo {
   /* border: 1px solid gold; */
   width: 100%;

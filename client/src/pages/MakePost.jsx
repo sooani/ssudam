@@ -119,7 +119,7 @@ const MakePost = () => {
     const contact = data.get("contact");
 
     let postDTO = {
-      id: Math.random() * 1000, //
+      // id: Math.random() * 1000,
       // memberId 하나로 가져오기!
       // owneruserId: 1,
       // owneremail: "user1@example.com",
