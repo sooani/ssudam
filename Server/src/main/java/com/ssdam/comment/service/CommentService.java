@@ -29,7 +29,8 @@ public class CommentService {
         this.beanUtils = beanUtils;
     }
 
-    //party 상태변경(모집종료) 시 댓글작성 불가 로직 필요
+    //댓글 등록여부 확인 로직 필요, (이미 해당 모임에 댓글을 등록했는지 ?)
+    //cascade설정 (모집글 삭제시 같이삭제되어야한다)
     public Comment createComment(Comment comment) {
         findVerifiedPartyStatusForComment(comment);
         return commentRepository.save(comment);
