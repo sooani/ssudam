@@ -125,6 +125,15 @@ public class PartyControllerTest {
     }
 
     @Test
+    @DisplayName("addPartyMember 테스트")
+    public void addPartyMemberTest() {
+        System.out.println("파티 참가 테스트 시작!");
+        //given
+        //when
+        //then
+    }
+
+    @Test
     @DisplayName("patchParty 테스트")
     public void patchPartyTest() throws Exception {
         System.out.println("patchParty 테스트 시작!");
@@ -287,7 +296,7 @@ public class PartyControllerTest {
         List<PartyDto.Response> responses = PartyStub.MockParty.getListResponseBody();
 
         given(partyService.findParties(Mockito.anyInt(), Mockito.anyInt()))
-                .willReturn((Page)pageParties);
+                .willReturn((Page) pageParties);
         given(mapper.partiesToPartyResponses(Mockito.anyList()))
                 .willReturn(responses);
 
@@ -335,6 +344,17 @@ public class PartyControllerTest {
                                         fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("페이지 총 개수"),
                                         fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("페이지 총 번호")
                                 ))));
+    }
+
+    @Test
+    @DisplayName("getPartiesMember 테스트")
+    public void getPartiesMemberTest() throws Exception {
+        System.out.println(" 특정 멤버가 작성한 모든 파티 조회 테스트 시작!");
+
+        //given
+//        long
+        //when
+        //then
     }
 
     @Test

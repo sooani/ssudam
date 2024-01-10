@@ -30,8 +30,17 @@ public class PartyService {
         this.partyMemberRepository = partyMemberRepository;
     }
 
-    public Party createParty(Party party) {
-        return partyRepository.save(party);
+    // 새로운 파티 생성
+    public Party createParty(Party party, Member author) {
+        // 파티 저장
+        Party savedParty = partyRepository.save(party);
+
+        // 작성자를 파티멤버로 추가
+        PartyMember partyMember = new PartyMember(author, savedParty);
+        savedParty.addPartyMember(partyMember);
+
+        // 파티 저장 (업데이트된 파티멤버 정보를 반영하기 위해)
+        return partyRepository.save(savedParty);
     }
 
     public Party findParty(long partyId) {
@@ -47,10 +56,10 @@ public class PartyService {
                 Sort.by("partyId").descending()));
     }
 
-    // 특정 멤버가 작성한 모든 모임 조회
+    // 특정 멤버가 작성한 모든 모임 목록 조회
     @Transactional(readOnly = true)
     public Page<Party> findPartiesByMember(long memberId, int page, int size) {
-        List<Party> parties = partyRepository.findByPartyMembers_Member_MemberId(memberId);
+        List<Party> parties = partyRepository.findByMember_MemberId(memberId);
         Page<Party> pageParties =
                 new PageImpl<>(parties,
                         PageRequest.of(page, size,
@@ -58,9 +67,35 @@ public class PartyService {
         return pageParties;
     }
 
+    // 특정 멤버가 참여한 모든 모임 목록 조회
+    @Transactional(readOnly = true)
+    public Page<Party> findPartiesByPartyMember(long partyMemberId, int page, int size) {
+        List<Party> parties = partyRepository.findByPartyMembers_Member_MemberId(partyMemberId);
+        Page<Party> pageParties = new PageImpl<>(parties,
+                PageRequest.of(page, size, Sort.by("createdAt").descending()), parties.size());
+        return pageParties;
+    }
+
+    // 최신 글 조회
+    @Transactional(readOnly = true)
+    public Page<Party> findLatestParties(int page, int size) {
+        // 현재 날짜에서 2일 전의 날짜를 계산
+        LocalDateTime twoDaysAgo = LocalDateTime.now().minusDays(2);
+
+        /// 페이지 번호가 1 이하인 경우 0으로 설정
+        int adjustedPage = Math.max(0, page);
+
+        // 2일 이내에 올린 글만 조회하여 페이지네이션
+        return partyRepository.findByCreatedAtAfter(twoDaysAgo, PageRequest.of(adjustedPage, size,
+                Sort.by("partyId").descending()));
+
+    }
+
     // 글을 등록한 사람만 수정할 수 있게 권한 추가 해야함
     public Party updateParty(Party party) {
         Party findParty = findVerifiedParty(party.getPartyId());
+
+        updatePartyHits(findParty);// 수정 시 조회수 업데이트
 
         Optional.ofNullable(party.getMeetingDate())
                 .ifPresent(findParty::setMeetingDate);
@@ -84,6 +119,7 @@ public class PartyService {
         return partyRepository.save(findParty);
     }
 
+    // 파티 삭제
     public void deleteParty(long partyId) {
         Party findParty = findVerifiedParty(partyId);
 

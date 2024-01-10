@@ -32,7 +32,7 @@ API 문서 개요
 == PartyController
 === 모임 등록
 .curl-request
-include::{snippets}/post-party/http-request.adoc[]
+include::{snippets}/post-party/curl-request.adoc[]
 
 .http-request
 include::{snippets}/post-party/http-request.adoc[]
@@ -46,13 +46,68 @@ include::{snippets}/post-party/http-response.adoc[]
 .response-headers
 include::{snippets}/post-party/response-headers.adoc[]
 
+=== 모임 수정
+.curl-request
+include::{snippets}/patch-party/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-party/http-request.adoc[]
+
+.request-fields
+include::{snippets}/patch-party/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-party/http-response.adoc[]
+
+.response-fields
+include::{snippets}/patch-party/response-fields.adoc[]
+
 === 모임 정보 조회
+.curl-request
+include::{snippets}/get-party/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-party/http-request.adoc[]
+
+.response-fields
+include::{snippets}/get-party/response-fields.adoc[]
+
+.http-response
+include::{snippets}/get-party/http-response.adoc[]
+
+.path-parameters
+include::{snippets}/get-party/path-parameters.adoc[]
 
 === 다수의 모임 정보 조회
+.curl-request
+include::{snippets}/get-parties/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-parties/http-request.adoc[]
+
+.response-fields
+include::{snippets}/get-parties/response-fields.adoc[]
+
+.http-response
+include::{snippets}/get-parties/http-response.adoc[]
+
+.request-parameters
+include::{snippets}/get-parties/request-parameters.adoc[]
 
 === 특정 멤버가 등록한 모든 모임 조회
 
 === 모임 정보 삭제
+.curl-request
+include::{snippets}/delete-party/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-party/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-party/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-party/http-response.adoc[]
 
 ***
 

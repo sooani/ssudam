@@ -40,11 +40,11 @@ public class Party extends Auditable {
     private String content;
 
     @Column(nullable = false)
-    @Min(value = 1)
+    @Min(value = 2)
     private int maxCapacity; //최대 인원
 
     @Column(nullable = false)
-    private int currentCapacity = 1; //현재 인원
+    private int currentCapacity = 0; //현재 인원
 
     @Column(nullable = false)
     private int hits = 0; //조회수

@@ -41,7 +41,7 @@ public class PartyController {
         Party party = mapper.partyPostDtoToParty(requestBody);
         party.setMember(member);
 
-        Party createdParty = partyService.createParty(party);
+        Party createdParty = partyService.createParty(party, member);
 
         URI location = UriCreator.createUri(PARTY_DEFAULT_URL, createdParty.getPartyId());
 
@@ -88,6 +88,33 @@ public class PartyController {
                                              @Positive @RequestParam int page,
                                              @Positive @RequestParam int size) {
         Page<Party> pageParties = partyService.findPartiesByMember(memberId, page - 1, size);
+        List<Party> parties = pageParties.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.partiesToPartyResponses(parties),
+                        pageParties),
+                HttpStatus.OK);
+    }
+
+    // 특정 멤버가 침여한 모든 파티 조회
+    @RequestMapping(value = "/v1/parties", method = RequestMethod.GET, params = {"partyMemberId"})
+    public ResponseEntity getPartiesByPartyMember(@Positive @RequestParam long partyMemberId,
+                                                  @Positive @RequestParam int page,
+                                                  @Positive @RequestParam int size) {
+        Page<Party> pageParties = partyService.findPartiesByPartyMember(partyMemberId, page - 1, size);
+        List<Party> parties = pageParties.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.partiesToPartyResponses(parties),
+                        pageParties),
+                HttpStatus.OK);
+    }
+
+    //2일 이내에 작성된 파티 조회
+    @RequestMapping(value = "/v1/parties/latest", method = RequestMethod.GET)
+    public ResponseEntity getLatestParties(@Positive @RequestParam int page,
+                                           @Positive @RequestParam int size) {
+        Page<Party> pageParties = partyService.findLatestParties(page - 1, size);
         List<Party> parties = pageParties.getContent();
 
         return new ResponseEntity<>(

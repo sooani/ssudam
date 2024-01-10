@@ -39,10 +39,6 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<PartyMember> partyMembers = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "PARTY_ID")
-    private Party party;
-
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>(); // 사용자의 권한을 등록하기 위한 권한 테이블
 
