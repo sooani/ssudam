@@ -31,7 +31,7 @@ const ListSlider = ({ data }) => {
         {/* 각각의 아이템에 대해 ItemCard 컴포넌트를 렌더링 */}
 
         {data.map((party) => (
-          <ListCard key={party.partyId} party={party} />
+          <ListCard party={party} />
         ))}
       </Slider>
     </section>
