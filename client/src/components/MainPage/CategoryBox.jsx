@@ -29,7 +29,7 @@ const CategoryBox = ({ data, activeTab }) => {
         nextLabel={'다음'}
         breakLabel={'...'}
         pageCount={pageCount}
-        marginPagesDisplayed={2}
+        marginPagesDisplayed={0}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}
         containerClassName={'pagination'}

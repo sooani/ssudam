@@ -17,22 +17,30 @@ const ListCard = ({ party }) => {
   };
 
   return (
-    <div className={classes.ListCard}>
+    <div className={classes.listCard}>
       <div className={classes.topContents}>
         <img src={footerLogo} alt="게시판 이미지" />
-        <div className={classes.ListCardTitle}>
+        <div className={classes.listCardTitle}>
           <span>{party?.title}</span>
         </div>
-        <div className={classes.ListCardContent}>
+        <div className={classes.listCardContent}>
           <span>{party?.content}</span>
         </div>
       </div>
-      <div className={classes.ListCardMeetingDate}>
-        <span>{party?.meetingDate}</span>
+      <div className={classes.bottomContents}>
+        <div className={classes.listCardMeetingDate}>
+          <span>{party?.meetingDate}</span>
+        </div>
+        <div className={classes.listCardCurrentCapacity}>
+          <span>{party?.currentCapacity}&nbsp;/&nbsp;</span>
+        </div>
+        <div className={classes.listCardMaxCapacity}>
+          <span>{party?.maxCapacity}</span>
+        </div>
+        <button className={classes.gotoPost} onClick={handlePostClick}>
+          모임 가기
+        </button>
       </div>
-      <button className={classes.gotoPost} onClick={handlePostClick}>
-        모임 가기
-      </button>
 
       <SignUpModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
     </div>
