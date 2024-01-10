@@ -1,7 +1,7 @@
 .categoryTab {
   width: 300px;
   height: 100px;
-  border: 1px solid black;
+  border: 1px solid red;
 }
 .categoryTab:hover {
   cursor: pointer;

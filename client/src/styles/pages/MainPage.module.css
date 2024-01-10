@@ -11,7 +11,9 @@ main {
   height: 100vh;
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  /* box-sizing: inherit;
+   */
+  box-sizing: border-box;
   overflow-x: hidden;
   background-color: white;
 }
@@ -27,7 +29,7 @@ main {
 /* 메인 섹션 */
 .mainContainer {
   /* background-color: orange; */
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 100vh;
   width: 100vw;
   position: relative;
@@ -37,6 +39,7 @@ main {
 .todoAndNewSection {
   display: flex;
   height: 25vh;
+  box-sizing: border-box;
 }
 
 .todoList {
@@ -49,7 +52,7 @@ main {
 
 .newPost {
   /* background-color: blueviolet; */
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 80vw;
   min-height: 1vh;
   text-align: right;

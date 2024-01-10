@@ -59,7 +59,6 @@ const MainPage = () => {
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>
-          {/* {partyData?.length > 0 && <ListSlider partyData={partyData} />} */}
           <ListSlider data={data} />
         </div>
       </section>
