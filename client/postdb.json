@@ -344,14 +344,14 @@
       "title": "용두사지 철당간",
       "content": "용두사지 철당간 앞에서",
       "max_capacity": "5",
-      "current_capacity": 3,
+      "current_capacity": 4,
       "hits": 0,
-      "created_at": "2024-01-09T09:16:25.171Z",
-      "last_modified_at": "2024-01-09T09:16:25.171Z",
+      "created_at": "2024-01-09T09:22:24.601Z",
+      "last_modified_at": "2024-01-09T09:22:24.601Z",
       "meetingname": "용철",
       "duedate": "2024-01-20",
       "contact": "010-1111-2222",
-      "party_status": "모집완료"
+      "party_status": "모집중"
     }
   ],
   "comments": [
@@ -485,6 +485,16 @@
       "created": "2024-01-09T06:51:37.872Z",
       "content": "댓글 테스트",
       "id": 708.2611949639141
+    },
+    {
+      "meetingId": "973.6414635505148",
+      "userId": 4,
+      "useremail": "user1@example.com",
+      "nickname": "당근이",
+      "edited": "2024-01-09T09:45:48.987Z",
+      "created": "2024-01-09T09:45:47.773Z",
+      "content": "ㅋㅋㅋ",
+      "id": 709.2611949639141
     }
   ],
   "participations": [
@@ -688,6 +698,11 @@
       "member_id": 3,
       "party_id": 973.6414635505148,
       "id": 40
+    },
+    {
+      "member_id": 4,
+      "party_id": 973.6414635505148,
+      "id": 41
     }
   ]
 }

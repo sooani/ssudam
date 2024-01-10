@@ -89,6 +89,7 @@ const DetailPost = () => {
         getComments();
         setHasMyComment(true);
         setEnteredComment("");
+        setMyComment(response.data);
       })
       .catch((error) => {
         console.error("Error posting comment data: ", error);
@@ -338,13 +339,13 @@ const DetailPost = () => {
             </div>
             {isRecruiting && (
               <div className={classes.btnCon}>
-                {!isParticipating && (
+                {!isMyPost && !isParticipating && (
                   <button className={classes.joinBtn} onClick={joinHandler}>
                     <FaUsers style={{ fontSize: "1.5rem" }} />
                     참여
                   </button>
                 )}
-                {isParticipating && (
+                {!isMyPost && isParticipating && (
                   <button className={classes.joinBtn} disabled>
                     <FaUsers style={{ fontSize: "1.5rem" }} />
                     참여중
