@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import classes from "../styles/pages/LogIn.module.css"
 
 // 해결할 문제
 // 오류메시지 css 수정
 // 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
-// axios(확정x)로 로그인 정보 보내는 코드 작성
+// jwt 토큰 관련 코드 수정
 // 유효성검사 뭘 할지 결정 (후순위 개발)
 // 더 추가될 수 있음
 
@@ -16,7 +17,9 @@ const LogIn = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    const handleLogin = (e) => {
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
         console.log('handleLogin 함수 호출')
         e.preventDefault();
 
@@ -41,10 +44,47 @@ const LogIn = () => {
             return;
         }
 
-        // 이메일이나 비밀번호가 틀릴 때 (이메일/비밀번호가 일치하지 않습니다.)
-        setError('이메일/비밀번호가 일치하지 않습니다.');
-        
-        //로그인 처리 로직 axios
+        axios.post('/v1/auth/login', {
+            email: email,
+            password: password,
+        },
+        {
+            headers : {
+               // 'Content-Type' : 'application/json', //클라이언트가 서버한테 요청하는(원하는) 타입
+              "Content-Type": "application/json;charset=UTF-8",
+              // 서버로부터 받고자 하는 응답 데이터의 타입
+              'Accept' : 'application/json',
+              // CORS 정책에 관련된 헤더, '*' 값은 모든 도메인에서 이 서버에 접근할 수 있다는 것
+              // 보안상의 이유로 '*' 대신에 특정 도메인을 명시하는 것이 좋으니 url 나오면 수정(?)
+              'Access-Control-Allow-Origin' : '*',
+            },
+        })
+            .then((response) => {
+                console.log(response)
+                console.log(response.data); // 서버 응답의 body 데이터
+                console.log(response.headers.authorization); // Authorization 헤더 값, 주로 인증토큰 담고있음
+                console.log('로그인 되었습니다!');
+                localStorage.setItem('Authorization', response.headers.authorization);
+                localStorage.setItem('email', response.data.email);
+                localStorage.setItem('token', response.data.token);
+                
+
+                // 로그인 성공 시 입력 필드 초기화, 메인 페이지로 이동
+                setEmail('');
+                setPassword('');
+
+                navigate('/');
+            })
+            .catch((error) => {
+                // 서버로부터 에러 응답이 온 경우
+                if (error.response) {
+                    setError('이메일/비밀번호가 일치하지 않습니다.');
+                } else {
+                    // 네트워크 오류 등으로 인한 경우
+                    console.error('로그인 오류:', error.message);
+                    setError('로그인 중 오류가 발생했습니다.');
+                }
+            });
     }
 
     return (

@@ -1,5 +1,5 @@
 import classes from '../../styles/components/CategoryTab.module.css';
-import dummy2 from '../../dummyTab.json';
+import React, { useState } from 'react';
 
 // const TabItem = () => {
 //   return (
@@ -10,20 +10,30 @@ import dummy2 from '../../dummyTab.json';
 //   );
 // };
 
-const CategoryTab = () => {
+const CategoryTab = ({ onSelectTab }) => {
+  const [activeTab, setActiveTab] = useState('recruiting');
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    onSelectTab(tab);
+  };
+
   return (
     <div className={classes.categoryTab}>
       <div className={classes.categoryTabTitle}>
-        <span>{dummy2.title}</span>
+        <button
+          onClick={() => handleTabClick('recruiting')}
+          style={{ fontWeight: activeTab === 'recruiting' ? 'bold' : 'normal' }}
+        >
+          모집 중
+        </button>
+        <button
+          onClick={() => handleTabClick('completed')}
+          style={{ fontWeight: activeTab === 'completed' ? 'bold' : 'normal' }}
+        >
+          모집완료
+        </button>
       </div>
-      {/* <TabItem /> */}
-      {/* {categories?.map(({ id, type }) => (
-        <TabItem
-          type={type}
-          onclick={() => setSelectedId(id)}
-          isActive={selectedId === id}
-        />
-      ))} */}
     </div>
   );
 };

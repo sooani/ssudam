@@ -3,14 +3,13 @@ import Footer from '../components/Layout/Footer';
 import classes from '../styles/pages/MainPage.module.css';
 import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
-// import ListSlider from '../components/MainPage/ListSlider';
-// import ListCard from '../components/MainPage/ListCard';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
 import CategoryBox from '../components/MainPage/CategoryBox';
-import Pagination from '../components/MainPage/Pagination';
+import axios from '../axios';
+import React, { useState, useEffect } from 'react';
+// import Pagination from '../components/MainPage/Pagination';
 // import dummy from '../dummyTab.json';
-import { useState } from 'react';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -21,11 +20,23 @@ import { useState } from 'react';
 */
 
 const MainPage = () => {
-  const [categories, setCategories] = useState(null);
-  // const [selectedId, setSelectedId] = useState(null);
-  // useEffect(() => {
-  //   fetchData('categories').then((data) => setCategories(data));
-  // }, []);
+  const [data, setData] = useState([]);
+  const [activeTab, setActiveTab] = useState('recruiting');
+  useEffect(() => {
+    axios
+      .get(`/data`)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error party data:', error);
+      });
+  }, []);
+
+  const handleTabSelect = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <main>
       {/* 헤더 */}
@@ -48,15 +59,15 @@ const MainPage = () => {
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>
-          <ListSlider />
+          <ListSlider data={data} />
         </div>
       </section>
 
       {/* 메인 구역 */}
       <section className={classes.mainContainer}>
-        <CategoryTab categories={categories} />
-        <CategoryBox />
-        <Pagination />
+        <CategoryTab onSelectTab={handleTabSelect} />
+        <CategoryBox data={data} activeTab={activeTab} />
+        {/* <Pagination /> */}
       </section>
 
       {/* 푸터 */}

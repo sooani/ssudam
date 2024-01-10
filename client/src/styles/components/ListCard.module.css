@@ -1,15 +1,46 @@
-.ListCard img {
-  height: 30px;
-  width: 30px;
+.listCard img {
+  height: 10vh;
+  width: 3vw;
+  float: left;
+  /* background-color: aliceblue; */
 }
-.ListCard {
+.listCard {
   margin: 10px 0 0 10px;
-  height: 14vh;
-  width: 15vw;
-  border: 1px solid black;
-  text-align: center;
+  height: 17vh;
+  width: 14vw;
+  /* border: 1px solid black; */
+  /* text-align: center; */
   background-color: #b5ee63;
 }
-.ListCard:hover {
+
+.listCardTitle {
+  text-align: left;
+  padding-top: 30px;
+  padding-left: 30%;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.listCardContent {
+  padding-top: 10px;
+  padding-left: 7%;
+  text-align: left;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bottomContents {
+  display: flex;
+  width: 100vh;
+}
+.listCardMeetingDate {
+  font-size: 0.7rem;
+  padding-top: 4vh;
+}
+
+.gotoPost {
+  background-color: aqua;
+}
+.gotoPost:hover {
   cursor: pointer;
 }
