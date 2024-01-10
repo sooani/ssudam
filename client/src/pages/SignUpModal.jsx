@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import classes from "../styles/pages/SignUpModal.module.css"
 
@@ -22,6 +22,7 @@ const SignUpModal = ({isOpen, onClose}) => {
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -59,27 +60,31 @@ const SignUpModal = ({isOpen, onClose}) => {
             return;
         }
 
-        try {
-            // axios를 사용하여 서버에 회원가입 데이터 전송
-            await axios.post('/v1/members', {
-                email: email,
-                nickname: nickname,
-                password: password,
-                confirmPassword: confirmPassword,
-            });
-
-            // 회원가입 성공 시 입력 필드 초기화 및 모달 닫기
+        axios.post('/v1/members', {
+            email: email,
+            nickname: nickname,
+            password: password,
+            confirmPassword: confirmPassword,
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        })
+        .then((response) => {
+            // 회원가입 성공 시 입력 필드 초기화, 메인페이지로 이동
             setEmail('');
             setNickname('');
             setPassword('');
             setConfirmPassword('');
 
-            onClose();
-        } catch (error) {
+            navigate('/');
+        })
+        .catch((error) => {
             // 회원가입 실패 처리 (기존 에러 처리와 유사)
             console.error('회원가입 오류:', error.message);
             setError('회원가입 중 오류가 발생했습니다.');
-        }
+        });
     }
 
     return (

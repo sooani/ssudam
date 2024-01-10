@@ -60,28 +60,33 @@ const SignUp = () => {
             return;
         }
 
-        try {
-            // axios를 사용하여 서버에 회원가입 데이터 전송
-            const response = await axios.post('/v1/members', {
-                email: email,
-                nickname: nickname,
-                password: password,
-                confirmPassword: confirmPassword,
-            });
-
+        axios.post('/v1/members', {
+            email: email,
+            nickname: nickname,
+            password: password,
+            confirmPassword: confirmPassword,
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        })
+        .then((response) => {
             // 회원가입 성공 시 입력 필드 초기화, 메인페이지로 이동
+            console.log(response)
+            console.log('회원가입이 되었습니다!')
             setEmail('');
             setNickname('');
             setPassword('');
             setConfirmPassword('');
 
             navigate('/');
-        } catch (error) {
+        })
+        .catch((error) => {
             // 회원가입 실패 처리 (기존 에러 처리와 유사)
             console.error('회원가입 오류:', error.message);
             setError('회원가입 중 오류가 발생했습니다.');
-        }
-
+        });
     }
 
     return (
