@@ -5,6 +5,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import classes from '../styles/pages/LeaveModal.module.css';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function LeaveModal() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -24,7 +26,7 @@ function LeaveModal() {
         </button>
         <p className={classes['leave-message']}>정말 탈퇴 하시겠습니까?</p>
         <div className={classes.buttons}>
-          <button
+          <Link to="/"
             className={classes.Yes}
             onClick={() => {
               // 탈퇴 후 메인으로 돌아감
@@ -32,7 +34,7 @@ function LeaveModal() {
             }}
           >
             예
-          </button>
+          </Link>
           <button className={classes.No} onClick={() => setModalIsOpen(false)}>
             아니오
           </button>
