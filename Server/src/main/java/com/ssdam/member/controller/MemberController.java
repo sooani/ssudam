@@ -2,6 +2,8 @@ package com.ssdam.member.controller;
 
 import com.ssdam.dto.MultiResponseDto;
 import com.ssdam.dto.SingleResponseDto;
+import com.ssdam.exception.BusinessLogicException;
+import com.ssdam.exception.ExceptionCode;
 import com.ssdam.member.dto.MemberPatchDto;
 import com.ssdam.member.dto.MemberPostDto;
 import com.ssdam.member.entity.Member;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,14 +39,23 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto, BindingResult bindingResult) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
         Member member = mapper.memberPostDtoToMember(memberPostDto);
+
+        if (!memberPostDto.getPassword().equals(memberPostDto.getConfirmPassword())) {
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
+
+//        if (!memberPostDto.getPassword().equals(memberPostDto.getConfirmPassword())) {
+//            bindingResult.rejectValue("confirmPassword", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
+//        }
+
+//        if (bindingResult.hasErrors()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(createErrorResponse(bindingResult));
+//        }
+
         Member createdMember = memberService.createMember(member);
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
-
-        if (!memberPostDto.getPassword1().equals(memberPostDto.getPassword2())) {
-            bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워득 일치하지 않습니다.");
-        }
 
         return ResponseEntity.created(location).build();
     }
@@ -86,4 +98,16 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    private MultiResponseDto<SingleResponseDto<String>> createErrorResponse(BindingResult bindingResult) {
+//        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+//        MultiResponseDto<SingleResponseDto<String>> errorResponse = new MultiResponseDto<>(null, null);
+//
+//        for (FieldError fieldError : fieldErrors) {
+//            SingleResponseDto<String> error = new SingleResponseDto<>(fieldError.getDefaultMessage());
+//            errorResponse.getData().add(error);
+//        }
+//
+//        return errorResponse;
+//    }
 }

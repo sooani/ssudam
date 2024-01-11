@@ -40,7 +40,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin() // H2 웹 콘솔의 화면 자체가 내부적으로 태그를 사용하고 있기 때문에 개발 환경에서는 H2 웹 콘솔을 정상적으로 사용할 수 있도록
+                .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())
@@ -60,16 +60,6 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
                         .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                        .antMatchers(HttpMethod.POST, "/*/parties").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/*/parties/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/parties").hasRole("ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/parties/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/parties/**").hasRole("USER")
-                        .antMatchers(HttpMethod.POST, "/*/comments").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/*/comments/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/comments").hasRole("ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/comments/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/comments/**").hasRole("USER")
                         .anyRequest().permitAll()
                 );
         return http.build();
@@ -85,6 +75,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

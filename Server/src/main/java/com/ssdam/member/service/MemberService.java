@@ -29,7 +29,9 @@ public class MemberService {
     private final CustomAuthorityUtils authorityUtils;
 
     public MemberService(MemberRepository memberRepository,
-                         ApplicationEventPublisher publisher, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
+                         ApplicationEventPublisher publisher,
+                         PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
         this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
@@ -43,7 +45,7 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
-        // DB에 User Role 저장
+        // DB에 User Role 추가
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
