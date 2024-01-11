@@ -15,7 +15,7 @@ public class LikeController {
         this.likeService = likeService;
     }
     @PostMapping("/comments/{comment-id}")//현재 로그인한 회원이 좋아요/취소 할 수 있는기능 (토글)
-    public ResponseEntity toggleLikeToAnswer(@PathVariable("comment-id")@Positive long commentId,
+    public ResponseEntity toggleLikeToComment(@PathVariable("comment-id")@Positive long commentId,
                                              @RequestParam @Positive long memberId){//이부분 나중에 토큰으로 받아야함
 
         likeService.toggleLike(commentId,memberId);
