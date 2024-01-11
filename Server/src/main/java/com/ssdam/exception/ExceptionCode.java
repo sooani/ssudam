@@ -8,6 +8,8 @@ public enum ExceptionCode {
     PARTY_NOT_FOUND(404, "Party not found"),
     COMMENT_NOT_FOUND(404, "Comment not found"),
     COMMENT_NOT_ALLOWED(422,"Comment not allowed"),
+    REPLY_NOT_FOUND(404, "Reply not found"),
+    REPLY_NOT_ALLOWED(422,"Reply not allowed"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
     TODOLIST_NOT_FOUND(404, "TodoList not found"),

@@ -25,6 +25,9 @@ public class Reply {
     @JoinColumn(name = "COMMENT_ID")
     private Comment comment;
 
+    @Column(nullable = false)
+    private String Reply;
+
     public void addMember(Member member) {
         this.member = member;
         if (!this.member.getReplies().contains(this)) {
