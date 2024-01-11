@@ -154,6 +154,37 @@ const MakePost = () => {
       // hits 필요
       party_status: "모집중", //
     };
+    // let postDTO = {
+    //   title: postedtitle,
+    //   meetingDate: meetingdate,
+    //   latitude: latlng.lat,
+    //   longitude: latlng.lng,
+    //   address: address.address_name,
+
+    //   id: Math.random() * 1000,
+    //   // memberId 하나로 가져오기!
+    //   // owneruserId: 1,
+    //   // owneremail: "user1@example.com",
+    //   memberId: loggedInUser.id, //
+
+    //   content: content,
+    //   maxCapacity: numofpeople,
+    //   currentCapacity: 0, //
+
+    //   // 참여 기능 완성되면 수정 필요 // 글 등록할 때는 기본적으로 0 아님??
+    //   hits: 0, //
+
+    //   created_at: new Date(), //
+    //   last_modified_at: new Date(), //
+
+    //   // 아래는 테이블에서 생략됨 이야기 필요
+    //   meetingname: meetingname,
+    //   duedate: duedate,
+    //   contact: contact,
+
+    //   // hits 필요
+    //   party_status: "모집중", //
+    // };
     setPostedInfo({
       postedtitle: "",
       meetingname: "",
@@ -173,6 +204,7 @@ const MakePost = () => {
     setLatLng({ lat: 33.450701, lng: 126.570667 });
     console.log(postedInfo);
     axios
+      // .post(`/meetings`, postDTO)
       .post(`/meetings`, postDTO)
       .then((response) => {
         console.log(response.data);

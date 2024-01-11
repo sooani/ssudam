@@ -415,31 +415,34 @@ const DetailPost = () => {
                 )}
               </div>
             </div>
-            {isRecruiting && (
-              <div className={classes.btnCon}>
-                {!isMyPost && !isParticipating && (
-                  <button className={classes.joinBtn} onClick={joinHandler}>
-                    <FaUsers style={{ fontSize: "1.5rem" }} />
-                    참여
-                  </button>
-                )}
-                {!isMyPost && isParticipating && (
-                  <button className={classes.joinBtn} onClick={joinHandler}>
-                    <FaUsers style={{ fontSize: "1.5rem" }} />
-                    참여중
-                  </button>
-                )}
-                {/* 참여 취소가 가능해질 경우 아래를 state 관련으로 변경해야 함 (아마) */}
-                {/* {!isParticipating &&
+
+            <div className={classes.btnCon}>
+              {isRecruiting && !isMyPost && !isParticipating && (
+                <button className={classes.joinBtn} onClick={joinHandler}>
+                  <FaUsers style={{ fontSize: "1.5rem" }} />
+                  참여
+                </button>
+              )}
+              {!isMyPost && isParticipating && (
+                <button
+                  className={classes.joinBtn}
+                  onClick={joinHandler}
+                  disabled={!isRecruiting}
+                >
+                  <FaUsers style={{ fontSize: "1.5rem" }} />
+                  참여중
+                </button>
+              )}
+              {/* 참여 취소가 가능해질 경우 아래를 state 관련으로 변경해야 함 (아마) */}
+              {/* {!isParticipating &&
                   meetingInfo.max_capacity <= meetingInfo.current_capacity && (
                     <button className={classes.limitBtn} disabled>
                       인원 마감
                     </button>
                   )} */}
-                {/* <button className={classes.joinBtn}>참여하기</button>
+              {/* <button className={classes.joinBtn}>참여하기</button>
             <button className={classes.joinBtn}>참여하기</button> */}
-              </div>
-            )}
+            </div>
           </div>
           <div className={classes.detailInfo}>
             <div className={classes.detail}>
