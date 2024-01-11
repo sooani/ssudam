@@ -38,13 +38,16 @@ const EditPost = () => {
   useEffect(() => {
     console.log(meetingId);
     axios
-      .get(`/meetings/${meetingId}`)
+      .get(`/v1/parties/${meetingId}`)
       .then((response) => {
         console.log(response);
-        setMeetingInfo(response.data);
+        setMeetingInfo(response.data.data);
         console.log(meetingInfo);
-        setLatLng({ lat: response.data.lat, lng: response.data.lng });
-        setAddress({ address_name: response.data.location });
+        setLatLng({
+          lat: response.data.data.latitude,
+          lng: response.data.data.longitude,
+        });
+        setAddress({ address_name: response.data.data.address });
       })
       .catch((error) => {
         console.error("Error getting meeting data: ", error);
@@ -102,13 +105,13 @@ const EditPost = () => {
   const numberHandler = (e) => {
     setMeetingInfo((prevInfo) => ({
       ...prevInfo,
-      max_capacity: e.target.value,
+      maxCapacity: e.target.value,
     }));
   };
   const dateHandler = (e) => {
     setMeetingInfo((prevInfo) => ({
       ...prevInfo,
-      meeting_date: e.target.value,
+      meetingDate: e.target.value,
     }));
   };
   const dueHandler = (e) => {
@@ -142,53 +145,64 @@ const EditPost = () => {
     const duedate = data.get("duedate");
     const contact = data.get("contact");
 
-    let updatedDTO = {
-      id: Math.random() * 1000,
-      // memberId 하나로 가져오기!
-      // owneruserId: 1,
-      // owneremail: "user1@example.com",
-      memberId: loggedInUser.id, //
-      meeting_date: meetingdate,
-      location: address.address_name,
-      lat: latlng.lat,
-      lng: latlng.lng,
-      title: postedtitle,
+    // let updatedDTO = {
+    //   id: Math.random() * 1000,
+    //   // memberId 하나로 가져오기!
+    //   // owneruserId: 1,
+    //   // owneremail: "user1@example.com",
+    //   memberId: loggedInUser.id, //
+    //   meeting_date: meetingdate,
+    //   location: address.address_name,
+    //   lat: latlng.lat,
+    //   lng: latlng.lng,
+    //   title: postedtitle,
 
-      content: content,
-      max_capacity: numofpeople,
-      current_capacity: meetingInfo.current_capacity, //
-      // 참여 기능 완성되면 수정 필요 // 글 등록할 때는 기본적으로 0 아님??
-      hits: 0, //
+    //   content: content,
+    //   max_capacity: numofpeople,
+    //   current_capacity: meetingInfo.current_capacity, //
+    //   // 참여 기능 완성되면 수정 필요 // 글 등록할 때는 기본적으로 0 아님??
+    //   hits: 0, //
 
-      created_at: new Date(), //
-      last_modified_at: new Date(), //
+    //   created_at: new Date(), //
+    //   last_modified_at: new Date(), //
 
-      // 아래는 테이블에서 생략됨 이야기 필요
-      meetingname: meetingname,
-      duedate: duedate,
-      contact: contact,
+    //   // 아래는 테이블에서 생략됨 이야기 필요
+    //   meetingname: meetingname,
+    //   duedate: duedate,
+    //   contact: contact,
 
-      // hits 필요
-      party_status: meetingInfo.party_status, //
+    //   // hits 필요
+    //   party_status: meetingInfo.party_status, //
+    // };
+    let postDTO = {
+      title: meetingInfo.title,
+      memberId: loggedInUser.id,
+      meetingDate: meetingInfo.meetingDate,
+      latitude: latlng.lat,
+      longitude: latlng.lng,
+      address: address.address_name,
+      content: meetingInfo.content,
+      maxCapacity: meetingInfo.maxCapacity,
     };
-    console.log(updatedDTO);
-    setMeetingInfo({
-      postedtitle: "",
-      meetingname: "",
-      numofpeople: "",
-      meetingdate: today,
-      duedate: today,
-      contact: "",
-      content: "",
-    });
+    // console.log(updatedDTO);
+    // setMeetingInfo({
+    //   postedtitle: "",
+    //   meetingname: "",
+    //   numofpeople: "",
+    //   meetingdate: today,
+    //   duedate: today,
+    //   contact: "",
+    //   content: "",
+    // });
     // setAddress({ address_name: "" });
-    setLatLng({ lat: meetingInfo.lat, lng: meetingInfo.lng });
-
+    // setLatLng({ lat: meetingInfo.lat, lng: meetingInfo.lng });
+    console.log(meetingInfo);
     setSearchkeyword("");
     // setLatLng({ lat: 33.450701, lng: 126.570667 });
     // console.log(postedInfo);
+    console.log(postDTO);
     axios
-      .put(`/meetings/${meetingInfo.id}`, updatedDTO)
+      .patch(`/v1/parties/${meetingInfo.partyId}`, postDTO)
       .then((response) => {
         console.log(response.data);
         // console.log("submit 완료");
@@ -232,7 +246,7 @@ const EditPost = () => {
           <div className={classes.info}>
             <div className={classes.inputs}>
               <h2>상세 정보</h2>
-              <div className={classes.field}>
+              {/* <div className={classes.field}>
                 <h4>모임 이름</h4>
                 <input
                   type="text"
@@ -240,7 +254,7 @@ const EditPost = () => {
                   name="meetingname"
                   onChange={nameHandler}
                 />
-              </div>
+              </div> */}
               <div className={classes.field}>
                 <h4>모임 장소</h4>
                 <input
@@ -257,7 +271,7 @@ const EditPost = () => {
                   placeholder="2명 이상~50명 이하"
                   min={2}
                   max={50}
-                  value={meetingInfo.max_capacity}
+                  value={meetingInfo.maxCapacity}
                   name="numofpeople"
                   onChange={numberHandler}
                 />
@@ -265,14 +279,14 @@ const EditPost = () => {
               <div className={classes.field}>
                 <h4>모임 날짜</h4>
                 <input
-                  type="date"
+                  type="datetime-local"
                   min={today}
-                  value={meetingInfo.meeting_date}
+                  value={meetingInfo.meetingDate}
                   name="meetingdate"
                   onChange={dateHandler}
                 />
               </div>
-              <div className={classes.field}>
+              {/* <div className={classes.field}>
                 <h4>모임 마감일</h4>
                 <input
                   type="date"
@@ -281,7 +295,7 @@ const EditPost = () => {
                   name="duedate"
                   onChange={dueHandler}
                 />
-              </div>
+              </div> */}
               <div className={classes.field}>
                 <h4>연락 방법</h4>
                 <input
