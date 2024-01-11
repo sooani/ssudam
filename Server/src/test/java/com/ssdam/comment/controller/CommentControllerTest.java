@@ -1,15 +1,13 @@
-package com.ssdam.comment;
+package com.ssdam.comment.controller;
 
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-import com.ssdam.comment.controller.CommentController;
 import com.ssdam.comment.dto.CommentDto;
 import com.ssdam.comment.entity.Comment;
 import com.ssdam.comment.mapper.CommentMapper;
 import com.ssdam.comment.service.CommentService;
 import com.ssdam.member.entity.Member;
 import com.ssdam.party.entity.Party;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,6 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,7 +28,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.ssdam.util.ApiDocumentUtils.getRequestPreProcessor;

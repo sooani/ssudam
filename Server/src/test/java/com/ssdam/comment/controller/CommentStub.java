@@ -1,4 +1,4 @@
-package com.ssdam.comment;
+package com.ssdam.comment.controller;
 
 import com.ssdam.comment.dto.CommentDto;
 import com.ssdam.comment.entity.Comment;
