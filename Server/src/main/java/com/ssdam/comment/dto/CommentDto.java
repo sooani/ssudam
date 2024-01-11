@@ -1,5 +1,6 @@
 package com.ssdam.comment.dto;
 
+import com.ssdam.reply.dto.ReplyDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,10 +38,11 @@ public class CommentDto {
     @Getter
     public static class Response {
         private long commentId;
-        private long partyId;
+        private String partyTitle;
         private String nickname;
         private int likeCount;
         private String comment;
+        private ReplyDto.Response reply;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
