@@ -102,7 +102,7 @@ public class PartyControllerTest {
         //when
         ResultActions actions =
                 mockMvc.perform(
-                        RestDocumentationRequestBuilders.post("/v1/parties")
+                        post("/v1/parties")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
@@ -119,7 +119,7 @@ public class PartyControllerTest {
                         requestFields(
                                 List.of(
                                         fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 날짜"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 날짜"),
                                         fieldWithPath("longitude").type(JsonFieldType.STRING).description("경도"),
                                         fieldWithPath("latitude").type(JsonFieldType.STRING).description("위도"),
@@ -274,7 +274,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
                                         fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data.meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data.closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -341,7 +341,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
                                         fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data.meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data.closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -400,7 +400,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
                                         fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data[].meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data[].closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -456,7 +456,7 @@ public class PartyControllerTest {
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestParameters(
-                                List.of(parameterWithName("memberId").description("멤버 식별자"),
+                                List.of(parameterWithName("memberId").description("회원 식별자"),
                                         parameterWithName("page").description("페이지 번호"),
                                         parameterWithName("size").description("페이지 크기"))
                         ),
@@ -464,7 +464,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
                                         fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data[].meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data[].closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -520,7 +520,7 @@ public class PartyControllerTest {
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestParameters(
-                                List.of(parameterWithName("partyMemberId").description("모임에 참여한 멤버(모임멤버) 식별자"),
+                                List.of(parameterWithName("partyMemberId").description("모임에 참여한 회원(모임회원) 식별자"),
                                         parameterWithName("page").description("페이지 번호"),
                                         parameterWithName("size").description("페이지 크기"))
                         ),
@@ -528,7 +528,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
                                         fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data[].meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data[].closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -589,7 +589,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
                                         fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data[].meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data[].closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -653,7 +653,7 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
                                         fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
-                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data[].meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("data[].closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
@@ -696,7 +696,7 @@ public class PartyControllerTest {
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         pathParameters(
-                                parameterWithName("partyId").description("모임 식별자")
+                                parameterWithName("partyId").description("회원 식별자")
                         )));
     }
 }
