@@ -30,6 +30,7 @@ const DetailPost = () => {
   // const meetingId = 906.8489342328219;
   const { meetingId } = useParams();
   console.log(meetingId);
+  console.log(meetingInfo, userInfo);
   // const loggedInUser = localStorage.getItem("email");
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -55,107 +56,169 @@ const DetailPost = () => {
   //       });
   //   }
   // }, [userInfo]);
-  useEffect(() => {
-    if (meetingInfo && meetingInfo.memberId) {
+  // useEffect(() => {
+  //   if (loggedInUser && userInfo) {
+  //     // 이글의 모든 댓글을 조회하고 그 중에
+  //     axios
+  //       .get(`/v1/parties/${meetingId}/comments?userId=${loggedInUser.id}`)
+  //       .then((response) => {
+  //         if (Array.isArray(response.data) && response.data.length === 0) {
+  //           // console.log("응답 데이터가 빈 배열입니다.");
+  //         } else {
+  //           // console.log("응답 데이터가 빈 배열이 아닙니다.");
+  //           setHasMyComment(true);
+  //           // console.log(response.data[0]);
+  //           setMyComment(response.data[0]);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching comments:", error);
+  //       });
+  //   }
+  // }, [userInfo]);
+  // useEffect(() => {
+  //   if (meetingInfo && meetingInfo.memberId) {
+
+  //     axios
+  //       .get(`/v1/members/${meetingInfo.memberId}`)
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         setUserInfo(response.data.data);
+  //         // setUserInfo({
+  //         //   memberId: 1,
+  //         //   email: "user1@example.com",
+  //         //   nickname: "당근이",
+  //         // });
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error getting user data: ", error);
+  //       });
+  //     // console.log(userInfo);
+  //   }
+  // }, [meetingInfo]);
+  // useEffect(() => {}, [isRecruiting]);
+  const commentSubmitHandler = (e) => {
+    e.preventDefault();
+    // console.log(loggedInUser.nickname);
+    let commentDTO = {
+      // id: Math.random() * 1000,
+      partyId: meetingId,
+      memberId: loggedInUser.id,
+      // useremail: loggedInUser.email,
+      // nickname: loggedInUser.nickname,
+      // edited: new Date(),
+      // created: new Date(),
+      comment: enteredComment,
+    };
+    console.log(commentDTO);
+    axios
+      .post(`/v1/comments`, commentDTO)
+      .then((response) => {
+        // console.log(response.data);
+        getComments();
+        setHasMyComment(true);
+        setEnteredComment("");
+        console.log(response.data);
+        // 응답의 헤더에서 Location 값을 추출
+        const locationHeaderValue = response.headers.location;
+
+        // '/v1/comments/{commentId}'에서 commentId 부분을 추출
+        const commentIdMatch = locationHeaderValue.match(
+          /\/v1\/comments\/(\d+)/
+        );
+
+        if (commentIdMatch && commentIdMatch[1]) {
+          // commentId를 사용하여 원하는 작업 수행
+          const commentId = commentIdMatch[1];
+          console.log("Extracted Comment ID:", commentId);
+          axios.get(`/v1/comments/${commentId}`).then((response) => {
+            console.log(response.data);
+            setMyComment(response.data.data);
+          });
+        } else {
+          console.error("Comment ID not found in Location header.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error posting comment data: ", error);
+      });
+    // console.log(comments);
+  };
+  const getComments = async () => {
+    try {
+      // const res = await axios.get(`/v1/parties/${meetingId}/comments`);
+      const res = await axios.get(
+        `/v1/comments?partyId=${meetingId}&page=1&size=3`
+      );
+      const comments = res.data.data;
+      if (userInfo) {
+        const myComment = comments.find(
+          (comment) => comment.nickname === userInfo.nickname
+        );
+
+        if (myComment) {
+          // 조건에 맞는 comment가 있으면 setMyComment에 저장
+          setHasMyComment(true);
+          setMyComment(myComment);
+          console.log("My Comment:", myComment);
+        } else {
+          console.log("No comment found for the user.");
+        }
+        console.log("comments are updated successfully");
+        setComments(comments);
+      }
+    } catch (error) {
+      console.error("Error fetching comment datas: ", error);
+    }
+  };
+  const commentEditHandler = () => {
+    const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
+    let updatedDTO = myComment;
+    // console.log(updatedDTO);
+    if (userConfirmed) {
       axios
-        .get(`/v1/members/${meetingInfo.memberId}`)
+        .patch(`/v1/comments/${myComment.commentId}`, updatedDTO)
+
         .then((response) => {
-          console.log(response.data);
-          setUserInfo(response.data.data);
+          // console.log(response.data);
+          alert("댓글이 수정되었습니다!");
+          getComments();
         })
         .catch((error) => {
-          console.error("Error getting user data: ", error);
+          console.error("Error updating comment data: ", error);
+          alert("오류가 발생했습니다!");
         });
-      // console.log(userInfo);
     }
-  }, [meetingInfo]);
-  // useEffect(() => {}, [isRecruiting]);
-  // const commentSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   // console.log(loggedInUser.nickname);
-  //   let commentDTO = {
-  //     // id: Math.random() * 1000,
-  //     meetingId: meetingId,
-  //     userId: loggedInUser.id,
-  //     useremail: loggedInUser.email,
-  //     nickname: loggedInUser.nickname,
-  //     edited: new Date(),
-  //     created: new Date(),
-  //     content: enteredComment,
-  //   };
+  };
+  const commentDeleteHandler = () => {
+    const userConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
+    // json-server에서는 조건이 있는 삭제가 안되나봄..?
+    // 백엔드와 연결했을때 테스트 가능할듯...
+    if (userConfirmed) {
+      axios
+        .delete(`/v1/comments/${myComment.commentId}`)
 
-  //   axios
-  //     .post(`/v1/parties/${meetingId}/comments`, commentDTO)
-  //     .then((response) => {
-  //       // console.log(response.data);
-  //       getComments();
-  //       setHasMyComment(true);
-  //       setEnteredComment("");
-  //       setMyComment(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error posting comment data: ", error);
-  //     });
-  //   // console.log(comments);
-  // };
-  // const getComments = async () => {
-  //   try {
-  //     const res = await axios.get(`/v1/parties/${meetingId}/comments`);
-  //     const comments = res.data;
-  //     console.log("comments are updated successfully");
-  //     setComments(comments);
-  //   } catch (error) {
-  //     console.error("Error fetching comment datas: ", error);
-  //   }
-  // };
-  // const commentEditHandler = () => {
-  //   const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
-  //   let updatedDTO = myComment;
-  //   // console.log(updatedDTO);
-  //   if (userConfirmed) {
-  //     axios
-  //       .put(`/v1/comments/${myComment.id}`, updatedDTO)
-
-  //       .then((response) => {
-  //         // console.log(response.data);
-  //         alert("댓글이 수정되었습니다!");
-  //         getComments();
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error updating comment data: ", error);
-  //         alert("오류가 발생했습니다!");
-  //       });
-  //   }
-  // };
-  // const commentDeleteHandler = () => {
-  //   const userConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
-  //   // json-server에서는 조건이 있는 삭제가 안되나봄..?
-  //   // 백엔드와 연결했을때 테스트 가능할듯...
-  //   if (userConfirmed) {
-  //     axios
-  //       .delete(`/v1/comments/${myComment.id}`)
-
-  //       .then((response) => {
-  //         // console.log(response.data);
-  //         alert("댓글이 삭제되었습니다!");
-  //         setHasMyComment(false);
-  //         getComments();
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error deleting comment data: ", error);
-  //         alert("오류가 발생했습니다!");
-  //       });
-  //   }
-  // };
-  // useEffect(() => {
-  //   getComments();
-  // }, []);
+        .then((response) => {
+          // console.log(response.data);
+          alert("댓글이 삭제되었습니다!");
+          setHasMyComment(false);
+          getComments();
+        })
+        .catch((error) => {
+          console.error("Error deleting comment data: ", error);
+          alert("오류가 발생했습니다!");
+        });
+    }
+  };
+  useEffect(() => {
+    getComments();
+  }, [userInfo]);
   const commentChangeHandler = (e) => {
     if (hasMyComment) {
       setMyComment((prev) => ({
         ...prev,
-        content: e.target.value,
-        edited: new Date(),
+        comment: e.target.value,
+        // edited: new Date(),
       }));
     } else {
       setEnteredComment(e.target.value);
@@ -183,7 +246,8 @@ const DetailPost = () => {
   }, [meetingInfo]);
   const deleteMeetingHandler = () => {
     const userConfirmed = window.confirm("해당 글을 삭제하시겠습니까?");
-
+    console.log(meetingInfo);
+    console.log(meetingId);
     if (userConfirmed) {
       axios
         .delete(`/v1/parties/${meetingId}`)
@@ -222,8 +286,14 @@ const DetailPost = () => {
       .get(`/v1/parties/${meetingId}`)
       .then((response) => {
         // setIsLoading(true);
-        console.log(response.data);
+        console.log(response.data.data);
         setMeetingInfo(response.data.data);
+        // 아래는 나중에 주석처리
+        setUserInfo({
+          memberId: 1,
+          email: "user1@example.com",
+          nickname: "당근이",
+        });
         // if (response.data.party_status === "모집중") {
         //   setIsRecruiting(true);
         // }
@@ -238,7 +308,7 @@ const DetailPost = () => {
         // setIsLoading(false);
       });
     console.log(meetingInfo);
-  }, []);
+  }, [isParticipating]);
   useEffect(() => {
     axios
       .get(`/v1/parties/${meetingId}`)
@@ -261,6 +331,7 @@ const DetailPost = () => {
       });
     console.log(meetingInfo);
   }, [isParticipating]);
+  console.log(myComment);
   const joinHandler = () => {
     if (!isParticipating) {
       const userConfirmed = window.confirm("해당 모임에 참여하시겠습니까?");
@@ -312,43 +383,68 @@ const DetailPost = () => {
       if (userConfirmed) {
         console.log("참여 취소되었습니다.");
 
-        axios
-          .get(
-            `/v1/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`
-          )
-          .then((response) => {
-            // console.log(response);
-            if (response.data.length > 0) {
-              const particiId = response.data[0].id;
-              // console.log(particiId);
+        // axios
+        //   .get(
+        //     `/v1/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`
+        //   )
+        //   .then((response) => {
+        //     // console.log(response);
+        //     if (response.data.length > 0) {
+        //       const particiId = response.data[0].id;
+        //       // console.log(particiId);
 
-              axios
-                .delete(`/participations/${particiId}`)
-                .then((deleteResponse) => {
-                  // console.log(deleteResponse);
-                  // alert("해당 모임에 참여 취소 되었습니다!");
-                  setMeetingInfo((prev) => ({
-                    ...prev,
-                    party_status:
-                      prev.current_capacity - 1 <= prev.max_capacity
-                        ? "모집중"
-                        : "모집완료",
-                    current_capacity: prev.current_capacity - 1,
-                  }));
-                  setIsParticipating(false);
-                })
-                .catch((deleteError) => {
-                  console.error(
-                    "Error deleting participation data: ",
-                    deleteError
-                  );
-                });
-            } else {
-              console.log("해당하는 participation이 없습니다.");
-            }
+        //       axios
+        //         .delete(`/participations/${particiId}`)
+        //         .then((deleteResponse) => {
+        //           // console.log(deleteResponse);
+        //           // alert("해당 모임에 참여 취소 되었습니다!");
+        //           setMeetingInfo((prev) => ({
+        //             ...prev,
+        //             party_status:
+        //               prev.current_capacity - 1 <= prev.max_capacity
+        //                 ? "모집중"
+        //                 : "모집완료",
+        //             current_capacity: prev.current_capacity - 1,
+        //           }));
+        //           setIsParticipating(false);
+        //         })
+        //         .catch((deleteError) => {
+        //           console.error(
+        //             "Error deleting participation data: ",
+        //             deleteError
+        //           );
+        //         });
+        //     } else {
+        //       console.log("해당하는 participation이 없습니다.");
+        //     }
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error fetching participation data: ", error);
+        //   });
+        axios
+          // .post(`/participations`, partDTO)
+          .post(`/v1/parties/${meetingId}`, {
+            memberId: loggedInUser.id,
+            email: loggedInUser.email,
+            nickname: loggedInUser.nickname,
+          })
+          .then((response) => {
+            console.log(response);
+            // 참여중 여부는 db에 안들어가니까 새로고침할때마다 기존 상태가 유지 안됨 > useEffect로 participation 정보
+            // 가져와서 그거 기준으로 setIsParticipating 해야 함!
+            // setIsParticipating(true);
+            setMeetingInfo((prev) => ({
+              ...prev,
+              party_status:
+                prev.current_capacity - 1 <= prev.max_capacity
+                  ? "모집중"
+                  : "모집완료",
+              current_capacity: prev.current_capacity - 1,
+            }));
+            setIsParticipating(false);
           })
           .catch((error) => {
-            console.error("Error fetching participation data: ", error);
+            console.error("Error deleting participation data: ", error);
           });
       }
     }
@@ -378,7 +474,7 @@ const DetailPost = () => {
     axios
       .get(`/v1/parties?partyMemberId=${loggedInUser.id}&page=1&size=3`)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.data);
         const hasParticipatingParty = response.data.data.some(
           (item) => item.partyId == meetingId
         );
@@ -461,7 +557,7 @@ const DetailPost = () => {
               {!isMyPost && isParticipating && (
                 <button
                   className={classes.joinBtn}
-                  // onClick={joinHandler}
+                  onClick={joinHandler}
                   disabled={!isRecruiting}
                 >
                   <FaUsers style={{ fontSize: "1.5rem" }} />
@@ -576,7 +672,7 @@ const DetailPost = () => {
               {hasMyComment && <h3>내가 쓴 댓글</h3>}
               <textarea
                 placeholder="댓글 내용을 입력하세요..."
-                value={hasMyComment ? myComment.content : enteredComment}
+                value={hasMyComment ? myComment.comment : enteredComment}
                 onChange={commentChangeHandler}
                 required
               />
@@ -585,7 +681,7 @@ const DetailPost = () => {
                   <button
                     className={classes.joinBtn_1}
                     // type="submit"
-                    // onClick={commentSubmitHandler}
+                    onClick={commentSubmitHandler}
                   >
                     댓글 등록
                     {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
@@ -596,13 +692,13 @@ const DetailPost = () => {
                 <div className={classes.btnCon_2}>
                   <button
                     className={classes.joinBtn}
-                    // onClick={commentEditHandler}
+                    onClick={commentEditHandler}
                   >
                     댓글 수정
                   </button>
                   <button
                     className={classes.deleteBtn}
-                    // onClick={commentDeleteHandler}
+                    onClick={commentDeleteHandler}
                   >
                     댓글 삭제
                   </button>
@@ -631,12 +727,12 @@ const DetailPost = () => {
                       <div className={classes.user}>
                         <div>{comment.nickname}</div>
                         <div>
-                          {new Date(comment.edited).toLocaleString("ko-KR")}
+                          {new Date(comment.modifiedAt).toLocaleString("ko-KR")}
                         </div>
                       </div>
                     </div>
 
-                    <div className={classes.commcontent}>{comment.content}</div>
+                    <div className={classes.commcontent}>{comment.comment}</div>
                   </div>
                 );
               })}
