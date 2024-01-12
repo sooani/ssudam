@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {login} from '../features/userSlice'
 import axios from 'axios';
 import classes from "../styles/pages/LogIn.module.css"
 
@@ -18,6 +20,7 @@ const LogIn = () => {
     const [passwordError, setPasswordError] = useState(false);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
         console.log('handleLogin 함수 호출')
@@ -68,6 +71,13 @@ const LogIn = () => {
                 localStorage.setItem('email', response.data.email);
                 localStorage.setItem('token', response.data.token);
                 
+                dispatch(
+                    login({
+                        email: email,
+                        password: password,
+                        loggedIn: true,
+                    })
+                )
 
                 // 로그인 성공 시 입력 필드 초기화, 메인 페이지로 이동
                 setEmail('');
