@@ -145,11 +145,20 @@
     align-items: center; 
     width: 80vw;
     height: 150vh;
+    flex-direction: row;
 }
 
 .MyPostContainer{
-    display: flex; 
-    flex-direction: row;
-    border: 1px solid yellow;
+    width: 40vw;
+    height: 150vh;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
 }
-
+.MyCommentContainer{
+    width: 40vw;
+    height: 150vh;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}

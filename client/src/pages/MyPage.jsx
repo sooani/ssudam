@@ -10,13 +10,15 @@ import Footer from '../components/Layout/Footer';
 import footerLogo from '../images/footerLogo.png';
 import classes from '../styles/pages/MyPage.module.css';
 import axios from '../axios';
+import MySlider from '../components/MyPage/MySlider';
+
 
 const MyPage = () => {
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
         const fetchUserData = () => {
-            axios.get('member')
+            axios.get('v1/members/{member-id}')
                 .then(response => {
                     setUserData(response.data);
                     console.log(response.data);
@@ -65,11 +67,11 @@ const MyPage = () => {
                 <div className={classes.MyContents}>
                     <div className={classes.MyPostContainer}>
                         <h1 className={classes.MyPostHeader}>나의 글</h1>
-                        <div>{/*내가 쓴 글 제목 받아오기*/}</div>
-                        <div className={classes.MyCommentContainer}>
+                        <MySlider />
+                    <div className={classes.MyCommentContainer}>
                             <h1 className={classes.MyCommentHeader}>나의 댓글</h1>
                             <div>{/*내가 쓴 댓글 받아오기*/}</div>
-                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

@@ -117,16 +117,26 @@
     /* border: 1px solid blue; */
 }
 
-.UserCurrentPasswordcontainer{
+/* .UserCurrentPasswordcontainer{
     display: flex;
     flex-direction: column; 
     border: 1px solid blue;
+} */
+
+.UserNewPasswordContainer{
+    display: flex;
+    flex-direction: column; 
+    height: 10vh;
+    border: 1px solid red;
 }
+
 .ConfirmUserPasswordContainer{
     display: flex;
     flex-direction: column; 
     border: 1px solid blue;
+    height: 10vh;
 }
+
 
 /* .UserCurrentPasswordMSG{
     position: absolute;
@@ -135,6 +145,14 @@
     color: red;
     font-size: 14px;
 } */
+
+.UserNewPasswordMSG{
+    position: relative;
+    left: 0;
+    color: red;
+    font-size: 14px;
+    margin: 0;
+}
 
 .UserConfirmPassword {
     width: 50vw;
