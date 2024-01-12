@@ -15,7 +15,14 @@ const EditPost = () => {
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
   // 오늘 날짜에서 년/월/일 도출
-  const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
+  const today = new Date();
+
+  // 현재 날짜에 1일(24시간)을 더하여 하루 뒤의 일시를 얻음
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
+
   const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
@@ -281,7 +288,7 @@ const EditPost = () => {
                 <h4>모임 일시</h4>
                 <input
                   type="datetime-local"
-                  min={today}
+                  min={formattedTomorrow}
                   value={meetingInfo.meetingDate}
                   name="meetingdate"
                   onChange={dateHandler}

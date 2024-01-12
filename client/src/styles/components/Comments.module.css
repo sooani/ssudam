@@ -11,6 +11,10 @@
   margin: 0 2rem;
   margin-left: auto;
 }
+.dropdown select {
+  padding: 0.5rem;
+  border-radius: 5px;
+}
 .comments .comm {
   /* border: 1px solid orange; */
   border-bottom: 2px solid gray;
