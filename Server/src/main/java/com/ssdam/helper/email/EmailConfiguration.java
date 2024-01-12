@@ -12,22 +12,22 @@ import java.util.Properties;
 
 @Configuration
 public class EmailConfiguration {
-    @Value("smtp.gmail.com")
+    @Value("${mail.smtp.host}")
     private String host;
 
-    @Value("587")
+    @Value("${mail.smtp.port}")
     private int port;
 
-    @Value("${EMAIL_USERNAME}")
+    @Value("${mail.smtp.username}")
     private String username;
 
-    @Value("${EMAIL_PASSWORD}")
+    @Value("${mail.smtp.password}")
     private String password;
 
-    @Value("true")
+    @Value("${mail.smtp.auth}")
     private String auth;
 
-    @Value("true")
+    @Value("${mail.smtp.starttls.enable}")
     private String tlsEnable;
 
 
