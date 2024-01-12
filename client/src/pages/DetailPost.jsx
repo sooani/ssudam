@@ -10,7 +10,8 @@ import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import axios from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Comment from "../components/Meeting/Comment";
+import Comment from "../components/Meeting/Comments";
+import Comments from "../components/Meeting/Comments";
 const DetailPost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({});
@@ -143,6 +144,7 @@ const DetailPost = () => {
       });
     // console.log(comments);
   };
+  console.log(hasMyComment);
   const getComments = async () => {
     try {
       // const res = await axios.get(`/v1/parties/${meetingId}/comments`);
@@ -152,9 +154,11 @@ const DetailPost = () => {
       const comments = res.data.data;
       if (userInfo) {
         const myComment = comments.find(
-          (comment) => comment.nickname === userInfo.nickname
+          (comment) => comment.nickname === loggedInUser.nickname
         );
-
+        console.log(comments);
+        console.log(loggedInUser);
+        console.log(myComment);
         if (myComment) {
           // 조건에 맞는 comment가 있으면 setMyComment에 저장
           setHasMyComment(true);
@@ -172,8 +176,13 @@ const DetailPost = () => {
   };
   const commentEditHandler = () => {
     const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
-    let updatedDTO = myComment;
-    // console.log(updatedDTO);
+    console.log(myComment);
+    let updatedDTO = {
+      comment: myComment.comment,
+      createdAt: myComment.createdAt,
+      modifiedAt: new Date(),
+    };
+    console.log(updatedDTO);
     if (userConfirmed) {
       axios
         .patch(`/v1/comments/${myComment.commentId}`, updatedDTO)
@@ -289,9 +298,9 @@ const DetailPost = () => {
         setMeetingInfo(response.data.data);
         // 아래는 나중에 주석처리
         setUserInfo({
-          memberId: 1,
-          email: "user1@example.com",
-          nickname: "당근이",
+          memberId: 3,
+          email: "user3@example.com",
+          nickname: "초롱이",
         });
         // if (response.data.party_status === "모집중") {
         //   setIsRecruiting(true);
@@ -513,6 +522,11 @@ const DetailPost = () => {
   return (
     <div className={classes.wrapper}>
       <Header />
+      {/* {!meetingInfo && !userInfo && (
+        <div className={classes.container}>
+          <p>Loading...</p>
+        </div>
+      )} */}
       {meetingInfo && userInfo && (
         <div className={classes.container}>
           <div className={classes.infoAndBtn}>
@@ -743,10 +757,11 @@ const DetailPost = () => {
                 );
               })}
           </div> */}
-          <Comment
+          <Comments
             isLoading={isLoading}
             comments={comments}
-            userInfo={userInfo}
+            loggedInUser={loggedInUser}
+            partyId={meetingId}
           />
         </div>
       )}
