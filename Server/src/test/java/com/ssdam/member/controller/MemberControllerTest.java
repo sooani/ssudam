@@ -31,8 +31,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -157,5 +156,57 @@ class MemberControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    public void getMemberTest() throws Exception {
+        // given
+        long memberId = 1L;
+        Member member =
+                new Member(
+                        "cjh@gmail.com",
+                        "cjh123!@",
+                        "보노보노의고함"
+                );
+        MemberResponseDto response =
+                new MemberResponseDto(
+                        memberId,
+                        "cjh@gmail.com",
+                        "보노보노의고함",
+                        Member.MemberStatus.MEMBER_ACTIVE
+                );
+
+        given(memberService.findMember(Mockito.anyLong())).willReturn(new Member());
+        given(mapper.memberToMemberResponseDto(Mockito.any(Member.class))).willReturn(response);
+
+        // when
+        ResultActions actions = mockMvc
+                .perform(
+                        get("/v1/members/{member-id}", memberId)
+                                .accept(MediaType.APPLICATION_JSON)
+                );
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.email").value(member.getEmail()))
+                .andExpect(jsonPath("$.data.nickname").value(member.getNickname()))
+                .andDo(
+                        document("get-member",
+                                getRequestPreProcessor(),
+                                getResponsePreProcessor(),
+                                pathParameters(
+                                        parameterWithName("member-id").description("회원 식별자")),
+                                responseFields(
+                                        List.of(
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
+                                                fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                                fieldWithPath("data.memberStatus").type(JsonFieldType.STRING).description("회원 상태: 활동중 / 휴면 상태 / 탈퇴 상태")
+                                        )
+                                )
+                        )
+                );
     }
 }
