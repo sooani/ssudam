@@ -125,34 +125,66 @@ const MakePost = () => {
     const duedate = data.get("duedate");
     const contact = data.get("contact");
 
+    // let postDTO = {
+    //   id: Math.random() * 1000,
+    //   // memberId 하나로 가져오기!
+    //   // owneruserId: 1,
+    //   // owneremail: "user1@example.com",
+    //   memberId: loggedInUser.id, //
+    //   meeting_date: meetingdate,
+    //   location: address.address_name,
+    //   lat: latlng.lat,
+    //   lng: latlng.lng,
+    //   title: postedtitle,
+
+    //   content: content,
+    //   max_capacity: numofpeople,
+    //   current_capacity: 0, //
+    //   // 참여 기능 완성되면 수정 필요 // 글 등록할 때는 기본적으로 0 아님??
+    //   hits: 0, //
+
+    //   created_at: new Date(), //
+    //   last_modified_at: new Date(), //
+
+    //   // 아래는 테이블에서 생략됨 이야기 필요
+    //   meetingname: meetingname,
+    //   duedate: duedate,
+    //   contact: contact,
+
+    //   // hits 필요
+    //   party_status: "모집중", //
+    // };
     let postDTO = {
-      id: Math.random() * 1000,
+      title: postedtitle,
+      memberId: loggedInUser.id,
+      meetingDate: meetingdate,
+      latitude: latlng.lat,
+      longitude: latlng.lng,
+      address: address.address_name,
+      content: content,
+      maxCapacity: numofpeople,
+
+      // id: Math.random() * 1000,
       // memberId 하나로 가져오기!
       // owneruserId: 1,
       // owneremail: "user1@example.com",
-      memberId: loggedInUser.id, //
-      meeting_date: meetingdate,
-      location: address.address_name,
-      lat: latlng.lat,
-      lng: latlng.lng,
-      title: postedtitle,
+      //
 
-      content: content,
-      max_capacity: numofpeople,
-      current_capacity: 0, //
+      // currentCapacity: 0, //
+
       // 참여 기능 완성되면 수정 필요 // 글 등록할 때는 기본적으로 0 아님??
-      hits: 0, //
+      // hits: 0, //
 
-      created_at: new Date(), //
-      last_modified_at: new Date(), //
+      // created_at: new Date(), //
+      // last_modified_at: new Date(), //
 
       // 아래는 테이블에서 생략됨 이야기 필요
-      meetingname: meetingname,
-      duedate: duedate,
-      contact: contact,
+      // meetingname: meetingname,
+      // duedate: duedate,
+      // contact: contact,
 
       // hits 필요
-      party_status: "모집중", //
+      // party_status: "모집중", //
     };
     setPostedInfo({
       postedtitle: "",
@@ -164,16 +196,18 @@ const MakePost = () => {
       content: "",
     });
     // setAddress({ address_name: "" });
-    setLatLng({
-      lat: 33.450701,
-      lng: 126.570667,
-    });
+    // setLatLng({
+    //   lat: 33.450701,
+    //   lng: 126.570667,
+    // });
 
     setSearchkeyword("");
-    setLatLng({ lat: 33.450701, lng: 126.570667 });
+    // setLatLng({ lat: 33.450701, lng: 126.570667 });
     console.log(postedInfo);
+    console.log(postDTO);
     axios
-      .post(`/meetings`, postDTO)
+      // .post(`/meetings`, postDTO)
+      .post(`/v1/parties`, postDTO)
       .then((response) => {
         console.log(response.data);
         console.log("submit 완료");
@@ -206,7 +240,7 @@ const MakePost = () => {
           <div className={classes.info}>
             <div className={classes.inputs}>
               <h2>상세 정보</h2>
-              <div className={classes.field}>
+              {/* <div className={classes.field}>
                 <h4>모임 이름</h4>
                 <input
                   type="text"
@@ -215,7 +249,7 @@ const MakePost = () => {
                   // onChange={nameHandler}
                   // value={postedInfo.meetingname}
                 />
-              </div>
+              </div> */}
               <div className={classes.field}>
                 <h4>모임 장소</h4>
                 <input
@@ -240,9 +274,9 @@ const MakePost = () => {
                 />
               </div>
               <div className={classes.field}>
-                <h4>모임 날짜</h4>
+                <h4>모임 일시</h4>
                 <input
-                  type="date"
+                  type="datetime-local"
                   min={today}
                   required
                   name="meetingdate"
@@ -250,17 +284,17 @@ const MakePost = () => {
                   // value={postedInfo.meetingdate}
                 />
               </div>
-              <div className={classes.field}>
+              {/* <div className={classes.field}>
                 <h4>모임 마감일</h4>
                 <input
-                  type="date"
+                  type="datetime-local"
                   min={today}
                   required
                   name="duedate"
                   // onChange={dueHandler}
                   // value={postedInfo.duedate}
                 />
-              </div>
+              </div> */}
               <div className={classes.field}>
                 <h4>연락 방법</h4>
                 <input
@@ -304,7 +338,9 @@ const MakePost = () => {
               name="content"
             />
             <div className={classes.btnCon}>
-              <button className={classes.cancelBtn}>취소</button>
+              <button className={classes.cancelBtn} onClick={handleCancel}>
+                취소
+              </button>
               <button type="submit" className={classes.postBtn}>
                 글 등록
               </button>

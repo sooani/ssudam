@@ -77,10 +77,8 @@
 }
 
 .UserNickname,
-.UserEmail,
 .UserCurrentPassword,
-.UserNewPassword,
-.UserConfirmPassword{
+.UserNewPassword{
     width : 50vw;
     height: 5vh;
     border-radius: 5px;
@@ -92,18 +90,73 @@
     position: relative;
 }
 
-.ErrorText {
+.UserEmail{
+    width : 50vw;
+    height: 5vh;
+    border-radius: 5px;
+    border:1px solid black;
+    background-color: rgb(180, 180, 180);
+    display: flex;
+    align-items: center;
+    padding: 0.5vh;
+    position: relative;
+}
+
+.UserNicknameContainer {
+    position: relative;
+    display: flex;
+    /* border:2px solid rgb(250, 0, 0); */
+}
+
+.UserNicknameMSG {
     position: absolute;
-    bottom: -1.5rem;
+    bottom: -2.5rem;
     left: 0;
     color: red;
     font-size: 14px;
+    /* border: 1px solid blue; */
 }
 
-.Error {
-    border-color: red; 
+.UserCurrentPasswordcontainer{
+    display: flex;
+    flex-direction: column; 
+    border: 1px solid blue;
+}
+.ConfirmUserPasswordContainer{
+    display: flex;
+    flex-direction: column; 
+    border: 1px solid blue;
 }
 
+/* .UserCurrentPasswordMSG{
+    position: absolute;
+    bottom: -2.5rem;
+    left: 0;
+    color: red;
+    font-size: 14px;
+} */
+
+.UserConfirmPassword {
+    width: 50vw;
+    height: 5vh;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0.5vh;
+    position: relative;
+}
+
+.UserConfirmPasswordMSG{
+    /* position: absolute; */
+    position: relative;
+    /* bottom: -1.5rem; */
+    left: 0;
+    color: red;
+    font-size: 14px;
+    margin: 0;
+}
 
 .ConfirmCurrentPasswordContainer {
     display: flex;

@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'http://localhost:4000',
+  // baseURL: "http://15.164.28.18:8080",
   withCredentials: true,
 });
 

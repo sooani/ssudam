@@ -22,17 +22,19 @@
     align-items: center; 
     height : auto; */
     width: 70vw;
-    height: 100vh;
+    /* height: 100vh; */
+    height : auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: left;
     margin: auto;
     padding: 10px;
+    /* overflow-y: auto; */
 }
 
 .MyInfo{
-    border: 2px solid yellow;
+    /* border: 2px solid yellow; */
     display: flex; 
     align-items: center; 
     justify-content: center; /* 수평 가운데 정렬을 위해 수정 */
@@ -42,7 +44,7 @@
 
 .Myprofile{
     display: flex; 
-    border: 2px solid green;
+    /* border: 2px solid green; */
     height: 50vh;
     width:20vw;
     flex-direction: column; 
@@ -68,7 +70,7 @@
     height: 25vh; 
     width: 15vw;
     overflow: hidden;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
@@ -83,7 +85,7 @@
 }
 
 .MyData{
-    border: 2px solid black;
+    /* border: 2px solid black; */
     width: 60vw;
     height: 50vh;
     display: flex;
@@ -91,16 +93,28 @@
     align-items: center; 
 }
 
-.NicknameContainer,
+.NicknameContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid green; */
+    margin-top: 6rem;
+}
 .EmailContainer{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    /* border: 1px solid green; */
+    margin-top: 0rem;
 }
+
 .Email,
 .Nickname{
     font-weight: 700;
     font-size: 1.2rem;
+    /* border: 1px solid pink; */
 }
 
 .UserEmail,
@@ -122,6 +136,20 @@
     display: flex; 
     align-items: center; 
     width: 80vw;
-    height: 100vh;
+    height: 300vh;
+}
+
+.MyContents{
+    border: 2px solid red;
+    display: flex; 
+    align-items: center; 
+    width: 80vw;
+    height: 150vh;
+}
+
+.MyPostContainer{
+    display: flex; 
+    flex-direction: row;
+    border: 1px solid yellow;
 }
 

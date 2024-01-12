@@ -11,6 +11,7 @@ const SearchMap = (props) => {
   const [markers, setMarkers] = useState([]);
   const [level, setLevel] = useState(4);
   const [map, setMap] = useState();
+  console.log(props.lat, props.lng);
   // const [position, setPosition] = useState({
   //   lat: props && props.lat ? props.lat : 33.450701,
   //   lng: props && props.lng ? props.lng : 126.570667,
@@ -111,8 +112,8 @@ const SearchMap = (props) => {
     <div className={classes.container}>
       <Map
         center={{
-          lat: 37.566826,
-          lng: 126.9786567,
+          lat: props.lat ? props.lat : 37.566826,
+          lng: props.lng ? props.lng : 126.9786567,
         }}
         // center={{
         //   lat: position.lat,
@@ -162,7 +163,9 @@ const SearchMap = (props) => {
             )}
           </MapMarker>
         ))}
-
+        {props.lat && props.lng && (
+          <MapMarker position={{ lat: props.lat, lng: props.lng }} />
+        )}
         <div className={classes.sidebar}>
           {markers.map((marker, index) => (
             <div
