@@ -47,8 +47,33 @@ include::{snippets}/post-party/http-response.adoc[]
 include::{snippets}/post-party/response-headers.adoc[]
 
 === 모임 참가
+.curl-request
+include::{snippets}/post-party-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-party-member/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-party-member/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-party-member/http-response.adoc[]
+
+.path-parameters
+include::{snippets}/post-party-member/path-parameters.adoc[]
 
 === 종료된 모임 참가시 400 오류
+.curl-request
+include::{snippets}/post-party-member-error/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-party-member-error/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-party-member-error/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-party-member-error/http-response.adoc[]
 
 === 모임 수정
 .curl-request
@@ -99,12 +124,68 @@ include::{snippets}/get-parties/http-response.adoc[]
 include::{snippets}/get-parties/request-parameters.adoc[]
 
 === 특정 멤버가 등록한 모든 모임 조회
+.curl-request
+include::{snippets}/get-parties-by-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-parties-by-member/http-request.adoc[]
+
+.response-fields
+include::{snippets}/get-parties-by-member/response-fields.adoc[]
+
+.http-response
+include::{snippets}/get-parties-by-member/http-response.adoc[]
+
+.request-parameters
+include::{snippets}/get-parties/request-parameters.adoc[]
 
 === 특정 멤버가 참여한 모든 모임 조회
+.curl-request
+include::{snippets}/get-parties-by-party-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-parties-by-party-member/http-request.adoc[]
+
+.response-fields
+include::{snippets}/get-parties-by-party-member/response-fields.adoc[]
+
+.http-response
+include::{snippets}/get-parties-by-party-member/http-response.adoc[]
+
+.request-parameters
+include::{snippets}/get-parties-by-party-member/request-parameters.adoc[]
 
 === 2일 이내 등록된 최신글 조회
+.curl-request
+include::{snippets}/get-latest-parties/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-latest-parties/http-request.adoc[]
+
+.response-fields
+include::{snippets}/get-latest-parties/response-fields.adoc[]
+
+.http-response
+include::{snippets}/get-latest-parties/http-response.adoc[]
+
+.request-parameters
+include::{snippets}/get-latest-parties/request-parameters.adoc[]
 
 === 키워드로 제목,내용 검색
+.curl-request
+include::{snippets}/get-parties-with-title-or-content/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-parties-with-title-or-content/http-request.adoc[]
+
+.response-fields
+include::{snippets}/get-parties-with-title-or-content/response-fields.adoc[]
+
+.http-response
+include::{snippets}/get-parties-with-title-or-content/http-response.adoc[]
+
+.request-parameters
+include::{snippets}/get-parties-with-title-or-content/request-parameters.adoc[]
 
 === 모임 정보 삭제
 .curl-request
