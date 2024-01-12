@@ -39,14 +39,14 @@ public class ReviewService {
     }
 
     // 해당 멤버가 쓴 후기 조회
-//    @Transactional(readOnly = true)
-//    public Page<Review> findAllReviewsByMemberId(long memberId, int page, int size) {
-//        // 해당 멤버 ID에 대한 리뷰를 가져오는 리포지토리 메서드 호출
-//        List<Review> reviews = reviewRepository.findByMemberId(memberId);
-//        Page<Review> pageReviews = new PageImpl<>(reviews, PageRequest.of(page, size, Sort.by("createdAt").descending()), reviews.size());
-//
-//        return pageReviews;
-//    }
+    @Transactional(readOnly = true)
+    public Page<Review> findAllReviewsByMemberId(long memberId, int page, int size) {
+        // 해당 멤버 ID에 대한 리뷰를 가져오는 리포지토리 메서드 호출
+        List<Review> reviews = reviewRepository.findByMember_MemberId(memberId);
+        Page<Review> pageReviews = new PageImpl<>(reviews, PageRequest.of(page, size, Sort.by("createdAt").descending()), reviews.size());
+
+        return pageReviews;
+    }
 
     // 전체 후기 조회
     public Page<Review> findAll(int page, int size) {

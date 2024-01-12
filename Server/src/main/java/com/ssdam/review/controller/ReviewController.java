@@ -50,16 +50,16 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.OK).body(mapper.reviewToReviewResponseDto(updatedReview));
     }
 
-//    // 해당 멤버가 쓴 후기 조회
-//    @GetMapping("/{member-id}/reviews")
-//    public ResponseEntity getReviewsByMember(@PathVariable("member-id") @Positive long memberId,
-//                                             @Positive @RequestParam int page,
-//                                             @Positive @RequestParam int size) {
-//        Page<Review> pageReview = reviewService.findAllReviewsByMemberId(memberId, page - 1, size);
-//        List<Review> reviews = pageReview.getContent();
-//
-//        return ResponseEntity.ok(new MultiResponseDto<>(mapper.reviewsToReviewResponseDtos(reviews), pageReview));
-//    }
+    // 해당 멤버가 쓴 후기 조회
+    @GetMapping("/{member-id}/reviews")
+    public ResponseEntity getReviewsByMember(@PathVariable("member-id") @Positive long memberId,
+                                             @Positive @RequestParam int page,
+                                             @Positive @RequestParam int size) {
+        Page<Review> pageReview = reviewService.findAllReviewsByMemberId(memberId, page - 1, size);
+        List<Review> reviews = pageReview.getContent();
+
+        return ResponseEntity.ok(new MultiResponseDto<>(mapper.reviewsToReviewResponseDtos(reviews), pageReview));
+    }
 
     // 전체 후기 조회
     @GetMapping
