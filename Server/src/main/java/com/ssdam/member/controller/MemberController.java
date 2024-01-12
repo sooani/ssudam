@@ -65,6 +65,10 @@ public class MemberController {
                                       @Valid @RequestBody MemberPatchDto memberPatchDto) {
         memberPatchDto.setMemberId(memberId);
 
+        if (!memberPatchDto.getPassword().equals(memberPatchDto.getConfirmPassword())) {
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
+
         Member member =
                 memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
 

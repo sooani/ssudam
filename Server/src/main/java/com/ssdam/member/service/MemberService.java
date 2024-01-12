@@ -40,6 +40,7 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
+        verifyExistsNickname(member.getNickname());
 
         // Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
@@ -58,6 +59,8 @@ public class MemberService {
     public Member updateMember(Member member) {
         Member findMember = findVerifiedMember(member.getMemberId());
 
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password -> findMember.setPassword(password));
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickname -> findMember.setNickname(nickname));
         Optional.ofNullable(member.getMemberStatus())
@@ -93,6 +96,12 @@ public class MemberService {
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    private void verifyExistsNickname(String nickname) {
+        Optional<Member> member1 = memberRepository.findByNickname(nickname);
+        if (member1.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 }

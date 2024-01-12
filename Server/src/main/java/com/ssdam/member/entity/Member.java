@@ -34,8 +34,9 @@ public class Member extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>(); // 사용자의 권한을 등록하기 위한 권한 테이블
 
-    public Member(String email) {
+    public Member(String email, String nickname) {
         this.email = email;
+        this.nickname = nickname;
     }
 
     public enum MemberStatus {
