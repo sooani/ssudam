@@ -9,20 +9,21 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import footerLogo from '../images/footerLogo.png';
 import classes from '../styles/pages/MyPage.module.css';
-import axios from 'axios';
+import axios from '../axios';
 
 const MyPage = () => {
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.post('/v1/members', {
+        const fetchUserData = () => {
+            axios.get('member')
+                .then(response => {
+                    setUserData(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('사용자 데이터를 가져오는 중 오류 발생', error);
                 });
-                setUserData(response.data);
-            } catch (error) {
-                console.error('사용자 데이터를 가져오는 중 오류 발생', error);
-            }
         };
 
         fetchUserData();
@@ -58,8 +59,18 @@ const MyPage = () => {
                     </div>
                 </div>
                 <div className={classes.MyEvent}>
-                    <h1 className={classes.MyEventHeader}>내가 참여한 모임</h1>
+                    <h1 className={classes.MyEventHeader}>나의 모임</h1>
                     {/* 내가 참여한 모임 나타내기 */}
+                </div>
+                <div className={classes.MyContents}>
+                    <div className={classes.MyPostContainer}>
+                        <h1 className={classes.MyPostHeader}>나의 글</h1>
+                        <div>{/*내가 쓴 글 제목 받아오기*/}</div>
+                        <div className={classes.MyCommentContainer}>
+                            <h1 className={classes.MyCommentHeader}>나의 댓글</h1>
+                            <div>{/*내가 쓴 댓글 받아오기*/}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <Footer />
