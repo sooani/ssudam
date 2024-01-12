@@ -23,7 +23,6 @@ public class Review extends Auditable {
     private Member member;
 
     @Column(nullable = false)
-    @NotBlank
     private String title;
 
     @Column(nullable = false)

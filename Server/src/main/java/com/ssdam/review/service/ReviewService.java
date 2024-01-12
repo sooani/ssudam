@@ -25,10 +25,12 @@ public class ReviewService {
         this.beanUtils = beanUtils;
     }
 
+    // 후기 등록
     public Review createReview(Review review) {
         return reviewRepository.save(review);
     }
 
+    // 후기 수정
     public Review updateReview(Review review) {
         Review foundReview = findReview(review.getReviewId());
         Review updatedReview = beanUtils.copyNonNullProperties(review, foundReview);
@@ -36,10 +38,22 @@ public class ReviewService {
         return reviewRepository.save(updatedReview);
     }
 
+    // 해당 멤버가 쓴 후기 조회
+//    @Transactional(readOnly = true)
+//    public Page<Review> findAllReviewsByMemberId(long memberId, int page, int size) {
+//        // 해당 멤버 ID에 대한 리뷰를 가져오는 리포지토리 메서드 호출
+//        List<Review> reviews = reviewRepository.findByMemberId(memberId);
+//        Page<Review> pageReviews = new PageImpl<>(reviews, PageRequest.of(page, size, Sort.by("createdAt").descending()), reviews.size());
+//
+//        return pageReviews;
+//    }
+
+    // 전체 후기 조회
     public Page<Review> findAll(int page, int size) {
         return reviewRepository.findAll(PageRequest.of(page - 1, size, Sort.by("reviewId").descending()));
     }
 
+    // 후기 삭제
     public void deleteReview(long reviewId) {
         Review foundReview = findReview(reviewId);
         reviewRepository.delete(foundReview);

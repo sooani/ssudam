@@ -30,7 +30,7 @@ public class ReviewController {
         this.mapper = mapper;
     }
 
-    // 리뷰 등록
+    // 후기 등록
     @PostMapping
     public ResponseEntity postReview(@RequestBody @Valid ReviewDto.Post requestBody) {
         Review review = mapper.reiviewPostDtoToReview(requestBody);
@@ -40,7 +40,7 @@ public class ReviewController {
         return ResponseEntity.created(location).build();
     }
 
-    // 리뷰 수정
+    // 후기 수정
     @PutMapping("/{review-id}")
     public ResponseEntity patchReview(@PathVariable("review-id") @Positive long reviewId,
                                       @Valid @RequestBody ReviewDto.Patch requestBody) {
@@ -50,7 +50,7 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.OK).body(mapper.reviewToReviewResponseDto(updatedReview));
     }
 
-//    // 해당 멤버가 쓴 리뷰 조회
+//    // 해당 멤버가 쓴 후기 조회
 //    @GetMapping("/{member-id}/reviews")
 //    public ResponseEntity getReviewsByMember(@PathVariable("member-id") @Positive long memberId,
 //                                             @Positive @RequestParam int page,
@@ -61,7 +61,7 @@ public class ReviewController {
 //        return ResponseEntity.ok(new MultiResponseDto<>(mapper.reviewsToReviewResponseDtos(reviews), pageReview));
 //    }
 
-    // 전체 리뷰 조회
+    // 전체 후기 조회
     @GetMapping
     public ResponseEntity getReviews(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
@@ -71,7 +71,7 @@ public class ReviewController {
         return ResponseEntity.ok(new MultiResponseDto(mapper.reviewsToReviewResponseDtos(reviews), pageReview));
     }
 
-    // 리뷰 삭제
+    // 후기 삭제
     @DeleteMapping("/{review-id}")
     public ResponseEntity deleteReview(@PathVariable("review-id") long reviewId) {
         reviewService.deleteReview(reviewId);
