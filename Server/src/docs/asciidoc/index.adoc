@@ -46,6 +46,10 @@ include::{snippets}/post-party/http-response.adoc[]
 .response-headers
 include::{snippets}/post-party/response-headers.adoc[]
 
+=== 모임 참가
+
+=== 종료된 모임 참가시 400 오류
+
 === 모임 수정
 .curl-request
 include::{snippets}/patch-party/curl-request.adoc[]
@@ -99,6 +103,8 @@ include::{snippets}/get-parties/request-parameters.adoc[]
 === 특정 멤버가 참여한 모든 모임 조회
 
 === 2일 이내 등록된 최신글 조회
+
+=== 키워드로 제목,내용 검색
 
 === 모임 정보 삭제
 .curl-request

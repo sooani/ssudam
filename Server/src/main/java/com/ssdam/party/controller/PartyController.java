@@ -52,8 +52,7 @@ public class PartyController {
     @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.POST)
     public ResponseEntity<Void> postPartyMember(@PathVariable("party-id")
                                                 @Positive long partyId,
-                                                @RequestBody Member member,
-                                                @RequestParam @Positive long memberId) {
+                                                @RequestBody Member member) {
 
         partyService.addPartyMember(partyId, member);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -129,7 +128,7 @@ public class PartyController {
     public ResponseEntity getPartiesWithTitleOrContent(@RequestParam String keyword,
                                                        @Positive @RequestParam int page,
                                                        @Positive @RequestParam int size) {
-        Page<Party> pageParties = partyService.searchPartiesByTitleAndContent(keyword,page - 1, size);
+        Page<Party> pageParties = partyService.searchPartiesByTitleAndContent(keyword, page - 1, size);
         List<Party> parties = pageParties.getContent(); // 페이지에서 목록 가져옴
         return new ResponseEntity(
                 new MultiResponseDto<>(mapper.partiesToPartyResponses(parties),
