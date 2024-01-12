@@ -12,6 +12,7 @@ import axios from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Comment from "../components/Meeting/Comments";
 import Comments from "../components/Meeting/Comments";
+import { FaBookmark } from "react-icons/fa";
 import {
   WiCloud,
   WiCloudy,
@@ -573,7 +574,11 @@ const DetailPost = () => {
                     navigate(-1);
                   }}
                 />
-                <h1>{meetingInfo.title}</h1>{" "}
+                {/* <div className={classes.bookmark}>
+                  <h1>{meetingInfo.title}</h1>
+                  <FaBookmark style={{ color: "red", fontSize: "2rem" }} />
+                </div> */}
+                <h1>{meetingInfo.title}</h1>
               </div>
               <div className={classes.writerAndDate}>
                 <div className={classes.writer}>
@@ -592,10 +597,17 @@ const DetailPost = () => {
                     <h4>모집완료</h4>
                   </div>
                 )}
+                {/* <div>
+                  <FaBookmark style={{ color: "red", fontSize: "2rem" }} />
+                </div> */}
               </div>
             </div>
 
             <div className={classes.btnCon}>
+              <FaBookmark
+                style={{ color: "red", fontSize: "2rem" }}
+                className={classes.bookmark}
+              />
               {isRecruiting && !isMyPost && !isParticipating && (
                 <button className={classes.joinBtn} onClick={joinHandler}>
                   <FaUsers style={{ fontSize: "1.5rem" }} />
@@ -612,15 +624,10 @@ const DetailPost = () => {
                   참여중
                 </button>
               )}
-              {/* 참여 취소가 가능해질 경우 아래를 state 관련으로 변경해야 함 (아마) */}
-              {/* {!isParticipating &&
-                  meetingInfo.max_capacity <= meetingInfo.current_capacity && (
-                    <button className={classes.limitBtn} disabled>
-                      인원 마감
-                    </button>
-                  )} */}
-              {/* <button className={classes.joinBtn}>참여하기</button>
-            <button className={classes.joinBtn}>참여하기</button> */}
+
+              {/* <div className={classes.bookmark}> */}
+
+              {/* </div> */}
             </div>
           </div>
           <div className={classes.detailInfo}>
