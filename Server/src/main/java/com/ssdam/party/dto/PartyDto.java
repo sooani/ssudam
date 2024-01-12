@@ -82,12 +82,13 @@ public class PartyDto {
         private String longitude; //경도
         private String latitude; //위도
         private String address; //주소
+        private String weather;
+        private int bookmarkCount;
         private String content;
         private int maxCapacity;
         private int currentCapacity;
         private Party.PartyStatus partyStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-
     }
 }

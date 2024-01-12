@@ -39,6 +39,8 @@ public class Party extends Auditable {
     @Column(nullable = false)
     private String address;
 
+    private String weather;
+
     @Column(nullable = false, length = 30)
     private String title;
 
