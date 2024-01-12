@@ -7,6 +7,7 @@ import com.ssdam.party.entity.Party;
 import com.ssdam.party.entity.PartyMember;
 import com.ssdam.party.repository.PartyMemberRepository;
 import com.ssdam.party.repository.PartyRepository;
+import com.ssdam.party.weather.WeatherService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,13 +24,17 @@ public class PartyService {
     private final PartyRepository partyRepository;
 
     private final PartyMemberRepository partyMemberRepository;
+    private final WeatherService weatherService;
 
-    public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository) {
+    public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository, WeatherService weatherService) {
         this.partyRepository = partyRepository;
         this.partyMemberRepository = partyMemberRepository;
+        this.weatherService = weatherService;
     }
 
     public Party createParty(Party party) {
+        party.setWeather(weatherService.getWeather(party.getLatitude(), party.getLongitude(),party.getMeetingDate())
+                .orElse(null));
         return partyRepository.save(party);
     }
 
