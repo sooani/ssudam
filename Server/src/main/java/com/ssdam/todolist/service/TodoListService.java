@@ -41,7 +41,7 @@ public class TodoListService {
     }
 
     public Page<TodoList> findAll(int page, int size) {
-        return todoListRepository.findAll(PageRequest.of(page - 1, size, Sort.by("todolist_id").descending()));
+        return todoListRepository.findAll(PageRequest.of(page - 1, size, Sort.by("todoOrder").ascending()));
     }
 
     public void deleteTodo(long todolist_id) {

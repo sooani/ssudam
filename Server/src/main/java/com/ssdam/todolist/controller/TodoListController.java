@@ -45,7 +45,6 @@ public class TodoListController {
                                     @Valid @RequestBody TodoListDto.Patch requestBody) {
         requestBody.addTodoListId(todolistId);
         TodoList updatedTodo = todoListService.updateTodoList(mapper.todoPatchDtoToTodoList(requestBody));
-
         return ResponseEntity.status(HttpStatus.OK).body(mapper.todoToTodoListResponseDto(updatedTodo));
     }
 
