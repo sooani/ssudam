@@ -1,17 +1,22 @@
 import classes from "../../styles/components/Comments.module.css";
 import footerLogo from "../../images/footerLogo.png";
+import ReactPaginate from "react-paginate";
 import { FaThumbsUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import axios from "../../axios";
 const Comments = (props) => {
   const [commentLikes, setCommentLikes] = useState({});
+  const [comments, setComments] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalComments, setTotalComments] = useState(0);
+  const commentsPerPage = 2;
   console.log(props.comments);
   // const commentsLength = props.comments.length;
   useEffect(() => {
     // comments 배열이 변경될 때마다 댓글 좋아요 상태 초기화
     const initialCommentLikes = {};
-    if (props.comments) {
-      props.comments.forEach((comment) => {
+    if (comments) {
+      comments.forEach((comment) => {
         axios
           .get(
             `/v1/likes/comments/${comment.commentId}/like-status?memberId=${props.loggedInUser.id}`
@@ -36,7 +41,7 @@ const Comments = (props) => {
           });
       });
     }
-  }, [props.comments]);
+  }, [comments]);
 
   const likeHandler = (commentId) => {
     // 댓글 좋아요 상태 토글
@@ -80,6 +85,9 @@ const Comments = (props) => {
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
+  const handlePageChange = ({ selected }) => {
+    setPage(selected + 1);
+  };
   // useEffect(() => {
   //   axios
   //     .post(
@@ -104,6 +112,23 @@ const Comments = (props) => {
   //       alert("오류가 발생했습니다!");
   //     });
   // }, []);
+  // useEffect(() => {
+  //   console.log(commentsPerPage);
+  //   const fetchComments = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `/v1/comments?partyId=${props.partyId}&page=${page}&size=${commentsPerPage}`
+  //       );
+  //       console.log(response.data.data);
+  //       // setComments(response.data.data);
+  //       // setTotalComments(response.data.pageInfo.totalElements);
+  //     } catch (error) {
+  //       console.error("Error fetching comments:", error);
+  //     }
+  //   };
+
+  //   fetchComments();
+  // }, [page]);
   return (
     <div className={classes.comments}>
       <div className={classes.dropdown}>
@@ -153,6 +178,14 @@ const Comments = (props) => {
             </div>
           );
         })}
+      {/* <ReactPaginate
+        pageCount={Math.ceil(totalComments / commentsPerPage)}
+        pageRangeDisplayed={5}
+        marginPagesDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={classes.pagination}
+        activeClassName={classes.active}
+      /> */}
     </div>
   );
 };

@@ -12,6 +12,41 @@ import axios from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Comment from "../components/Meeting/Comments";
 import Comments from "../components/Meeting/Comments";
+import {
+  WiCloud,
+  WiCloudy,
+  WiDayCloudy,
+  WiDaySunny,
+  WiFog,
+  WiRain,
+  WiShowers,
+  WiSnow,
+  WiThunderstorm,
+} from "weather-icons-react";
+const WeatherIcon = ({ weatherType }) => {
+  switch (weatherType) {
+    case "clear sky":
+      return <WiDaySunny size={50} color="skyblue" />;
+    case "few clouds":
+      return <WiDayCloudy size={50} color="skyblue" />;
+    case "scattered clouds":
+      return <WiCloud size={50} color="skyblue" />;
+    case "broken clouds":
+      return <WiCloudy size={50} color="skyblue" />;
+    case "shower rain":
+      return <WiShowers size={50} color="skyblue" />;
+    case "rain":
+      return <WiRain size={50} color="skyblue" />;
+    case "thunderstorm":
+      return <WiThunderstorm size={50} color="skyblue" />;
+    case "snow":
+      return <WiSnow size={50} color="skyblue" />;
+    case "mist":
+      return <WiFog size={50} color="skyblue" />;
+    default:
+      return null; // 다른 날씨 유형에 대한 아이콘이 없는 경우
+  }
+};
 const DetailPost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({});
@@ -629,12 +664,18 @@ const DetailPost = () => {
                       )}
                     </div>
                   </h4>
-                  {/* <h4>
+                  <h4>
                     모임 마감일
                     <div className={classes.emp}>
-                      {meetingInfo.duedate.split("T")[0]}
+                      {new Date(meetingInfo.dueDate).toLocaleString("ko-KR", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                      })}
                     </div>
-                  </h4> */}
+                  </h4>
                   <h4>
                     연락 방법
                     {(isMyPost || isParticipating) && (
@@ -643,6 +684,17 @@ const DetailPost = () => {
                     {!isParticipating && !isMyPost && (
                       <div className={classes.alert}>참여 후 확인 가능</div>
                     )}
+                  </h4>
+                  <h4>
+                    예상 날씨
+                    {/* <div className={classes.weather}>{meetingInfo.weather}</div> */}
+                    <div className={classes.weather}>
+                      <WeatherIcon
+                        className={classes.wIcon}
+                        weatherType={meetingInfo.weather}
+                        // weatherType="snow"
+                      />
+                    </div>
                   </h4>
                 </div>
               </div>
