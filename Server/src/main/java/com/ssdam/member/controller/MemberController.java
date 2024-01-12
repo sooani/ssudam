@@ -46,14 +46,6 @@ public class MemberController {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
 
-//        if (!memberPostDto.getPassword().equals(memberPostDto.getConfirmPassword())) {
-//            bindingResult.rejectValue("confirmPassword", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-//        }
-
-//        if (bindingResult.hasErrors()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(createErrorResponse(bindingResult));
-//        }
-
         Member createdMember = memberService.createMember(member);
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
@@ -103,15 +95,5 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    private MultiResponseDto<SingleResponseDto<String>> createErrorResponse(BindingResult bindingResult) {
-//        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-//        MultiResponseDto<SingleResponseDto<String>> errorResponse = new MultiResponseDto<>(null, null);
-//
-//        for (FieldError fieldError : fieldErrors) {
-//            SingleResponseDto<String> error = new SingleResponseDto<>(fieldError.getDefaultMessage());
-//            errorResponse.getData().add(error);
-//        }
-//
-//        return errorResponse;
-//    }
+
 }

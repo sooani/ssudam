@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,6 +24,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
@@ -28,13 +34,13 @@ import static com.ssdam.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
@@ -205,6 +211,110 @@ class MemberControllerTest {
                                                 fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
                                                 fieldWithPath("data.memberStatus").type(JsonFieldType.STRING).description("회원 상태: 활동중 / 휴면 상태 / 탈퇴 상태")
                                         )
+                                )
+                        )
+                );
+    }
+
+    @Test
+    public void getMembersTest() throws Exception {
+        // given
+        String page = "1";
+        String size = "10";
+
+        List<Member> members = List.of(
+                new Member(
+                        "ghj@gmail.com",
+                        "ghj123!@",
+                        "포로리"
+                ),
+                new Member(
+                        "ksa@gmail.com",
+                        "ksa123!@",
+                        "뽀로로"
+                )
+        );
+
+        List<MemberResponseDto> responses = List.of(
+                new MemberResponseDto(1L,
+                        "ghj@gmail.com",
+                        "포로리",
+                        Member.MemberStatus.MEMBER_ACTIVE
+                ),
+                new MemberResponseDto(2L,
+                        "ksa@gmail.com",
+                        "뽀로로",
+                        Member.MemberStatus.MEMBER_ACTIVE
+                )
+        );
+
+        Page<Member> pageMembers = new PageImpl<>(members,
+                PageRequest.of(0, 10, Sort.by("memberId").descending()), members.size());
+
+        given(memberService.findMembers(Mockito.anyInt(), Mockito.anyInt())).willReturn(pageMembers);
+        given(mapper.membersToMemberResponseDto(members)).willReturn(responses);
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/v1/members")
+                        .params(queryParams)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isArray())
+                .andDo(document("get-members",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestParameters(
+                                List.of(
+                                        parameterWithName("page").description("페이지 번호"),
+                                        parameterWithName("size").description("페이지 사이즈")
+                                )
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                        fieldWithPath("data[].email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("data[].memberStatus").type(JsonFieldType.STRING).description("회원 상태: 활동중 / 휴면 상태 / 탈퇴 상태"),
+                                        fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 결과 데이터"),
+                                        fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                        fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("페이지 사이즈"),
+                                        fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("총 데이터 개수"),
+                                        fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("총 페이지 번호")
+                                )
+                        )
+                ));
+    }
+
+    @Test
+    public void deleteMemberTest() throws Exception {
+        // given
+        long memberId = 1L;
+        doNothing().when(memberService).deleteMember(Mockito.anyLong());
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                delete("/v1/members/{member-id}", memberId)
+        );
+
+        // then
+        actions.andExpect(status().isNoContent())
+                .andDo(
+                        document(
+                                "delete-member",
+                                getRequestPreProcessor(),
+                                getResponsePreProcessor(),
+                                pathParameters(
+                                        parameterWithName("member-id").description("회원 식별자")
                                 )
                         )
                 );
