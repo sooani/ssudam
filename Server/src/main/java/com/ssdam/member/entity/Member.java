@@ -24,7 +24,7 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String nickname;
 
     @Enumerated(value = EnumType.STRING)
