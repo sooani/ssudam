@@ -183,6 +183,7 @@ const EditPost = () => {
       address: address.address_name,
       content: meetingInfo.content,
       maxCapacity: meetingInfo.maxCapacity,
+      partyStatus: meetingInfo.partyStatus,
     };
     // console.log(updatedDTO);
     // setMeetingInfo({
@@ -218,13 +219,13 @@ const EditPost = () => {
   const toggleOnHandler = () => {
     setMeetingInfo((prevInfo) => ({
       ...prevInfo,
-      party_status: "모집완료",
+      partyStatus: "PARTY_CLOSED",
     }));
   };
   const toggleOffHandler = () => {
     setMeetingInfo((prevInfo) => ({
       ...prevInfo,
-      party_status: "모집중",
+      partyStatus: "PARTY_OPENED",
     }));
   };
   return (
@@ -277,7 +278,7 @@ const EditPost = () => {
                 />
               </div>
               <div className={classes.field}>
-                <h4>모임 날짜</h4>
+                <h4>모임 일시</h4>
                 <input
                   type="datetime-local"
                   min={today}
@@ -338,12 +339,12 @@ const EditPost = () => {
               onChange={contentHandler}
             />
             <div className={classes.btnCon}>
-              {meetingInfo.party_status === "모집중" && (
+              {meetingInfo.partyStatus === "PARTY_OPENED" && (
                 <button className={classes.onBtn} onClick={toggleOnHandler}>
                   현재 모집중
                 </button>
               )}
-              {meetingInfo.party_status === "모집완료" && (
+              {meetingInfo.partyStatus === "PARTY_CLOSED" && (
                 <button className={classes.offBtn} onClick={toggleOffHandler}>
                   현재 모집완료
                 </button>

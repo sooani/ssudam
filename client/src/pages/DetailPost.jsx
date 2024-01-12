@@ -164,20 +164,23 @@ const DetailPost = () => {
   // localStorage에서 사용자 email 가져와서 글의 사용자 email 과 비교하고 같을 경우 수정/삭제 버튼 띄우기
   // localStorage를 쓸지 함수를 쓸지 추후에 방식 변경 가능성 존재
   useEffect(() => {
+    console.log(userInfo);
     if (userInfo) {
-      if (userInfo.memberId === loggedInUser.id) {
+      if (userInfo.memberId == loggedInUser.id) {
         setIsMyPost(true);
         console.log(isMyPost);
       }
     }
   }, [userInfo]);
-  // useEffect(() => {
-  //   if (meetingInfo.party_status === "모집중") {
-  //     setIsRecruiting(true);
-  //   } else {
-  //     setIsRecruiting(false);
-  //   }
-  // }, [meetingInfo]);
+  useEffect(() => {
+    if (meetingInfo) {
+      if (meetingInfo.partyStatus === "PARTY_OPENED") {
+        setIsRecruiting(true);
+      } else {
+        setIsRecruiting(false);
+      }
+    }
+  }, [meetingInfo]);
   const deleteMeetingHandler = () => {
     const userConfirmed = window.confirm("해당 글을 삭제하시겠습니까?");
 
@@ -243,10 +246,10 @@ const DetailPost = () => {
         // setIsLoading(true);
         // console.log(response);
         // setMeetingInfo(response.data);
-        if (response.data.party_status === "모집중") {
+        if (response.data.partyStatus === "PARTY_OPENED") {
           setIsRecruiting(true);
         }
-        if (response.data.party_status === "모집완료") {
+        if (response.data.partyStatus === "PARTY_CLOSED") {
           setIsRecruiting(false);
         }
 
@@ -258,93 +261,98 @@ const DetailPost = () => {
       });
     console.log(meetingInfo);
   }, [isParticipating]);
-  // const joinHandler = () => {
-  //   if (!isParticipating) {
-  //     const userConfirmed = window.confirm("해당 모임에 참여하시겠습니까?");
+  const joinHandler = () => {
+    if (!isParticipating) {
+      const userConfirmed = window.confirm("해당 모임에 참여하시겠습니까?");
 
-  //     // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
-  //     if (userConfirmed) {
-  //       console.log("참여되었습니다.");
+      // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
+      if (userConfirmed) {
+        console.log("참여되었습니다.");
 
-  //       let partDTO = {
-  //         // member_party_id: Math.random() * 1000,
-  //         member_id: loggedInUser.id,
-  //         party_id: meetingId,
-  //       };
-  //       // 해당 meeting의 current capacity가 max capacity - 1 이하일 경우 참여가 가능하다
-  //       // max capacity 랑 current capacity랑 같을 때 모임글 상태를 모집완료로 변경!
-  //       axios
-  //         .post(`/participations`, partDTO)
-  //         .then((response) => {
-  //           console.log(response);
-  //           // 참여중 여부는 db에 안들어가니까 새로고침할때마다 기존 상태가 유지 안됨 > useEffect로 participation 정보
-  //           // 가져와서 그거 기준으로 setIsParticipating 해야 함!
-  //           // setIsParticipating(true);
-  //           setMeetingInfo((prev) => ({
-  //             ...prev,
-  //             party_status:
-  //               prev.current_capacity + 1 == prev.max_capacity
-  //                 ? "모집완료"
-  //                 : "모집중",
-  //             current_capacity: prev.current_capacity + 1,
-  //           }));
-  //           setIsParticipating(true);
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error posting participation data: ", error);
-  //         });
-  //     }
-  //   }
-  //   if (isParticipating) {
-  //     const userConfirmed = window.confirm(
-  //       "해당 모임에 참여 취소 하시겠습니까?"
-  //     );
+        let partDTO = {
+          // member_party_id: Math.random() * 1000,
+          member_id: loggedInUser.id,
+          party_id: meetingId,
+        };
+        // 해당 meeting의 current capacity가 max capacity - 1 이하일 경우 참여가 가능하다
+        // max capacity 랑 current capacity랑 같을 때 모임글 상태를 모집완료로 변경!
+        axios
+          // .post(`/participations`, partDTO)
+          .post(`/v1/parties/${meetingId}`, {
+            memberId: loggedInUser.id,
+            email: loggedInUser.email,
+            nickname: loggedInUser.nickname,
+          })
+          .then((response) => {
+            console.log(response);
+            // 참여중 여부는 db에 안들어가니까 새로고침할때마다 기존 상태가 유지 안됨 > useEffect로 participation 정보
+            // 가져와서 그거 기준으로 setIsParticipating 해야 함!
+            // setIsParticipating(true);
+            setMeetingInfo((prev) => ({
+              ...prev,
+              party_status:
+                prev.current_capacity + 1 == prev.max_capacity
+                  ? "모집완료"
+                  : "모집중",
+              current_capacity: prev.current_capacity + 1,
+            }));
+            setIsParticipating(true);
+          })
+          .catch((error) => {
+            console.error("Error posting participation data: ", error);
+          });
+      }
+    }
+    if (isParticipating) {
+      const userConfirmed = window.confirm(
+        "해당 모임에 참여 취소 하시겠습니까?"
+      );
 
-  //     // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
-  //     if (userConfirmed) {
-  //       console.log("참여 취소되었습니다.");
+      // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
+      if (userConfirmed) {
+        console.log("참여 취소되었습니다.");
 
-  //       axios
-  //         .get(
-  //           `/v1/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`
-  //         )
-  //         .then((response) => {
-  //           // console.log(response);
-  //           if (response.data.length > 0) {
-  //             const particiId = response.data[0].id;
-  //             // console.log(particiId);
+        axios
+          .get(
+            `/v1/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`
+          )
+          .then((response) => {
+            // console.log(response);
+            if (response.data.length > 0) {
+              const particiId = response.data[0].id;
+              // console.log(particiId);
 
-  //             axios
-  //               .delete(`/participations/${particiId}`)
-  //               .then((deleteResponse) => {
-  //                 // console.log(deleteResponse);
-  //                 // alert("해당 모임에 참여 취소 되었습니다!");
-  //                 setMeetingInfo((prev) => ({
-  //                   ...prev,
-  //                   party_status:
-  //                     prev.current_capacity - 1 <= prev.max_capacity
-  //                       ? "모집중"
-  //                       : "모집완료",
-  //                   current_capacity: prev.current_capacity - 1,
-  //                 }));
-  //                 setIsParticipating(false);
-  //               })
-  //               .catch((deleteError) => {
-  //                 console.error(
-  //                   "Error deleting participation data: ",
-  //                   deleteError
-  //                 );
-  //               });
-  //           } else {
-  //             console.log("해당하는 participation이 없습니다.");
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error fetching participation data: ", error);
-  //         });
-  //     }
-  //   }
-  // };
+              axios
+                .delete(`/participations/${particiId}`)
+                .then((deleteResponse) => {
+                  // console.log(deleteResponse);
+                  // alert("해당 모임에 참여 취소 되었습니다!");
+                  setMeetingInfo((prev) => ({
+                    ...prev,
+                    party_status:
+                      prev.current_capacity - 1 <= prev.max_capacity
+                        ? "모집중"
+                        : "모집완료",
+                    current_capacity: prev.current_capacity - 1,
+                  }));
+                  setIsParticipating(false);
+                })
+                .catch((deleteError) => {
+                  console.error(
+                    "Error deleting participation data: ",
+                    deleteError
+                  );
+                });
+            } else {
+              console.log("해당하는 participation이 없습니다.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching participation data: ", error);
+          });
+      }
+    }
+  };
   // console.log(isParticipating);
 
   // useEffect(() => {
@@ -365,6 +373,29 @@ const DetailPost = () => {
   //       alert("오류가 발생했습니다!");
   //     });
   // }, [meetingInfo]);
+  useEffect(() => {
+    console.log(meetingId);
+    axios
+      .get(`/v1/parties?partyMemberId=${loggedInUser.id}&page=1&size=3`)
+      .then((response) => {
+        console.log(response.data);
+        const hasParticipatingParty = response.data.data.some(
+          (item) => item.partyId == meetingId
+        );
+        console.log(hasParticipatingParty);
+        setIsParticipating(hasParticipatingParty);
+        console.log(isParticipating);
+        // 뭔가 있을 경우 참여중
+        // if (response.data.length > 0) {
+        //   setIsParticipating(true);
+        // }
+        // 아니면 비참여중
+      })
+      .catch((error) => {
+        console.error("Error updating meeting data: ", error);
+        alert("오류가 발생했습니다!");
+      });
+  }, [meetingInfo]);
   // useEffect(() => {
   //   console.log("meeting info updated-------------------");
   //   console.log("updated meeting info = ", meetingInfo);
@@ -422,10 +453,7 @@ const DetailPost = () => {
 
             <div className={classes.btnCon}>
               {isRecruiting && !isMyPost && !isParticipating && (
-                <button
-                  className={classes.joinBtn}
-                  // onClick={joinHandler}
-                >
+                <button className={classes.joinBtn} onClick={joinHandler}>
                   <FaUsers style={{ fontSize: "1.5rem" }} />
                   참여
                 </button>
@@ -477,9 +505,19 @@ const DetailPost = () => {
                 </div>
                 <div className={classes.info1_2}>
                   <h4>
-                    모임 날짜
+                    모임 일시
                     <div className={classes.emp}>
-                      {meetingInfo.meetingDate.split("T")[0]}
+                      {/* {meetingInfo.meetingDate.split("T")[0]} */}
+                      {new Date(meetingInfo.meetingDate).toLocaleString(
+                        "ko-KR",
+                        {
+                          year: "numeric",
+                          month: "numeric",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                        }
+                      )}
                     </div>
                   </h4>
                   {/* <h4>

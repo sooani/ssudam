@@ -274,7 +274,7 @@ const MakePost = () => {
                 />
               </div>
               <div className={classes.field}>
-                <h4>모임 날짜</h4>
+                <h4>모임 일시</h4>
                 <input
                   type="datetime-local"
                   min={today}

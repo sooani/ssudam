@@ -169,7 +169,7 @@
 }
 .info1 .info1_1 {
   /* border: 1px solid black; */
-  flex-basis: 65%;
+  flex-basis: 55%;
   /* display: flex;
   flex-direction: row; */
 }
@@ -184,7 +184,7 @@
 }
 .info1 .info1_2 {
   /* border: 1px solid orange; */
-  flex-basis: 35%;
+  flex-basis: 45%;
 }
 .info1_2 h4 {
   display: flex;
