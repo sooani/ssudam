@@ -7,10 +7,7 @@ import com.ssdam.party.entity.Party;
 import com.ssdam.party.entity.PartyMember;
 import com.ssdam.party.repository.PartyMemberRepository;
 import com.ssdam.party.repository.PartyRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +27,7 @@ public class PartyService {
         this.partyMemberRepository = partyMemberRepository;
     }
 
-    // 새로운 파티 생성
+    // 파티 생성
     public Party createParty(Party party, Member author) {
         // 파티 저장
         Party savedParty = partyRepository.save(party);
@@ -91,7 +88,16 @@ public class PartyService {
 
     }
 
-    // 글을 등록한 사람만 수정할 수 있게 권한 추가 해야함
+    //키워드로 제목,글내용 검색
+    @Transactional(readOnly = true)
+    public Page<Party> searchPartiesByTitleAndContent(String keyword, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("partyId").descending());
+
+        return partyRepository.findByTitleContainingOrContentContaining(keyword, keyword, pageable);
+    }
+
+    // 파티 수정 , 작성한 사람만 수정하게 해야함
     public Party updateParty(Party party) {
         Party findParty = findVerifiedParty(party.getPartyId());
 
@@ -119,7 +125,7 @@ public class PartyService {
         return partyRepository.save(findParty);
     }
 
-    // 파티 삭제
+    // 파티 삭제, 작성한 사람이 삭제하게 해야함
     public void deleteParty(long partyId) {
         Party findParty = findVerifiedParty(partyId);
 
