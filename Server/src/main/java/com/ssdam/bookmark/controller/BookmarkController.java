@@ -22,7 +22,7 @@ public class BookmarkController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/parties/{party-id}/like-status")
+    @GetMapping("/parties/{party-id}/bookmark-status")
     public ResponseEntity<Boolean> checkBookmarkStatus(@PathVariable("party-id")@Positive long partyId,
                                                        @RequestParam @Positive long memberId){
         boolean isBookmarked = bookmarkService.isPartyBookmarkedByUser(memberId,partyId);
