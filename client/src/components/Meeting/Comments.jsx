@@ -6,14 +6,17 @@ import { useState, useEffect } from "react";
 import axios from "../../axios";
 const Comments = (props) => {
   const [commentLikes, setCommentLikes] = useState({});
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(props.comments);
   const [page, setPage] = useState(1);
   const [totalComments, setTotalComments] = useState(0);
   const commentsPerPage = 2;
   console.log(props.comments);
   // const commentsLength = props.comments.length;
   useEffect(() => {
-    // comments 배열이 변경될 때마다 댓글 좋아요 상태 초기화
+    // props.comments가 변경될 때마다 comments 상태를 업데이트
+    setComments(props.comments);
+  }, [props.comments]);
+  useEffect(() => {
     const initialCommentLikes = {};
     if (comments) {
       comments.forEach((comment) => {
@@ -23,6 +26,7 @@ const Comments = (props) => {
           )
 
           .then((response) => {
+            console.log(response);
             if (response.data === true) {
               setCommentLikes((prevState) => ({
                 ...prevState,
@@ -54,8 +58,20 @@ const Comments = (props) => {
     axios
       .post(`/v1/likes/comments/${commentId}?memberId=${props.loggedInUser.id}`)
       .then((response) => {
-        // 성공적으로 처리된 경우의 로직을 작성하세요.
         console.log(response);
+        const updatedComments = comments.map((comment) => {
+          if (comment.commentId === commentId) {
+            return {
+              ...comment,
+              likeCount: commentLikes[commentId]
+                ? comment.likeCount - 1
+                : comment.likeCount + 1,
+            };
+          }
+          return comment;
+        });
+        console.log(updatedComments);
+        setComments(updatedComments);
       })
       .catch((error) => {
         console.error("Error liking comment data: ", error);
@@ -67,21 +83,23 @@ const Comments = (props) => {
 
   useEffect(() => {
     // 최신 순으로 정렬
-    if (sortOption === "recent" && props.comments) {
-      const sortedByRecent = [...props.comments].sort(
+    if (sortOption === "recent" && comments) {
+      const sortedByRecent = [...comments].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
       setSortedComments(sortedByRecent);
     }
     // 좋아요 순으로 정렬
-    else if (sortOption === "likes" && props.comments) {
-      const sortedByLikes = [...props.comments].sort(
-        (a, b) => b.likeCount - a.likesCount
+    else if (sortOption === "likes" && comments) {
+      const sortedByLikes = [...comments].sort(
+        (a, b) => b.likeCount - a.likeCount
       );
       setSortedComments(sortedByLikes);
     }
-  }, [props.comments, sortOption]);
-
+  }, [comments, sortOption]);
+  useEffect(() => {
+    console.log("updated commentLikes");
+  }, [commentLikes]);
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
@@ -138,7 +156,7 @@ const Comments = (props) => {
         </select>
       </div>
       {!props.isLoading &&
-        props.comments &&
+        comments &&
         sortedComments.map((comment) => {
           return (
             <div key={comment.commentId} className={classes.comm}>
@@ -172,7 +190,8 @@ const Comments = (props) => {
                         ? "green"
                         : "black",
                     }}
-                  />
+                  />{" "}
+                  {comment.likeCount}
                 </div>
               </div>
             </div>

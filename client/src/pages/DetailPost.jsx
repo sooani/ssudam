@@ -334,8 +334,8 @@ const DetailPost = () => {
         setMeetingInfo(response.data.data);
         // 아래는 나중에 주석처리
         setUserInfo({
-          memberId: 3,
-          email: "user3@example.com",
+          memberId: 2,
+          email: "user2@example.com",
           nickname: "초롱이",
         });
         // if (response.data.party_status === "모집중") {
