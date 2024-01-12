@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
+import com.ssdam.member.entity.Member;
+import com.ssdam.member.service.MemberService;
 import com.ssdam.party.dto.PartyDto;
 import com.ssdam.party.entity.Party;
 import com.ssdam.party.mapper.PartyMapper;
@@ -62,6 +64,8 @@ public class PartyControllerTest {
     @MockBean
     private PartyService partyService;
     @MockBean
+    private MemberService memberService;
+    @MockBean
     private PartyMapper mapper;
 
     @Test
@@ -70,6 +74,8 @@ public class PartyControllerTest {
         System.out.println("postParty 테스트 시작");
         //given
         PartyDto.Post post = (PartyDto.Post) PartyStub.MockParty.getRequestBody(HttpMethod.POST);
+        Member mockMember = new Member();
+        mockMember.setMemberId(1l);
 
         //직렬화 할때 nano 속성 제거해서 포함하지 않는 문자열 생성
         Gson gson = new GsonBuilder()
@@ -80,13 +86,15 @@ public class PartyControllerTest {
         String content = gson.toJson(post);
         System.out.println("전송하는 JSON 데이터: " + content);
 
+        given(memberService.findMember(Mockito.anyLong()))
+                .willReturn(mockMember);
         given(mapper.partyPostDtoToParty(Mockito.any(PartyDto.Post.class)))
                 .willReturn(new Party());
 
         Party mockResultParty = new Party();
         mockResultParty.setPartyId(1L);
 
-        given(partyService.createParty(Mockito.any(Party.class)))
+        given(partyService.createParty(Mockito.any(Party.class), Mockito.any(Member.class)))
                 .willReturn(mockResultParty);
 
         //when
@@ -109,9 +117,12 @@ public class PartyControllerTest {
                         requestFields(
                                 List.of(
                                         fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 날짜"),
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 날짜"),
                                         fieldWithPath("longitude").type(JsonFieldType.STRING).description("경도"),
                                         fieldWithPath("latitude").type(JsonFieldType.STRING).description("위도"),
                                         fieldWithPath("address").type(JsonFieldType.STRING).description("도로명 주소"),
+                                        fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("연락처"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("본문 내용"),
                                         fieldWithPath("maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
@@ -136,7 +147,7 @@ public class PartyControllerTest {
     @Test
     @DisplayName("patchParty 테스트")
     public void patchPartyTest() throws Exception {
-        System.out.println("patchParty 테스트 시작!");
+        System.out.println("모임 수정 테스트 시작!");
         //given
         long partyId = 1L;
         PartyDto.Patch patch = (PartyDto.Patch) PartyStub.MockParty.getRequestBody(HttpMethod.PATCH);
@@ -170,11 +181,6 @@ public class PartyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.partyId").value(patch.getPartyId()))
                 .andExpect(jsonPath("$.data.title").value(patch.getTitle()))
-                .andExpect(jsonPath("$.data.meetingDate").value(patch.getMeetingDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
-                .andExpect(jsonPath("$.data.longitude").value(patch.getLongitude()))
-                .andExpect(jsonPath("$.data.latitude").value(patch.getLatitude()))
-                .andExpect(jsonPath("$.data.address").value(patch.getAddress()))
-                .andExpect(jsonPath("$.data.content").value(patch.getContent()))
                 .andExpect(jsonPath("$.data.maxCapacity").value(patch.getMaxCapacity()))
                 .andExpect(jsonPath("$.data.currentCapacity").value(patch.getCurrentCapacity()))
                 .andExpect(jsonPath("$.data.partyStatus").value(patch.getPartyStatus().toString()))
@@ -188,11 +194,6 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
-                                        fieldWithPath("longitude").type(JsonFieldType.STRING).description("경도"),
-                                        fieldWithPath("latitude").type(JsonFieldType.STRING).description("위도"),
-                                        fieldWithPath("address").type(JsonFieldType.STRING).description("도로명 주소"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                         fieldWithPath("maxCapacity").type(JsonFieldType.NUMBER).description("최대 인원"),
                                         fieldWithPath("currentCapacity").type(JsonFieldType.NUMBER).description("현재 인원"),
                                         fieldWithPath("partyStatus").type(JsonFieldType.STRING).description("글 상태 : PARTY_OPENED / PARTY_CLOSED")
@@ -202,8 +203,11 @@ public class PartyControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
                                         fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
                                         fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("data.meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
+                                        fieldWithPath("data.closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
+                                        fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING).description("연락처"),
                                         fieldWithPath("data.longitude").type(JsonFieldType.STRING).description("경도"),
                                         fieldWithPath("data.latitude").type(JsonFieldType.STRING).description("위도"),
                                         fieldWithPath("data.address").type(JsonFieldType.STRING).description("도로명 주소"),
@@ -216,6 +220,7 @@ public class PartyControllerTest {
                                 )
                         )
                 ));
+
     }
 
     @Test

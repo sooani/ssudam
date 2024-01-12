@@ -11,9 +11,12 @@ import java.util.List;
 public interface PartyRepository extends JpaRepository<Party, Long> {
     List<Party> findByMember_MemberId(Long memberId);
 
-    List<Party> findByPartyMembers_Member_MemberId(Long memberId);// 참여한 파티
+    // 모임에 참여한 멤버 조회
+    List<Party> findByPartyMembers_Member_MemberId(Long memberId);
 
+    // 모임일자가 현재 날짜보다 이전 + 특정 파티상태 조회
     List<Party> findByMeetingDateBeforeAndPartyStatus(LocalDateTime meetingDate, Party.PartyStatus partyStatus);
 
+    // 특정 시간 이후 조회
     Page<Party> findByCreatedAtAfter(LocalDateTime dateTime, Pageable pageable);
 }

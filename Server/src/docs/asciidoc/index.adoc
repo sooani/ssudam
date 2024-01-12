@@ -96,6 +96,10 @@ include::{snippets}/get-parties/request-parameters.adoc[]
 
 === 특정 멤버가 등록한 모든 모임 조회
 
+=== 특정 멤버가 참여한 모든 모임 조회
+
+=== 2일 이내 등록된 최신글 조회
+
 === 모임 정보 삭제
 .curl-request
 include::{snippets}/delete-party/curl-request.adoc[]

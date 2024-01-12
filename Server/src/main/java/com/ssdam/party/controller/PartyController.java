@@ -49,10 +49,11 @@ public class PartyController {
     }
 
     //파티 참가
-    @RequestMapping(value = "/v1/parties/{party-id}")
-    public ResponseEntity<Void> addPartyMember(@PathVariable("party-id")
-                                               @Positive long partyId,
-                                               @RequestBody Member member) {
+    @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.POST)
+    public ResponseEntity<Void> postPartyMember(@PathVariable("party-id")
+                                                @Positive long partyId,
+                                                @RequestBody Member member,
+                                                @RequestParam @Positive long memberId) {
 
         partyService.addPartyMember(partyId, member);
         return ResponseEntity.status(HttpStatus.CREATED).build();

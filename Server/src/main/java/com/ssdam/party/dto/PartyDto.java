@@ -1,6 +1,7 @@
 package com.ssdam.party.dto;
 
 import com.ssdam.party.entity.Party;
+import com.ssdam.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,11 +23,15 @@ public class PartyDto {
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate; //모임일자
 
+        private LocalDateTime closingDate; //모집마감일자
+
         private String longitude; //경도
 
         private String latitude; //위도
 
         private String address; //도로명주소
+
+        private String phoneNumber; //연락처
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -42,16 +47,18 @@ public class PartyDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @Builder
     public static class Patch {
 
         private long partyId;
 
-        @NotBlank(message = "제목을 입력해주세요.")
+        @NotSpace(message = "제목을 입력해주세요.")
         private String title;
 
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate;
+
+        private LocalDateTime closingDate; //모집마감일자
 
         private String longitude; //경도
 
@@ -59,10 +66,11 @@ public class PartyDto {
 
         private String address; //도로명주소
 
-        @NotBlank(message = "내용을 입력해주세요.")
+        private String phoneNumber; //연락처
+
+        @NotSpace(message = "내용을 입력해주세요.")
         private String content;
 
-        @Positive
         private int maxCapacity;
 
         private int currentCapacity;
@@ -80,8 +88,11 @@ public class PartyDto {
     @AllArgsConstructor
     public static class Response {
         private long partyId;
+        private long memberId;
         private String title;
         private LocalDateTime meetingDate;
+        private LocalDateTime closingDate;
+        private String phoneNumber;
         private String longitude;
         private String latitude;
         private String address;
@@ -91,7 +102,6 @@ public class PartyDto {
         private Party.PartyStatus partyStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        private long memberId;
 
     }
 }

@@ -159,6 +159,9 @@ public class PartyService {
     // 파티 참가, 권한 추가 필요
     public void addPartyMember(long partyId, Member member) {
         Party party = findParty(partyId);
+        if (isPartyClosed(party)) {
+            throw new BusinessLogicException(ExceptionCode.PARTY_CLOSED_ERROR);
+        }
 
         if (canJoinParty(member, party)) {
             increasePartyCapacity(party);
@@ -192,5 +195,10 @@ public class PartyService {
     // 파티에서 멤버 삭제
     private void removeMemberFromParty(Member member, Party party) {
         partyMemberRepository.deleteByMemberAndParty(member, party);
+    }
+
+    // 파티가 모집 종료상태인지 확인
+    private boolean isPartyClosed(Party party) {
+        return party.getPartyStatus() == Party.PartyStatus.PARTY_CLOSED;
     }
 }
