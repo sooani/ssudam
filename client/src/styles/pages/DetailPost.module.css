@@ -395,7 +395,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  /* background-color: pink; */
+  /* border: 1px solid pink; */
 }
 .comm .commcontent {
+  display: flex;
+  flex-direction: row;
+}
+.comm .likes {
+  /* border: 1px solid black; */
+  margin-left: auto;
 }

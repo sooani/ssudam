@@ -8,10 +8,9 @@ import MakeMap from "../components/Map/MakeMap";
 import { FaUsers } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa";
-import footerLogo from "../images/footerLogo.png";
 import axios from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Comment from "../components/Meeting/Comment";
 const DetailPost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({});
@@ -711,7 +710,7 @@ const DetailPost = () => {
               {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
             </div>
           )}
-          <div className={classes.comments}>
+          {/* <div className={classes.comments}>
             {!isLoading &&
               comments &&
               comments.map((comment) => {
@@ -725,18 +724,30 @@ const DetailPost = () => {
                         height="50px"
                       />
                       <div className={classes.user}>
-                        <div>{comment.nickname}</div>
+                        <div>{comment.nickname}</div>{" "}
                         <div>
                           {new Date(comment.modifiedAt).toLocaleString("ko-KR")}
                         </div>
                       </div>
                     </div>
 
-                    <div className={classes.commcontent}>{comment.comment}</div>
+                    <div className={classes.commcontent}>
+                      {comment.comment}{" "}
+                      <div className={classes.likes}>
+                        <FaThumbsUp
+                          style={{ fontSize: "1.5rem", color: "green" }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 );
               })}
-          </div>
+          </div> */}
+          <Comment
+            isLoading={isLoading}
+            comments={comments}
+            userInfo={userInfo}
+          />
         </div>
       )}
       <Footer />
