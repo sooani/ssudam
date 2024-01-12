@@ -19,4 +19,7 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
     // 특정 시간 이후 조회
     Page<Party> findByCreatedAtAfter(LocalDateTime dateTime, Pageable pageable);
+
+    // 제목과 내용 검색
+    Page<Party> findByTitleContainingOrContentContaining(String title, String content, Pageable pageable);
 }

@@ -124,7 +124,20 @@ public class PartyController {
                 HttpStatus.OK);
     }
 
-    // 파티 수정
+    //키워드로 제목,글내용 검색
+    @RequestMapping(value = "/v1/parties/search", method = RequestMethod.GET)
+    public ResponseEntity getPartiesWithTitleOrContent(@RequestParam String keyword,
+                                                       @Positive @RequestParam int page,
+                                                       @Positive @RequestParam int size) {
+        Page<Party> pageParties = partyService.searchPartiesByTitleAndContent(keyword,page - 1, size);
+        List<Party> parties = pageParties.getContent(); // 페이지에서 목록 가져옴
+        return new ResponseEntity(
+                new MultiResponseDto<>(mapper.partiesToPartyResponses(parties),
+                        pageParties),
+                HttpStatus.OK);
+    }
+
+    // 파티 수정 , 작성한 사람만 수정하게 해야함
     @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.PATCH)
     public ResponseEntity patchParty(@PathVariable("party-id") @Positive long partyId,
                                      @Valid @RequestBody PartyDto.Patch requestBody) {
@@ -136,7 +149,7 @@ public class PartyController {
                 new SingleResponseDto<>(mapper.partyToPartyResponse(updatedParty)), HttpStatus.OK);
     }
 
-    // 파티 삭제
+    // 파티 삭제, 작성한 사람이 삭제하게 해야함
     @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteParty(@PathVariable("party-id") @Positive long partyId) {
         partyService.deleteParty(partyId);
