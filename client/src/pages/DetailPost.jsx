@@ -495,26 +495,7 @@ const DetailPost = () => {
       }
     }
   };
-  // console.log(isParticipating);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `/v1/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`
-  //     )
-  //     .then((response) => {
-  //       // console.log(response.data);
-  //       // 뭔가 있을 경우 참여중
-  //       if (response.data.length > 0) {
-  //         setIsParticipating(true);
-  //       }
-  //       // 아니면 비참여중
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error updating meeting data: ", error);
-  //       alert("오류가 발생했습니다!");
-  //     });
-  // }, [meetingInfo]);
   useEffect(() => {
     console.log(meetingId);
     axios
@@ -852,6 +833,7 @@ const DetailPost = () => {
             comments={comments}
             loggedInUser={loggedInUser}
             partyId={meetingId}
+            userInfo={userInfo}
           />
         </div>
       )}

@@ -4,13 +4,17 @@ import ReactPaginate from "react-paginate";
 import { FaThumbsUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { FaComment } from "react-icons/fa";
-import reply from "../../images/reply.png";
+import replyImg from "../../images/reply.png";
 import axios from "../../axios";
 const Comments = (props) => {
   const [commentLikes, setCommentLikes] = useState({});
   const [comments, setComments] = useState(props.comments);
   const [page, setPage] = useState(1);
   const [totalComments, setTotalComments] = useState(0);
+  const [isReplyOpened, setIsReplyOpened] = useState([]);
+  const [reply, setReply] = useState("");
+  const [replies, setReplies] = useState([]);
+  // const [enteredReply, setEnteredReply] = useState("");
   const commentsPerPage = 2;
   console.log(props.comments);
   // const commentsLength = props.comments.length;
@@ -46,9 +50,24 @@ const Comments = (props) => {
             alert("오류가 발생했습니다!");
           });
       });
+      const initialIsReplyOpened = comments.reduce(
+        (acc, comment) => ({ ...acc, [comment.commentId]: false }),
+        {}
+      );
+      setIsReplyOpened(initialIsReplyOpened);
     }
   }, [comments]);
-
+  useEffect(() => {}, [isReplyOpened]);
+  const openReplyHandler = (commentId) => {
+    console.log(isReplyOpened);
+    if (comments) {
+      // setIsReplyOpened(Array(comments.length).fill(false));
+      setIsReplyOpened((prev) => ({
+        ...prev,
+        [commentId]: !prev[commentId],
+      }));
+    }
+  };
   const likeHandler = (commentId) => {
     // 댓글 좋아요 상태 토글
     setCommentLikes((prevState) => ({
@@ -105,50 +124,61 @@ const Comments = (props) => {
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
-  const handlePageChange = ({ selected }) => {
-    setPage(selected + 1);
+
+  const replyChangeHandler = (e) => {
+    setReply((prev) => ({
+      ...prev,
+      reply: e.target.value,
+    }));
   };
-  // useEffect(() => {
-  //   axios
-  //     .post(
-  //       `/v1/likes/comments/${commentId}/like-status?memberId=${props.loggedInUser.memberId}`
-  //     )
+  const replyHandler = (e, commentId) => {
+    e.preventDefault();
+    // console.log(loggedInUser.nickname);
+    let replyDTO = {
+      // id: Math.random() * 1000,
+      // partyId: meetingId,
+      commentId: commentId,
+      memberId: props.loggedInUser.id,
+      reply: reply.reply,
+    };
+    console.log(replyDTO);
+    axios
+      .post(`/v1/replies`, replyDTO)
+      .then((response) => {
+        console.log(response.data);
 
-  //     .then((response) => {
-  //       if (response.data === true) {
-  //         setCommentLikes((prevState) => ({
-  //           ...prevState,
-  //           [commentId]: true,
-  //         }));
-  //       } else {
-  //         setCommentLikes((prevState) => ({
-  //           ...prevState,
-  //           [commentId]: false,
-  //         }));
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting likes data: ", error);
-  //       alert("오류가 발생했습니다!");
-  //     });
-  // }, []);
-  // useEffect(() => {
-  //   console.log(commentsPerPage);
-  //   const fetchComments = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `/v1/comments?partyId=${props.partyId}&page=${page}&size=${commentsPerPage}`
-  //       );
-  //       console.log(response.data.data);
-  //       // setComments(response.data.data);
-  //       // setTotalComments(response.data.pageInfo.totalElements);
-  //     } catch (error) {
-  //       console.error("Error fetching comments:", error);
-  //     }
-  //   };
+        alert("대댓글이 등록되었습니다!");
+        // setIsReplyOpened((prev) => ({
+        //   ...prev,
+        //   [commentId]: !prev[commentId],
+        // }));
+        const locationHeaderValue = response.headers.location;
 
-  //   fetchComments();
-  // }, [page]);
+        // '/v1/comments/{commentId}'에서 commentId 부분을 추출
+        const replyIdMatch = locationHeaderValue.match(/\/v1\/replies\/(\d+)/);
+
+        if (replyIdMatch && replyIdMatch[1]) {
+          // commentId를 사용하여 원하는 작업 수행
+          const replyId = replyIdMatch[1];
+          console.log("Extracted Reply ID:", replyId);
+          axios.get(`/v1/replies/${replyId}`).then((response) => {
+            console.log(response.data.data);
+            setReplies((prevReplies) => ({
+              ...prevReplies,
+              [commentId]: response.data.data,
+            }));
+          });
+        } else {
+          console.error("Comment ID not found in Location header.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error posting comment data: ", error);
+      });
+    // console.log(comments);
+  };
+  console.log(replies);
+  useEffect(() => {}, []);
   return (
     <div className={classes.comments}>
       {sortedComments.length >= 2 && (
@@ -183,15 +213,23 @@ const Comments = (props) => {
 
                 <div className={classes.commcontent}>
                   {comment.comment}{" "}
-                  <div className={classes.replyIcon} onClick={() => {}}>
-                    {" "}
-                    <FaComment
-                      style={{
-                        fontSize: "1.5rem",
-                        color: "black",
+                  {props.userInfo.nickname === props.loggedInUser.nickname && (
+                    <div
+                      className={classes.replyIcon}
+                      onClick={() => {
+                        openReplyHandler(comment.commentId);
                       }}
-                    />
-                  </div>
+                    >
+                      {" "}
+                      {/* 답글 아이콘은 글 작성자랑 현재 로그인한 사용자의 닉네임이 같을 경우만 띄워짐 */}
+                      <FaComment
+                        style={{
+                          fontSize: "1.5rem",
+                          color: "black",
+                        }}
+                      />
+                    </div>
+                  )}
                   <div
                     className={classes.likes}
                     onClick={() => {
@@ -210,48 +248,109 @@ const Comments = (props) => {
                   </div>
                 </div>
               </div>
-              <div className={classes.reply}>
-                {" "}
-                <div className={classes.info}>
-                  <img
-                    alt="replyImage"
-                    src={reply}
-                    width="30px"
-                    height="30px"
-                  />
-                  <img
-                    alt="ProfileImage"
-                    src={footerLogo}
-                    width="50px"
-                    height="50px"
-                  />
-                  <div className={classes.user}>
-                    <div>{comment.nickname}</div>{" "}
-                    <div>
-                      {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
+              <>
+                {props.userInfo.nickname === props.loggedInUser.nickname && (
+                  <div className={classes.reply}>
+                    {" "}
+                    <div className={classes.info}>
+                      <img
+                        alt="replyImage"
+                        src={replyImg}
+                        width="30px"
+                        height="30px"
+                      />{" "}
+                      <div className={classes.comment}>
+                        {" "}
+                        <textarea
+                          placeholder="대댓글 내용을 입력하세요..."
+                          value={
+                            comment.reply ? comment.reply.reply : reply.reply
+                          }
+                          onChange={replyChangeHandler}
+                          required
+                        />
+                        {!comment.reply && (
+                          <div className={classes.btnCon_2}>
+                            <button
+                              className={classes.joinBtn_1}
+                              // type="submit"
+                              onClick={(e) => {
+                                replyHandler(e, comment.commentId);
+                              }}
+                            >
+                              등록
+                              {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
+                            </button>
+                          </div>
+                        )}
+                        {comment.reply && (
+                          <div className={classes.btnCon_2}>
+                            <button
+                              className={classes.joinBtn}
+                              // onClick={commentEditHandler}
+                            >
+                              수정
+                            </button>
+                            <button
+                              className={classes.deleteBtn}
+                              // onClick={commentDeleteHandler}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className={classes.commcontent}>
-                  {comment.comment}{" "}
-                  <div
-                    className={classes.likes}
-                    onClick={() => {
-                      likeHandler(comment.commentId);
-                    }}
-                  >
-                    <FaThumbsUp
-                      style={{
-                        fontSize: "1.5rem",
-                        color: commentLikes[comment.commentId]
-                          ? "green"
-                          : "black",
-                      }}
-                    />{" "}
-                    {comment.likeCount}
+                )}
+
+                {!props.userInfo.nickname === props.loggedInUser.nickname && (
+                  <div className={classes.reply}>
+                    {" "}
+                    <div className={classes.info}>
+                      <img
+                        alt="replyImage"
+                        src={replyImg}
+                        width="30px"
+                        height="30px"
+                      />
+                      <img
+                        alt="ProfileImage"
+                        src={footerLogo}
+                        width="50px"
+                        height="50px"
+                      />
+                      <div className={classes.user}>
+                        <div>{comment.reply.nickname}</div>{" "}
+                        <div>
+                          {new Date(comment.reply.createdAt).toLocaleString(
+                            "ko-KR"
+                          )}{" "}
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.commcontent}>
+                      {comment.reply.reply}{" "}
+                      {/* <div
+                          className={classes.likes}
+                          onClick={() => {
+                            likeHandler(comment.commentId);
+                          }}
+                        >
+                          <FaThumbsUp
+                            style={{
+                              fontSize: "1.5rem",
+                              color: commentLikes[comment.commentId]
+                                ? "green"
+                                : "black",
+                            }}
+                          />{" "}
+                          {comment.likeCount}
+                        </div> */}
+                    </div>
                   </div>
-                </div>
-              </div>
+                )}
+              </>
             </div>
           );
         })}
