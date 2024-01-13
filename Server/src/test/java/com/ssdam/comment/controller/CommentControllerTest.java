@@ -6,8 +6,6 @@ import com.ssdam.comment.dto.CommentDto;
 import com.ssdam.comment.entity.Comment;
 import com.ssdam.comment.mapper.CommentMapper;
 import com.ssdam.comment.service.CommentService;
-import com.ssdam.member.entity.Member;
-import com.ssdam.party.entity.Party;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +28,19 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
-import static com.ssdam.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.ssdam.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CommentController.class)
@@ -522,8 +517,8 @@ public class CommentControllerTest {
         actions
                 .andExpect(status().isNoContent())
                 .andDo(document("delete-comment",
-                        getRequestPreProcessor(),
-                        getResponsePreProcessor(),
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         pathParameters(
                                 parameterWithName("comment-id").description("댓글 식별자")
                         )));
