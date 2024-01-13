@@ -3,6 +3,8 @@ import footerLogo from "../../images/footerLogo.png";
 import ReactPaginate from "react-paginate";
 import { FaThumbsUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { FaComment } from "react-icons/fa";
+import reply from "../../images/reply.png";
 import axios from "../../axios";
 const Comments = (props) => {
   const [commentLikes, setCommentLikes] = useState({});
@@ -149,49 +151,105 @@ const Comments = (props) => {
   // }, [page]);
   return (
     <div className={classes.comments}>
-      <div className={classes.dropdown}>
-        <select value={sortOption} onChange={handleSortChange}>
-          <option value="recent">최신 순</option>
-          <option value="likes">좋아요 순</option>
-        </select>
-      </div>
+      {sortedComments.length >= 2 && (
+        <div className={classes.dropdown}>
+          <select value={sortOption} onChange={handleSortChange}>
+            <option value="recent">최신 순</option>
+            <option value="likes">좋아요 순</option>
+          </select>
+        </div>
+      )}
       {!props.isLoading &&
         comments &&
         sortedComments.map((comment) => {
           return (
-            <div key={comment.commentId} className={classes.comm}>
-              <div className={classes.info}>
-                <img
-                  alt="ProfileImage"
-                  src={footerLogo}
-                  width="50px"
-                  height="50px"
-                />
-                <div className={classes.user}>
-                  <div>{comment.nickname}</div>{" "}
-                  <div>
-                    {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
+            <div className={classes.container}>
+              {" "}
+              <div key={comment.commentId} className={classes.comm}>
+                <div className={classes.info}>
+                  <img
+                    alt="ProfileImage"
+                    src={footerLogo}
+                    width="50px"
+                    height="50px"
+                  />
+                  <div className={classes.user}>
+                    <div>{comment.nickname}</div>{" "}
+                    <div>
+                      {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
+                    </div>
+                  </div>{" "}
+                </div>
+
+                <div className={classes.commcontent}>
+                  {comment.comment}{" "}
+                  <div className={classes.replyIcon} onClick={() => {}}>
+                    {" "}
+                    <FaComment
+                      style={{
+                        fontSize: "1.5rem",
+                        color: "black",
+                      }}
+                    />
+                  </div>
+                  <div
+                    className={classes.likes}
+                    onClick={() => {
+                      likeHandler(comment.commentId);
+                    }}
+                  >
+                    <FaThumbsUp
+                      style={{
+                        fontSize: "1.5rem",
+                        color: commentLikes[comment.commentId]
+                          ? "green"
+                          : "black",
+                      }}
+                    />
+                    {comment.likeCount}
                   </div>
                 </div>
               </div>
-
-              <div className={classes.commcontent}>
-                {comment.comment}{" "}
-                <div
-                  className={classes.likes}
-                  onClick={() => {
-                    likeHandler(comment.commentId);
-                  }}
-                >
-                  <FaThumbsUp
-                    style={{
-                      fontSize: "1.5rem",
-                      color: commentLikes[comment.commentId]
-                        ? "green"
-                        : "black",
+              <div className={classes.reply}>
+                {" "}
+                <div className={classes.info}>
+                  <img
+                    alt="replyImage"
+                    src={reply}
+                    width="30px"
+                    height="30px"
+                  />
+                  <img
+                    alt="ProfileImage"
+                    src={footerLogo}
+                    width="50px"
+                    height="50px"
+                  />
+                  <div className={classes.user}>
+                    <div>{comment.nickname}</div>{" "}
+                    <div>
+                      {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
+                    </div>
+                  </div>
+                </div>
+                <div className={classes.commcontent}>
+                  {comment.comment}{" "}
+                  <div
+                    className={classes.likes}
+                    onClick={() => {
+                      likeHandler(comment.commentId);
                     }}
-                  />{" "}
-                  {comment.likeCount}
+                  >
+                    <FaThumbsUp
+                      style={{
+                        fontSize: "1.5rem",
+                        color: commentLikes[comment.commentId]
+                          ? "green"
+                          : "black",
+                      }}
+                    />{" "}
+                    {comment.likeCount}
+                  </div>
                 </div>
               </div>
             </div>
