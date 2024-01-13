@@ -1,10 +1,14 @@
 package com.ssdam.like.controller;
 
+import com.ssdam.dto.SingleResponseDto;
 import com.ssdam.like.service.LikeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/likes")
@@ -22,9 +26,11 @@ public class LikeController {
         return ResponseEntity.ok().build();
     }
     @GetMapping("/comments/{comment-id}/like-status")//현재 로그인한 회원이 좋아요를 눌렀는지 확인
-    public ResponseEntity<Boolean> checkLikeStatus(@PathVariable ("comment-id")@Positive long commentId,
+    public ResponseEntity checkLikeStatus(@PathVariable ("comment-id")@Positive long commentId,
                                                    @RequestParam @Positive long memberId) {
         boolean isLiked = likeService.isCommentLikedByUser(commentId,memberId);
-        return ResponseEntity.ok(isLiked);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isLiked",isLiked);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
