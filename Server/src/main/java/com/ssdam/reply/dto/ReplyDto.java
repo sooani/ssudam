@@ -1,6 +1,7 @@
 package com.ssdam.reply.dto;
 
 import com.ssdam.validator.NotSpace;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class ReplyDto {
+    @AllArgsConstructor
     @Getter
     public static class Post {
         private long commentId;
@@ -21,6 +23,7 @@ public class ReplyDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Patch {
         private long replyId;
 
