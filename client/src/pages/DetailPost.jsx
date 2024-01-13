@@ -24,6 +24,7 @@ import {
   WiSnow,
   WiThunderstorm,
 } from "weather-icons-react";
+import TranslateWeather from "../components/Meeting/TranslateWeather";
 const WeatherIcon = ({ weatherType }) => {
   switch (weatherType) {
     case "clear sky":
@@ -61,6 +62,7 @@ const DetailPost = () => {
   const [myComment, setMyComment] = useState({});
   const [isRecruiting, setIsRecruiting] = useState(false);
   const [isParticipating, setIsParticipating] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
   // const meetingId = 983.5226956209999;
   // const meetingId = 906.6961085461239;
   // const meetingId = 906.8489342328219;
@@ -334,9 +336,9 @@ const DetailPost = () => {
         setMeetingInfo(response.data.data);
         // 아래는 나중에 주석처리
         setUserInfo({
-          memberId: 2,
-          email: "user2@example.com",
-          nickname: "초롱이",
+          memberId: 1,
+          email: "user1@example.com",
+          nickname: "당근이",
         });
         // if (response.data.party_status === "모집중") {
         //   setIsRecruiting(true);
@@ -554,7 +556,33 @@ const DetailPost = () => {
   //       });
   //   }
   // }, [meetingInfo]);
-
+  const bookmarkHandler = () => {
+    setBookmarked((prev) => !prev);
+    axios
+      .post(`/v1/bookmarks/parties/${meetingId}?memberId=${loggedInUser.id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error bookmarking meeting data: ", error);
+        alert("오류가 발생했습니다!");
+      });
+  };
+  useEffect(() => {
+    axios
+      .get(
+        `/v1/bookmarks/parties/${meetingId}/like-status?memberId=${loggedInUser.id}`
+      )
+      .then((response) => {
+        console.log(response);
+        setBookmarked(response.data);
+      })
+      .catch((error) => {
+        console.error("Error getting bookmark data: ", error);
+        alert("오류가 발생했습니다!");
+      });
+  }, []);
+  console.log(bookmarked);
   return (
     <div className={classes.wrapper}>
       <Header />
@@ -597,16 +625,17 @@ const DetailPost = () => {
                     <h4>모집완료</h4>
                   </div>
                 )}
-                {/* <div>
-                  <FaBookmark style={{ color: "red", fontSize: "2rem" }} />
-                </div> */}
               </div>
             </div>
 
             <div className={classes.btnCon}>
               <FaBookmark
-                style={{ color: "red", fontSize: "2rem" }}
+                style={{
+                  color: bookmarked ? "green" : "black",
+                  fontSize: "2rem",
+                }}
                 className={classes.bookmark}
+                onClick={bookmarkHandler}
               />
               {isRecruiting && !isMyPost && !isParticipating && (
                 <button className={classes.joinBtn} onClick={joinHandler}>
@@ -696,11 +725,13 @@ const DetailPost = () => {
                     예상 날씨
                     {/* <div className={classes.weather}>{meetingInfo.weather}</div> */}
                     <div className={classes.weather}>
-                      <WeatherIcon
+                      {/* <WeatherIcon
                         className={classes.wIcon}
                         weatherType={meetingInfo.weather}
                         // weatherType="snow"
-                      />
+                      /> */}
+                      {meetingInfo.weather}
+                      {/* <TranslateWeather weatherType={meetingInfo.weather} /> */}
                     </div>
                   </h4>
                 </div>
