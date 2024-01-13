@@ -834,6 +834,7 @@ const DetailPost = () => {
             loggedInUser={loggedInUser}
             partyId={meetingId}
             userInfo={userInfo}
+            getComments={getComments}
           />
         </div>
       )}

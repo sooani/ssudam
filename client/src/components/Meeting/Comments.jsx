@@ -10,10 +10,12 @@ const Comments = (props) => {
   const [commentLikes, setCommentLikes] = useState({});
   const [comments, setComments] = useState(props.comments);
   const [page, setPage] = useState(1);
+  const [newReplyId, setNewReplyId] = useState(null);
   const [totalComments, setTotalComments] = useState(0);
   const [isReplyOpened, setIsReplyOpened] = useState([]);
-  const [reply, setReply] = useState("");
+  const [reply, setReply] = useState([]);
   const [replies, setReplies] = useState([]);
+  const [hasReply, setHasReply] = useState({});
   // const [enteredReply, setEnteredReply] = useState("");
   const commentsPerPage = 2;
   console.log(props.comments);
@@ -55,9 +57,44 @@ const Comments = (props) => {
         {}
       );
       setIsReplyOpened(initialIsReplyOpened);
+      setReply((prev) => {
+        const newReplies = [...prev];
+        comments.forEach((comment) => {
+          newReplies[comment.commentId] = {
+            replyId: comment.reply ? comment.reply.replyId : undefined,
+            reply: comment.reply ? comment.reply.reply : undefined,
+          };
+        });
+        return newReplies;
+      });
+      setReplies((prev) => {
+        const newReplies = { ...prev };
+
+        comments.forEach((comment) => {
+          newReplies[comment.commentId] = {
+            ...newReplies[comment.commentId],
+            reply: comment.reply ? comment.reply : {},
+          };
+        });
+
+        return newReplies;
+      });
+      setHasReply((prevHasReply) => {
+        const newHasReply = { ...prevHasReply };
+
+        comments.forEach((comment) => {
+          // comment.reply가 null이 아니면 true, 그렇지 않으면 false
+          newHasReply[comment.commentId] = comment.reply !== null;
+        });
+
+        return newHasReply;
+      });
     }
   }, [comments]);
-  useEffect(() => {}, [isReplyOpened]);
+  console.log(hasReply);
+  useEffect(() => {
+    console.log(isReplyOpened);
+  }, [isReplyOpened]);
   const openReplyHandler = (commentId) => {
     console.log(isReplyOpened);
     if (comments) {
@@ -68,6 +105,7 @@ const Comments = (props) => {
       }));
     }
   };
+  // console.log(reply);
   const likeHandler = (commentId) => {
     // 댓글 좋아요 상태 토글
     setCommentLikes((prevState) => ({
@@ -124,12 +162,15 @@ const Comments = (props) => {
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
-
-  const replyChangeHandler = (e) => {
-    setReply((prev) => ({
-      ...prev,
-      reply: e.target.value,
-    }));
+  // console.log(reply);
+  const replyChangeHandler = (e, commentId) => {
+    const { value } = e.target;
+    console.log(reply);
+    setReply((prev) => {
+      const newReplies = [...prev];
+      newReplies[commentId] = { reply: value };
+      return newReplies;
+    });
   };
   const replyHandler = (e, commentId) => {
     e.preventDefault();
@@ -139,7 +180,7 @@ const Comments = (props) => {
       // partyId: meetingId,
       commentId: commentId,
       memberId: props.loggedInUser.id,
-      reply: reply.reply,
+      reply: reply[commentId].reply,
     };
     console.log(replyDTO);
     axios
@@ -163,11 +204,28 @@ const Comments = (props) => {
           console.log("Extracted Reply ID:", replyId);
           axios.get(`/v1/replies/${replyId}`).then((response) => {
             console.log(response.data.data);
-            setReplies((prevReplies) => ({
-              ...prevReplies,
-              [commentId]: response.data.data,
+            // setReplies((prevReplies) => ({
+            //   ...prevReplies,
+            //   [commentId]: response.data.data,
+            // }));
+            console.log(response.data.data.replyId);
+            //  const id = response.data.data.replyId;
+            setReplies((prev) => {
+              const newReplies = { ...prev };
+
+              newReplies[commentId] = {
+                ...newReplies[commentId],
+                replyId: response.data.data.replyId,
+              };
+
+              return newReplies;
+            });
+            setHasReply((prevHasReply) => ({
+              ...prevHasReply,
+              [commentId]: true,
             }));
           });
+          // setNewReplyId(response.data.data.replyId);
         } else {
           console.error("Comment ID not found in Location header.");
         }
@@ -176,9 +234,79 @@ const Comments = (props) => {
         console.error("Error posting comment data: ", error);
       });
     // console.log(comments);
+    // return id;
   };
-  console.log(replies);
-  useEffect(() => {}, []);
+  console.log("replies", replies);
+  const replyEditHandler = (commentId, replyId) => {
+    console.log(commentId, replyId);
+    // if (replies[commentId] && replies[commentId].reply) {
+    const updatedDTO = {
+      replyId: replyId,
+      reply: reply[commentId].reply,
+    };
+    axios
+      .patch(`/v1/replies/${replyId}`, updatedDTO)
+      .then((response) => {
+        console.log(response.data.data);
+        alert("대댓글이 수정되었습니다!");
+      })
+      .catch((error) => {
+        console.error("Error patching reply data: ", error);
+      });
+    // }
+  };
+  const replyDeleteHandler = (commentId, replyId) => {
+    const userConfirmed = window.confirm("해당 대댓글을 삭제하시겠습니까?");
+
+    if (userConfirmed) {
+      axios
+        .delete(`/v1/replies/${replyId}`)
+        .then((response) => {
+          console.log(response.data.data);
+          alert("대댓글이 삭제되었습니다!");
+          // setReplies((prevReplies) => ({
+          //   ...prevReplies,
+          //   [commentId]: null,
+          // }));
+          setReply((prev) => {
+            const newReplies = [...prev];
+            newReplies[commentId] = { reply: "" };
+            return newReplies;
+          });
+          setReplies((prev) => {
+            const newReplies = { ...prev };
+
+            comments.forEach((comment) => {
+              newReplies[comment.commentId] = {
+                ...newReplies[comment.commentId],
+                reply: comment.reply ? comment.reply : {},
+              };
+            });
+
+            return newReplies;
+          });
+          setHasReply((prevHasReply) => ({
+            ...prevHasReply,
+            [commentId]: false,
+          }));
+        })
+        .catch((error) => {
+          console.error("Error deleting reply data: ", error);
+        });
+    }
+  };
+  // console.log("hasReply", hasReply);
+  useEffect(() => {
+    props.getComments();
+  }, []);
+  useEffect(() => {
+    if (newReplyId !== null) {
+      console.log("New Reply ID:", newReplyId);
+      // Perform any actions or use the newReplyId as needed
+    }
+  }, [newReplyId]);
+  // console.log(replies[1].reply.replyId);
+  // if (reply[1]) console.log("reply", reply[1].replyId);
   return (
     <div className={classes.comments}>
       {sortedComments.length >= 2 && (
@@ -249,89 +377,119 @@ const Comments = (props) => {
                 </div>
               </div>
               <>
-                {props.userInfo.nickname === props.loggedInUser.nickname && (
-                  <div className={classes.reply}>
-                    {" "}
-                    <div className={classes.info}>
-                      <img
-                        alt="replyImage"
-                        src={replyImg}
-                        width="30px"
-                        height="30px"
-                      />{" "}
-                      <div className={classes.comment}>
-                        {" "}
-                        <textarea
-                          placeholder="대댓글 내용을 입력하세요..."
-                          value={
-                            comment.reply ? comment.reply.reply : reply.reply
-                          }
-                          onChange={replyChangeHandler}
-                          required
-                        />
-                        {!comment.reply && (
-                          <div className={classes.btnCon_2}>
-                            <button
-                              className={classes.joinBtn_1}
-                              // type="submit"
-                              onClick={(e) => {
-                                replyHandler(e, comment.commentId);
-                              }}
-                            >
-                              등록
-                              {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
-                            </button>
-                          </div>
-                        )}
-                        {comment.reply && (
-                          <div className={classes.btnCon_2}>
-                            <button
-                              className={classes.joinBtn}
-                              // onClick={commentEditHandler}
-                            >
-                              수정
-                            </button>
-                            <button
-                              className={classes.deleteBtn}
-                              // onClick={commentDeleteHandler}
-                            >
-                              삭제
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {!props.userInfo.nickname === props.loggedInUser.nickname && (
-                  <div className={classes.reply}>
-                    {" "}
-                    <div className={classes.info}>
-                      <img
-                        alt="replyImage"
-                        src={replyImg}
-                        width="30px"
-                        height="30px"
-                      />
-                      <img
-                        alt="ProfileImage"
-                        src={footerLogo}
-                        width="50px"
-                        height="50px"
-                      />
-                      <div className={classes.user}>
-                        <div>{comment.reply.nickname}</div>{" "}
-                        <div>
-                          {new Date(comment.reply.createdAt).toLocaleString(
-                            "ko-KR"
-                          )}{" "}
+                {props.userInfo.nickname === props.loggedInUser.nickname &&
+                  (isReplyOpened[comment.commentId] ||
+                    hasReply[comment.commentId]) && (
+                    <div className={classes.reply}>
+                      {" "}
+                      <div className={classes.info}>
+                        <img
+                          alt="replyImage"
+                          src={replyImg}
+                          width="30px"
+                          height="30px"
+                        />{" "}
+                        <div className={classes.comment}>
+                          {" "}
+                          <textarea
+                            placeholder="대댓글 내용을 입력하세요..."
+                            value={
+                              reply[comment.commentId]
+                                ? reply[comment.commentId].reply
+                                : ""
+                              // reply.reply
+                            }
+                            onChange={(e) => {
+                              replyChangeHandler(e, comment.commentId);
+                            }}
+                            required
+                          />
+                          {!hasReply[comment.commentId] ? (
+                            <div className={classes.btnCon_2}>
+                              {/* {Object.keys(replies[comment.commentId]).values} */}
+                              {/* {replies[comment.commentId].reply.reply} */}
+                              {/* {comment.reply} */}
+                              <button
+                                className={classes.joinBtn_1}
+                                // type="submit"
+                                onClick={(e) => {
+                                  replyHandler(e, comment.commentId);
+                                }}
+                              >
+                                등록
+                                {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className={classes.btnCon_2}>
+                              {/* {Object.keys(replies[comment.commentId]).values} */}
+                              {/* {replies[comment.commentId].reply.reply} */}{" "}
+                              <button
+                                className={classes.joinBtn}
+                                onClick={() => {
+                                  // if (reply[comment.commentId].replyId) {
+                                  replyEditHandler(
+                                    comment.commentId,
+                                    // comment.reply.replyId
+                                    comment.reply.replyId
+                                    // latestReplies[comment.commentId].reply.replyId
+                                  );
+                                  // }
+                                }}
+                              >
+                                수정
+                              </button>
+                              <button
+                                className={classes.deleteBtn}
+                                onClick={() => {
+                                  // if (reply[comment.commentId].replyId) {
+                                  replyDeleteHandler(
+                                    comment.commentId,
+                                    comment.reply.replyId
+                                    // latestReplies[comment.commentId].reply.replyId
+                                    // comment.reply.replyId
+                                  );
+                                  // }
+                                }}
+                              >
+                                {/* {replies[comment.commentId].reply.replyId} */}
+                                삭제
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
-                    <div className={classes.commcontent}>
-                      {comment.reply.reply}{" "}
-                      {/* <div
+                  )}
+                {!(props.userInfo.nickname === props.loggedInUser.nickname) &&
+                  comment.reply && (
+                    <div className={classes.reply}>
+                      {" "}
+                      <div className={classes.info}>
+                        <img
+                          alt="replyImage"
+                          src={replyImg}
+                          width="30px"
+                          height="30px"
+                        />
+                        <img
+                          alt="ProfileImage"
+                          src={footerLogo}
+                          width="50px"
+                          height="50px"
+                        />
+                        <div className={classes.user}>
+                          <div>{comment.reply.nickname}</div>{" "}
+                          <div>
+                            {new Date(comment.reply.createdAt).toLocaleString(
+                              "ko-KR"
+                            )}{" "}
+                          </div>
+                        </div>
+                      </div>
+                      <div className={classes.commcontent}>
+                        {comment.reply.reply}{" "}
+                        {/* <div
                           className={classes.likes}
                           onClick={() => {
                             likeHandler(comment.commentId);
@@ -347,9 +505,9 @@ const Comments = (props) => {
                           />{" "}
                           {comment.likeCount}
                         </div> */}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </>
             </div>
           );
