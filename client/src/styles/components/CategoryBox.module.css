@@ -1,23 +1,13 @@
 .listCardContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 100vw;
   height: 75vh;
-  gap: 30px;
-  justify-content: center;
-}
-
-.list1 {
-  display: flex;
-}
-.list2 {
-  display: flex;
-}
-.list3 {
-  display: flex;
-}
-.list4 {
-  display: flex;
+  row-gap: 1vw;
+  gap: 50px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-content: center;
 }

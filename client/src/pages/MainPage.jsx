@@ -21,12 +21,27 @@ import React, { useState, useEffect } from 'react';
 
 const MainPage = () => {
   const [data, setData] = useState([]);
+  const [latest, setLatest] = useState([]);
   const [activeTab, setActiveTab] = useState('recruiting');
+
+  // 메인 모집중 게시글
   useEffect(() => {
     axios
-      .get(`/data`)
+      .get(`/v1/parties?page=1&size=12`)
       .then((response) => {
-        setData(response.data);
+        setData(response.data.data);
+      })
+      .catch((error) => {
+        console.error('Error party data:', error);
+      });
+  }, []);
+
+  // 새로운 모임
+  useEffect(() => {
+    axios
+      .get(`/v1/parties/latest?page=1&size=12`)
+      .then((response) => {
+        setLatest(response.data.data);
       })
       .catch((error) => {
         console.error('Error party data:', error);
@@ -59,7 +74,7 @@ const MainPage = () => {
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>
-          <ListSlider data={data} />
+          <ListSlider latest={latest} />
         </div>
       </section>
 
@@ -67,7 +82,6 @@ const MainPage = () => {
       <section className={classes.mainContainer}>
         <CategoryTab onSelectTab={handleTabSelect} />
         <CategoryBox data={data} activeTab={activeTab} />
-        {/* <Pagination /> */}
       </section>
 
       {/* 푸터 */}

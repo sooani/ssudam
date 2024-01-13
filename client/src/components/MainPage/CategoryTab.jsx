@@ -1,15 +1,6 @@
 import classes from '../../styles/components/CategoryTab.module.css';
 import React, { useState } from 'react';
 
-// const TabItem = () => {
-//   return (
-//     <div className={classes.tabItem}>
-//       <span onClick={onclick}>{dummy2.title}</span>
-//       <span>{dummy2.title}</span>
-//     </div>
-//   );
-// };
-
 const CategoryTab = ({ onSelectTab }) => {
   const [activeTab, setActiveTab] = useState('recruiting');
 

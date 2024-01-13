@@ -1,5 +1,6 @@
 import classes from '../../styles/components/Header.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+// import { FaUserLarge } from 'react-icons/fa6';
 
 /*
   헤더
@@ -42,4 +43,63 @@ const Header = (props) => {
     </header>
   );
 };
+// import React from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { Link, useNavigate } from 'react-router-dom';
+// import { login, logout, selectIsLoggedIn } from '../features/user/userSlice';
+// import classes from '../../styles/components/Header.module.css';
+
+// const Header = () => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const isLoggedIn = useSelector(selectIsLoggedIn);
+
+//   const gotoPost = () => {
+//     navigate('/meetings/new');
+//   };
+
+//   const gotoLogin = () => {
+//     navigate('/Login');
+//   };
+
+//   const gotoSignUp = () => {
+//     navigate('/SignUp');
+//   };
+
+//   const handleLogout = () => {
+//     dispatch(logout());
+//   };
+
+//   return (
+//     <header>
+//       <div className={classes.header}>
+//         <h1>
+//           <Link to="/">쓰담</Link>
+//         </h1>
+//         <div className={classes.loginElement}>
+//           <button className={classes.postRegister} onClick={gotoPost}>
+//             새 글 쓰기
+//           </button>
+//           {isLoggedIn ? (
+//             <>
+//               <button className={classes.logout} onClick={handleLogout}>
+//                 로그아웃
+//               </button>
+//               <button className={classes.mypage}><FaUserLarge /></button>
+//             </>
+//           ) : (
+//             <>
+//               <button className={classes.login} onClick={gotoLogin}>
+//                 로그인
+//               </button>
+//               <button className={classes.join} onClick={gotoSignUp}>
+//                 회원가입
+//               </button>
+//             </>
+//           )}
+//         </div>
+//       </div>
+//     </header>
+//   );
+// };
 export default Header;
