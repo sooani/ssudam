@@ -41,10 +41,10 @@ public class LikeControllerTest {
         long commentId = 1L;
         long memberId = 1L;
 
-        doNothing().when(likeService).toggleLike(Mockito.anyLong(),Mockito.anyLong());
+        doNothing().when(likeService).toggleLike(Mockito.anyLong(), Mockito.anyLong());
         //when
         ResultActions actions = mockMvc.perform(
-                post("/v1/likes/comments/{comment-id}",commentId)
+                post("/v1/likes/comments/{comment-id}", commentId)
                         .param("memberId", String.valueOf(memberId)));
         //then
         actions
@@ -59,18 +59,19 @@ public class LikeControllerTest {
                                 parameterWithName("memberId").description("회원 식별자 ID")
                         )));
     }
+
     @Test
-    public void checkLikeStatusTest() throws Exception{
+    public void checkLikeStatusTest() throws Exception {
         //given
         long commentId = 1L;
         long memberId = 1L;
         boolean isLiked = true;
 
-        given(likeService.isCommentLikedByUser(Mockito.anyLong(),Mockito.anyLong())).willReturn(isLiked);
+        given(likeService.isCommentLikedByUser(Mockito.anyLong(), Mockito.anyLong())).willReturn(isLiked);
         //when
         ResultActions actions = mockMvc.perform(
-                get("/v1/likes/comments/{comment-id}/like-status",commentId)
-                        .param("memberId",String.valueOf(memberId))
+                get("/v1/likes/comments/{comment-id}/like-status", commentId)
+                        .param("memberId", String.valueOf(memberId))
                         .accept(MediaType.APPLICATION_JSON)
         );
 
