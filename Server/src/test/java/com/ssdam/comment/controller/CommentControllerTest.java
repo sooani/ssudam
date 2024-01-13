@@ -65,12 +65,6 @@ public class CommentControllerTest {
     @Test
     public void postCommentTest() throws Exception {
         //given
-        Party party = new Party();
-        party.setPartyId(1L);
-
-        Member member = new Member();
-        member.setMemberId(1L);
-
         CommentDto.Post post = (CommentDto.Post) CommentStub.getRequestBody(HttpMethod.POST);
         String content = gson.toJson(post);
 
@@ -102,7 +96,6 @@ public class CommentControllerTest {
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("comment").type(JsonFieldType.STRING).description("댓글 내용")
                                                 .attributes(key("constraints").value(commentDescriptions))
-                                                .optional()
                                 )
                         ),
                         responseHeaders(
@@ -159,16 +152,15 @@ public class CommentControllerTest {
                         ),
                         requestFields(
                                 List.of(
-                                        fieldWithPath("commentId").type(JsonFieldType.NUMBER)
-                                                .description("댓글 식별자").ignored(),
+                                        fieldWithPath("commentId").type(JsonFieldType.NUMBER).description("댓글 식별자")
+                                                .ignored(),
                                         fieldWithPath("comment").type(JsonFieldType.STRING).description("댓글 내용")
                                                 .attributes(key("constraints").value(commentDescriptions))
-                                                .optional()
                                 )
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터").optional(),
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
                                         fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
                                         fieldWithPath("data.partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                         fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
@@ -190,12 +182,6 @@ public class CommentControllerTest {
     @Test
     public void getCommentTest() throws Exception {
         //given
-        Party party = new Party();
-        party.setPartyId(1L);
-
-        Member member = new Member();
-        member.setMemberId(1L);
-
         long commentId = 1L;
         CommentDto.Response responseDto = CommentStub.getSingleResponseBody();
 
@@ -529,11 +515,9 @@ public class CommentControllerTest {
         long commentId = 1L;
 
         doNothing().when(commentService).deleteComment(Mockito.anyLong());
-
         //when
         ResultActions actions = mockMvc.perform(
                 delete("/v1/comments/{comment-id}", commentId));
-
         //then
         actions
                 .andExpect(status().isNoContent())

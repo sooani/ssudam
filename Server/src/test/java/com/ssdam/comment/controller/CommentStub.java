@@ -4,6 +4,7 @@ import com.ssdam.comment.dto.CommentDto;
 import com.ssdam.comment.entity.Comment;
 import com.ssdam.member.entity.Member;
 import com.ssdam.party.entity.Party;
+import com.ssdam.reply.controller.ReplyStub;
 import com.ssdam.reply.dto.ReplyDto;
 import com.ssdam.reply.entity.Reply;
 import org.springframework.data.domain.Page;
@@ -272,13 +273,7 @@ public class CommentStub {
                 PageRequest.of(0, 10, Sort.by("createdAt").descending()),2);
     }
     public static ReplyDto.Response getReplyDtoResponse(){
-       return ReplyDto.Response.builder()
-               .replyId(1L)
-               .reply("대댓글내용")
-               .nickname("작성자")
-               .createdAt(LocalDateTime.now())
-               .modifiedAt(LocalDateTime.now())
-               .build();
+       return ReplyStub.getSingleResponseBody();
     }
 
 }
