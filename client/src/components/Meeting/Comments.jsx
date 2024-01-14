@@ -7,25 +7,29 @@ import { FaComment } from "react-icons/fa";
 import replyImg from "../../images/reply.png";
 import axios from "../../axios";
 const Comments = (props) => {
-  const [commentLikes, setCommentLikes] = useState({});
-  const [comments, setComments] = useState(props.comments);
+  const [commentLikes, setCommentLikes] = useState({}); // 코멘트들의 좋아요 상태
+  const [comments, setComments] = useState(props.comments); // 해당 모집글의 전체 댓글
   const [page, setPage] = useState(1);
-  const [newReplyId, setNewReplyId] = useState(null);
-  const [totalComments, setTotalComments] = useState(0);
-  const [isReplyOpened, setIsReplyOpened] = useState([]);
-  const [reply, setReply] = useState([]);
-  const [replies, setReplies] = useState([]);
-  const [hasReply, setHasReply] = useState({});
-  // const [enteredReply, setEnteredReply] = useState("");
-  const commentsPerPage = 2;
-  console.log(props.comments);
-  // const commentsLength = props.comments.length;
+  const [isReplyOpened, setIsReplyOpened] = useState([]); // 답글 버튼 열림/닫힘 상태
+  const [replies, setReplies] = useState([]); // 대댓글들 상태
+  const [hasReply, setHasReply] = useState({}); // 대댓글 여부 상태
+  const [sortOption, setSortOption] = useState("recent"); // 정렬 상태
+  const [sortedComments, setSortedComments] = useState([]); // 정렬된 댓글
+  // props의 댓글이 변화할때 마다 comments 업데이트 (상관없나..?)
   useEffect(() => {
-    // props.comments가 변경될 때마다 comments 상태를 업데이트
     setComments(props.comments);
   }, [props.comments]);
   useEffect(() => {
-    const initialCommentLikes = {};
+    console.log(comments);
+  }, [comments]);
+  useEffect(() => {
+    props.getComments();
+  }, []);
+  useEffect(() => {
+    console.log("replies", replies);
+  }, [replies]);
+  useEffect(() => {
+    // 댓글들에 대한 현재 로그인한 사용자의 좋아요 상태를 업데이트
     if (comments) {
       comments.forEach((comment) => {
         axios
@@ -34,7 +38,6 @@ const Comments = (props) => {
           )
 
           .then((response) => {
-            console.log(response);
             if (response.data === true) {
               setCommentLikes((prevState) => ({
                 ...prevState,
@@ -52,50 +55,33 @@ const Comments = (props) => {
             alert("오류가 발생했습니다!");
           });
       });
+      // 대댓글 창 열림 상태는 댓글의 길이만큼 false 배열로 초기화
       const initialIsReplyOpened = comments.reduce(
         (acc, comment) => ({ ...acc, [comment.commentId]: false }),
         {}
       );
       setIsReplyOpened(initialIsReplyOpened);
-      setReply((prev) => {
-        const newReplies = [...prev];
+
+      // 대댓글들의 상태를 업데이트, commentId가 key 값, 해당 코멘트의 reply가 value 값
+      setReplies((prev) => {
+        const newReplies = { ...prev };
+
         comments.forEach((comment) => {
           newReplies[comment.commentId] = {
+            ...newReplies[comment.commentId],
+
+            reply: comment.reply ? comment.reply.reply : "",
             replyId: comment.reply ? comment.reply.replyId : undefined,
-            reply: comment.reply ? comment.reply.reply : undefined,
-          };
-        });
-        return newReplies;
-      });
-      setReplies((prev) => {
-        const newReplies = { ...prev };
-
-        comments.forEach((comment) => {
-          newReplies[comment.commentId] = {
-            ...newReplies[comment.commentId],
-            reply: comment.reply ? comment.reply : {},
           };
         });
 
         return newReplies;
       });
-      setReplies((prev) => {
-        const newReplies = { ...prev };
-
-        comments.forEach((comment) => {
-          newReplies[comment.commentId] = {
-            ...newReplies[comment.commentId],
-            reply: comment.reply ? comment.reply : {},
-          };
-        });
-
-        return newReplies;
-      });
+      // 대댓글을 가지고 있는지 상태를 업데이트
       setHasReply((prevHasReply) => {
         const newHasReply = { ...prevHasReply };
 
         comments.forEach((comment) => {
-          // comment.reply가 null이 아니면 true, 그렇지 않으면 false
           newHasReply[comment.commentId] = comment.reply !== null;
         });
 
@@ -103,21 +89,16 @@ const Comments = (props) => {
       });
     }
   }, [comments]);
-  console.log(hasReply);
-  useEffect(() => {
-    console.log(isReplyOpened);
-  }, [isReplyOpened]);
+  // 대댓글 창 열림을 관리하는 핸들러
   const openReplyHandler = (commentId) => {
-    console.log(isReplyOpened);
     if (comments) {
-      // setIsReplyOpened(Array(comments.length).fill(false));
       setIsReplyOpened((prev) => ({
         ...prev,
         [commentId]: !prev[commentId],
       }));
     }
   };
-  // console.log(reply);
+  // 댓글의 좋아요 관리 핸들러
   const likeHandler = (commentId) => {
     // 댓글 좋아요 상태 토글
     setCommentLikes((prevState) => ({
@@ -129,7 +110,7 @@ const Comments = (props) => {
     axios
       .post(`/v1/likes/comments/${commentId}?memberId=${props.loggedInUser.id}`)
       .then((response) => {
-        console.log(response);
+        // 좋아요 상태를 업데이트 하여 comments에 저장 (필요 없나..?)
         const updatedComments = comments.map((comment) => {
           if (comment.commentId === commentId) {
             return {
@@ -141,7 +122,6 @@ const Comments = (props) => {
           }
           return comment;
         });
-        console.log(updatedComments);
         setComments(updatedComments);
       })
       .catch((error) => {
@@ -149,9 +129,8 @@ const Comments = (props) => {
         alert("오류가 발생했습니다!");
       });
   };
-  const [sortOption, setSortOption] = useState("recent");
-  const [sortedComments, setSortedComments] = useState([]);
 
+  // 정렬 기준에 따라 sortedComments를 업데이트 하는 로직
   useEffect(() => {
     // 최신 순으로 정렬
     if (sortOption === "recent" && comments) {
@@ -168,79 +147,67 @@ const Comments = (props) => {
       setSortedComments(sortedByLikes);
     }
   }, [comments, sortOption]);
-  useEffect(() => {
-    console.log("updated commentLikes");
-  }, [commentLikes]);
+  // 정렬 기준을 변경하는 핸들러
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
-  // console.log(reply);
+  // 대댓글 수정 핸들러
   const replyChangeHandler = (e, commentId) => {
-    const { value } = e.target;
-    console.log(reply);
-    setReply((prev) => {
-      const newReplies = [...prev];
-      newReplies[commentId] = { reply: value };
+    setReplies((prev) => {
+      const newReplies = { ...prev };
+
+      newReplies[commentId] = {
+        ...newReplies[commentId],
+
+        reply: e.target.value,
+      };
+
       return newReplies;
     });
   };
+  // 대댓글을 등록하는 핸들러
   const replyHandler = (e, commentId) => {
     e.preventDefault();
-    // console.log(loggedInUser.nickname);
+
     let replyDTO = {
-      // id: Math.random() * 1000,
-      // partyId: meetingId,
       commentId: commentId,
       memberId: props.loggedInUser.id,
-      reply: reply[commentId].reply,
+
+      reply: replies[commentId].reply,
     };
     console.log(replyDTO);
     axios
       .post(`/v1/replies`, replyDTO)
       .then((response) => {
-        console.log(response.data);
-
         alert("대댓글이 등록되었습니다!");
-        // setIsReplyOpened((prev) => ({
-        //   ...prev,
-        //   [commentId]: !prev[commentId],
-        // }));
+
         const locationHeaderValue = response.headers.location;
 
         // '/v1/comments/{commentId}'에서 commentId 부분을 추출
         const replyIdMatch = locationHeaderValue.match(/\/v1\/replies\/(\d+)/);
 
         if (replyIdMatch && replyIdMatch[1]) {
-          // commentId를 사용하여 원하는 작업 수행
           const replyId = replyIdMatch[1];
           console.log("Extracted Reply ID:", replyId);
           axios.get(`/v1/replies/${replyId}`).then((response) => {
-            console.log(response.data.data);
-            // setReplies((prevReplies) => ({
-            //   ...prevReplies,
-            //   [commentId]: response.data.data,
-            // }));
-            console.log(response.data.data.replyId);
-            //  const id = response.data.data.replyId;
             setReplies((prev) => {
               const newReplies = { ...prev };
 
               newReplies[commentId] = {
                 ...newReplies[commentId],
-                reply: {
-                  ...newReplies[commentId].reply,
-                  replyId: response.data.data.replyId,
-                },
+
+                reply: newReplies[commentId].reply,
+                replyId: replyId,
               };
 
               return newReplies;
             });
+            // 대댓글 보유 상태를 변경
             setHasReply((prevHasReply) => ({
               ...prevHasReply,
               [commentId]: true,
             }));
           });
-          // setNewReplyId(response.data.data.replyId);
         } else {
           console.error("Comment ID not found in Location header.");
         }
@@ -248,28 +215,24 @@ const Comments = (props) => {
       .catch((error) => {
         console.error("Error posting comment data: ", error);
       });
-    // console.log(comments);
-    // return id;
   };
-  console.log("replies", replies);
+  // 대댓글을 수정하는 핸들러
   const replyEditHandler = (commentId, replyId) => {
-    console.log(commentId, replyId);
-    // if (replies[commentId] && replies[commentId].reply) {
     const updatedDTO = {
       replyId: replyId,
-      reply: reply[commentId].reply,
+
+      reply: replies[commentId].reply,
     };
     axios
       .patch(`/v1/replies/${replyId}`, updatedDTO)
       .then((response) => {
-        console.log(response.data.data);
         alert("대댓글이 수정되었습니다!");
       })
       .catch((error) => {
         console.error("Error patching reply data: ", error);
       });
-    // }
   };
+  // 대댓글을 삭제하는 핸들러
   const replyDeleteHandler = (commentId, replyId) => {
     const userConfirmed = window.confirm("해당 대댓글을 삭제하시겠습니까?");
 
@@ -277,24 +240,16 @@ const Comments = (props) => {
       axios
         .delete(`/v1/replies/${replyId}`)
         .then((response) => {
-          console.log(response.data.data);
           alert("대댓글이 삭제되었습니다!");
-          // setReplies((prevReplies) => ({
-          //   ...prevReplies,
-          //   [commentId]: null,
-          // }));
-          setReply((prev) => {
-            const newReplies = [...prev];
-            newReplies[commentId] = { reply: "" };
-            return newReplies;
-          });
+
           setReplies((prev) => {
             const newReplies = { ...prev };
 
             comments.forEach((comment) => {
               newReplies[comment.commentId] = {
                 ...newReplies[comment.commentId],
-                reply: comment.reply ? comment.reply : {},
+
+                reply: "",
               };
             });
 
@@ -310,20 +265,10 @@ const Comments = (props) => {
         });
     }
   };
-  // console.log("hasReply", hasReply);
-  useEffect(() => {
-    props.getComments();
-  }, []);
-  useEffect(() => {
-    if (newReplyId !== null) {
-      console.log("New Reply ID:", newReplyId);
-      // Perform any actions or use the newReplyId as needed
-    }
-  }, [newReplyId]);
-  // console.log(replies[1].reply.replyId);
-  // if (reply[1]) console.log("reply", reply[1].replyId);
+
   return (
     <div className={classes.comments}>
+      {/* 정렬된 댓글이 2개이상일 경우만 정렬 기준을 선택할 수 있도록 한다 */}
       {sortedComments.length >= 2 && (
         <div className={classes.dropdown}>
           <select value={sortOption} onChange={handleSortChange}>
@@ -332,12 +277,12 @@ const Comments = (props) => {
           </select>
         </div>
       )}
+      {/* 댓글이 있는 경우 정렬된 댓글을 보여준다 */}
       {!props.isLoading &&
         comments &&
         sortedComments.map((comment) => {
           return (
-            <div className={classes.container}>
-              {" "}
+            <div className={classes.container} key={comment.commentId}>
               <div key={comment.commentId} className={classes.comm}>
                 <div className={classes.info}>
                   <img
@@ -347,15 +292,16 @@ const Comments = (props) => {
                     height="50px"
                   />
                   <div className={classes.user}>
-                    <div>{comment.nickname}</div>{" "}
+                    <div>{comment.nickname}</div>
                     <div>
-                      {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
+                      {new Date(comment.modifiedAt).toLocaleString("ko-KR")}
                     </div>
-                  </div>{" "}
+                  </div>
                 </div>
 
                 <div className={classes.commcontent}>
-                  {comment.comment}{" "}
+                  {comment.comment}
+                  {/* 현재 모집글의 모임장과 현재 로그인한 사용자가 같은 사람일 경우에만 대댓글을 달 수 있다. */}
                   {props.userInfo.nickname === props.loggedInUser.nickname && (
                     <div
                       className={classes.replyIcon}
@@ -363,8 +309,6 @@ const Comments = (props) => {
                         openReplyHandler(comment.commentId);
                       }}
                     >
-                      {" "}
-                      {/* 답글 아이콘은 글 작성자랑 현재 로그인한 사용자의 닉네임이 같을 경우만 띄워짐 */}
                       <FaComment
                         style={{
                           fontSize: "1.5rem",
@@ -392,64 +336,56 @@ const Comments = (props) => {
                 </div>
               </div>
               <>
+                {/* 현재 로그인한 사용자와 해당 모임장이 같은 사람이고, 대댓글 창이 열리거나 대댓글이 존재하는 경우 렌더링 */}
                 {props.userInfo.nickname === props.loggedInUser.nickname &&
                   (isReplyOpened[comment.commentId] ||
                     hasReply[comment.commentId]) && (
                     <div className={classes.reply}>
-                      {" "}
                       <div className={classes.info}>
                         <img
                           alt="replyImage"
                           src={replyImg}
                           width="30px"
                           height="30px"
-                        />{" "}
+                        />
                         <div className={classes.comment}>
-                          {" "}
                           <textarea
                             placeholder="대댓글 내용을 입력하세요..."
                             value={
-                              reply[comment.commentId]
-                                ? reply[comment.commentId].reply
+                              // reply[comment.commentId]
+                              //   ? reply[comment.commentId].reply
+                              //   : ""
+                              replies[comment.commentId].reply
+                                ? replies[comment.commentId].reply
                                 : ""
-                              // reply.reply
                             }
                             onChange={(e) => {
                               replyChangeHandler(e, comment.commentId);
                             }}
                             required
                           />
+                          {/* 등록된 대댓글이 없는 경우 등록 버튼을 렌더링 */}
+                          {/* 아니면 수정/삭제 버튼을 렌더링 */}
                           {!hasReply[comment.commentId] ? (
                             <div className={classes.btnCon_2}>
-                              {/* {Object.keys(replies[comment.commentId]).values} */}
-                              {/* {replies[comment.commentId].reply.reply} */}
-                              {/* {comment.reply} */}
                               <button
                                 className={classes.joinBtn_1}
-                                // type="submit"
                                 onClick={(e) => {
                                   replyHandler(e, comment.commentId);
                                 }}
                               >
                                 등록
-                                {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
                               </button>
                             </div>
                           ) : (
                             <div className={classes.btnCon_2}>
-                              {/* {Object.keys(replies[comment.commentId]).values} */}
-                              {/* {replies[comment.commentId].reply.reply} */}{" "}
                               <button
                                 className={classes.joinBtn}
                                 onClick={() => {
-                                  // if (reply[comment.commentId].replyId) {
                                   replyEditHandler(
                                     comment.commentId,
-                                    // comment.reply.replyId
-                                    // comment.reply.replyId
-                                    replies[comment.commentId].reply.replyId
+                                    replies[comment.commentId].replyId
                                   );
-                                  // }
                                 }}
                               >
                                 수정
@@ -457,17 +393,12 @@ const Comments = (props) => {
                               <button
                                 className={classes.deleteBtn}
                                 onClick={() => {
-                                  // if (reply[comment.commentId].replyId) {
                                   replyDeleteHandler(
                                     comment.commentId,
-                                    replies[comment.commentId].reply.replyId
-                                    // latestReplies[comment.commentId].reply.replyId
-                                    // comment.reply.replyId
+                                    replies[comment.commentId].replyId
                                   );
-                                  // }
                                 }}
                               >
-                                {/* {replies[comment.commentId].reply.replyId} */}
                                 삭제
                               </button>
                             </div>
@@ -476,10 +407,10 @@ const Comments = (props) => {
                       </div>
                     </div>
                   )}
+                {/* 현재 모임장과 로그인한 유저가 다른사람이고 대댓글이 존재하는 경우 대댓글을 보여준다. */}
                 {!(props.userInfo.nickname === props.loggedInUser.nickname) &&
                   comment.reply && (
                     <div className={classes.reply}>
-                      {" "}
                       <div className={classes.info}>
                         <img
                           alt="replyImage"
@@ -494,32 +425,16 @@ const Comments = (props) => {
                           height="50px"
                         />
                         <div className={classes.user}>
-                          <div>{comment.reply.nickname}</div>{" "}
+                          <div>{comment.reply.nickname}</div>
                           <div>
                             {new Date(comment.reply.createdAt).toLocaleString(
                               "ko-KR"
-                            )}{" "}
+                            )}
                           </div>
                         </div>
                       </div>
                       <div className={classes.commcontent}>
-                        {comment.reply.reply}{" "}
-                        {/* <div
-                          className={classes.likes}
-                          onClick={() => {
-                            likeHandler(comment.commentId);
-                          }}
-                        >
-                          <FaThumbsUp
-                            style={{
-                              fontSize: "1.5rem",
-                              color: commentLikes[comment.commentId]
-                                ? "green"
-                                : "black",
-                            }}
-                          />{" "}
-                          {comment.likeCount}
-                        </div> */}
+                        {comment.reply.reply}
                       </div>
                     </div>
                   )}
@@ -527,6 +442,7 @@ const Comments = (props) => {
             </div>
           );
         })}
+      {/* pagination 관련, 일단은 주석처리 */}
       {/* <ReactPaginate
         pageCount={Math.ceil(totalComments / commentsPerPage)}
         pageRangeDisplayed={5}

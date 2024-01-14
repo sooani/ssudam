@@ -3,117 +3,34 @@ import classes from "../styles/pages/DetailPost.module.css";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import { IoIosArrowBack } from "react-icons/io";
-import SearchMap from "../components/Map/SearchMap";
 import MakeMap from "../components/Map/MakeMap";
 import { FaUsers } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import axios from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Comment from "../components/Meeting/Comments";
 import Comments from "../components/Meeting/Comments";
 import { FaBookmark } from "react-icons/fa";
-import {
-  WiCloud,
-  WiCloudy,
-  WiDayCloudy,
-  WiDaySunny,
-  WiFog,
-  WiRain,
-  WiShowers,
-  WiSnow,
-  WiThunderstorm,
-} from "weather-icons-react";
-import TranslateWeather from "../components/Meeting/TranslateWeather";
-const WeatherIcon = ({ weatherType }) => {
-  switch (weatherType) {
-    case "clear sky":
-      return <WiDaySunny size={50} color="skyblue" />;
-    case "few clouds":
-      return <WiDayCloudy size={50} color="skyblue" />;
-    case "scattered clouds":
-      return <WiCloud size={50} color="skyblue" />;
-    case "broken clouds":
-      return <WiCloudy size={50} color="skyblue" />;
-    case "shower rain":
-      return <WiShowers size={50} color="skyblue" />;
-    case "rain":
-      return <WiRain size={50} color="skyblue" />;
-    case "thunderstorm":
-      return <WiThunderstorm size={50} color="skyblue" />;
-    case "snow":
-      return <WiSnow size={50} color="skyblue" />;
-    case "mist":
-      return <WiFog size={50} color="skyblue" />;
-    default:
-      return null; // 다른 날씨 유형에 대한 아이콘이 없는 경우
-  }
-};
+import WeatherIcon from "../components/Meeting/WeatherIcon";
 const DetailPost = () => {
-  // 도로명 주소
-  const [address, setAddress] = useState({});
-  const [comments, setComments] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [meetingInfo, setMeetingInfo] = useState(null);
-  const [enteredComment, setEnteredComment] = useState("");
-  const [userInfo, setUserInfo] = useState(null);
-  const [isMyPost, setIsMyPost] = useState(false);
-  const [hasMyComment, setHasMyComment] = useState(false);
-  const [myComment, setMyComment] = useState({});
-  const [isRecruiting, setIsRecruiting] = useState(false);
-  const [isParticipating, setIsParticipating] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
-  // const meetingId = 983.5226956209999;
-  // const meetingId = 906.6961085461239;
-  // const meetingId = 906.8489342328219;
+  const [address, setAddress] = useState({}); // 도로명 주소
+  const [comments, setComments] = useState(null); // 전체 댓글
+  const [isLoading, setIsLoading] = useState(false); // 로딩 여부
+  const [meetingInfo, setMeetingInfo] = useState(null); // 현재 파티의 정보
+  const [enteredComment, setEnteredComment] = useState(""); // 입력된 댓글
+  const [userInfo, setUserInfo] = useState(null); // 현재 파티의 모임장 정보
+  const [isMyPost, setIsMyPost] = useState(false); // 내 포스트인지 여부
+  const [hasMyComment, setHasMyComment] = useState(false); // 내 댓글 보유 여부
+  const [myComment, setMyComment] = useState({}); // 나의 코멘트
+  const [isRecruiting, setIsRecruiting] = useState(false); // 모집중인지 여부
+  const [isParticipating, setIsParticipating] = useState(false); // 참여중인지 여부
+  const [bookmarked, setBookmarked] = useState(false); // 북마크 여부
   const { meetingId } = useParams();
-  console.log(meetingId);
-  console.log(meetingInfo, userInfo);
-  // const loggedInUser = localStorage.getItem("email");
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   const navigate = useNavigate();
-  // console.log(userInfo);
-  // useEffect(() => {
-  //   if (loggedInUser && userInfo) {
-  //     axios
-  //       .get(`/v1/parties/${meetingId}/comments?userId=${loggedInUser.id}`)
-  //       .then((response) => {
-  //         if (Array.isArray(response.data) && response.data.length === 0) {
-  //           // console.log("응답 데이터가 빈 배열입니다.");
-  //         } else {
-  //           // console.log("응답 데이터가 빈 배열이 아닙니다.");
-  //           setHasMyComment(true);
-  //           // console.log(response.data[0]);
-  //           setMyComment(response.data[0]);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching comments:", error);
-  //       });
-  //   }
-  // }, [userInfo]);
-  // useEffect(() => {
-  //   if (loggedInUser && userInfo) {
-  //     // 이글의 모든 댓글을 조회하고 그 중에
-  //     axios
-  //       .get(`/v1/parties/${meetingId}/comments?userId=${loggedInUser.id}`)
-  //       .then((response) => {
-  //         if (Array.isArray(response.data) && response.data.length === 0) {
-  //           // console.log("응답 데이터가 빈 배열입니다.");
-  //         } else {
-  //           // console.log("응답 데이터가 빈 배열이 아닙니다.");
-  //           setHasMyComment(true);
-  //           // console.log(response.data[0]);
-  //           setMyComment(response.data[0]);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching comments:", error);
-  //       });
-  //   }
-  // }, [userInfo]);
+  // 수안님 코드의 경우 (party정보에 memberId가 존재할 경우) 주석 해제
   // useEffect(() => {
   //   if (meetingInfo && meetingInfo.memberId) {
 
@@ -134,30 +51,21 @@ const DetailPost = () => {
   //     // console.log(userInfo);
   //   }
   // }, [meetingInfo]);
-  // useEffect(() => {}, [isRecruiting]);
+  // 코멘트 등록 핸들러
   const commentSubmitHandler = (e) => {
     e.preventDefault();
-    // console.log(loggedInUser.nickname);
     let commentDTO = {
-      // id: Math.random() * 1000,
       partyId: meetingId,
       memberId: loggedInUser.id,
-      // useremail: loggedInUser.email,
-      // nickname: loggedInUser.nickname,
-      // edited: new Date(),
-      // created: new Date(),
       comment: enteredComment,
     };
-    console.log(commentDTO);
     axios
       .post(`/v1/comments`, commentDTO)
       .then((response) => {
-        // console.log(response.data);
         getComments();
         setHasMyComment(true);
         setEnteredComment("");
-        console.log(response.data);
-        // 응답의 헤더에서 Location 값을 추출
+
         const locationHeaderValue = response.headers.location;
 
         // '/v1/comments/{commentId}'에서 commentId 부분을 추출
@@ -170,7 +78,7 @@ const DetailPost = () => {
           const commentId = commentIdMatch[1];
           console.log("Extracted Comment ID:", commentId);
           axios.get(`/v1/comments/${commentId}`).then((response) => {
-            console.log(response.data);
+            // 등록된 나의 댓글을 my comment state로 업데이트
             setMyComment(response.data.data);
           });
         } else {
@@ -180,54 +88,47 @@ const DetailPost = () => {
       .catch((error) => {
         console.error("Error posting comment data: ", error);
       });
-    // console.log(comments);
   };
-  console.log(hasMyComment);
+  // 전체 코멘트를 가져오는 function
   const getComments = async () => {
     console.log(meetingId);
     try {
-      // const res = await axios.get(`/v1/parties/${meetingId}/comments`);
+      // pagination 동작하면 size와 page 값을 동적으로 줘야 함.
       const res = await axios.get(
         `/v1/comments?partyId=${meetingId}&page=1&size=3`
       );
       const comments = res.data.data;
+      // 댓글 중에 나의 댓글이 있는지 확인하는 로직
       if (userInfo) {
         const myComment = comments.find(
           (comment) => comment.nickname === loggedInUser.nickname
         );
-        console.log(comments);
-        console.log(loggedInUser);
-        console.log(myComment);
         if (myComment) {
           // 조건에 맞는 comment가 있으면 setMyComment에 저장
           setHasMyComment(true);
           setMyComment(myComment);
-          console.log("My Comment:", myComment);
         } else {
           console.log("No comment found for the user.");
         }
-        console.log("comments are updated successfully");
+        // 전체 코멘트를 업데이트
         setComments(comments);
+        console.log("comments are updated successfully");
       }
     } catch (error) {
       console.error("Error fetching comment datas: ", error);
     }
   };
+  // 나의 코멘트를 수정하는 핸들러
   const commentEditHandler = () => {
     const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
-    console.log(myComment);
     let updatedDTO = {
       comment: myComment.comment,
-      createdAt: myComment.createdAt,
-      modifiedAt: new Date(),
     };
-    console.log(updatedDTO);
     if (userConfirmed) {
       axios
         .patch(`/v1/comments/${myComment.commentId}`, updatedDTO)
 
         .then((response) => {
-          // console.log(response.data);
           alert("댓글이 수정되었습니다!");
           getComments();
         })
@@ -237,16 +138,13 @@ const DetailPost = () => {
         });
     }
   };
+  // 나의 코멘트를 삭제하는 핸들러
   const commentDeleteHandler = () => {
     const userConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
-    // json-server에서는 조건이 있는 삭제가 안되나봄..?
-    // 백엔드와 연결했을때 테스트 가능할듯...
     if (userConfirmed) {
       axios
         .delete(`/v1/comments/${myComment.commentId}`)
-
         .then((response) => {
-          // console.log(response.data);
           alert("댓글이 삭제되었습니다!");
           setHasMyComment(false);
           getComments();
@@ -257,31 +155,32 @@ const DetailPost = () => {
         });
     }
   };
+  // 처음 렌더링 될 때 코멘트를 가져옴.
   useEffect(() => {
     getComments();
-  }, [userInfo]);
+  }, []);
+  // 코멘트의 입력 상태를 관리하는 핸들러
+  // 입력된 나의 코멘트가 있으면 myComment 업데이트, 아니면 enterend comment 업데이트.
   const commentChangeHandler = (e) => {
     if (hasMyComment) {
       setMyComment((prev) => ({
         ...prev,
         comment: e.target.value,
-        // edited: new Date(),
       }));
     } else {
       setEnteredComment(e.target.value);
     }
   };
-  // localStorage에서 사용자 email 가져와서 글의 사용자 email 과 비교하고 같을 경우 수정/삭제 버튼 띄우기
   // localStorage를 쓸지 함수를 쓸지 추후에 방식 변경 가능성 존재
+  // meeting의 userInfo의 id와 현재 로그인된 사용자의 id를 비교하여 isMyPost 업데이트
   useEffect(() => {
-    console.log(userInfo);
     if (userInfo) {
       if (userInfo.memberId == loggedInUser.id) {
         setIsMyPost(true);
-        console.log(isMyPost);
       }
     }
   }, [userInfo]);
+  // meeting info의 모집 여부로 isRecruiting 상태를 업데이트 하는 로직
   useEffect(() => {
     if (meetingInfo) {
       if (meetingInfo.partyStatus === "PARTY_OPENED") {
@@ -291,10 +190,9 @@ const DetailPost = () => {
       }
     }
   }, [meetingInfo]);
+  // 파티를 삭제하는 핸들러
   const deleteMeetingHandler = () => {
     const userConfirmed = window.confirm("해당 글을 삭제하시겠습니까?");
-    console.log(meetingInfo);
-    console.log(meetingId);
     if (userConfirmed) {
       axios
         .delete(`/v1/parties/${meetingId}`)
@@ -308,36 +206,15 @@ const DetailPost = () => {
         });
     }
   };
-  // useEffect(() => {
-  //   axios
-  //     // .get(`/comments`, {
-  //     //   params: {
-  //     //     meetingId: 1,
-  //     //   },
-  //     // })
-  //     .get(`/meetings/${meetingId}/comments`)
-  //     .then((response) => {
-  //       setIsLoading(true);
-  //       console.log(response);
-  //       setComments(response.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting comment datas: ", error);
-  //       setIsLoading(false);
-  //     });
-  //   console.log(comments);
-  // }, [isLoading]);
+  // 처음 party의 상태를 업데이트 하는 로직.
+  // 현재는 meetingInfo에 memberId가 없어서 임시로 고정값을 준 상태이다.
   useEffect(() => {
     axios
       .get(`/v1/parties/${meetingId}`)
       .then((response) => {
-        // setIsLoading(true);
-        console.log(response.data.data);
         setMeetingInfo(response.data.data);
-        console.log(new Date(response.data.data.closingDate));
+        // 모집 글의 모집 마감일이 현재 날짜보다 지난경우 모집 상태를 마감으로 업데이트!
         if (new Date(response.data.data.closingDate) <= new Date()) {
-          console.log("updating partyStatus");
           const updatedDTO = {
             partyId: meetingId,
             title: response.data.data.title,
@@ -345,16 +222,14 @@ const DetailPost = () => {
             currentCapacity: response.data.data.currentCapacity,
             partyStatus: "PARTY_CLOSED",
           };
-          console.log(updatedDTO);
+          // axios로 patch 요청을 보내는 부분
           axios
             .patch(`/v1/parties/${meetingInfo.partyId}`, updatedDTO)
             .then((response) => {
-              console.log(response.data.data);
               setMeetingInfo(response.data.data);
             })
             .catch((error) => {
               console.error("Error updating meeting data: ", error);
-              // error.message 판단하여 alert 메세지 던져주기
               alert("오류가 발생했습니다!");
             });
         }
@@ -364,71 +239,49 @@ const DetailPost = () => {
           email: "user1@example.com",
           nickname: "당근이",
         });
-        // if (response.data.party_status === "모집중") {
-        //   setIsRecruiting(true);
-        // }
-        // if (response.data.party_status === "모집완료") {
-        //   setIsRecruiting(false);
-        // }
-
-        // setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error getting meeting data: ", error);
-        // setIsLoading(false);
       });
-    console.log(meetingInfo);
   }, [isParticipating]);
-  useEffect(() => {
-    axios
-      .get(`/v1/parties/${meetingId}`)
-      .then((response) => {
-        // setIsLoading(true);
-        // console.log(response);
-        // setMeetingInfo(response.data);
-        if (response.data.partyStatus === "PARTY_OPENED") {
-          setIsRecruiting(true);
-        }
-        if (response.data.partyStatus === "PARTY_CLOSED") {
-          setIsRecruiting(false);
-        }
+  // 위는 원래 의존성이 isParticipating이었다...오류 날시 점검 필요
+  // 겹치는 로직 존재하여 아래는 임시 주석처리
+  // useEffect(() => {
+  //   axios
+  //     .get(`/v1/parties/${meetingId}`)
+  //     .then((response) => {
+  //       if (response.data.partyStatus === "PARTY_OPENED") {
+  //         setIsRecruiting(true);
+  //       }
+  //       if (response.data.partyStatus === "PARTY_CLOSED") {
+  //         setIsRecruiting(false);
+  //       }
 
-        // setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error getting meeting data: ", error);
-        // setIsLoading(false);
-      });
-    console.log(meetingInfo);
-  }, [isParticipating]);
-  console.log(myComment);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting meeting data: ", error);
+
+  //     });
+
+  // }, [isParticipating]);
+  // 참여 핸들러
   const joinHandler = () => {
     if (!isParticipating) {
       const userConfirmed = window.confirm("해당 모임에 참여하시겠습니까?");
 
-      // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
       if (userConfirmed) {
         console.log("참여되었습니다.");
 
-        let partDTO = {
-          // member_party_id: Math.random() * 1000,
-          member_id: loggedInUser.id,
-          party_id: meetingId,
-        };
         // 해당 meeting의 current capacity가 max capacity - 1 이하일 경우 참여가 가능하다
         // max capacity 랑 current capacity랑 같을 때 모임글 상태를 모집완료로 변경!
         axios
-          // .post(`/participations`, partDTO)
+
           .post(`/v1/parties/${meetingId}`, {
             memberId: loggedInUser.id,
             email: loggedInUser.email,
             nickname: loggedInUser.nickname,
           })
           .then((response) => {
-            console.log(response);
-            // 참여중 여부는 db에 안들어가니까 새로고침할때마다 기존 상태가 유지 안됨 > useEffect로 participation 정보
-            // 가져와서 그거 기준으로 setIsParticipating 해야 함!
-            // setIsParticipating(true);
             setMeetingInfo((prev) => ({
               ...prev,
               party_status:
@@ -449,50 +302,11 @@ const DetailPost = () => {
         "해당 모임에 참여 취소 하시겠습니까?"
       );
 
-      // dto에 들어갈것 : meetingId, 현재 로그인한 사용자의 id, 랜덤 participation id
       if (userConfirmed) {
         console.log("참여 취소되었습니다.");
 
-        // axios
-        //   .get(
-        //     `/v1/participations?member_id=${loggedInUser.id}&party_id=${meetingId}`
-        //   )
-        //   .then((response) => {
-        //     // console.log(response);
-        //     if (response.data.length > 0) {
-        //       const particiId = response.data[0].id;
-        //       // console.log(particiId);
-
-        //       axios
-        //         .delete(`/participations/${particiId}`)
-        //         .then((deleteResponse) => {
-        //           // console.log(deleteResponse);
-        //           // alert("해당 모임에 참여 취소 되었습니다!");
-        //           setMeetingInfo((prev) => ({
-        //             ...prev,
-        //             party_status:
-        //               prev.current_capacity - 1 <= prev.max_capacity
-        //                 ? "모집중"
-        //                 : "모집완료",
-        //             current_capacity: prev.current_capacity - 1,
-        //           }));
-        //           setIsParticipating(false);
-        //         })
-        //         .catch((deleteError) => {
-        //           console.error(
-        //             "Error deleting participation data: ",
-        //             deleteError
-        //           );
-        //         });
-        //     } else {
-        //       console.log("해당하는 participation이 없습니다.");
-        //     }
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error fetching participation data: ", error);
-        //   });
         axios
-          // .post(`/participations`, partDTO)
+
           .post(`/v1/parties/${meetingId}`, {
             memberId: loggedInUser.id,
             email: loggedInUser.email,
@@ -500,9 +314,7 @@ const DetailPost = () => {
           })
           .then((response) => {
             console.log(response);
-            // 참여중 여부는 db에 안들어가니까 새로고침할때마다 기존 상태가 유지 안됨 > useEffect로 participation 정보
-            // 가져와서 그거 기준으로 setIsParticipating 해야 함!
-            // setIsParticipating(true);
+
             setMeetingInfo((prev) => ({
               ...prev,
               party_status:
@@ -519,67 +331,41 @@ const DetailPost = () => {
       }
     }
   };
-
+  // 참여 중 여부를 업데이트하는 로직
+  // 현재 로그인한 사용자가 참여 중인 파티를 요청하고 그중에 현재 파티가 있을 경우 참여중으로 판단
   useEffect(() => {
-    console.log(meetingId);
     axios
       .get(`/v1/parties?partyMemberId=${loggedInUser.id}&page=1&size=3`)
       .then((response) => {
-        console.log(response.data.data);
         const hasParticipatingParty = response.data.data.some(
           (item) => item.partyId == meetingId
         );
-        console.log(hasParticipatingParty);
+
         setIsParticipating(hasParticipatingParty);
-        console.log(isParticipating);
-        // 뭔가 있을 경우 참여중
-        // if (response.data.length > 0) {
-        //   setIsParticipating(true);
-        // }
-        // 아니면 비참여중
       })
       .catch((error) => {
         console.error("Error updating meeting data: ", error);
         alert("오류가 발생했습니다!");
       });
   }, [meetingInfo]);
-  // useEffect(() => {
-  //   console.log("meeting info updated-------------------");
-  //   console.log("updated meeting info = ", meetingInfo);
-  //   if (meetingInfo) {
-  //     // let updatedDTO = meetingInfo;
-  //     // if(meetingInfo.party_status === "모집완료")
-  //     axios
-  //       .put(`/v1/parties/${meetingId}`, meetingInfo)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         // setMeetingInfo(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error updating meeting data: ", error);
-  //         alert("오류가 발생했습니다!");
-  //       });
-  //   }
-  // }, [meetingInfo]);
+  // 북마크를 처리하는 핸들러
   const bookmarkHandler = () => {
     setBookmarked((prev) => !prev);
     axios
       .post(`/v1/bookmarks/parties/${meetingId}?memberId=${loggedInUser.id}`)
-      .then((response) => {
-        console.log(response);
-      })
+      .then((response) => {})
       .catch((error) => {
         console.error("Error bookmarking meeting data: ", error);
         alert("오류가 발생했습니다!");
       });
   };
+  // 현재 로그인한 사용자의 현재 글에 대한 북마크 여부를 가져오는 로직
   useEffect(() => {
     axios
       .get(
         `/v1/bookmarks/parties/${meetingId}/like-status?memberId=${loggedInUser.id}`
       )
       .then((response) => {
-        console.log(response);
         setBookmarked(response.data);
       })
       .catch((error) => {
@@ -587,15 +373,9 @@ const DetailPost = () => {
         alert("오류가 발생했습니다!");
       });
   }, []);
-  console.log(bookmarked);
   return (
     <div className={classes.wrapper}>
       <Header />
-      {/* {!meetingInfo && !userInfo && (
-        <div className={classes.container}>
-          <p>Loading...</p>
-        </div>
-      )} */}
       {meetingInfo && userInfo && (
         <div className={classes.container}>
           <div className={classes.infoAndBtn}>
@@ -607,10 +387,6 @@ const DetailPost = () => {
                     navigate(-1);
                   }}
                 />
-                {/* <div className={classes.bookmark}>
-                  <h1>{meetingInfo.title}</h1>
-                  <FaBookmark style={{ color: "red", fontSize: "2rem" }} />
-                </div> */}
                 <h1>{meetingInfo.title}</h1>
               </div>
               <div className={classes.writerAndDate}>
@@ -642,12 +418,14 @@ const DetailPost = () => {
                 className={classes.bookmark}
                 onClick={bookmarkHandler}
               />
+              {/* 파티가 모집중이고 내 포스트도 아니고 참여중도 아닐경우 렌더링 */}
               {isRecruiting && !isMyPost && !isParticipating && (
                 <button className={classes.joinBtn} onClick={joinHandler}>
                   <FaUsers style={{ fontSize: "1.5rem" }} />
                   참여
                 </button>
               )}
+              {/* 내 포스트가 아니고 참여중일 경우 렌더링 (모집 완료인 경우에도 볼 수 있다) */}
               {!isMyPost && isParticipating && (
                 <button
                   className={classes.joinBtn}
@@ -658,10 +436,6 @@ const DetailPost = () => {
                   참여중
                 </button>
               )}
-
-              {/* <div className={classes.bookmark}> */}
-
-              {/* </div> */}
             </div>
           </div>
           <div className={classes.detailInfo}>
@@ -669,11 +443,6 @@ const DetailPost = () => {
               <h2>상세 정보</h2>
               <div className={classes.info1}>
                 <div className={classes.info1_1}>
-                  {/* <h4>
-                    모임 이름
-                    <div className={classes.emp}>{meetingInfo.meetingname}</div>
-                  </h4> */}
-
                   <h4>
                     모임 장소
                     <div className={classes.emp}>{meetingInfo.address}</div>
@@ -693,7 +462,6 @@ const DetailPost = () => {
                   <h4>
                     모임 일시
                     <div className={classes.emp}>
-                      {/* {meetingInfo.meetingDate.split("T")[0]} */}
                       {new Date(meetingInfo.meetingDate).toLocaleString(
                         "ko-KR",
                         {
@@ -721,6 +489,8 @@ const DetailPost = () => {
                       )}
                     </div>
                   </h4>
+                  {/* 내 포스트인경우나 참여중일 경우 연락처를 보여준다 */}
+                  {/* 반대의 경우 안보여줌 */}
                   <h4>
                     연락 방법
                     {(isMyPost || isParticipating) && (
@@ -734,7 +504,6 @@ const DetailPost = () => {
                   </h4>
                   <h4>
                     예상 날씨
-                    {/* <div className={classes.weather}>{meetingInfo.weather}</div> */}
                     <div className={classes.weather}>
                       {/* <WeatherIcon
                         className={classes.wIcon}
@@ -742,7 +511,6 @@ const DetailPost = () => {
                         // weatherType="snow"
                       /> */}
                       {meetingInfo.weather}
-                      {/* <TranslateWeather weatherType={meetingInfo.weather} /> */}
                     </div>
                   </h4>
                 </div>
@@ -756,6 +524,7 @@ const DetailPost = () => {
                 lat={meetingInfo.latitude}
                 lng={meetingInfo.longitude}
               />
+              {/* 내 포스트일 경우 수정/삭제가 가능함, 수정버튼을 클릭 시 수정 페이지로 이동 */}
               {isMyPost && (
                 <div className={classes.btnCon_1}>
                   <button
@@ -771,7 +540,6 @@ const DetailPost = () => {
                     className={classes.deleteBtn}
                     onClick={deleteMeetingHandler}
                   >
-                    {" "}
                     <FaTrash style={{ fontSize: "1.5rem" }} />
                     삭제
                   </button>
@@ -779,7 +547,12 @@ const DetailPost = () => {
               )}
             </div>
           </div>
-
+          {/* 모집 중 일경우 댓글 수와 댓글 등/수/삭 버튼 보여주고 모집 완료일경우 댓글 수만 보여줌 */}
+          {!isRecruiting && (
+            <div className={classes.comment}>
+              {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
+            </div>
+          )}
           {isRecruiting && (
             <div className={classes.comment}>
               {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
@@ -790,18 +563,18 @@ const DetailPost = () => {
                 onChange={commentChangeHandler}
                 required
               />
+              {/* 내가 쓴 댓글이 없을 경우 새롭게 등록할 수 있도록 버튼을 렌더링 */}
               {!hasMyComment && (
                 <div className={classes.btnCon_2}>
                   <button
                     className={classes.joinBtn_1}
-                    // type="submit"
                     onClick={commentSubmitHandler}
                   >
                     댓글 등록
-                    {/* <FaPlus style={{ fontSize: "1.5rem" }} /> */}
                   </button>
                 </div>
               )}
+              {/* 내가 작성한 댓글이 있을 경우 수정/삭제 버튼 렌더링 */}
               {hasMyComment && (
                 <div className={classes.btnCon_2}>
                   <button
@@ -820,44 +593,7 @@ const DetailPost = () => {
               )}
             </div>
           )}
-          {!isRecruiting && (
-            <div className={classes.comment}>
-              {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
-            </div>
-          )}
-          {/* <div className={classes.comments}>
-            {!isLoading &&
-              comments &&
-              comments.map((comment) => {
-                return (
-                  <div key={comment.id} className={classes.comm}>
-                    <div className={classes.info}>
-                      <img
-                        alt="ProfileImage"
-                        src={footerLogo}
-                        width="50px"
-                        height="50px"
-                      />
-                      <div className={classes.user}>
-                        <div>{comment.nickname}</div>{" "}
-                        <div>
-                          {new Date(comment.modifiedAt).toLocaleString("ko-KR")}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className={classes.commcontent}>
-                      {comment.comment}{" "}
-                      <div className={classes.likes}>
-                        <FaThumbsUp
-                          style={{ fontSize: "1.5rem", color: "green" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div> */}
+          {/* 댓글 컴포넌트 렌더링 */}
           <Comments
             isLoading={isLoading}
             comments={comments}
