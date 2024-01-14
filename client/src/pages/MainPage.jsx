@@ -20,11 +20,33 @@ import React, { useState, useEffect } from 'react';
 */
 
 const MainPage = () => {
+  const [randomData, setRandomData] = useState([]);
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
   // const [activeTab, setActiveTab] = useState('recruiting');
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    const generateRandomData = () => {
+      const newData = Array.from({ length: 3 }, (_, index) => ({
+        todolistId: index + 1,
+        title: `할 일 ${index + 1}`,
+        todoOrder: index + 1,
+      }));
+
+      setRandomData(newData);
+    };
+    // 초기 렌더링 시 데이터 생성
+    generateRandomData();
+
+    // 5초마다 데이터 갱신
+    const intervalId = setInterval(() => {
+      generateRandomData();
+    }, 5000);
+
+    // 컴포넌트가 언마운트되면 clearInterval 호출하여 타이머 중지
+    return () => clearInterval(intervalId);
+  }, []);
   // 메인 모집중 게시글
   useEffect(() => {
     axios
@@ -72,7 +94,7 @@ const MainPage = () => {
       <section className={classes.todoAndNewSection}>
         {/* 투두 리스트  */}
         <div className={classes.todoList}>
-          <TodoList />
+          <TodoList todos={randomData} />
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>

@@ -76,12 +76,14 @@ const CategoryTab = () => {
       <div>
         <button
           onClick={() => handleTabChange('recruiting')}
+          style={{ fontWeight: activeTab === 'recruiting' ? 'bold' : 'normal' }}
           className={activeTab === 'recruiting' ? 'active' : ''}
         >
           모집중
         </button>
         <button
           onClick={() => handleTabChange('completed')}
+          style={{ fontWeight: activeTab === 'completed' ? 'bold' : 'normal' }}
           className={activeTab === 'completed' ? 'active' : ''}
         >
           모집완료
