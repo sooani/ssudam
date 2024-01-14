@@ -35,7 +35,7 @@ public class TodoListController {
     public ResponseEntity postTodoList(@Valid @RequestBody TodoListDto.Post requestBody) {
         TodoList TodoList = mapper.todoPostDtoToTodoList(requestBody);
         TodoList createdTodoList = todoListService.createTodoList(TodoList);
-        URI location = UriCreator.createUri(TODOLIST_DEFAULT_URL, createdTodoList.getTodolist_id());
+        URI location = UriCreator.createUri(TODOLIST_DEFAULT_URL, createdTodoList.getTodolistId());
 
         return ResponseEntity.created(location).build();
     }
@@ -58,7 +58,7 @@ public class TodoListController {
     @GetMapping
     public ResponseEntity getTodos(@Positive @RequestParam int page,
                                    @Positive @RequestParam int size) {
-        Page<TodoList> pageTodo = todoListService.findAll(page, size);
+        Page<TodoList> pageTodo = todoListService.findAll(page - 1, size);
         List<TodoList> todos = pageTodo.getContent();
         return ResponseEntity.ok(new MultiResponseDto(mapper.todosToTodoResponseDtos(todos), pageTodo));
     }

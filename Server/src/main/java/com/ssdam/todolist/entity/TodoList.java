@@ -14,16 +14,16 @@ import javax.persistence.*;
 public class TodoList extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long todolist_id;
+    private Long todolistId;
 
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
-    private Integer todo_order;
+    private Integer todoOrder;
 
-    public void setTodo_order(Integer todo_order) {
-        this.todo_order = todo_order;
+    public void setTodoOrder(Integer todoOrder) {
+        this.todoOrder = todoOrder;
     }
 
 }

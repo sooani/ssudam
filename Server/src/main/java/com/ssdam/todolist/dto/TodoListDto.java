@@ -1,11 +1,13 @@
 package com.ssdam.todolist.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class TodoListDto {
     @Getter
@@ -14,26 +16,27 @@ public class TodoListDto {
         @NotBlank
         private String title;
         @NotNull
-        private Integer todo_order;
+        private Integer todoOrder;
     }
 
     @Getter
+    @Builder
     public static class Patch {
-        private long todolist_id;
+        private long todolistId;
         private String title;
-        private Integer todo_order;
-        public void addTodoListId(long todolist_id) {
-            this.todolist_id = todolist_id;
+        private Integer todoOrder;
+        public void addTodoListId(long todolistId) {
+            this.todolistId = todolistId;
         }
     }
 
     @Getter
     @Builder
     public static class Response {
-        private long todolist_id;
+        private long todolistId;
         private String title;
-        private Integer todo_order;
-        private String createdAt;
-        private String modifiedAt;
+        private Integer todoOrder;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 }
