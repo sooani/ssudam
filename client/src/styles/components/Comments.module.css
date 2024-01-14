@@ -1,5 +1,4 @@
 .comments {
-  /* height: 100px; */
   width: 100%;
   /* border: 1px solid black; */
   margin: 0 2rem;
@@ -16,16 +15,11 @@
   border-radius: 5px;
 }
 .comments .comm {
-  /* border: 1px solid orange; */
-  /* border-bottom: 2px solid gray; */
-  /* padding: 0.5rem; */
   margin: 0 2rem;
   height: 100px;
   display: flex;
   flex-direction: column;
-  /* gap: 1rem; */
-  /* margin-bottom: 1rem; */
-  /* background-color: aqua; */
+
   @media screen and (max-width: 1070px) {
     height: auto;
   }
@@ -48,9 +42,7 @@
   flex-direction: row;
   text-align: center;
   justify-content: center;
-  /* justify-content: flex-end; */
 
-  /* justify-content: space-between; */
   align-items: center;
   margin: 0;
   padding: 0.5rem;
@@ -64,44 +56,29 @@
   right: 5rem;
   /* border: 1px solid pink; */
 
-  /* margin-left: auto; */
-  /* text-align: center; */
-  /* display: flex; */
-  /* gap: 1rem; */
-  /* padding: 0.3rem; */
   padding: 0.5rem;
 }
 .comm .likes {
   /* border: 1px solid black; */
   margin-left: auto;
-  /* padding-left: 1rem; */
-  /* border-right: 2px solid gray; */
-  /* margin-bottom: 10rem; */
+
   text-align: center;
   display: flex;
   gap: 1rem;
-  /* padding: 0.3rem; */
+
   padding: 0.5rem;
-  /* font-size: large;
-  font-weight: 700; */
 }
 .comments .reply {
   /* border: 1px solid orange; */
-  /* border-bottom: 2px solid gray; */
+
   padding: 1rem;
   margin: 0 1rem 0 3rem;
   height: 100px;
   display: flex;
   flex-direction: column;
-  /* flex-direction: row; */
-  /* gap: 1rem; */
-  /* font-size: large;
-  font-weight: 700; */
-  /* margin-bottom: 1rem; */
-  /* background-color: aqua; */
+
   @media screen and (max-width: 1070px) {
     height: auto;
-    /* margin: 0 1rem 0 3rem; */
   }
 }
 .reply .info {
@@ -131,7 +108,7 @@
 .reply .likes {
   /* border: 1px solid black; */
   margin-left: auto;
-  /* margin-bottom: 10rem; */
+
   text-align: center;
   display: flex;
   gap: 1rem;
@@ -148,8 +125,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  /* padding: 0 auto; */
-  /* height: 100px; */
+
   margin-bottom: 1.5rem;
   @media screen and (max-width: 1070px) {
     margin-top: 1rem;
@@ -166,7 +142,7 @@
 }
 .comment textarea {
   width: 100%;
-  /* width: 950px; */
+
   height: 100px;
   margin: 0 1rem 0 0;
   padding: 0.5rem;
@@ -175,48 +151,42 @@
 }
 .btnCon_2 {
   /* border: 1px solid red; */
-  /* width: 100%; */
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* margin-right: 1rem; */
-  /* margin-top: 1rem; */
+
   align-items: center;
   gap: 1rem;
   @media screen and (max-width: 1070px) {
     gap: 1rem;
-    /* flex-direction: column; */
+
     margin-right: 0rem;
-    /* margin: 1rem auto; */
+
     justify-content: center;
   }
 }
 .btnCon_2 button {
   width: 60px;
-  /* display: flex;
-  flex-direction: row; */
+
   margin-right: 0.5rem;
   /* border: 1px solid black; */
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
   font-size: large;
   font-weight: 700;
-  /* margin-right: 2rem; */
+
   text-align: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* margin-right: 2rem; */
-  /* margin-top: 1rem; */
+
   align-items: center;
   gap: 0.5rem;
   @media screen and (max-width: 1070px) {
-    /* flex-direction: column; */
-    /* margin-right: 0rem; */
   }
 }
 .btnCon_2 .joinBtn {
-  /* margin-right: 2rem; */
   background-color: green;
   color: white;
   @media screen and (max-width: 1070px) {
@@ -224,7 +194,6 @@
   }
 }
 .btnCon_2 .joinBtn_1 {
-  /* margin-right: 2rem; */
   background-color: green;
   color: white;
   @media screen and (max-width: 1070px) {
@@ -232,7 +201,6 @@
   }
 }
 .btnCon_2 .deleteBtn {
-  /* margin-right: 2rem; */
   background-color: gray;
   color: black;
   @media screen and (max-width: 1070px) {

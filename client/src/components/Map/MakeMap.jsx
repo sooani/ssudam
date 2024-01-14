@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import classes from "../../styles/components/Map.module.css";
 const MakeMap = (props) => {
   const { kakao } = window;
-  // const lat = props.lat;
-  // const lng = props.lng;
-  // console.log(lat, lng);
   // position은 위도 경도
   const [position, setPosition] = useState({ lat: props.lat, lng: props.lng });
   // address는 주소 > 지금은 props로 받음!
@@ -21,19 +17,12 @@ const MakeMap = (props) => {
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-    // console.log(address);
   };
-
+  // makemap은 조회에 쓰는 거라 도로명 주소 핸들러 필요없다...
   const setFullAddress = (lat, lng) => {
-    // 마우스 이벤트로 얻은 lat과 lng으로 position 설정하고 도로명 주소를 얻는 getAddress 호출
-    // setPosition(lat, lng);
     getAddress(position.lat, position.lng);
   };
 
-  // position이 바뀌면 getAddress 다시 호출
-  // useEffect(() => {
-  //   getAddress(position.lat, position.lng);
-  // }, [position]);
   return (
     <div className={classes.container}>
       <Map // 지도를 표시할 Container
@@ -41,8 +30,6 @@ const MakeMap = (props) => {
           // 지도의 중심좌표
           lat: position.lat,
           lng: position.lng,
-          // lat: lat,
-          // lng: lng,
         }}
         style={{ width: "90%", height: "34vh" }}
         level={3} // 지도의 확대 레벨

@@ -16,8 +16,6 @@
   color: black;
 }
 .sidebar {
-  /* position: fixed;
-  float: right; */
   /* border: 1px solid blue; */
   width: 90%;
   margin: 1rem;
@@ -29,6 +27,6 @@
 }
 .sidebar div {
   width: 40%;
-  /* border-bottom: 2px solid gray; */
+
   margin: 0 auto;
 }

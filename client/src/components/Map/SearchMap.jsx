@@ -1,71 +1,51 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import classes from "../../styles/components/Map.module.css";
-import { FaMapMarker, FaMapMarkerAlt } from "react-icons/fa";
 
 const SearchMap = (props) => {
   const { kakao } = window;
   // 마커가 위치한 장소의 정보
   const [info, setInfo] = useState();
-  const [markers, setMarkers] = useState([]);
-  const [level, setLevel] = useState(4);
-  const [map, setMap] = useState();
-  console.log(props.lat, props.lng);
-  // const [position, setPosition] = useState({
-  //   lat: props && props.lat ? props.lat : 33.450701,
-  //   lng: props && props.lng ? props.lng : 126.570667,
-  // });
+  const [markers, setMarkers] = useState([]); // 마커들
+  const [level, setLevel] = useState(4); // 확대 레벨
+  const [map, setMap] = useState(); // 지도 설정
   const [position, setPosition] = useState({
     lat: 33.450701,
     lng: 126.570667,
   });
-  const [selectedMarker, setSelectedMarker] = useState(null);
-  // const position = props.position;
-  // const setPosition = props.setPosition;
-  // console.log(position);
-  // props로 받은 검색 키워드
-  console.log(position);
+  const [selectedMarker, setSelectedMarker] = useState(null); // 선택된 마커
+
   const keyword = props.searchkeyword;
   const setLatLng = props.setLatLng;
+
+  // 도로명 주소를 얻는 메소드
   const getAddress = (lat, lng) => {
     const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
     const coord = new kakao.maps.LatLng(lat, lng); // 주소로 변환할 좌표 입력
     const callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        // console.log(position.lat, position.lng);
-        props.setAddress(result[0].address);
-        console.log(result[0].address);
-        // props.setAddress((prevAddress) => ({
-        //   ...prevAddress,
-        //   address_name: result[0].address,
-        // }))
+        props.setAddress(result[0].address); // 도로명 주소 설정
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-    // console.log(address);
   };
-
+  // 클릭된 마커를 이용하는 메서드
   const handleMarkerClick = (position) => {
-    // 클릭된 마커의 위도와 경도 출력
+    // 클릭된 마커의 위도와 경도 뽑아오기
     setPosition(position.lat, position.lng);
     setLatLng({
       lat: position.lat,
       lng: position.lng,
     });
-    console.log(position);
 
+    // 설정된 위도와 경도로 도로명 주소 설정
     getAddress(position.lat, position.lng);
-    console.log("지도를 확대합니다.");
-    // setLevel(1);
   };
-  useEffect(() => {
-    console.log(level);
-  }, [level]);
+
   useEffect(() => {
     if (!map) return;
     const ps = new kakao.maps.services.Places();
-
+    // 키워드가 존재하면
     if (keyword) {
       ps.keywordSearch(keyword, (data, status, _pagination) => {
         if (status === kakao.maps.services.Status.OK) {
@@ -94,9 +74,11 @@ const SearchMap = (props) => {
       });
     }
   }, [map, keyword]);
+  // 검색 목록에서 클릭했을 경우 위도와 경도를 설정하는 메서드
   const handleSidebarMarkerClick = (marker) => {
     const { lat, lng } = marker.position;
     const moveLatLon = new kakao.maps.LatLng(lat, lng);
+    // 클릭된 위도와 경도로 (마커 위치로) 이동
     map.panTo(moveLatLon);
     setSelectedMarker(marker);
     setLatLng({
@@ -105,7 +87,6 @@ const SearchMap = (props) => {
     });
 
     getAddress(lat, lng);
-    // setLevel(1);
   };
 
   return (
@@ -115,10 +96,6 @@ const SearchMap = (props) => {
           lat: props.lat ? props.lat : 37.566826,
           lng: props.lng ? props.lng : 126.9786567,
         }}
-        // center={{
-        //   lat: position.lat,
-        //   lng: position.lng,
-        // }}
         style={{
           width: "90%",
           height: "37vh",
@@ -130,24 +107,19 @@ const SearchMap = (props) => {
             lat: mouseEvent.latLng.getLat(),
             lng: mouseEvent.latLng.getLng(),
           });
-          // setLevel(1);
         }}
       >
         {markers.map((marker) => (
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
-            // onMouseOver={setInfo(marker)}
             onClick={() => {
               handleMarkerClick(marker.position);
               setInfo(marker);
               setSelectedMarker(marker);
-              // setLevel(1);
             }}
           >
-            {/* {info && info.content === marker.content && (
-              <div className={classes.info}>{marker.content}</div>
-            )} */}
+            {/* 선택된 마커이면 마커의 정보를 보여준다 */}
             {selectedMarker && selectedMarker.content === marker.content && (
               <div style={{ padding: "5px", color: "#000" }}>
                 {marker.content} <br />
@@ -163,21 +135,22 @@ const SearchMap = (props) => {
             )}
           </MapMarker>
         ))}
+        {/* 모임 글 수정의 경우 기존의 위치를 처음에 마커로 찍어준다 */}
         {props.lat && props.lng && (
           <MapMarker position={{ lat: props.lat, lng: props.lng }} />
         )}
+        {/* 검색 목록이 나오는 리스트 */}
         <div className={classes.sidebar}>
           {markers.map((marker, index) => (
             <div
               key={index}
               onClick={() => {
                 handleSidebarMarkerClick(marker);
-                // setLevel(1);
               }}
               style={{
                 color:
                   selectedMarker && selectedMarker.content === marker.content
-                    ? "black" // 변경하고 싶은 배경색을 여기에 지정하세요
+                    ? "black"
                     : "gray",
               }}
             >
