@@ -15,6 +15,7 @@ API 문서 개요
  이 문서를 통해 플로깅 모집 사이트 쓰담의 API 사용법을 알 수 있습니다.
 
 ***
+
 == MemberController
 === 회원 등록
 .curl-request
@@ -98,11 +99,7 @@ include::{snippets}/delete-member/http-response.adoc[]
 == PartyController
 === 모임 등록
 .curl-request
-<<<<<<< HEAD
 include::{snippets}/post-party/curl-request.adoc[]
-=======
-include::{snippets}/post-party/http-request.adoc[]
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 
 .http-request
 include::{snippets}/post-party/http-request.adoc[]
@@ -269,12 +266,13 @@ include::{snippets}/delete-party/path-parameters.adoc[]
 
 .http-response
 include::{snippets}/delete-party/http-response.adoc[]
-=======
 
 ***
 
 == CommentController
+
 === 댓글 등록
+
 .curl-request
 include::{snippets}/post-comment/curl-request.adoc[]
 
@@ -374,6 +372,7 @@ include::{snippets}/get-comments-by-party/http-response.adoc[]
 include::{snippets}/get-comments-by-party/response-fields.adoc[]
 
 === 모든 댓글 조회 (모집글, 좋아요순)
+
 .curl-request
 include::{snippets}/get-comments-by-party-by-likeCount/curl-request.adoc[]
 
@@ -403,6 +402,8 @@ include::{snippets}/delete-comment/path-parameters.adoc[]
 
 .http-response
 include::{snippets}/delete-comment/http-response.adoc[]
+
+***
 
 == ReplyController
 === 대댓글 등록
@@ -472,6 +473,7 @@ include::{snippets}/delete-reply/path-parameters.adoc[]
 .http-response
 include::{snippets}/delete-reply/http-response.adoc[]
 
+***
 == LikeController
 === 댓글에 좋아요 등록/취소
 
@@ -510,6 +512,8 @@ include::{snippets}/check-like-status/http-response.adoc[]
 .response-fields
 include::{snippets}/check-like-status/response-fields.adoc[]
 
+***
+
 == BookmarkController
 === 모집글 북마크 등록/취소
 .curl-request
@@ -546,7 +550,13 @@ include::{snippets}/check-bookmark-status/http-response.adoc[]
 
 .response-fields
 include::{snippets}/check-bookmark-status/response-fields.adoc[]
-=======
 
 ***
-==
+== TodoListController
+=== 할일 등록
+
+=== 할일 수정
+
+=== 할일 조회
+
+=== 할일 삭제
