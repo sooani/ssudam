@@ -8,7 +8,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 
 @SpringBootTest
 @EnableJpaAuditing
-class SsDamApplicationTests {
+class SsuDamApplicationTests {
 
 	@Test
 	void contextLoads() {
