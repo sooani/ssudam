@@ -7,9 +7,6 @@ import com.ssdam.comment.dto.CommentDto;
 import com.ssdam.comment.entity.Comment;
 import com.ssdam.comment.mapper.CommentMapper;
 import com.ssdam.comment.service.CommentService;
-import com.ssdam.member.entity.Member;
-import com.ssdam.party.entity.Party;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +14,6 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,25 +27,21 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.ssdam.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.ssdam.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CommentController.class)
@@ -71,12 +61,6 @@ public class CommentControllerTest {
     @Test
     public void postCommentTest() throws Exception {
         //given
-        Party party = new Party();
-        party.setPartyId(1L);
-
-        Member member = new Member();
-        member.setMemberId(1L);
-
         CommentDto.Post post = (CommentDto.Post) CommentStub.getRequestBody(HttpMethod.POST);
         String content = gson.toJson(post);
 
@@ -108,7 +92,6 @@ public class CommentControllerTest {
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("comment").type(JsonFieldType.STRING).description("댓글 내용")
                                                 .attributes(key("constraints").value(commentDescriptions))
-                                                .optional()
                                 )
                         ),
                         responseHeaders(
@@ -146,10 +129,15 @@ public class CommentControllerTest {
         actions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.commentId").value(commentId))
-                .andExpect(jsonPath("$.data.partyId").value(responseDto.getPartyId()))
+                .andExpect(jsonPath("$.data.partyTitle").value(responseDto.getPartyTitle()))
                 .andExpect(jsonPath("$.data.nickname").value(responseDto.getNickname()))
                 .andExpect(jsonPath("$.data.likeCount").value(responseDto.getLikeCount()))
                 .andExpect(jsonPath("$.data.comment").value(responseDto.getComment()))
+                .andExpect(jsonPath("$.data.reply.replyId").value(responseDto.getReply().getReplyId()))
+                .andExpect(jsonPath("$.data.reply.reply").value(responseDto.getReply().getReply()))
+                .andExpect(jsonPath("$.data.reply.nickname").value(responseDto.getReply().getNickname()))
+                .andExpect(jsonPath("$.data.reply.createdAt").value(responseDto.getReply().getCreatedAt().toString()))
+                .andExpect(jsonPath("$.data.reply.modifiedAt").value(responseDto.getReply().getModifiedAt().toString()))
                 .andExpect(jsonPath("$.data.createdAt").value(responseDto.getCreatedAt().toString()))
                 .andExpect(jsonPath("$.data.modifiedAt").value(responseDto.getModifiedAt().toString()))
                 .andDo(document("patch-comment",
@@ -160,21 +148,26 @@ public class CommentControllerTest {
                         ),
                         requestFields(
                                 List.of(
-                                        fieldWithPath("commentId").type(JsonFieldType.NUMBER)
-                                                .description("댓글 식별자").ignored(),
+                                        fieldWithPath("commentId").type(JsonFieldType.NUMBER).description("댓글 식별자")
+                                                .ignored(),
                                         fieldWithPath("comment").type(JsonFieldType.STRING).description("댓글 내용")
                                                 .attributes(key("constraints").value(commentDescriptions))
-                                                .optional()
                                 )
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터").optional(),
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
                                         fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
-                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("data.partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                         fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                         fieldWithPath("data.likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                         fieldWithPath("data.comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                        fieldWithPath("data.reply").type(JsonFieldType.OBJECT).description("대댓글"),
+                                        fieldWithPath("data.reply.replyId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                        fieldWithPath("data.reply.reply").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                        fieldWithPath("data.reply.nickname").type(JsonFieldType.STRING).description("대댓글 작성자"),
+                                        fieldWithPath("data.reply.createdAt").type(JsonFieldType.STRING).description("대댓글 작성 날짜"),
+                                        fieldWithPath("data.reply.modifiedAt").type(JsonFieldType.STRING).description("대댓글 수정 날짜"),
                                         fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                         fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜")
                                 )
@@ -185,12 +178,6 @@ public class CommentControllerTest {
     @Test
     public void getCommentTest() throws Exception {
         //given
-        Party party = new Party();
-        party.setPartyId(1L);
-
-        Member member = new Member();
-        member.setMemberId(1L);
-
         long commentId = 1L;
         CommentDto.Response responseDto = CommentStub.getSingleResponseBody();
 
@@ -206,10 +193,15 @@ public class CommentControllerTest {
         actions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.commentId").value(commentId))
-                .andExpect(jsonPath("$.data.partyId").value(responseDto.getPartyId()))
+                .andExpect(jsonPath("$.data.partyTitle").value(responseDto.getPartyTitle()))
                 .andExpect(jsonPath("$.data.nickname").value(responseDto.getNickname()))
                 .andExpect(jsonPath("$.data.likeCount").value(responseDto.getLikeCount()))
                 .andExpect(jsonPath("$.data.comment").value(responseDto.getComment()))
+                .andExpect(jsonPath("$.data.reply.replyId").value(responseDto.getReply().getReplyId()))
+                .andExpect(jsonPath("$.data.reply.reply").value(responseDto.getReply().getReply()))
+                .andExpect(jsonPath("$.data.reply.nickname").value(responseDto.getReply().getNickname()))
+                .andExpect(jsonPath("$.data.reply.createdAt").value(responseDto.getReply().getCreatedAt().toString()))
+                .andExpect(jsonPath("$.data.reply.modifiedAt").value(responseDto.getReply().getModifiedAt().toString()))
                 .andExpect(jsonPath("$.data.createdAt").value(responseDto.getCreatedAt().toString()))
                 .andExpect(jsonPath("$.data.modifiedAt").value(responseDto.getModifiedAt().toString()))
                 .andDo(document("get-comment",
@@ -222,10 +214,17 @@ public class CommentControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터").optional(),
                                         fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
-                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                        fieldWithPath("data.partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
+                                        fieldWithPath("data.reply").type(JsonFieldType.OBJECT).description("대댓글"),
                                         fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                         fieldWithPath("data.likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                         fieldWithPath("data.comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                        fieldWithPath("data.reply").type(JsonFieldType.OBJECT).description("대댓글"),
+                                        fieldWithPath("data.reply.replyId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                        fieldWithPath("data.reply.reply").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                        fieldWithPath("data.reply.nickname").type(JsonFieldType.STRING).description("대댓글 작성자"),
+                                        fieldWithPath("data.reply.createdAt").type(JsonFieldType.STRING).description("대댓글 작성 날짜"),
+                                        fieldWithPath("data.reply.modifiedAt").type(JsonFieldType.STRING).description("대댓글 수정 날짜"),
                                         fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                         fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜")
                                 )
@@ -272,10 +271,16 @@ public class CommentControllerTest {
                                                 List.of(
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
-                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].reply").type(JsonFieldType.OBJECT).description("대댓글"),
+                                                        fieldWithPath("data[].reply.replyId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                                        fieldWithPath("data[].reply.reply").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                                        fieldWithPath("data[].reply.nickname").type(JsonFieldType.STRING).description("대댓글 작성자"),
+                                                        fieldWithPath("data[].reply.createdAt").type(JsonFieldType.STRING).description("대댓글 작성 날짜"),
+                                                        fieldWithPath("data[].reply.modifiedAt").type(JsonFieldType.STRING).description("대댓글 수정 날짜"),
                                                         fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                                         fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
                                                         fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
@@ -335,10 +340,16 @@ public class CommentControllerTest {
                                                 List.of(
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
-                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].reply").type(JsonFieldType.OBJECT).description("대댓글"),
+                                                        fieldWithPath("data[].reply.replyId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                                        fieldWithPath("data[].reply.reply").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                                        fieldWithPath("data[].reply.nickname").type(JsonFieldType.STRING).description("대댓글 작성자"),
+                                                        fieldWithPath("data[].reply.createdAt").type(JsonFieldType.STRING).description("대댓글 작성 날짜"),
+                                                        fieldWithPath("data[].reply.modifiedAt").type(JsonFieldType.STRING).description("대댓글 수정 날짜"),
                                                         fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                                         fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
                                                         fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
@@ -398,10 +409,16 @@ public class CommentControllerTest {
                                                 List.of(
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
-                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].reply").type(JsonFieldType.OBJECT).description("대댓글"),
+                                                        fieldWithPath("data[].reply.replyId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                                        fieldWithPath("data[].reply.reply").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                                        fieldWithPath("data[].reply.nickname").type(JsonFieldType.STRING).description("대댓글 작성자"),
+                                                        fieldWithPath("data[].reply.createdAt").type(JsonFieldType.STRING).description("대댓글 작성 날짜"),
+                                                        fieldWithPath("data[].reply.modifiedAt").type(JsonFieldType.STRING).description("대댓글 수정 날짜"),
                                                         fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                                         fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
                                                         fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
@@ -418,6 +435,7 @@ public class CommentControllerTest {
         List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
         assertThat(list.size(), is(2));
     }
+
     @Test
     public void getCommentsByPartyByLikeCountTest() throws Exception {
         //given
@@ -461,10 +479,16 @@ public class CommentControllerTest {
                                                 List.of(
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
-                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모임 식별자"),
+                                                        fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
+                                                        fieldWithPath("data[].reply").type(JsonFieldType.OBJECT).description("대댓글"),
+                                                        fieldWithPath("data[].reply.replyId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                                        fieldWithPath("data[].reply.reply").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                                        fieldWithPath("data[].reply.nickname").type(JsonFieldType.STRING).description("대댓글 작성자"),
+                                                        fieldWithPath("data[].reply.createdAt").type(JsonFieldType.STRING).description("대댓글 작성 날짜"),
+                                                        fieldWithPath("data[].reply.modifiedAt").type(JsonFieldType.STRING).description("대댓글 수정 날짜"),
                                                         fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("댓글 작성 날짜"),
                                                         fieldWithPath("data[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 날짜"),
                                                         fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
@@ -488,17 +512,15 @@ public class CommentControllerTest {
         long commentId = 1L;
 
         doNothing().when(commentService).deleteComment(Mockito.anyLong());
-
         //when
         ResultActions actions = mockMvc.perform(
                 delete("/v1/comments/{comment-id}", commentId));
-
         //then
         actions
                 .andExpect(status().isNoContent())
                 .andDo(document("delete-comment",
-                        getRequestPreProcessor(),
-                        getResponsePreProcessor(),
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         pathParameters(
                                 parameterWithName("comment-id").description("댓글 식별자")
                         )));

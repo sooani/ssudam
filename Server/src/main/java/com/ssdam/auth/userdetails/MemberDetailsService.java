@@ -24,7 +24,6 @@ public class MemberDetailsService implements UserDetailsService {
         this.authorityUtils = authorityUtils;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
@@ -40,7 +39,6 @@ public class MemberDetailsService implements UserDetailsService {
             setPassword(member.getPassword());
             setRoles(member.getRoles());
         }
-
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,7 +67,7 @@ public class MemberDetailsService implements UserDetailsService {
 
         @Override
         public boolean isEnabled() {
-            return false;
+            return true;
         }
     }
 }

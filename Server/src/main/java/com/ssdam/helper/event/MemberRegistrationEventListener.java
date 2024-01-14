@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @EnableAsync
 @Component
-public class MemberRegistrationEventListener {
+class MemberRegistrationEventListener {
     @Value("Thank you for joining our site!")
     private String subject;
 

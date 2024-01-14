@@ -1,9 +1,6 @@
 package com.ssdam.comment.dto;
 
-<<<<<<< HEAD
 import com.ssdam.reply.dto.ReplyDto;
-=======
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -2,6 +2,8 @@ package com.ssdam.member.controller;
 
 import com.ssdam.dto.MultiResponseDto;
 import com.ssdam.dto.SingleResponseDto;
+import com.ssdam.exception.BusinessLogicException;
+import com.ssdam.exception.ExceptionCode;
 import com.ssdam.member.dto.MemberPatchDto;
 import com.ssdam.member.dto.MemberPostDto;
 import com.ssdam.member.entity.Member;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +40,14 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
-        Member member = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
+        Member member = mapper.memberPostDtoToMember(memberPostDto);
+
+        if (!memberPostDto.getPassword().equals(memberPostDto.getConfirmPassword())) {
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
+
+        Member createdMember = memberService.createMember(member);
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
         return ResponseEntity.created(location).build();
     }
@@ -47,6 +56,10 @@ public class MemberController {
     public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
                                       @Valid @RequestBody MemberPatchDto memberPatchDto) {
         memberPatchDto.setMemberId(memberId);
+
+        if (!memberPatchDto.getPassword().equals(memberPatchDto.getConfirmPassword())) {
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
 
         Member member =
                 memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));

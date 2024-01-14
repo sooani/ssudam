@@ -1,9 +1,6 @@
 package com.ssdam.member.dto;
 
-<<<<<<< HEAD
 import lombok.AllArgsConstructor;
-=======
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 import lombok.Getter;
 
 import javax.validation.constraints.Email;

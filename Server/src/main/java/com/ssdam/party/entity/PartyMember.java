@@ -27,11 +27,8 @@ public class PartyMember {
     public PartyMember(Member member, Party party) {
         this.member = member;
         this.party = party;
-<<<<<<< HEAD
 
         member.getPartyMembers().add(this);
-=======
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
     }
 
     public void addMember(Member member) {

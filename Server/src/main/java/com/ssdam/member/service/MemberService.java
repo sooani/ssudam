@@ -28,7 +28,9 @@ public class MemberService {
     private final CustomAuthorityUtils authorityUtils;
 
     public MemberService(MemberRepository memberRepository,
-                         ApplicationEventPublisher publisher, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
+                         ApplicationEventPublisher publisher,
+                         PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
         this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
@@ -37,12 +39,13 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
+        verifyExistsNickname(member.getNickname());
 
         // Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
-        // DB에 User Role 저장
+        // DB에 User Role 추가
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
@@ -55,6 +58,12 @@ public class MemberService {
     public Member updateMember(Member member) {
         Member findMember = findVerifiedMember(member.getMemberId());
 
+        if (!findMember.getNickname().equals(member.getNickname())) {
+            verifyExistsNickname(member.getNickname());
+        }
+
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password -> findMember.setPassword(password));
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickname -> findMember.setNickname(nickname));
         Optional.ofNullable(member.getMemberStatus())
@@ -90,6 +99,12 @@ public class MemberService {
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    private void verifyExistsNickname(String nickname) {
+        Optional<Member> member1 = memberRepository.findByNickname(nickname);
+        if (member1.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 }

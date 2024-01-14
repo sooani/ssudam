@@ -31,7 +31,7 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String nickname;
 
     @Enumerated(value = EnumType.STRING)
@@ -62,8 +62,10 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
 
-    public Member(String email) {
+    public Member(String email, String password, String nickname) {
         this.email = email;
+        this.password = password;
+        this.nickname = nickname;
     }
 
     public void addPartyLeader(Party party) {

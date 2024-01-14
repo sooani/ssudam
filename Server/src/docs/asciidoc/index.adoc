@@ -1,4 +1,6 @@
 = 플로깅 모집 사이트 쓰담
+=======
+= 쓰담 애플리케이션
 :sectnums:
 :toc: left
 :toclevels: 4
@@ -10,22 +12,86 @@ v1.0.0
 ***
 API 문서 개요
 
-//
  이 문서를 통해 플로깅 모집 사이트 쓰담의 API 사용법을 알 수 있습니다.
 
 ***
-
 == MemberController
-
-***
-
 === 회원 등록
+.curl-request
+include::{snippets}/post-member/curl-request.adoc[]
 
-=== 회원 정보 조회
+.http-request
+include::{snippets}/post-member/http-request.adoc[]
 
-=== 다수의 회원 정보 조회
+.request-fields
+include::{snippets}/post-member/request-fields.adoc[]
 
-=== 회원 정보 삭제
+.http-response
+include::{snippets}/post-member/http-response.adoc[]
+
+.response-headers
+include::{snippets}/post-member/response-headers.adoc[]
+
+=== 회원 정보 수정
+.curl-request
+include::{snippets}/patch-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-member/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/patch-member/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/patch-member/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/patch-member/response-fields.adoc[]
+
+=== 회원 조회
+.curl-request
+include::{snippets}/get-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-member/http-request.adoc[]
+
+.http-response
+include::{snippets}/get-member/http-response.adoc[]
+
+.path-parameters
+include::{snippets}/get-member/path-parameters.adoc[]
+
+.response-fields
+include::{snippets}/get-member/response-fields.adoc[]
+
+=== 다수 회원 조회
+.curl-request
+include::{snippets}/get-members/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-members/http-request.adoc[]
+
+.http-response
+include::{snippets}/get-members/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-members/response-fields.adoc[]
+
+=== 회원 삭제
+.curl-request
+include::{snippets}/delete-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-member/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-member/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-member/http-response.adoc[]
 
 ***
 
@@ -50,7 +116,6 @@ include::{snippets}/post-party/http-response.adoc[]
 .response-headers
 include::{snippets}/post-party/response-headers.adoc[]
 
-<<<<<<< HEAD
 === 모임 참가
 .curl-request
 include::{snippets}/post-party-member/curl-request.adoc[]
@@ -205,14 +270,6 @@ include::{snippets}/delete-party/path-parameters.adoc[]
 .http-response
 include::{snippets}/delete-party/http-response.adoc[]
 =======
-=== 모임 정보 조회
-
-=== 다수의 모임 정보 조회
-
-=== 특정 멤버가 등록한 모든 모임 조회
-
-=== 모임 정보 삭제
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 
 ***
 
@@ -249,11 +306,7 @@ include::{snippets}/patch-comment/request-fields.adoc[]
 .http-response
 include::{snippets}/patch-comment/http-response.adoc[]
 
-<<<<<<< HEAD
 .response-fields
-=======
-.response-fileds
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 include::{snippets}/patch-comment/response-fields.adoc[]
 
 === 특정 댓글 조회
@@ -351,7 +404,6 @@ include::{snippets}/delete-comment/path-parameters.adoc[]
 .http-response
 include::{snippets}/delete-comment/http-response.adoc[]
 
-<<<<<<< HEAD
 == ReplyController
 === 대댓글 등록
 
@@ -496,4 +548,5 @@ include::{snippets}/check-bookmark-status/http-response.adoc[]
 include::{snippets}/check-bookmark-status/response-fields.adoc[]
 =======
 
->>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
+***
+==
