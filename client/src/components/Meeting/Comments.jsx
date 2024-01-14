@@ -79,6 +79,18 @@ const Comments = (props) => {
 
         return newReplies;
       });
+      setReplies((prev) => {
+        const newReplies = { ...prev };
+
+        comments.forEach((comment) => {
+          newReplies[comment.commentId] = {
+            ...newReplies[comment.commentId],
+            reply: comment.reply ? comment.reply : {},
+          };
+        });
+
+        return newReplies;
+      });
       setHasReply((prevHasReply) => {
         const newHasReply = { ...prevHasReply };
 
@@ -215,7 +227,10 @@ const Comments = (props) => {
 
               newReplies[commentId] = {
                 ...newReplies[commentId],
-                replyId: response.data.data.replyId,
+                reply: {
+                  ...newReplies[commentId].reply,
+                  replyId: response.data.data.replyId,
+                },
               };
 
               return newReplies;
@@ -431,8 +446,8 @@ const Comments = (props) => {
                                   replyEditHandler(
                                     comment.commentId,
                                     // comment.reply.replyId
-                                    comment.reply.replyId
-                                    // latestReplies[comment.commentId].reply.replyId
+                                    // comment.reply.replyId
+                                    replies[comment.commentId].reply.replyId
                                   );
                                   // }
                                 }}
@@ -445,7 +460,7 @@ const Comments = (props) => {
                                   // if (reply[comment.commentId].replyId) {
                                   replyDeleteHandler(
                                     comment.commentId,
-                                    comment.reply.replyId
+                                    replies[comment.commentId].reply.replyId
                                     // latestReplies[comment.commentId].reply.replyId
                                     // comment.reply.replyId
                                   );

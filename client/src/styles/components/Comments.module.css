@@ -5,7 +5,7 @@
   margin: 0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1.5rem;
 }
 .comments .dropdown {
   margin: 0 2rem;
@@ -123,7 +123,7 @@
   text-align: center;
   align-items: center;
   margin: 0 0 0 3rem;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   gap: 1rem;
   /* border: 1px solid red; */
   border-bottom: 2px solid gray;
