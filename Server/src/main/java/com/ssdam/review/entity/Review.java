@@ -21,6 +21,12 @@ public class Review extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String content;
+
     public void addMember(Member member) {
         this.member = member;
         if (!member.getReviews().contains(this)) {

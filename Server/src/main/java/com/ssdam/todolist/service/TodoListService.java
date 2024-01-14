@@ -27,25 +27,25 @@ public class TodoListService {
     }
 
     public TodoList updateTodoList(TodoList todoList) {
-        TodoList foundTodoList = findTodoList(todoList.getTodolist_id());
+        TodoList foundTodoList = findTodoList(todoList.getTodolistId());
         TodoList updatedTodoList = beanUtils.copyNonNullProperties(todoList, foundTodoList);
 
         return todoListRepository.save(updatedTodoList);
     }
 
     @Transactional(readOnly = true)
-    public TodoList findTodoList(long todolist_id) {
+    public TodoList findTodoList(long todolistId) {
         return todoListRepository
-                .findById(todolist_id)
+                .findById(todolistId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODOLIST_NOT_FOUND));
     }
 
     public Page<TodoList> findAll(int page, int size) {
-        return todoListRepository.findAll(PageRequest.of(page - 1, size, Sort.by("todolist_id").descending()));
+        return todoListRepository.findAll(PageRequest.of(page - 1, size, Sort.by("todoOrder").ascending()));
     }
 
-    public void deleteTodo(long todolist_id) {
-        TodoList foundTodoList = findTodoList(todolist_id);
+    public void deleteTodo(long todolistId) {
+        TodoList foundTodoList = findTodoList(todolistId);
         todoListRepository.delete(foundTodoList);
     }
 

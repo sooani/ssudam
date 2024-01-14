@@ -1,6 +1,5 @@
 package com.ssdam.like.controller;
 
-import com.ssdam.dto.SingleResponseDto;
 import com.ssdam.like.service.LikeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

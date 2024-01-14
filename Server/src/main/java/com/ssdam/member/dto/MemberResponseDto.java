@@ -10,7 +10,6 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
-
 public class MemberResponseDto {
     private long memberId;
     private String email;

@@ -74,9 +74,9 @@ public class Member extends Auditable {
     }
 
     public void addPartyMember(PartyMember partyMember) {
-        this.partyMembers.add(partyMember);
+        partyMembers.add(partyMember);
         if (partyMember.getMember() != this) {
-            partyMember.addMember(this);
+            partyMember.setMember(this);
         }
     }
 
@@ -127,5 +127,4 @@ public class Member extends Auditable {
             this.status = status;
         }
     }
-
 }

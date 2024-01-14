@@ -14,8 +14,8 @@ public enum ExceptionCode {
     COMMENT_NOT_ALLOWED(422, "Comment not allowed"),
     REPLY_NOT_FOUND(404, "Reply not found"),
     REPLY_NOT_ALLOWED(422, "Reply not allowed"),
-    TODOLIST_NOT_FOUND(404, "TodoList not found");
-
+    TODOLIST_NOT_FOUND(404, "TodoList not found"),
+    REVIEW_NOT_FOUND(404, "Review not found");
 
     @Getter
     private int status;

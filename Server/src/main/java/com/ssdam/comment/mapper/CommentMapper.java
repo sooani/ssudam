@@ -9,13 +9,11 @@ import com.ssdam.reply.mapper.ReplyMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
     ReplyMapper replyMapper = ReplyMapper.create();
-
 
     default Comment commentPostDtoToComment(CommentDto.Post requestBody) {
         Member member = new Member();
@@ -34,7 +32,6 @@ public interface CommentMapper {
 
     default CommentDto.Response commentToCommentResponse(Comment comment) {
         ReplyDto.Response reply = replyMapper.replyToReplyResponse(comment.getReply());
-
 
         return CommentDto.Response.builder()
                 .commentId(comment.getCommentId())

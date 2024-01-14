@@ -32,7 +32,11 @@ API 문서 개요
 == PartyController
 === 모임 등록
 .curl-request
+<<<<<<< HEAD
 include::{snippets}/post-party/curl-request.adoc[]
+=======
+include::{snippets}/post-party/http-request.adoc[]
+>>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 
 .http-request
 include::{snippets}/post-party/http-request.adoc[]
@@ -46,6 +50,7 @@ include::{snippets}/post-party/http-response.adoc[]
 .response-headers
 include::{snippets}/post-party/response-headers.adoc[]
 
+<<<<<<< HEAD
 === 모임 참가
 .curl-request
 include::{snippets}/post-party-member/curl-request.adoc[]
@@ -199,6 +204,15 @@ include::{snippets}/delete-party/path-parameters.adoc[]
 
 .http-response
 include::{snippets}/delete-party/http-response.adoc[]
+=======
+=== 모임 정보 조회
+
+=== 다수의 모임 정보 조회
+
+=== 특정 멤버가 등록한 모든 모임 조회
+
+=== 모임 정보 삭제
+>>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 
 ***
 
@@ -235,7 +249,11 @@ include::{snippets}/patch-comment/request-fields.adoc[]
 .http-response
 include::{snippets}/patch-comment/http-response.adoc[]
 
+<<<<<<< HEAD
 .response-fields
+=======
+.response-fileds
+>>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46
 include::{snippets}/patch-comment/response-fields.adoc[]
 
 === 특정 댓글 조회
@@ -333,6 +351,7 @@ include::{snippets}/delete-comment/path-parameters.adoc[]
 .http-response
 include::{snippets}/delete-comment/http-response.adoc[]
 
+<<<<<<< HEAD
 == ReplyController
 === 대댓글 등록
 
@@ -475,3 +494,6 @@ include::{snippets}/check-bookmark-status/http-response.adoc[]
 
 .response-fields
 include::{snippets}/check-bookmark-status/response-fields.adoc[]
+=======
+
+>>>>>>> 76a1a726ece1e98dccc6442d1e67e7f2a6689c46

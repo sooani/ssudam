@@ -8,12 +8,15 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PartyMapper {
     Party partyPostDtoToParty(PartyDto.Post requestBody);
+
     Party partyPatchDtoToParty(PartyDto.Patch requestBody);
-    @Mapping(target="memberId",source = "party.member.memberId")
+
+    @Mapping(target = "memberId", source = "party.member.memberId")
     PartyDto.Response partyToPartyResponse(Party party);
+
     List<PartyDto.Response> partiesToPartyResponses(List<Party> parties);
 
 }
