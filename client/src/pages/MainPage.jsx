@@ -5,7 +5,7 @@ import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
-import CategoryBox from '../components/MainPage/CategoryBox';
+// import CategoryBox from '../components/MainPage/CategoryBox';
 import axios from '../axios';
 import React, { useState, useEffect } from 'react';
 // import Pagination from '../components/MainPage/Pagination';
@@ -22,14 +22,16 @@ import React, { useState, useEffect } from 'react';
 const MainPage = () => {
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
-  const [activeTab, setActiveTab] = useState('recruiting');
+  // const [activeTab, setActiveTab] = useState('recruiting');
+  const [page, setPage] = useState(1);
 
   // 메인 모집중 게시글
   useEffect(() => {
     axios
-      .get(`/v1/parties?page=1&size=12`)
+      .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
         setData(response.data.data);
+        setPage(response.data.data);
       })
       .catch((error) => {
         console.error('Error party data:', error);
@@ -39,7 +41,7 @@ const MainPage = () => {
   // 새로운 모임
   useEffect(() => {
     axios
-      .get(`/v1/parties/latest?page=1&size=12`)
+      .get(`/v1/parties/latest?page=${page}&size=12`)
       .then((response) => {
         setLatest(response.data.data);
       })
@@ -48,9 +50,9 @@ const MainPage = () => {
       });
   }, []);
 
-  const handleTabSelect = (tab) => {
-    setActiveTab(tab);
-  };
+  // const handleTabSelect = (tab) => {
+  //   setActiveTab(tab);
+  // };
 
   return (
     <main>
@@ -80,8 +82,9 @@ const MainPage = () => {
 
       {/* 메인 구역 */}
       <section className={classes.mainContainer}>
-        <CategoryTab onSelectTab={handleTabSelect} />
-        <CategoryBox data={data} activeTab={activeTab} />
+        <CategoryTab data={data} />
+        {/* <CategoryTab onSelectTab={handleTabSelect}/> */}
+        {/* <CategoryBox data={data} activeTab={activeTab} /> */}
       </section>
 
       {/* 푸터 */}
