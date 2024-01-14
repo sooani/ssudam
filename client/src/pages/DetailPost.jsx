@@ -184,6 +184,7 @@ const DetailPost = () => {
   };
   console.log(hasMyComment);
   const getComments = async () => {
+    console.log(meetingId);
     try {
       // const res = await axios.get(`/v1/parties/${meetingId}/comments`);
       const res = await axios.get(
@@ -334,6 +335,29 @@ const DetailPost = () => {
         // setIsLoading(true);
         console.log(response.data.data);
         setMeetingInfo(response.data.data);
+        console.log(new Date(response.data.data.closingDate));
+        if (new Date(response.data.data.closingDate) <= new Date()) {
+          console.log("updating partyStatus");
+          const updatedDTO = {
+            partyId: meetingId,
+            title: response.data.data.title,
+            maxCapacity: response.data.data.maxCapacity,
+            currentCapacity: response.data.data.currentCapacity,
+            partyStatus: "PARTY_CLOSED",
+          };
+          console.log(updatedDTO);
+          axios
+            .patch(`/v1/parties/${meetingInfo.partyId}`, updatedDTO)
+            .then((response) => {
+              console.log(response.data.data);
+              setMeetingInfo(response.data.data);
+            })
+            .catch((error) => {
+              console.error("Error updating meeting data: ", error);
+              // error.message 판단하여 alert 메세지 던져주기
+              alert("오류가 발생했습니다!");
+            });
+        }
         // 아래는 나중에 주석처리
         setUserInfo({
           memberId: 1,
@@ -649,13 +673,14 @@ const DetailPost = () => {
                     모임 이름
                     <div className={classes.emp}>{meetingInfo.meetingname}</div>
                   </h4> */}
-                  <h4>
-                    모집 인원
-                    <div className={classes.emp}>{meetingInfo.maxCapacity}</div>
-                  </h4>
+
                   <h4>
                     모임 장소
                     <div className={classes.emp}>{meetingInfo.address}</div>
+                  </h4>
+                  <h4>
+                    모집 인원
+                    <div className={classes.emp}>{meetingInfo.maxCapacity}</div>
                   </h4>
                   <h4>
                     현재 인원
@@ -682,21 +707,26 @@ const DetailPost = () => {
                     </div>
                   </h4>
                   <h4>
-                    모임 마감일
+                    모집 마감일
                     <div className={classes.emp}>
-                      {new Date(meetingInfo.dueDate).toLocaleString("ko-KR", {
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                      })}
+                      {new Date(meetingInfo.closingDate).toLocaleString(
+                        "ko-KR",
+                        {
+                          year: "numeric",
+                          month: "numeric",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                        }
+                      )}
                     </div>
                   </h4>
                   <h4>
                     연락 방법
                     {(isMyPost || isParticipating) && (
-                      <div className={classes.emp}>{meetingInfo.contact}</div>
+                      <div className={classes.emp}>
+                        {meetingInfo.phoneNumber}
+                      </div>
                     )}
                     {!isParticipating && !isMyPost && (
                       <div className={classes.alert}>참여 후 확인 가능</div>
@@ -752,7 +782,7 @@ const DetailPost = () => {
 
           {isRecruiting && (
             <div className={classes.comment}>
-              {comments && !isLoading && <h2>댓글 {comments.length}</h2>}
+              {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
               {hasMyComment && <h3>내가 쓴 댓글</h3>}
               <textarea
                 placeholder="댓글 내용을 입력하세요..."

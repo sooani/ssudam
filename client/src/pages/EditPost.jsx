@@ -31,12 +31,12 @@ const EditPost = () => {
     meetingname: "",
     numofpeople: "",
     meetingdate: today,
-    duedate: today,
+    closingDate: today,
     contact: "",
     content: "",
   });
   const navigate = useNavigate();
-
+  // console.log(meetingInfo.closingDate);
   const handleCancel = () => {
     navigate(-1);
   };
@@ -124,13 +124,13 @@ const EditPost = () => {
   const dueHandler = (e) => {
     setMeetingInfo((prevInfo) => ({
       ...prevInfo,
-      duedate: e.target.value,
+      closingDate: e.target.value,
     }));
   };
   const contactHandler = (e) => {
     setMeetingInfo((prevInfo) => ({
       ...prevInfo,
-      contact: e.target.value,
+      phoneNumber: e.target.value,
     }));
   };
   const contentHandler = (e) => {
@@ -185,12 +185,14 @@ const EditPost = () => {
       title: meetingInfo.title,
       memberId: loggedInUser.id,
       meetingDate: meetingInfo.meetingDate,
+      closingDate: meetingInfo.closingDate,
       latitude: latlng.lat,
       longitude: latlng.lng,
       address: address.address_name,
       content: meetingInfo.content,
       maxCapacity: meetingInfo.maxCapacity,
       partyStatus: meetingInfo.partyStatus,
+      phoneNumber: meetingInfo.phoneNumber,
     };
     // console.log(updatedDTO);
     // setMeetingInfo({
@@ -294,22 +296,22 @@ const EditPost = () => {
                   onChange={dateHandler}
                 />
               </div>
-              {/* <div className={classes.field}>
-                <h4>모임 마감일</h4>
+              <div className={classes.field}>
+                <h4>모집 마감일</h4>
                 <input
-                  type="date"
-                  min={today}
-                  value={meetingInfo.duedate}
+                  type="datetime-local"
+                  min={formattedTomorrow}
+                  value={meetingInfo.closingDate}
                   name="duedate"
                   onChange={dueHandler}
                 />
-              </div> */}
+              </div>
               <div className={classes.field}>
                 <h4>연락 방법</h4>
                 <input
                   type="tel"
                   pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-                  value={meetingInfo.contact}
+                  value={meetingInfo.phoneNumber}
                   name="contact"
                   onChange={contactHandler}
                 />

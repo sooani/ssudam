@@ -162,6 +162,7 @@ const MakePost = () => {
       title: postedtitle,
       memberId: loggedInUser.id,
       meetingDate: meetingdate,
+      closingDate: duedate,
       latitude: latlng.lat,
       longitude: latlng.lng,
       address: address.address_name,
@@ -184,8 +185,8 @@ const MakePost = () => {
 
       // 아래는 테이블에서 생략됨 이야기 필요
       // meetingname: meetingname,
-      // duedate: duedate,
-      // contact: contact,
+
+      phoneNumber: contact,
 
       // hits 필요
       // party_status: "모집중", //
@@ -195,7 +196,7 @@ const MakePost = () => {
       meetingname: "",
       numofpeople: "",
       meetingdate: today,
-      duedate: today,
+      closingDate: today,
       contact: "",
       content: "",
     });
@@ -289,7 +290,7 @@ const MakePost = () => {
                 />
               </div>
               <div className={classes.field}>
-                <h4>모임 마감일</h4>
+                <h4>모집 마감일</h4>
                 <input
                   type="datetime-local"
                   min={formattedTomorrow}
