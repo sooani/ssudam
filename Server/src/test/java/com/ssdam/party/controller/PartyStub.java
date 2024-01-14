@@ -53,6 +53,8 @@ public class PartyStub {
                     .longitude("129.026370491329")
                     .latitude("35.3368478896222")
                     .address("경남 양산시 양산역6길 12")
+                    .weather("clear")
+                    .bookmarkCount(3)
                     .content("줍깅 하실분 구합니다람쥐")
                     .maxCapacity(5)
                     .currentCapacity(2)
@@ -67,7 +69,7 @@ public class PartyStub {
 
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "줍깅 알려드림",
                     5,
                     2, PARTY_OPENED,
@@ -77,7 +79,7 @@ public class PartyStub {
 
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "저랑 같이 줍깅 모임하실분?",
                     5,
                     2, PARTY_OPENED,
@@ -92,7 +94,7 @@ public class PartyStub {
             PartyDto.Response response1 = new PartyDto.Response(1L, 1, "줍깅모임 하실 분!",
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "줍깅 알려드림",
                     5,
                     2, PARTY_OPENED,
@@ -101,7 +103,7 @@ public class PartyStub {
             PartyDto.Response response2 = new PartyDto.Response(2L, 2, "선착순 23548명",
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "저랑 같이 줍깅 모임하실분?",
                     5,
                     2, PARTY_OPENED,
@@ -115,7 +117,7 @@ public class PartyStub {
 
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "줍깅 알려드림",
                     5,
                     2, PARTY_OPENED,
@@ -125,7 +127,7 @@ public class PartyStub {
 
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "저랑 같이 줍깅 모임하실분?",
                     5,
                     2, PARTY_OPENED,
@@ -140,7 +142,7 @@ public class PartyStub {
             PartyDto.Response response1 = new PartyDto.Response(1L, 1, "줍깅모임 하실 분!",
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "줍깅 알려드림",
                     5,
                     2, PARTY_OPENED,
@@ -149,7 +151,7 @@ public class PartyStub {
             PartyDto.Response response2 = new PartyDto.Response(2L, 2, "선착순 23548명",
                     LocalDateTime.parse("2024-02-21T15:00"), LocalDateTime.parse("2024-02-20T15:00"), "010-1234-1234",
                     "129.026370491329", "35.3368478896222",
-                    "경남 양산시 양산역6길 12",
+                    "경남 양산시 양산역6길 12","clear",3,
                     "저랑 같이 줍깅 모임하실분?",
                     5,
                     2, PARTY_OPENED,

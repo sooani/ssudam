@@ -1,6 +1,8 @@
 package com.ssdam.party.entity;
 
 import com.ssdam.audit.Auditable;
+import com.ssdam.bookmark.entity.Bookmark;
+import com.ssdam.comment.entity.Comment;
 import com.ssdam.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +23,13 @@ public class Party extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long partyId;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     @Column(nullable = false)
     private LocalDateTime meetingDate; //모임일자
-
+    //모임장소
     @Column(nullable = false)
     private LocalDateTime closingDate; //모임모집마감일자
 
@@ -37,7 +43,9 @@ public class Party extends Auditable {
     private String latitude; //위도
 
     @Column(nullable = false)
-    private String address; //도로명주소
+    private String address;
+
+    private String weather;
 
     @Column(nullable = false, length = 30)
     private String title;
@@ -55,15 +63,34 @@ public class Party extends Auditable {
     @Column(nullable = false)
     private int hits = 0; //조회수
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    @Column(nullable = false)
+    private int bookmarkCount;
 
     @OneToMany(mappedBy = "party")
     private List<PartyMember> partyMembers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "party")
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private PartyStatus partyStatus = PartyStatus.PARTY_OPENED;
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        if (comment.getParty() != this) {
+            comment.setParty(this);
+        }
+    }
+
+    public void addBookmark(Bookmark bookmark) {
+        bookmarks.add(bookmark);
+        if (bookmark.getParty() != this) {
+            bookmark.setParty(this);
+        }
+    }
 
     public enum PartyStatus {
         PARTY_OPENED("모집중"),
