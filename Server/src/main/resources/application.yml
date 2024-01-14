@@ -15,8 +15,6 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-  cache:
-    type: redis
   redis:
     host: 127.0.0.1
     port: 6379
