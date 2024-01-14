@@ -41,7 +41,20 @@ const MakeMap = (props) => {
         }
       >
         {/* 마커 */}
-        {position && <MapMarker position={position} />}
+        {position && (
+          <MapMarker position={position}>
+            <div style={{ padding: "5px", color: "#000" }}>
+              <a
+                href={`https://map.kakao.com/link/map/${position.lat},${position.lng}`}
+                style={{ color: "blue" }}
+                target="_blank"
+                rel="noreferrer"
+              >
+                큰지도보기
+              </a>
+            </div>
+          </MapMarker>
+        )}
       </Map>
     </div>
   );
