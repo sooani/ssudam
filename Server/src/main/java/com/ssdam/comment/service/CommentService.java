@@ -37,6 +37,7 @@ public class CommentService {
 
     public Comment updateComment(Comment comment) {
         Comment foundComment = findVerifiedComment(comment.getCommentId());
+        comment.setLikeCount(foundComment.getLikeCount());
         beanUtils.copyNonNullProperties(comment, foundComment);
         return commentRepository.save(foundComment);
     }
