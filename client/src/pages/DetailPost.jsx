@@ -209,10 +209,12 @@ const DetailPost = () => {
   // 처음 party의 상태를 업데이트 하는 로직.
   // 현재는 meetingInfo에 memberId가 없어서 임시로 고정값을 준 상태이다.
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`/v1/parties/${meetingId}`)
       .then((response) => {
         setMeetingInfo(response.data.data);
+
         // 모집 글의 모집 마감일이 현재 날짜보다 지난경우 모집 상태를 마감으로 업데이트!
         if (new Date(response.data.data.closingDate) <= new Date()) {
           const updatedDTO = {
@@ -239,9 +241,11 @@ const DetailPost = () => {
           email: "user1@example.com",
           nickname: "당근이",
         });
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error getting meeting data: ", error);
+        setIsLoading(false);
       });
   }, [isParticipating]);
   // 위는 원래 의존성이 isParticipating이었다...오류 날시 점검 필요
@@ -375,236 +379,249 @@ const DetailPost = () => {
   }, []);
   return (
     <div className={classes.wrapper}>
-      <Header />
-      {meetingInfo && userInfo && (
-        <div className={classes.container}>
-          <div className={classes.infoAndBtn}>
-            <div className={classes.info}>
-              <div className={classes.title}>
-                <IoIosArrowBack
-                  style={{ fontSize: "2rem" }}
-                  onClick={() => {
-                    navigate(-1);
-                  }}
-                />
-                <h1>{meetingInfo.title}</h1>
-              </div>
-              <div className={classes.writerAndDate}>
-                <div className={classes.writer}>
-                  <h4>{userInfo.nickname}</h4>
-                </div>
-                <div className={classes.date}>
-                  <h4>{meetingInfo.createdAt.split("T")[0]}</h4>
-                </div>
-                {meetingInfo.partyStatus === "PARTY_OPENED" && (
-                  <div className={classes.isRecruiting}>
-                    <h4>모집중</h4>
-                  </div>
-                )}
-                {meetingInfo.partyStatus === "PARTY_CLOSED" && (
-                  <div className={classes.isNotRecruiting}>
-                    <h4>모집완료</h4>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={classes.btnCon}>
-              <FaBookmark
-                style={{
-                  color: bookmarked ? "green" : "black",
-                  fontSize: "2rem",
-                }}
-                className={classes.bookmark}
-                onClick={bookmarkHandler}
-              />
-              {/* 파티가 모집중이고 내 포스트도 아니고 참여중도 아닐경우 렌더링 */}
-              {isRecruiting && !isMyPost && !isParticipating && (
-                <button className={classes.joinBtn} onClick={joinHandler}>
-                  <FaUsers style={{ fontSize: "1.5rem" }} />
-                  참여
-                </button>
-              )}
-              {/* 내 포스트가 아니고 참여중일 경우 렌더링 (모집 완료인 경우에도 볼 수 있다) */}
-              {!isMyPost && isParticipating && (
-                <button
-                  className={classes.joinBtn}
-                  onClick={joinHandler}
-                  disabled={!isRecruiting}
-                >
-                  <FaUsers style={{ fontSize: "1.5rem" }} />
-                  참여중
-                </button>
-              )}
-            </div>
+      {(isLoading || !meetingInfo || !userInfo) && (
+        <>
+          <Header />
+          <div className={classes.loading}>
+            <p>Loading...</p>
           </div>
-          <div className={classes.detailInfo}>
-            <div className={classes.detail}>
-              <h2>상세 정보</h2>
-              <div className={classes.info1}>
-                <div className={classes.info1_1}>
-                  <h4>
-                    모임 장소
-                    <div className={classes.emp}>{meetingInfo.address}</div>
-                  </h4>
-                  <h4>
-                    모집 인원
-                    <div className={classes.emp}>{meetingInfo.maxCapacity}</div>
-                  </h4>
-                  <h4>
-                    현재 인원
-                    <div className={classes.emp}>
-                      {meetingInfo.currentCapacity}
-                    </div>
-                  </h4>
+          <Footer />
+        </>
+      )}
+      {!isLoading && meetingInfo && userInfo && (
+        <>
+          <Header />
+          <div className={classes.container}>
+            <div className={classes.infoAndBtn}>
+              <div className={classes.info}>
+                <div className={classes.title}>
+                  <IoIosArrowBack
+                    style={{ fontSize: "2rem" }}
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                  />
+                  <h1>{meetingInfo.title}</h1>
                 </div>
-                <div className={classes.info1_2}>
-                  <h4>
-                    모임 일시
-                    <div className={classes.emp}>
-                      {new Date(meetingInfo.meetingDate).toLocaleString(
-                        "ko-KR",
-                        {
-                          year: "numeric",
-                          month: "numeric",
-                          day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                        }
-                      )}
+                <div className={classes.writerAndDate}>
+                  <div className={classes.writer}>
+                    <h4>{userInfo.nickname}</h4>
+                  </div>
+                  <div className={classes.date}>
+                    <h4>{meetingInfo.createdAt.split("T")[0]}</h4>
+                  </div>
+                  {meetingInfo.partyStatus === "PARTY_OPENED" && (
+                    <div className={classes.isRecruiting}>
+                      <h4>모집중</h4>
                     </div>
-                  </h4>
-                  <h4>
-                    모집 마감일
-                    <div className={classes.emp}>
-                      {new Date(meetingInfo.closingDate).toLocaleString(
-                        "ko-KR",
-                        {
-                          year: "numeric",
-                          month: "numeric",
-                          day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                        }
-                      )}
+                  )}
+                  {meetingInfo.partyStatus === "PARTY_CLOSED" && (
+                    <div className={classes.isNotRecruiting}>
+                      <h4>모집완료</h4>
                     </div>
-                  </h4>
-                  {/* 내 포스트인경우나 참여중일 경우 연락처를 보여준다 */}
-                  {/* 반대의 경우 안보여줌 */}
-                  <h4>
-                    연락 방법
-                    {(isMyPost || isParticipating) && (
+                  )}
+                </div>
+              </div>
+
+              <div className={classes.btnCon}>
+                <FaBookmark
+                  style={{
+                    color: bookmarked ? "green" : "black",
+                    fontSize: "2rem",
+                  }}
+                  className={classes.bookmark}
+                  onClick={bookmarkHandler}
+                />
+                {/* 파티가 모집중이고 내 포스트도 아니고 참여중도 아닐경우 렌더링 */}
+                {isRecruiting && !isMyPost && !isParticipating && (
+                  <button className={classes.joinBtn} onClick={joinHandler}>
+                    <FaUsers style={{ fontSize: "1.5rem" }} />
+                    참여
+                  </button>
+                )}
+                {/* 내 포스트가 아니고 참여중일 경우 렌더링 (모집 완료인 경우에도 볼 수 있다) */}
+                {!isMyPost && isParticipating && (
+                  <button
+                    className={classes.joinBtn}
+                    onClick={joinHandler}
+                    disabled={!isRecruiting}
+                  >
+                    <FaUsers style={{ fontSize: "1.5rem" }} />
+                    참여중
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className={classes.detailInfo}>
+              <div className={classes.detail}>
+                <h2>상세 정보</h2>
+                <div className={classes.info1}>
+                  <div className={classes.info1_1}>
+                    <h4>
+                      모임 장소
+                      <div className={classes.emp}>{meetingInfo.address}</div>
+                    </h4>
+                    <h4>
+                      모집 인원
                       <div className={classes.emp}>
-                        {meetingInfo.phoneNumber}
+                        {meetingInfo.maxCapacity}
                       </div>
-                    )}
-                    {!isParticipating && !isMyPost && (
-                      <div className={classes.alert}>참여 후 확인 가능</div>
-                    )}
-                  </h4>
-                  <h4>
-                    예상 날씨
-                    <div className={classes.weather}>
-                      {/* <WeatherIcon
+                    </h4>
+                    <h4>
+                      현재 인원
+                      <div className={classes.emp}>
+                        {meetingInfo.currentCapacity}
+                      </div>
+                    </h4>
+                  </div>
+                  <div className={classes.info1_2}>
+                    <h4>
+                      모임 일시
+                      <div className={classes.emp}>
+                        {new Date(meetingInfo.meetingDate).toLocaleString(
+                          "ko-KR",
+                          {
+                            year: "numeric",
+                            month: "numeric",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                          }
+                        )}
+                      </div>
+                    </h4>
+                    <h4>
+                      모집 마감일
+                      <div className={classes.emp}>
+                        {new Date(meetingInfo.closingDate).toLocaleString(
+                          "ko-KR",
+                          {
+                            year: "numeric",
+                            month: "numeric",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                          }
+                        )}
+                      </div>
+                    </h4>
+                    {/* 내 포스트인경우나 참여중일 경우 연락처를 보여준다 */}
+                    {/* 반대의 경우 안보여줌 */}
+                    <h4>
+                      연락 방법
+                      {(isMyPost || isParticipating) && (
+                        <div className={classes.emp}>
+                          {meetingInfo.phoneNumber}
+                        </div>
+                      )}
+                      {!isParticipating && !isMyPost && (
+                        <div className={classes.alert}>참여 후 확인 가능</div>
+                      )}
+                    </h4>
+                    <h4>
+                      예상 날씨
+                      <div className={classes.weather}>
+                        {/* <WeatherIcon
                         className={classes.wIcon}
                         weatherType={meetingInfo.weather}
                         // weatherType="snow"
                       /> */}
-                      {meetingInfo.weather}
-                    </div>
-                  </h4>
+                        {meetingInfo.weather}
+                      </div>
+                    </h4>
+                  </div>
                 </div>
+                <h2>모임 소개</h2>
+                <div className={classes.info2}>{meetingInfo.content}</div>
               </div>
-              <h2>모임 소개</h2>
-              <div className={classes.info2}>{meetingInfo.content}</div>
+              <div className={classes.map}>
+                <MakeMap
+                  setAddress={setAddress}
+                  lat={meetingInfo.latitude}
+                  lng={meetingInfo.longitude}
+                />
+                {/* 내 포스트일 경우 수정/삭제가 가능함, 수정버튼을 클릭 시 수정 페이지로 이동 */}
+                {isMyPost && (
+                  <div className={classes.btnCon_1}>
+                    <button
+                      className={classes.joinBtn}
+                      onClick={() => {
+                        window.location.href = `/meetings/${meetingId}/edit`;
+                      }}
+                    >
+                      <FaEdit style={{ fontSize: "1.5rem" }} />
+                      수정
+                    </button>
+                    <button
+                      className={classes.deleteBtn}
+                      onClick={deleteMeetingHandler}
+                    >
+                      <FaTrash style={{ fontSize: "1.5rem" }} />
+                      삭제
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className={classes.map}>
-              <MakeMap
-                setAddress={setAddress}
-                lat={meetingInfo.latitude}
-                lng={meetingInfo.longitude}
-              />
-              {/* 내 포스트일 경우 수정/삭제가 가능함, 수정버튼을 클릭 시 수정 페이지로 이동 */}
-              {isMyPost && (
-                <div className={classes.btnCon_1}>
-                  <button
-                    className={classes.joinBtn}
-                    onClick={() => {
-                      window.location.href = `/meetings/${meetingId}/edit`;
-                    }}
-                  >
-                    <FaEdit style={{ fontSize: "1.5rem" }} />
-                    수정
-                  </button>
-                  <button
-                    className={classes.deleteBtn}
-                    onClick={deleteMeetingHandler}
-                  >
-                    <FaTrash style={{ fontSize: "1.5rem" }} />
-                    삭제
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-          {/* 모집 중 일경우 댓글 수와 댓글 등/수/삭 버튼 보여주고 모집 완료일경우 댓글 수만 보여줌 */}
-          {!isRecruiting && (
-            <div className={classes.comment}>
-              {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
-            </div>
-          )}
-          {isRecruiting && (
-            <div className={classes.comment}>
-              {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
-              {hasMyComment && <h3>내가 쓴 댓글</h3>}
-              <textarea
-                placeholder="댓글 내용을 입력하세요..."
-                value={hasMyComment ? myComment.comment : enteredComment}
-                onChange={commentChangeHandler}
-                required
-              />
-              {/* 내가 쓴 댓글이 없을 경우 새롭게 등록할 수 있도록 버튼을 렌더링 */}
-              {!hasMyComment && (
-                <div className={classes.btnCon_2}>
-                  <button
-                    className={classes.joinBtn_1}
-                    onClick={commentSubmitHandler}
-                  >
-                    댓글 등록
-                  </button>
-                </div>
-              )}
-              {/* 내가 작성한 댓글이 있을 경우 수정/삭제 버튼 렌더링 */}
-              {hasMyComment && (
-                <div className={classes.btnCon_2}>
-                  <button
-                    className={classes.joinBtn}
-                    onClick={commentEditHandler}
-                  >
-                    댓글 수정
-                  </button>
-                  <button
-                    className={classes.deleteBtn}
-                    onClick={commentDeleteHandler}
-                  >
-                    댓글 삭제
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-          {/* 댓글 컴포넌트 렌더링 */}
-          <Comments
-            isLoading={isLoading}
-            comments={comments}
-            loggedInUser={loggedInUser}
-            partyId={meetingId}
-            userInfo={userInfo}
-            getComments={getComments}
-          />
-        </div>
+            {/* 모집 중 일경우 댓글 수와 댓글 등/수/삭 버튼 보여주고 모집 완료일경우 댓글 수만 보여줌 */}
+            {!isRecruiting && (
+              <div className={classes.comment}>
+                {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
+              </div>
+            )}
+            {isRecruiting && (
+              <div className={classes.comment}>
+                {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
+                {hasMyComment && <h3>내가 쓴 댓글</h3>}
+                <textarea
+                  placeholder="댓글 내용을 입력하세요..."
+                  value={hasMyComment ? myComment.comment : enteredComment}
+                  onChange={commentChangeHandler}
+                  required
+                />
+                {/* 내가 쓴 댓글이 없을 경우 새롭게 등록할 수 있도록 버튼을 렌더링 */}
+                {!hasMyComment && (
+                  <div className={classes.btnCon_2}>
+                    <button
+                      className={classes.joinBtn_1}
+                      onClick={commentSubmitHandler}
+                    >
+                      댓글 등록
+                    </button>
+                  </div>
+                )}
+                {/* 내가 작성한 댓글이 있을 경우 수정/삭제 버튼 렌더링 */}
+                {hasMyComment && (
+                  <div className={classes.btnCon_2}>
+                    <button
+                      className={classes.joinBtn}
+                      onClick={commentEditHandler}
+                    >
+                      댓글 수정
+                    </button>
+                    <button
+                      className={classes.deleteBtn}
+                      onClick={commentDeleteHandler}
+                    >
+                      댓글 삭제
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* 댓글 컴포넌트 렌더링 */}
+            <Comments
+              isLoading={isLoading}
+              comments={comments}
+              loggedInUser={loggedInUser}
+              partyId={meetingId}
+              userInfo={userInfo}
+              getComments={getComments}
+            />
+          </div>{" "}
+          <Footer />
+        </>
       )}
-      <Footer />
     </div>
   );
 };

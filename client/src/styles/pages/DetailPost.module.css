@@ -8,6 +8,14 @@
   overflow-x: hidden;
   background-color: white;
 }
+.wrapper .loading p {
+  text-align: center;
+  font-size: x-large;
+  font-weight: 900;
+}
+.wrapper .loading {
+  height: 100vh;
+}
 .container {
   display: flex;
   flex-direction: column;
