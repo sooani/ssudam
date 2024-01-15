@@ -196,14 +196,6 @@ public class TodoListControllerTest {
 
         TodoListDto.Response response = TodoListStub.getSingleResponseBody();
 
-        /*ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS"));
-
-        String createdAtAsString = objectMapper.writeValueAsString(response.getCreatedAt());
-        String modifiedAtAsString = objectMapper.writeValueAsString(response.getModifiedAt());*/
-
         given(todoListService.findTodoList(Mockito.anyLong())).willReturn(new TodoList());
         given(mapper.todoToTodoListResponseDto(any(TodoList.class))).willReturn(response);
 
