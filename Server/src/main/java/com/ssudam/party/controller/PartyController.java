@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Validated
@@ -56,6 +58,16 @@ public class PartyController {
 
         partyService.addPartyMember(partyId, member);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //파티에 참가한 멤버인지 조회
+    @RequestMapping(value = "/v1/parties/{party-id}/partymember-status", method = RequestMethod.GET)
+    public ResponseEntity checkPartyMemberStatus(@PathVariable("party-id") Member member, Party party){
+        boolean isJoinedParty = partyService.isJoinParty(member, party);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isJoined", isJoinedParty);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // 파티 조회

@@ -5,6 +5,7 @@ import com.ssudam.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
@@ -69,9 +70,10 @@ public class PartyDto {
         @NotSpace(message = "내용을 입력해주세요.")
         private String content;
 
-        private int maxCapacity;
+        @Range(min = 2, max = 9999)
+        private Integer maxCapacity;
 
-        private int currentCapacity;
+        private Integer currentCapacity;
 
         private Party.PartyStatus partyStatus;
 
@@ -95,6 +97,7 @@ public class PartyDto {
         private String latitude;
         private String address;
         private String weather;
+        private int hits;
         private int bookmarkCount;
         private String content;
         private int maxCapacity;

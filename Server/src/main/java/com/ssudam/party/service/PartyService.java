@@ -178,7 +178,7 @@ public class PartyService {
             throw new BusinessLogicException(ExceptionCode.PARTY_CLOSED_ERROR);
         }
 
-        if (canJoinParty(member, party)) {
+        if (isJoinParty(member, party)) {
             increasePartyCapacity(party);
             addMemberToParty(member, party);
         } else {
@@ -188,7 +188,7 @@ public class PartyService {
     }
 
     // 파티에 가입한 멤버인지 검사
-    private boolean canJoinParty(Member member, Party party) {
+    public boolean isJoinParty(Member member, Party party) {
         return !partyMemberRepository.existsByMemberAndParty(member, party);
     }
 
