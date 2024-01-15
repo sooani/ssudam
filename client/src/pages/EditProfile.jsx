@@ -1,172 +1,236 @@
-
 // EditProfile.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import LeaveModal from './LeaveModal';
 import classes from '../styles/pages/EditProfile.module.css';
-import axios from '../axios';
 import { useForm } from "react-hook-form";
+import axios from '../axios';
 
-const EditProfile = () => {
+function EditProfile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [currentNickname, setCurrentNickname] = useState('');
-    const [newNickname, setNewNickname] = useState('');
-    const [currentEmail, setCurrentEmail] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
+    const [isNicknameBlurred, setIsNicknameBlurred] = useState(false);
+
+    //닉네임이랑 비번 분리안되는오류가 있는것같음
+    //이부분 데이터 넣고 테스트 해보기 (초기로드시에 닉네임이 있으니까)
+
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     formState: { isSubmitting, isSubmitted, errors, isValid },
+    //     watch,
+    //     setValue,
+    //     trigger
+    // } = useForm({
+    //     mode: 'onChange'
+    // });
 
     const {
         register,
-        formState: { errors },
         handleSubmit,
-        setError,
-        clearErrors,
-        watch
-    } = useForm();
+        formState, 
+        watch,
+        setValue,
+        trigger
+    } = useForm({
+        mode: 'onChange'
+    });
+
+    const { isSubmitting, isSubmitted, errors, isValid } = formState;  
+    // formState 에러나서 구조 분해 할당해준부분.. 왜?
+
+    
 
     useEffect(() => {
-        const fetchCurrentNickname = async () => {
-            try {
-                const response = await axios.get('/v1/members/{member-id}');
-                setCurrentNickname(response.data.nickname);
-            } catch (error) {
-                console.error('현재 닉네임 호출오류:', error);
-            }
-        };
-        fetchCurrentNickname();
+        trigger("Nickname");
     }, []);
 
+    const handleNicknameBlur = () => {
+        setIsNicknameBlurred(true);
+        trigger("Nickname");
+    };
+
+    // 닉네임, 이메일 받아오기
     useEffect(() => {
-        const fetchCurrentEmail = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get('/v1/members/{member-id}');
-                setCurrentEmail(response.data.email);
+                const response = await axios.get('/v1/members/1');  
+                const { email, nickname } = response.data.data;
+
+                setValue('email', email);  
+                setValue('Nickname', nickname);  
+                trigger('Nickname');  
             } catch (error) {
-                console.error('현재 이메일 호출오류:', error);
+                console.error('닉네임,이메일 get error:', error);
             }
         };
-        fetchCurrentEmail();
-    }, []);
 
-    const [initialLoad, setInitialLoad] = useState(true);
+        fetchData();
+    }, []);  
 
-    const handleNicknameChange = (e) => {
-        setNewNickname(e.target.value);
-    };
-
-    const handleNewPasswordChange = (e) => {
-        setNewPassword(e.target.value);
-    };
-
-
-    const onSubmit = async (data) => {
+    //닉네임 중복검사! 이거 엔드포인트가 달라야하는지???
+    const GetDuplicateNickname = async (value) => {
         try {
-            const response = await axios.post(`/v1/members/{member}`, {
-                newNickname: data.nickname,
-                newPassword : data.newpassword
-            });
-            console.log(response.data);
+            const response = await axios.post('/v1/members/1', { nickname: value });
+            return !response.data.result; // 사용 가능한 닉네임은 false 반환
         } catch (error) {
-            console.error('닉네임 변경 중 오류 ', error);
+            console.error('닉네임 중복 검사 오류:', error);
+            throw error;
+        }
+    }
+
+    //닉네임이랑 비밀번호를 부분적으로 변경 가능하게 분리
+    const updateUserData = async (data) => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            let updatedUserData = {};
+    
+            if (data.Nickname) {
+                updatedUserData = {
+                    nickname: data.Nickname,
+                };
+            } else if (data.NewPassword) {
+                updatedUserData = {
+                    password: data.NewPassword,
+                    confirmPassword: data.ConfirmPassword,
+                };
+            }
+    
+            await axios.post('/v1/members/1', updatedUserData, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+    
+            alert('회원 정보 수정완료.');
+        } catch (error) {
+            console.error('회원정보 수정 중 업데이트 오류:', error);
+            alert('회원정보 수정 중 오류가 발생했습니다.');
         }
     };
 
 
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
             <div className={classes.Main}>
                 <Header />
                 <div className={classes.MainContainer}>
                     <h1 className={classes.EditProfileTitle}>회원정보수정</h1>
-                        <div className={classes.NicknameContainer}>
-                            <label className={classes.Nickname}>닉네임</label>
-                            <div className={classes.UserNicknameContainer}>
-                                <input
-                                    {...register("nickname", {
-                                        required: {
-                                            value: true,
-                                            message: '닉네임을 입력하세요.',
-                                        },
-                                        minLength: {
-                                            value: 2,
-                                            message: '2글자 이상 입력해주세요.',
-                                        },
-                                        maxLength: {
-                                            value: 12,
-                                            message: '최대 12글자까지 입력 가능합니다.',
-                                        },
-                                    })}
-                                    className={classes.UserNickname}
-                                    defaultValue={currentNickname}
-                                    onChange={handleNicknameChange}
-                                />
-                                {errors.nickname && <p className={classes.UserNicknameMSG}>{errors.nickname.message}</p>}
-                            </div>
-                        </div>
 
-                        <div className={classes.EmailContainer}>
-                            <label className={classes.Email}>이메일</label>
+                    <div className={classes.NicknameContainer}>
+                        <label htmlFor="Nickname" className={classes.Nickname}>닉네임</label>
+                        <div className={classes.UserNicknameContainer}>
                             <input
+                                id="Nickname"
                                 type="text"
-                                className={classes.UserEmail}
-                                value={currentEmail}
-                                readOnly
+                                {...register("Nickname", {
+                                    required: {
+                                        value: true,
+                                        message: '닉네임을 입력하세요.',
+                                    },
+                                    minLength: {
+                                        value: 2,
+                                        message: '2글자 이상 입력해주세요.',
+                                    },
+                                    maxLength: {
+                                        value: 12,
+                                        message: '최대 12글자까지 입력 가능합니다.',
+                                    },
+                                    validate: {
+                                        isAvailable: async value => {
+                                            const res = await GetDuplicateNickname(value);
+                                            return (
+                                                (res && res.data.result) ||
+                                            '이미 사용중인 닉네임입니다. 다른 닉네임을 입력하세요'
+                                            );
+                                            }
+                                        },
+                                })}
+                                className={classes.UserNickname}
+                                aria-invalid={isNicknameBlurred && errors.Nickname ? "true" : "false"}
+                                onBlur={handleNicknameBlur}
                             />
+                            {isNicknameBlurred && errors.Nickname && <small className={classes.UserNicknameMSG}>{errors.Nickname.message}</small>}
                         </div>
+                    </div>
 
+                    <div className={classes.EmailContainer}>
+                        <label htmlFor="email" className={classes.Email}>이메일</label>
+                        <input className={classes.UserEmail} id="email" type="text" readOnly />
+                    </div>
 
-                            <>
-                                <div className={classes.NewPasswordContainer}>
-                                    <label className={classes.NewPassword}>새 비밀번호</label>
-                                    <div className={classes.UserNewPasswordContainer}>
-                                        <input
-                                            {...register("newPassword", {
-                                                required: { value: true, message: '비밀번호를 입력하세요.' },
-                                                minLength: { value: 8, message: '8글자 이상 입력해주세요.' },
-                                                maxLength: { value: 20, message: '최대 20글자까지 입력 가능합니다.' },
-                                                pattern: {
-                                                    value: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+])[A-Za-z\\d!@#$%^&*()_+]+$',
-                                                    message: '영문 대문자, 소문자, 숫자, 특수문자를 각각 최소한 하나씩 포함해야됩니다.'
-                                                }
-                                            })}
-                                            className={classes.UserNewPassword}
-                                            onChange={handleNewPasswordChange}
-                                        />
-                                        {errors?.newPassword && <p className={classes.UserNewPasswordMSG}>{errors.newPassword.message}</p>}
-                                    </div>
-                                </div>
+                    <div className={classes.NewPasswordContainer}>
+                        <label htmlFor="NewPassword" className={classes.NewPassword}>새 비밀번호</label>
+                        <div className={classes.UserNewPasswordContainer}>
+                            <input
+                                id="NewPassword"
+                                type="text"
+                                {...register("NewPassword", {
+                                    required: "새 비밀번호를 입력해주세요.",
+                                    minLength: { value: 8, message: "8글자 이상 입력해주세요." },
+                                    maxLength: { value: 20, message: "최대 20글자까지 입력 가능합니다." },
+                                    pattern: {
+                                        value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{1,}$/,
+                                        message: "영문 대,소문자와 숫자, 특수기호(@$!%*#?&)가 적어도 1개 이상씩 포함되어야 합니다."
+                                    }
+                                })}
+                                aria-invalid={isSubmitted ? (errors.NewPassword ? "true" : "false") : undefined}
+                                className={classes.UserNewPassword}
+                            />
+                            {errors.NewPassword && <small className={classes.UserNewPasswordMSG}>{errors.NewPassword.message}</small>}
+                            </div>
+                    </div>
 
-
-                                <div className={classes.ConfirmPasswordContainer}>
-                                    <label className={classes.ConfirmPassword}>새 비밀번호 확인</label>
-                                    <div className={classes.ConfirmUserPasswordContainer}>
-                                        <input
-                                            {...register("confirmPassword", {
-                                                required: { value: true, message: "비밀번호를 입력해주세요." },
-                                                validate: (value) => value === watch('newPassword') || '비밀번호가 일치하지 않습니다.2',
-                                            })}
-                                            className={classes.UserConfirmPassword}
-                                        />
-                                        {errors?.confirmPassword && <p className={classes.UserConfirmPasswordMSG}>{errors.confirmPassword.message}</p>}
-                                    </div>
-                                </div>
-                            </>
-                        
-
-                        <div className={classes.EditButtons}>
-                            <LeaveModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-                            <button type="submit" className={classes.EditChangeButton}>변경사항수정</button>
+                    <div className={classes.ConfirmPasswordContainer}>
+                        <label htmlFor="ConfirmPassword" className={classes.ConfirmPassword}>비밀번호 확인</label>
+                        <div className={classes.ConfirmUserPasswordContainer}>
+                        <input
+                            id="ConfirmPassword"
+                            type="text"
+                            {...register("ConfirmPassword", {
+                                required: "새 비밀번호를 한번 더 입력해주세요.",
+                                validate: (value) => value === watch('NewPassword') || '비밀번호가 일치하지 않습니다.2',
+                            })}
+                            className={classes.UserConfirmPassword}
+                            aria-invalid={isSubmitted ? (errors.ConfirmPassword ? "true" : "false") : undefined}
+                            onChange={(e) => {
+                                setValue("ConfirmPassword", e.target.value);
+                                trigger("ConfirmPassword");
+                            }}
+                        />
+                        {errors?.ConfirmPassword && <small className={classes.UserConfirmPasswordMSG}> {errors.ConfirmPassword.message}</small>}
                         </div>
+                    </div>
+
+                    <div className={classes.EditButtons}>
+                        <LeaveModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+                        {/* <button
+                            type="button"
+                            onClick={handleSubmit((data) => updateUserData(data))}
+                            disabled={isSubmitting}
+                            className={classes.EditChangeButton}
+                        >
+                            변경사항수정
+                        </button> */}
+
+                        <button
+                            type="button"
+                            onClick={handleSubmit((data) => updateUserData(data))}
+                            disabled={isSubmitting || !formState.isValid}
+                            className={`${classes.EditChangeButton} ${(!formState.isValid) ? classes.DisabledButton : ''}`}
+                        >
+                            변경사항수정
+                        </button>
+
+                    </div>
 
                 </div>
-                <Footer />
             </div>
+            <Footer />
         </form>
     );
-};
+}
+
+
 
 export default EditProfile;
