@@ -22,13 +22,15 @@
     align-items: center; 
     height : auto; */
     width: 70vw;
-    height: 100vh;
+    /* height: 100vh; */
+    height : auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: left;
     margin: auto;
     padding: 10px;
+    /* overflow-y: auto; */
 }
 
 .MyInfo{
@@ -134,6 +136,29 @@
     display: flex; 
     align-items: center; 
     width: 80vw;
-    height: 100vh;
+    height: 300vh;
 }
 
+.MyContents{
+    border: 2px solid red;
+    display: flex; 
+    align-items: center; 
+    width: 80vw;
+    height: 150vh;
+    flex-direction: row;
+}
+
+.MyPostContainer{
+    width: 40vw;
+    height: 150vh;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+}
+.MyCommentContainer{
+    width: 40vw;
+    height: 150vh;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}

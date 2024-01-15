@@ -5,7 +5,7 @@ import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
-import CategoryBox from '../components/MainPage/CategoryBox';
+// import CategoryBox from '../components/MainPage/CategoryBox';
 import axios from '../axios';
 import React, { useState, useEffect } from 'react';
 // import Pagination from '../components/MainPage/Pagination';
@@ -20,22 +20,61 @@ import React, { useState, useEffect } from 'react';
 */
 
 const MainPage = () => {
+  const [randomData, setRandomData] = useState([]);
   const [data, setData] = useState([]);
-  const [activeTab, setActiveTab] = useState('recruiting');
+  const [latest, setLatest] = useState([]);
+  // const [activeTab, setActiveTab] = useState('recruiting');
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const generateRandomData = () => {
+      const newData = Array.from({ length: 3 }, (_, index) => ({
+        todolistId: index + 1,
+        title: `할 일 ${index + 1}`,
+        todoOrder: index + 1,
+      }));
+
+      setRandomData(newData);
+    };
+    // 초기 렌더링 시 데이터 생성
+    generateRandomData();
+
+    // 5초마다 데이터 갱신
+    const intervalId = setInterval(() => {
+      generateRandomData();
+    }, 5000);
+
+    // 컴포넌트가 언마운트되면 clearInterval 호출하여 타이머 중지
+    return () => clearInterval(intervalId);
+  }, []);
+  // 메인 모집중 게시글
   useEffect(() => {
     axios
-      .get(`/data`)
+      .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
-        setData(response.data);
+        setData(response.data.data);
+        setPage(response.data.data);
       })
       .catch((error) => {
         console.error('Error party data:', error);
       });
   }, []);
 
-  const handleTabSelect = (tab) => {
-    setActiveTab(tab);
-  };
+  // 새로운 모임
+  useEffect(() => {
+    axios
+      .get(`/v1/parties/latest?page=${page}&size=12`)
+      .then((response) => {
+        setLatest(response.data.data);
+      })
+      .catch((error) => {
+        console.error('Error party data:', error);
+      });
+  }, []);
+
+  // const handleTabSelect = (tab) => {
+  //   setActiveTab(tab);
+  // };
 
   return (
     <main>
@@ -55,19 +94,19 @@ const MainPage = () => {
       <section className={classes.todoAndNewSection}>
         {/* 투두 리스트  */}
         <div className={classes.todoList}>
-          <TodoList />
+          <TodoList todos={randomData} />
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>
-          <ListSlider data={data} />
+          <ListSlider latest={latest} />
         </div>
       </section>
 
       {/* 메인 구역 */}
       <section className={classes.mainContainer}>
-        <CategoryTab onSelectTab={handleTabSelect} />
-        <CategoryBox data={data} activeTab={activeTab} />
-        {/* <Pagination /> */}
+        <CategoryTab data={data} />
+        {/* <CategoryTab onSelectTab={handleTabSelect}/> */}
+        {/* <CategoryBox data={data} activeTab={activeTab} /> */}
       </section>
 
       {/* 푸터 */}

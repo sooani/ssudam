@@ -48,7 +48,7 @@
 
 
 
-// LeaveModal.jsx
+
 // LeaveModal.jsx
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
@@ -65,6 +65,9 @@ function LeaveModal() {
     try {
       await axios.delete('v1/members/{member-id}');
       console.log('회원 정보 삭제 성공');
+      // 회원 정보 삭제 성공 시, 로컬 스토리지에서 JWT 토큰 삭제
+      localStorage.removeItem('jwtToken');
+      console.log('JWT 토큰이 로컬 스토리지에서 삭제되었습니다.');
       setModalIsOpen(false);
       setLeaveSuccess(true);
     } catch (error) {
@@ -76,7 +79,7 @@ function LeaveModal() {
     if (leaveSuccess) {
       setTimeout(() => {
         setLeaveSuccess(false);
-        navigate('/main'); // 메인 화면으로 이동
+        navigate('/'); // 메인 화면으로 이동
       }, 2000);
     }
   }, [leaveSuccess, navigate]);
@@ -104,25 +107,9 @@ function LeaveModal() {
           </button>
         </div>
       </Modal>
-      <Detail leaveSuccess={leaveSuccess} />
-    </div>
-  );
-}
-
-function Detail(props) {
-  return (
-    <div className="container">
-      {props.leaveSuccess && <Alert />}
-    </div>
-  );
-}
-
-function Alert() {
-  return (
-    <div className="alert alert-warning">
-      회원탈퇴가 완료되었습니다.
     </div>
   );
 }
 
 export default LeaveModal;
+

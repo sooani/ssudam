@@ -6,3 +6,7 @@
 .categoryTab:hover {
   cursor: pointer;
 }
+
+.categoryTabTitle button {
+  height: 100px;
+}

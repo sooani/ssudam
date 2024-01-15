@@ -1,40 +1,33 @@
-import React, { useState } from 'react';
-import ReactPaginate from 'react-paginate';
+import React from 'react';
 import ListCard from './ListCard';
 import classes from '../../styles/components/CategoryBox.module.css';
+import PaginationBar from './PaginationBar';
 
-const ITEMS_PER_PAGE = 12;
+const CategoryBox = ({ categoryData, pageInfo, onPageChange }) => {
+  // const CategoryBox = ({ data, activeTab, PARTY_OPENED }) => {
+  // 선택된 탭에 따라 데이터를 필터링
+  // const filteredData = data.filter((item) =>
+  //   activeTab === 'recruiting'
+  //     ? item.partyStatus === 'PARTY_OPENED'
+  //     : item.partyStatus !== 'PARTY_OPENED'
+  // );
 
-const CategoryBox = ({ data, activeTab }) => {
-  const filteredData = data.filter((item) =>
-    activeTab === 'recruiting'
-      ? item.partyStatus === 'PARTY_OPENED'
-      : item.partyStatus !== 'PARTY_OPENED'
-  );
-  const [currentPage, setCurrentPage] = useState(0);
-  const handlePageClick = ({ selected }) => {
-    setCurrentPage(selected);
-  };
-  const pageCount = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
-  const offset = currentPage * ITEMS_PER_PAGE;
-
-  const currentData = filteredData.slice(offset, offset + ITEMS_PER_PAGE);
   return (
+    // <div className={classes.listCardContainer}>
+    //   {filteredData.map((party) => (
+    //     <ListCard
+    //       key={party.partyId}
+    //       party={party}
+    //       partyStatus={PARTY_OPENED}
+    //     />
+    //   ))}
+    //   <PaginationBar pageInfo={pageInfo} />
+    // </div>
     <div className={classes.listCardContainer}>
-      {currentData.map((party) => (
-        <ListCard party={party} />
+      {categoryData.map((party) => (
+        <ListCard key={party.partyId} party={party} />
       ))}
-      <ReactPaginate
-        previousLabel={'이전'}
-        nextLabel={'다음'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        marginPagesDisplayed={0}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
-      />
+      <PaginationBar pageInfo={pageInfo} onPageChange={onPageChange} />
     </div>
   );
 };

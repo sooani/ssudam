@@ -16,9 +16,11 @@
 .listCardTitle {
   text-align: left;
   padding-top: 30px;
-  padding-left: 30%;
+  padding-left: 6%;
   font-size: 1.25rem;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .listCardContent {
