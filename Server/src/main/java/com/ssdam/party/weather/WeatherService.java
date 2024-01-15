@@ -33,7 +33,7 @@ public class WeatherService {
                     .orElse(null);
             String description = weather.stream()
                     .findFirst()
-                    .map(weather1 -> weather1.getDescription())
+                    .map(weather1 -> weather1.getId())
                     .orElse(null);
 
             return Optional.ofNullable(description);
