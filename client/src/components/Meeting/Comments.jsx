@@ -15,6 +15,7 @@ const Comments = (props) => {
   const [hasReply, setHasReply] = useState({}); // 대댓글 여부 상태
   const [sortOption, setSortOption] = useState("recent"); // 정렬 상태
   const [sortedComments, setSortedComments] = useState([]); // 정렬된 댓글
+
   // props의 댓글이 변화할때 마다 comments 업데이트 (상관없나..?)
   useEffect(() => {
     setComments(props.comments);
@@ -38,7 +39,7 @@ const Comments = (props) => {
           )
 
           .then((response) => {
-            if (response.data === true) {
+            if (response.data.isLiked === true) {
               setCommentLikes((prevState) => ({
                 ...prevState,
                 [comment.commentId]: true,
@@ -443,14 +444,6 @@ const Comments = (props) => {
           );
         })}
       {/* pagination 관련, 일단은 주석처리 */}
-      {/* <ReactPaginate
-        pageCount={Math.ceil(totalComments / commentsPerPage)}
-        pageRangeDisplayed={5}
-        marginPagesDisplayed={2}
-        onPageChange={handlePageChange}
-        containerClassName={classes.pagination}
-        activeClassName={classes.active}
-      /> */}
     </div>
   );
 };

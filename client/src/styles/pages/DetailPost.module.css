@@ -103,7 +103,10 @@
 .btnCon .bookmark {
   position: absolute;
   top: -0.5rem;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   margin-right: 0.5rem;
 
   @media screen and (max-width: 1070px) {

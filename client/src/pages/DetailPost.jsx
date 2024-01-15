@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Comments from "../components/Meeting/Comments";
 import { FaBookmark } from "react-icons/fa";
 import WeatherIcon from "../components/Meeting/WeatherIcon";
+import ReactPaginate from "react-paginate";
 const DetailPost = () => {
   const [address, setAddress] = useState({}); // 도로명 주소
   const [comments, setComments] = useState(null); // 전체 댓글
@@ -25,6 +26,9 @@ const DetailPost = () => {
   const [isRecruiting, setIsRecruiting] = useState(false); // 모집중인지 여부
   const [isParticipating, setIsParticipating] = useState(false); // 참여중인지 여부
   const [bookmarked, setBookmarked] = useState(false); // 북마크 여부
+  const [totalPages, setTotalPages] = useState(null); // 전체 페이지 수
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const commentsPerPage = 1; // 한 페이지에 표시할 댓글 수
   const { meetingId } = useParams();
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -51,6 +55,10 @@ const DetailPost = () => {
   //     // console.log(userInfo);
   //   }
   // }, [meetingInfo]);
+  useEffect(() => {
+    console.log(commentsPerPage);
+    console.log(currentPage);
+  }, [commentsPerPage, currentPage]);
   // 코멘트 등록 핸들러
   const commentSubmitHandler = (e) => {
     e.preventDefault();
@@ -62,7 +70,7 @@ const DetailPost = () => {
     axios
       .post(`/v1/comments`, commentDTO)
       .then((response) => {
-        getComments();
+        getComments(currentPage, commentsPerPage);
         setHasMyComment(true);
         setEnteredComment("");
 
@@ -89,15 +97,24 @@ const DetailPost = () => {
         console.error("Error posting comment data: ", error);
       });
   };
+  useEffect(() => {
+    getComments(currentPage, commentsPerPage);
+  }, [currentPage, commentsPerPage]);
   // 전체 코멘트를 가져오는 function
-  const getComments = async () => {
+  const getComments = async (currentPage, commentsPerPage) => {
     console.log(meetingId);
+    console.log(currentPage, commentsPerPage);
+    let page = currentPage ? currentPage : 1;
+    let size = commentsPerPage ? commentsPerPage : 1;
     try {
       // pagination 동작하면 size와 page 값을 동적으로 줘야 함.
       const res = await axios.get(
-        `/v1/comments?partyId=${meetingId}&page=1&size=3`
+        `/v1/comments?partyId=${meetingId}&page=${page}&size=${size}`
       );
       const comments = res.data.data;
+      const totalPages = res.data.pageInfo.totalPages;
+      console.log(totalPages);
+      setTotalPages(totalPages);
       // 댓글 중에 나의 댓글이 있는지 확인하는 로직
       if (userInfo) {
         const myComment = comments.find(
@@ -118,6 +135,9 @@ const DetailPost = () => {
       console.error("Error fetching comment datas: ", error);
     }
   };
+  useEffect(() => {
+    console.log(comments);
+  }, [comments]);
   // 나의 코멘트를 수정하는 핸들러
   const commentEditHandler = () => {
     const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
@@ -130,7 +150,7 @@ const DetailPost = () => {
 
         .then((response) => {
           alert("댓글이 수정되었습니다!");
-          getComments();
+          getComments(currentPage, commentsPerPage);
         })
         .catch((error) => {
           console.error("Error updating comment data: ", error);
@@ -147,7 +167,7 @@ const DetailPost = () => {
         .then((response) => {
           alert("댓글이 삭제되었습니다!");
           setHasMyComment(false);
-          getComments();
+          getComments(currentPage, commentsPerPage);
         })
         .catch((error) => {
           console.error("Error deleting comment data: ", error);
@@ -156,9 +176,7 @@ const DetailPost = () => {
     }
   };
   // 처음 렌더링 될 때 코멘트를 가져옴.
-  useEffect(() => {
-    getComments();
-  }, []);
+
   // 코멘트의 입력 상태를 관리하는 핸들러
   // 입력된 나의 코멘트가 있으면 myComment 업데이트, 아니면 enterend comment 업데이트.
   const commentChangeHandler = (e) => {
@@ -248,6 +266,26 @@ const DetailPost = () => {
         setIsLoading(false);
       });
   }, [isParticipating]);
+  // 현재 모집글에 대한 북마크 상태를 불러오는 로직
+  useEffect(() => {
+    axios
+      .get(
+        `/v1/bookmarks/parties/${meetingId}/bookmark-status?memberId=${loggedInUser.id}`
+      )
+
+      .then((response) => {
+        console.log(response.data.isBookmarked);
+        if (response.data.isBookmarked === true) {
+          setBookmarked(true);
+        } else {
+          setBookmarked(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting bookmark data: ", error);
+        alert("오류가 발생했습니다!");
+      });
+  }, []);
   // 위는 원래 의존성이 isParticipating이었다...오류 날시 점검 필요
   // 겹치는 로직 존재하여 아래는 임시 주석처리
   // useEffect(() => {
@@ -363,20 +401,10 @@ const DetailPost = () => {
         alert("오류가 발생했습니다!");
       });
   };
-  // 현재 로그인한 사용자의 현재 글에 대한 북마크 여부를 가져오는 로직
-  useEffect(() => {
-    axios
-      .get(
-        `/v1/bookmarks/parties/${meetingId}/like-status?memberId=${loggedInUser.id}`
-      )
-      .then((response) => {
-        setBookmarked(response.data);
-      })
-      .catch((error) => {
-        console.error("Error getting bookmark data: ", error);
-        alert("오류가 발생했습니다!");
-      });
-  }, []);
+  // 페이지네이션 페이지를 선택하는 핸들러
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected + 1);
+  };
   return (
     <div className={classes.wrapper}>
       {(isLoading || !meetingInfo || !userInfo) && (
@@ -424,14 +452,16 @@ const DetailPost = () => {
               </div>
 
               <div className={classes.btnCon}>
-                <FaBookmark
-                  style={{
-                    color: bookmarked ? "green" : "black",
-                    fontSize: "2rem",
-                  }}
-                  className={classes.bookmark}
-                  onClick={bookmarkHandler}
-                />
+                <div className={classes.bookmark}>
+                  <FaBookmark
+                    style={{
+                      color: bookmarked ? "green" : "black",
+                      fontSize: "2rem",
+                    }}
+                    onClick={bookmarkHandler}
+                  />
+                  {meetingInfo.bookmarkCount}
+                </div>
                 {/* 파티가 모집중이고 내 포스트도 아니고 참여중도 아닐경우 렌더링 */}
                 {isRecruiting && !isMyPost && !isParticipating && (
                   <button className={classes.joinBtn} onClick={joinHandler}>
@@ -610,6 +640,7 @@ const DetailPost = () => {
               </div>
             )}
             {/* 댓글 컴포넌트 렌더링 */}
+
             <Comments
               isLoading={isLoading}
               comments={comments}
@@ -618,7 +649,29 @@ const DetailPost = () => {
               userInfo={userInfo}
               getComments={getComments}
             />
-          </div>{" "}
+
+            {totalPages && (
+              <ReactPaginate
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                pageCount={totalPages}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination justify-content-center"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active"}
+              />
+            )}
+          </div>
           <Footer />
         </>
       )}
