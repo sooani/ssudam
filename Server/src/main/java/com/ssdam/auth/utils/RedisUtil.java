@@ -47,8 +47,4 @@ public class RedisUtil {
         return redisBlackListTemplate.hasKey(key);
     }
 
-    public boolean deleteRefreshToken(String userEmail) {
-        String refreshTokenKey = "refreshToken:" + userEmail;
-        return delete(refreshTokenKey);
-    }
 }

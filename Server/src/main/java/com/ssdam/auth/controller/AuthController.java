@@ -31,8 +31,6 @@ public class AuthController {
 
             if (jwtTokenizer.validateToken(accessToken) && !redisUtil.hasKeyBlackList(accessToken)) {
                 redisUtil.setBlackList(accessToken, "invalid", jwtTokenizer.getAccessTokenExpirationMinutes() * 60 * 1000L);
-                String userEmail = jwtTokenizer.getClaims(accessToken, jwtTokenizer.getSecretKey()).getBody().getSubject();
-                redisUtil.deleteRefreshToken(userEmail);
                 return ResponseEntity.ok("로그아웃이 성공적으로 처리되었습니다.");
             } else {
                 return ResponseEntity.ok("이미 로그아웃된 토큰이거나 유효하지 않은 토큰입니다.");
