@@ -555,13 +555,6 @@ include::{snippets}/check-bookmark-status/response-fields.adoc[]
 == TodoListController
 === 할일 등록
 
-<<<<<<< HEAD
-=== 할일 수정
-
-=== 할일 조회
-
-=== 할일 삭제
-=======
 .curl-request
 include::{snippets}/post-todolist/curl-request.adoc[]
 
@@ -652,4 +645,3 @@ include::{snippets}/delete-todolists/http-request.adoc[]
 
 .http-response
 include::{snippets}/delete-todolists/http-response.adoc[]
->>>>>>> 497611c18ee8419e2b548834136251fa11434f11
