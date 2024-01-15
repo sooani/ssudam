@@ -9,9 +9,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 @SpringBootTest
 @EnableJpaAuditing
 class SsuDamApplicationTests {
-
 	@Test
-	void contextLoads() {
-	}
+	void contextLoads() {}
 
 }

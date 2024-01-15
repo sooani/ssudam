@@ -38,7 +38,7 @@ public class Comment extends Auditable {
     @OneToOne(mappedBy = "comment",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private Reply reply;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<Like> likes;
 
     public void addMember(Member member) {

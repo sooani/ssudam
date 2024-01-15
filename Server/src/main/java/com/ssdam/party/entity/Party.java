@@ -66,13 +66,13 @@ public class Party extends Auditable {
     @Column(nullable = false)
     private int bookmarkCount;
 
-    @OneToMany(mappedBy = "party")
+    @OneToMany(mappedBy = "party",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<PartyMember> partyMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "party", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "party")
+    @OneToMany(mappedBy = "party",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<Bookmark> bookmarks = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
