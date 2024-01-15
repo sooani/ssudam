@@ -1,5 +1,4 @@
 import Header from "./components/Layout/Header";
-import Meeting from "./components/Meeting/Meeting";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MakePost from "./pages/MakePost";
