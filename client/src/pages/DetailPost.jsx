@@ -13,6 +13,8 @@ import Comments from "../components/Meeting/Comments";
 import { FaBookmark } from "react-icons/fa";
 import WeatherIcon from "../components/Meeting/WeatherIcon";
 import ReactPaginate from "react-paginate";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import weatherDescKo from "../components/Meeting/weatherDescKo";
 const DetailPost = () => {
   const [address, setAddress] = useState({}); // 도로명 주소
   const [comments, setComments] = useState(null); // 전체 댓글
@@ -27,8 +29,10 @@ const DetailPost = () => {
   const [isParticipating, setIsParticipating] = useState(false); // 참여중인지 여부
   const [bookmarked, setBookmarked] = useState(false); // 북마크 여부
   const [totalPages, setTotalPages] = useState(null); // 전체 페이지 수
+  const [totalLength, setTotalLength] = useState(null); // 전체 댓글 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-  const commentsPerPage = 1; // 한 페이지에 표시할 댓글 수
+  const [weather, setWeather] = useState("");
+  const commentsPerPage = 10; // 한 페이지에 표시할 댓글 수
   const { meetingId } = useParams();
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -105,7 +109,7 @@ const DetailPost = () => {
     console.log(meetingId);
     console.log(currentPage, commentsPerPage);
     let page = currentPage ? currentPage : 1;
-    let size = commentsPerPage ? commentsPerPage : 1;
+    let size = commentsPerPage ? commentsPerPage : 10;
     try {
       // pagination 동작하면 size와 page 값을 동적으로 줘야 함.
       const res = await axios.get(
@@ -113,8 +117,10 @@ const DetailPost = () => {
       );
       const comments = res.data.data;
       const totalPages = res.data.pageInfo.totalPages;
+      const totalLength = res.data.pageInfo.totalElements;
       console.log(totalPages);
       setTotalPages(totalPages);
+      setTotalLength(totalLength);
       // 댓글 중에 나의 댓글이 있는지 확인하는 로직
       if (userInfo) {
         const myComment = comments.find(
@@ -232,6 +238,18 @@ const DetailPost = () => {
       .get(`/v1/parties/${meetingId}`)
       .then((response) => {
         setMeetingInfo(response.data.data);
+
+        const weatherCode = response.data.data.weather;
+
+        const meetingWeatherDescriptionObject = weatherDescKo.find(
+          (item) => Object.keys(item)[0] === weatherCode
+        );
+
+        const meetingWeatherDescription = meetingWeatherDescriptionObject
+          ? Object.values(meetingWeatherDescriptionObject)[0]
+          : "예상 날씨 없음";
+
+        setWeather(meetingWeatherDescription);
 
         // 모집 글의 모집 마감일이 현재 날짜보다 지난경우 모집 상태를 마감으로 업데이트!
         if (new Date(response.data.data.closingDate) <= new Date()) {
@@ -556,7 +574,8 @@ const DetailPost = () => {
                         weatherType={meetingInfo.weather}
                         // weatherType="snow"
                       /> */}
-                        {meetingInfo.weather}
+                        {/* {meetingInfo.weather} */}
+                        {weather}
                       </div>
                     </h4>
                   </div>
@@ -596,12 +615,12 @@ const DetailPost = () => {
             {/* 모집 중 일경우 댓글 수와 댓글 등/수/삭 버튼 보여주고 모집 완료일경우 댓글 수만 보여줌 */}
             {!isRecruiting && (
               <div className={classes.comment}>
-                {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
+                {!isLoading && <h2>댓글 {comments ? totalLength : 0}</h2>}
               </div>
             )}
             {isRecruiting && (
               <div className={classes.comment}>
-                {!isLoading && <h2>댓글 {comments ? comments.length : 0}</h2>}
+                {!isLoading && <h2>댓글 {comments ? totalLength : 0}</h2>}
                 {hasMyComment && <h3>내가 쓴 댓글</h3>}
                 <textarea
                   placeholder="댓글 내용을 입력하세요..."
@@ -650,25 +669,16 @@ const DetailPost = () => {
               getComments={getComments}
             />
 
-            {totalPages && (
+            {totalPages > 0 && (
               <ReactPaginate
-                previousLabel={"previous"}
-                nextLabel={"next"}
-                breakLabel={"..."}
+                previousLabel={<FiChevronLeft />}
+                nextLabel={<FiChevronRight />}
                 pageCount={totalPages}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={2}
                 onPageChange={handlePageClick}
-                containerClassName={"pagination justify-content-center"}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                previousClassName={"page-item"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakClassName={"page-item"}
-                breakLinkClassName={"page-link"}
-                activeClassName={"active"}
+                containerClassName={classes.pagination}
+                pageLinkClassName={classes.pagination__link}
+                activeLinkClassName={classes.pagination__link__active}
+                renderPagination={() => null}
               />
             )}
           </div>
