@@ -27,20 +27,26 @@ const ListCard = ({ party }) => {
           <span>{party?.content}</span>
         </div>
       </div>
-      <div className={classes.bottomContents}>
-        <div className={classes.listCardMeetingDate}>
-          <span>{party?.meetingDate}</span>
-        </div>
-        <div className={classes.listCardCurrentCapacity}>
-          <span>{party?.currentCapacity}&nbsp;/&nbsp;</span>
-        </div>
-        <div className={classes.listCardMaxCapacity}>
-          <span>{party?.maxCapacity}</span>
-        </div>
-        <button className={classes.gotoPost} onClick={handlePostClick}>
-          모임 가기
-        </button>
+
+      <div className={classes.listCardMeetingDate1}>
+        <span>{party?.meetingDate}</span>
       </div>
+      <div className={classes.listCardMeetingDate2}>
+        <span>{party?.meetingDate}</span>
+      </div>
+      {/* closingDate 추가되면 넣어야함 */}
+      {/* <div className={classes.listCardclosingDate}>
+        <span>{party?.closingDate}</span>
+      </div> */}
+      <div className={classes.listCardCurrentCapacity}>
+        <span>{party?.currentCapacity}&nbsp;/&nbsp;</span>
+      </div>
+      <div className={classes.listCardMaxCapacity}>
+        <span>{party?.maxCapacity}</span>
+      </div>
+      <button className={classes.gotoPost} onClick={handlePostClick}>
+        모임 가기
+      </button>
 
       <SignUpModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
     </div>

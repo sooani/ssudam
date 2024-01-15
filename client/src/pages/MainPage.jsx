@@ -5,11 +5,8 @@ import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
-// import CategoryBox from '../components/MainPage/CategoryBox';
 import axios from '../axios';
 import React, { useState, useEffect } from 'react';
-// import Pagination from '../components/MainPage/Pagination';
-// import dummy from '../dummyTab.json';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -23,7 +20,6 @@ const MainPage = () => {
   const [randomData, setRandomData] = useState([]);
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
-  // const [activeTab, setActiveTab] = useState('recruiting');
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -42,11 +38,12 @@ const MainPage = () => {
     // 5초마다 데이터 갱신
     const intervalId = setInterval(() => {
       generateRandomData();
-    }, 5000);
+    }, 1000000);
 
     // 컴포넌트가 언마운트되면 clearInterval 호출하여 타이머 중지
     return () => clearInterval(intervalId);
   }, []);
+
   // 메인 모집중 게시글
   useEffect(() => {
     axios
@@ -71,10 +68,6 @@ const MainPage = () => {
         console.error('Error party data:', error);
       });
   }, []);
-
-  // const handleTabSelect = (tab) => {
-  //   setActiveTab(tab);
-  // };
 
   return (
     <main>
