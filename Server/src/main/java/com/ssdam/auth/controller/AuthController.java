@@ -39,5 +39,4 @@ public class AuthController {
             return ResponseEntity.badRequest().body("올바른 토큰이 제공되지 않았습니다.");
         }
     }
-
 }

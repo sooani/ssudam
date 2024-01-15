@@ -46,8 +46,8 @@ mail:
   smtp:
     host: smtp.gmail.com
     port: 587
-    username: ${EMAIL_USERNAME}  # 민감한 정보는 시스템 환경 변수로..
-    password: ${EMAIL_PASSWORD}  # 민감한 정보는 시스템 환경 변수로..
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
     auth: true
     starttls:
       enable: true
