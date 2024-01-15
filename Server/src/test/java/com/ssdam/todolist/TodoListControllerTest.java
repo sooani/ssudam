@@ -37,8 +37,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.ssdam.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.ssdam.util.ApiDocumentUtils.getResponsePreProcessor;
+import static com.ssdam.utils.ApiDocumentUtils.getRequestPreProcessor;
+import static com.ssdam.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;

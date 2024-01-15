@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static com.ssdam.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.ssdam.util.ApiDocumentUtils.getResponsePreProcessor;
+import static com.ssdam.utils.ApiDocumentUtils.getRequestPreProcessor;
+import static com.ssdam.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
