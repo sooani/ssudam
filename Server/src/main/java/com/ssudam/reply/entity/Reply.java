@@ -1,5 +1,6 @@
 package com.ssudam.reply.entity;
 
+import com.ssudam.audit.Auditable;
 import com.ssudam.comment.entity.Comment;
 import com.ssudam.member.entity.Member;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Reply {
+public class Reply extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long replyId;
