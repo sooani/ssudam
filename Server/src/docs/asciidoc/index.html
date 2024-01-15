@@ -1557,7 +1557,7 @@ Host: localhost:8080
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 661
+Content-Length: 678
 
 {
   "data" : {
@@ -1571,13 +1571,14 @@ Content-Length: 661
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
+    "hits" : 0,
     "bookmarkCount" : 3,
     "content" : "줍깅 하실분 구합니다람쥐",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.3587526",
-    "modifiedAt" : "2024-01-14T21:43:04.3587526"
+    "createdAt" : "2024-01-15T16:52:12.3489394",
+    "modifiedAt" : "2024-01-15T16:52:12.3489394"
   }
 }</code></pre>
 </div>
@@ -1651,6 +1652,11 @@ Content-Length: 661
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.weather</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.bookmarkCount</code></p></td>
@@ -1780,6 +1786,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.bookmarkCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크</p></td>
@@ -1821,7 +1832,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 655
+Content-Length: 678
 
 {
   "data" : {
@@ -1835,13 +1846,14 @@ Content-Length: 655
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
+    "hits" : 0,
     "bookmarkCount" : 3,
     "content" : "줍깅 하실분 구합니다람쥐",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.5883",
-    "modifiedAt" : "2024-01-14T21:43:04.5883"
+    "createdAt" : "2024-01-15T16:52:12.5681388",
+    "modifiedAt" : "2024-01-15T16:52:12.5681388"
   }
 }</code></pre>
 </div>
@@ -1954,6 +1966,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].bookmarkCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크</p></td>
@@ -2020,7 +2037,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1398
+Content-Length: 1432
 
 {
   "data" : [ {
@@ -2034,13 +2051,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "줍깅 알려드림",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.6995884",
-    "modifiedAt" : "2024-01-14T21:43:04.6995884"
+    "createdAt" : "2024-01-15T16:52:12.6812412",
+    "modifiedAt" : "2024-01-15T16:52:12.6812412"
   }, {
     "partyId" : 2,
     "memberId" : 2,
@@ -2052,13 +2070,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "저랑 같이 줍깅 모임하실분?",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.6995884",
-    "modifiedAt" : "2024-01-14T21:43:04.6995884"
+    "createdAt" : "2024-01-15T16:52:12.6812412",
+    "modifiedAt" : "2024-01-15T16:52:12.6812412"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -2181,6 +2200,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].bookmarkCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크</p></td>
@@ -2247,7 +2271,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1398
+Content-Length: 1432
 
 {
   "data" : [ {
@@ -2261,13 +2285,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "줍깅 알려드림",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.5289769",
-    "modifiedAt" : "2024-01-14T21:43:04.5289769"
+    "createdAt" : "2024-01-15T16:52:12.5100858",
+    "modifiedAt" : "2024-01-15T16:52:12.5100858"
   }, {
     "partyId" : 2,
     "memberId" : 2,
@@ -2279,13 +2304,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "저랑 같이 줍깅 모임하실분?",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.5289769",
-    "modifiedAt" : "2024-01-14T21:43:04.5289769"
+    "createdAt" : "2024-01-15T16:52:12.5100858",
+    "modifiedAt" : "2024-01-15T16:52:12.5100858"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -2408,6 +2434,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].bookmarkCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크</p></td>
@@ -2474,7 +2505,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1398
+Content-Length: 1432
 
 {
   "data" : [ {
@@ -2488,13 +2519,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "줍깅 알려드림",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.6685608",
-    "modifiedAt" : "2024-01-14T21:43:04.6685608"
+    "createdAt" : "2024-01-15T16:52:12.6512147",
+    "modifiedAt" : "2024-01-15T16:52:12.6512147"
   }, {
     "partyId" : 2,
     "memberId" : 2,
@@ -2506,13 +2538,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "저랑 같이 줍깅 모임하실분?",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.6685608",
-    "modifiedAt" : "2024-01-14T21:43:04.6685608"
+    "createdAt" : "2024-01-15T16:52:12.6512147",
+    "modifiedAt" : "2024-01-15T16:52:12.6512147"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -2639,6 +2672,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].bookmarkCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크</p></td>
@@ -2705,7 +2743,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1398
+Content-Length: 1432
 
 {
   "data" : [ {
@@ -2719,13 +2757,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "줍깅 알려드림",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.6365312",
-    "modifiedAt" : "2024-01-14T21:43:04.6365312"
+    "createdAt" : "2024-01-15T16:52:12.6211873",
+    "modifiedAt" : "2024-01-15T16:52:12.6211873"
   }, {
     "partyId" : 2,
     "memberId" : 2,
@@ -2737,13 +2776,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "저랑 같이 줍깅 모임하실분?",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.6365312",
-    "modifiedAt" : "2024-01-14T21:43:04.6365312"
+    "createdAt" : "2024-01-15T16:52:12.6211873",
+    "modifiedAt" : "2024-01-15T16:52:12.6211873"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -2866,6 +2906,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">날씨</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].bookmarkCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크</p></td>
@@ -2932,7 +2977,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1398
+Content-Length: 1432
 
 {
   "data" : [ {
@@ -2946,13 +2991,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "줍깅 알려드림",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.8128357",
-    "modifiedAt" : "2024-01-14T21:43:04.8128357"
+    "createdAt" : "2024-01-15T16:52:12.7683208",
+    "modifiedAt" : "2024-01-15T16:52:12.7683208"
   }, {
     "partyId" : 2,
     "memberId" : 2,
@@ -2964,13 +3010,14 @@ Content-Length: 1398
     "latitude" : "35.3368478896222",
     "address" : "경남 양산시 양산역6길 12",
     "weather" : "clear",
-    "bookmarkCount" : 3,
+    "hits" : 3,
+    "bookmarkCount" : 0,
     "content" : "저랑 같이 줍깅 모임하실분?",
     "maxCapacity" : 5,
     "currentCapacity" : 2,
     "partyStatus" : "PARTY_OPENED",
-    "createdAt" : "2024-01-14T21:43:04.8128357",
-    "modifiedAt" : "2024-01-14T21:43:04.8128357"
+    "createdAt" : "2024-01-15T16:52:12.7683208",
+    "modifiedAt" : "2024-01-15T16:52:12.7683208"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -3221,7 +3268,7 @@ Host: localhost:8080
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 466
+Content-Length: 462
 
 {
   "data" : {
@@ -3234,15 +3281,102 @@ Content-Length: 466
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:52:06.9613411",
-      "modifiedAt" : "2024-01-14T21:52:06.9623418"
+      "createdAt" : "2024-01-15T16:37:28.833946",
+      "modifiedAt" : "2024-01-15T16:37:28.833946"
     },
-    "createdAt" : "2024-01-14T21:52:06.9623418",
-    "modifiedAt" : "2024-01-14T21:52:06.9623418"
+    "createdAt" : "2024-01-15T16:37:28.833946",
+    "modifiedAt" : "2024-01-15T16:37:28.833946"
   }
 }</code></pre>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 34. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 식별자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.partyTitle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">모집글 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.likeCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.comment</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.reply</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.reply.replyId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 식별자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.reply.reply</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.reply.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 작성자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.reply.createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 작성 날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.reply.modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 수정 날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 작성 날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.modifiedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 수정 날짜</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_특정_댓글_조회">3.3. 특정 댓글 조회</h3>
@@ -3262,7 +3396,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 34. /v1/comments/{comment-id}</caption>
+<caption class="title">Table 35. /v1/comments/{comment-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3298,17 +3432,17 @@ Content-Length: 466
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T19:37:37.1061271",
-      "modifiedAt" : "2024-01-14T19:37:37.1061271"
+      "createdAt" : "2024-01-15T16:37:28.8669765",
+      "modifiedAt" : "2024-01-15T16:37:28.8669765"
     },
-    "createdAt" : "2024-01-14T19:37:37.1061271",
-    "modifiedAt" : "2024-01-14T19:37:37.1061271"
+    "createdAt" : "2024-01-15T16:37:28.8669765",
+    "modifiedAt" : "2024-01-15T16:37:28.8669765"
   }
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 35. response-fields</caption>
+<caption class="title">Table 36. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3418,7 +3552,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 36. request-parameters</caption>
+<caption class="title">Table 37. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3458,11 +3592,11 @@ Content-Length: 1488
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:55.7316965",
-      "modifiedAt" : "2024-01-14T21:53:55.7316965"
+      "createdAt" : "2024-01-15T16:37:28.6037372",
+      "modifiedAt" : "2024-01-15T16:37:28.6037372"
     },
-    "createdAt" : "2024-01-14T21:53:55.7326973",
-    "modifiedAt" : "2024-01-14T21:53:55.7326973"
+    "createdAt" : "2024-01-15T16:37:28.6037372",
+    "modifiedAt" : "2024-01-15T16:37:28.6037372"
   }, {
     "commentId" : 2,
     "partyTitle" : "모임2",
@@ -3473,11 +3607,11 @@ Content-Length: 1488
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:55.7326973",
-      "modifiedAt" : "2024-01-14T21:53:55.7326973"
+      "createdAt" : "2024-01-15T16:37:28.6037372",
+      "modifiedAt" : "2024-01-15T16:37:28.6037372"
     },
-    "createdAt" : "2024-01-14T21:53:55.7326973",
-    "modifiedAt" : "2024-01-14T21:53:55.7326973"
+    "createdAt" : "2024-01-15T16:37:28.6037372",
+    "modifiedAt" : "2024-01-15T16:37:28.6037372"
   }, {
     "commentId" : 3,
     "partyTitle" : "모임3",
@@ -3488,11 +3622,11 @@ Content-Length: 1488
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:55.7326973",
-      "modifiedAt" : "2024-01-14T21:53:55.7326973"
+      "createdAt" : "2024-01-15T16:37:28.6037372",
+      "modifiedAt" : "2024-01-15T16:37:28.6037372"
     },
-    "createdAt" : "2024-01-14T21:53:55.7326973",
-    "modifiedAt" : "2024-01-14T21:53:55.7326973"
+    "createdAt" : "2024-01-15T16:37:28.6037372",
+    "modifiedAt" : "2024-01-15T16:37:28.6037372"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -3504,7 +3638,7 @@ Content-Length: 1488
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 37. response-fields</caption>
+<caption class="title">Table 38. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3634,7 +3768,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 38. request-parameters</caption>
+<caption class="title">Table 39. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3678,11 +3812,11 @@ Content-Length: 1034
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:56.1122173",
-      "modifiedAt" : "2024-01-14T21:53:56.1122173"
+      "createdAt" : "2024-01-15T16:37:28.8059207",
+      "modifiedAt" : "2024-01-15T16:37:28.8059207"
     },
-    "createdAt" : "2024-01-14T21:53:56.1122173",
-    "modifiedAt" : "2024-01-14T21:53:56.1122173"
+    "createdAt" : "2024-01-15T16:37:28.8059207",
+    "modifiedAt" : "2024-01-15T16:37:28.8059207"
   }, {
     "commentId" : 3,
     "partyTitle" : "모임2",
@@ -3693,11 +3827,11 @@ Content-Length: 1034
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:56.1122173",
-      "modifiedAt" : "2024-01-14T21:53:56.1122173"
+      "createdAt" : "2024-01-15T16:37:28.8059207",
+      "modifiedAt" : "2024-01-15T16:37:28.8059207"
     },
-    "createdAt" : "2024-01-14T21:53:56.1122173",
-    "modifiedAt" : "2024-01-14T21:53:56.1122173"
+    "createdAt" : "2024-01-15T16:37:28.8059207",
+    "modifiedAt" : "2024-01-15T16:37:28.8059207"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -3709,7 +3843,7 @@ Content-Length: 1034
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. response-fields</caption>
+<caption class="title">Table 40. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3839,7 +3973,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. request-parameters</caption>
+<caption class="title">Table 41. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3870,7 +4004,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1026
+Content-Length: 1034
 
 {
   "data" : [ {
@@ -3883,11 +4017,11 @@ Content-Length: 1026
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:56.192654",
-      "modifiedAt" : "2024-01-14T21:53:56.192654"
+      "createdAt" : "2024-01-15T16:37:28.8919988",
+      "modifiedAt" : "2024-01-15T16:37:28.8919988"
     },
-    "createdAt" : "2024-01-14T21:53:56.192654",
-    "modifiedAt" : "2024-01-14T21:53:56.192654"
+    "createdAt" : "2024-01-15T16:37:28.8919988",
+    "modifiedAt" : "2024-01-15T16:37:28.8919988"
   }, {
     "commentId" : 2,
     "partyTitle" : "모임1",
@@ -3898,11 +4032,11 @@ Content-Length: 1026
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:56.192654",
-      "modifiedAt" : "2024-01-14T21:53:56.192654"
+      "createdAt" : "2024-01-15T16:37:28.8919988",
+      "modifiedAt" : "2024-01-15T16:37:28.8919988"
     },
-    "createdAt" : "2024-01-14T21:53:56.192654",
-    "modifiedAt" : "2024-01-14T21:53:56.192654"
+    "createdAt" : "2024-01-15T16:37:28.8919988",
+    "modifiedAt" : "2024-01-15T16:37:28.8919988"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -3914,7 +4048,7 @@ Content-Length: 1026
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. response-fields</caption>
+<caption class="title">Table 42. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4044,7 +4178,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. request-parameters</caption>
+<caption class="title">Table 43. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4088,11 +4222,11 @@ Content-Length: 1034
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:56.0731394",
-      "modifiedAt" : "2024-01-14T21:53:56.0731394"
+      "createdAt" : "2024-01-15T16:37:28.7748926",
+      "modifiedAt" : "2024-01-15T16:37:28.7748926"
     },
-    "createdAt" : "2024-01-14T21:53:56.0731394",
-    "modifiedAt" : "2024-01-14T21:53:56.0731394"
+    "createdAt" : "2024-01-15T16:37:28.7748926",
+    "modifiedAt" : "2024-01-15T16:37:28.7748926"
   }, {
     "commentId" : 1,
     "partyTitle" : "모임1",
@@ -4103,11 +4237,11 @@ Content-Length: 1034
       "replyId" : 1,
       "reply" : "Reply",
       "nickname" : "쓰담쓰담",
-      "createdAt" : "2024-01-14T21:53:56.0731394",
-      "modifiedAt" : "2024-01-14T21:53:56.0731394"
+      "createdAt" : "2024-01-15T16:37:28.7748926",
+      "modifiedAt" : "2024-01-15T16:37:28.7748926"
     },
-    "createdAt" : "2024-01-14T21:53:56.0731394",
-    "modifiedAt" : "2024-01-14T21:53:56.0731394"
+    "createdAt" : "2024-01-15T16:37:28.7748926",
+    "modifiedAt" : "2024-01-15T16:37:28.7748926"
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -4119,7 +4253,7 @@ Content-Length: 1034
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. response-fields</caption>
+<caption class="title">Table 44. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4247,7 +4381,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. /v1/comments/{comment-id}</caption>
+<caption class="title">Table 45. /v1/comments/{comment-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4310,7 +4444,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. request-fields</caption>
+<caption class="title">Table 46. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4349,7 +4483,7 @@ Location: /v1/replies/1</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. response-headers</caption>
+<caption class="title">Table 47. response-headers</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4398,7 +4532,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. /v1/replies/{reply-id}</caption>
+<caption class="title">Table 48. /v1/replies/{reply-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4417,7 +4551,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. request-fields</caption>
+<caption class="title">Table 49. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4450,14 +4584,14 @@ Content-Length: 199
     "replyId" : 1,
     "reply" : "Reply",
     "nickname" : "쓰담쓰담",
-    "createdAt" : "2024-01-14T18:08:23.356945",
-    "modifiedAt" : "2024-01-14T18:08:23.356945"
+    "createdAt" : "2024-01-15T16:37:31.757007",
+    "modifiedAt" : "2024-01-15T16:37:31.757007"
   }
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. response-fields</caption>
+<caption class="title">Table 50. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4522,7 +4656,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. /v1/replies/{reply-id}</caption>
+<caption class="title">Table 51. /v1/replies/{reply-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4545,21 +4679,21 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 201
+Content-Length: 199
 
 {
   "data" : {
     "replyId" : 1,
     "reply" : "Reply",
     "nickname" : "쓰담쓰담",
-    "createdAt" : "2024-01-14T22:04:08.0335483",
-    "modifiedAt" : "2024-01-14T22:04:08.0335483"
+    "createdAt" : "2024-01-15T16:37:31.783031",
+    "modifiedAt" : "2024-01-15T16:37:31.783031"
   }
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. response-fields</caption>
+<caption class="title">Table 52. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4622,7 +4756,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. /v1/replies/{reply-id}</caption>
+<caption class="title">Table 53. /v1/replies/{reply-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4673,7 +4807,7 @@ memberId=1</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. /v1/likes/comments/{comment-id}</caption>
+<caption class="title">Table 54. /v1/likes/comments/{comment-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4692,7 +4826,7 @@ memberId=1</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. request-parameters</caption>
+<caption class="title">Table 55. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4735,7 +4869,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. /v1/likes/comments/{comment-id}/like-status</caption>
+<caption class="title">Table 56. /v1/likes/comments/{comment-id}/like-status</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4754,7 +4888,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. request-parameters</caption>
+<caption class="title">Table 57. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4785,7 +4919,7 @@ Content-Length: 24
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. response-fields</caption>
+<caption class="title">Table 58. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4833,7 +4967,7 @@ memberId=1</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. /v1/bookmarks/parties/{party-id}</caption>
+<caption class="title">Table 59. /v1/bookmarks/parties/{party-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4852,7 +4986,7 @@ memberId=1</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. request-parameters</caption>
+<caption class="title">Table 60. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4895,7 +5029,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. /v1/bookmarks/parties/{party-id}/bookmark-status</caption>
+<caption class="title">Table 61. /v1/bookmarks/parties/{party-id}/bookmark-status</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4914,7 +5048,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. request-parameters</caption>
+<caption class="title">Table 62. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4945,7 +5079,7 @@ Content-Length: 29
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. response-fields</caption>
+<caption class="title">Table 63. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
