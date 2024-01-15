@@ -3,10 +3,10 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/{데이터베이스이름}?serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/ssudam?serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: ${MYSQL_PASSWORD}
-    thymeleaf:
+  thymeleaf:
       cache: false
   jpa:
     hibernate:
