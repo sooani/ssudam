@@ -32,22 +32,18 @@ public class AuthController {
             String accessToken = authorizationHeader.substring(7);
 
             if (jwtTokenizer.validateToken(accessToken) && !redisUtil.hasKeyBlackList(accessToken)) {
-                // 클라이언트로부터 전달받은 refreshToken을 사용하여 Redis에서 삭제
                 String subject = jwtTokenizer.getRefreshToken(refreshToken);
 
-                // subject가 null이 아니고 refreshToken이 유효한 경우에만 Redis에서 삭제 및 블랙리스트 추가 수행
                 if (subject != null && jwtTokenizer.validateToken(refreshToken) && !redisUtil.hasKeyBlackList(refreshToken)) {
-                    redisUtil.setBlackList(accessToken, "invalid", jwtTokenizer.getAccessTokenExpirationMinutes() * 60 * 1000L);
-                    redisUtil.setBlackList(refreshToken, "invalid", jwtTokenizer.getRefreshTokenExpirationMinutes() * 60 * 1000L);
+                    redisUtil.setBlackList(accessToken, "Invalid accessToken", jwtTokenizer.getAccessTokenExpirationMinutes() * 60 * 1000L);
+                    redisUtil.setBlackList(refreshToken, "Invalid refreshToken", jwtTokenizer.getRefreshTokenExpirationMinutes() * 60 * 1000L);
                     return ResponseEntity.ok("로그아웃이 성공적으로 처리되었습니다.");
                 } else {
                     return ResponseEntity.badRequest().body("유효하지 않은 refreshToken입니다.");
                 }
-            } else {
-                return ResponseEntity.ok("이미 로그아웃된 토큰이거나 유효하지 않은 토큰입니다.");
             }
-        } else {
-            return ResponseEntity.badRequest().body("올바른 토큰이 제공되지 않았습니다.");
         }
+        return ResponseEntity.badRequest().body("올바른 토큰이 제공되지 않았거나 이미 로그아웃된 토큰이거나 유효하지 않은 토큰입니다.");
     }
+
 }
