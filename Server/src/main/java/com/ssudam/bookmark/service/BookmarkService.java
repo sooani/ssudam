@@ -24,7 +24,7 @@ public class BookmarkService {
 
     public void toggleBookmark(long partyId, long memberId){
         Member member = memberService.findMember(memberId);
-        Party party = partyService.findParty(partyId);
+        Party party = partyService.findVerifiedParty(partyId);
         if(!isPartyBookmarkedByUser(memberId, partyId)){
             party.setBookmarkCount(party.getBookmarkCount()+1);
             bookmarkRepository.save(new Bookmark(member,party));
@@ -36,7 +36,7 @@ public class BookmarkService {
     }
     public boolean isPartyBookmarkedByUser(long memberId, long partyId) {
         Member member = memberService.findMember(memberId);
-        Party party = partyService.findParty(partyId);
+        Party party = partyService.findVerifiedParty(partyId);
         return bookmarkRepository.existsByMemberAndParty(member,party);
     }
 }
