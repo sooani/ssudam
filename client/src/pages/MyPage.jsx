@@ -5,6 +5,9 @@
 // MyPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; 
+
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import footerLogo from '../images/footerLogo.png';
@@ -18,10 +21,12 @@ import MyEventCard from '../components/MyPage/MyEventCard';
 
 const MyPage = () => {
     const [userData, setUserData] = useState({});
+    const isAuthenticated = useSelector((state) => state.user.user !== null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = () => {
-            axios.get('v1/members', { timeout: 10000 })
+            axios.get('/v1/members', { timeout: 10000 })
                 .then(response => {
                     setUserData(response.data);
                     console.log(response.data);
@@ -33,6 +38,10 @@ const MyPage = () => {
 
         fetchUserData();
     }, []);
+
+    if (!isAuthenticated) {//로그인 안되어있으면 로그인페이지로 이동한다.
+        navigate('/login');
+    }
 
     return (
         <div className={classes.Mypageroom}>
