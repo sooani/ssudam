@@ -266,7 +266,7 @@ const DetailPost = () => {
             title: response.data.data.title,
             maxCapacity: response.data.data.maxCapacity,
             currentCapacity: response.data.data.currentCapacity,
-            partyStatus: "PARTY_CLOSED",
+            partyStatus: response.data.data.partyStatus,
           };
           // axios로 patch 요청을 보내는 부분
           // 일단 조회수 때문에 주석처리!
@@ -418,18 +418,20 @@ const DetailPost = () => {
         alert("오류가 발생했습니다!");
       });
   }, [meetingInfo]);
-  // useEffect(() => {
-  //   axios
-  //     .get(`/v1/parties/${meetingId}/partymember-status`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setIsParticipating(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error updating meeting data: ", error);
-  //       alert("오류가 발생했습니다!");
-  //     });
-  // }, [meetingInfo]);
+  useEffect(() => {
+    axios
+      .get(
+        `/v1/parties/${meetingId}/partymember-status?memberId=${loggedInUser.id}`
+      )
+      .then((response) => {
+        console.log(response.data.isJoined);
+        setIsParticipating(response.data.isJoined);
+      })
+      .catch((error) => {
+        console.error("Error updating meeting data: ", error);
+        alert("오류가 발생했습니다!");
+      });
+  }, [meetingInfo]);
   // 북마크를 처리하는 핸들러
   const bookmarkHandler = () => {
     setBookmarked((prev) => !prev);

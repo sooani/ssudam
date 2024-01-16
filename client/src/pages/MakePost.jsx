@@ -77,6 +77,7 @@ const MakePost = () => {
       content: content,
       maxCapacity: numofpeople,
       phoneNumber: contact,
+      partyStatus: "PARTY_OPENED",
     };
     // DTO 생성했으니 값 초기화
     setPostedInfo({
