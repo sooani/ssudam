@@ -6,11 +6,14 @@ import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 const MakePost = () => {
   // 도로명 주소
   const [address, setAddress] = useState({ address_name: "" });
   // 현재 로그인한 사용자 정보 가져오기
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const loggedInUser = useSelector(selectUser);
   // 위도와 경도
   const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
   // 검색용 키워드
@@ -68,7 +71,7 @@ const MakePost = () => {
 
     let postDTO = {
       title: postedtitle,
-      memberId: loggedInUser.id,
+      memberId: loggedInUser.memberId,
       meetingDate: meetingdate,
       closingDate: duedate,
       latitude: latlng.lat,

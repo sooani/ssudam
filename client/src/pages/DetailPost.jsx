@@ -36,35 +36,34 @@ const DetailPost = () => {
   const commentsPerPage = 10; // 한 페이지에 표시할 댓글 수
   const { meetingId } = useParams();
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
   // 리덕스 사용자 정보 불러오기
-  const currentUser = useSelector(selectUser);
-  console.log(currentUser);
+  const loggedInUser = useSelector(selectUser);
+  console.log(loggedInUser);
 
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   const navigate = useNavigate();
   // 수안님 코드의 경우 (party정보에 memberId가 존재할 경우) 주석 해제
-  // useEffect(() => {
-  //   if (meetingInfo && meetingInfo.memberId) {
-
-  //     axios
-  //       .get(`/v1/members/${meetingInfo.memberId}`)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         setUserInfo(response.data.data);
-  //         // setUserInfo({
-  //         //   memberId: 1,
-  //         //   email: "user1@example.com",
-  //         //   nickname: "당근이",
-  //         // });
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error getting user data: ", error);
-  //       });
-  //     // console.log(userInfo);
-  //   }
-  // }, [meetingInfo]);
+  useEffect(() => {
+    if (meetingInfo && meetingInfo.memberId) {
+      axios
+        .get(`/v1/members/${meetingInfo.memberId}`)
+        .then((response) => {
+          console.log(response.data);
+          setUserInfo(response.data.data);
+          // setUserInfo({
+          //   memberId: 1,
+          //   email: "user1@example.com",
+          //   nickname: "당근이",
+          // });
+        })
+        .catch((error) => {
+          console.error("Error getting user data: ", error);
+        });
+      // console.log(userInfo);
+    }
+  }, [meetingInfo]);
   useEffect(() => {
     console.log(commentsPerPage);
     console.log(currentPage);
@@ -74,7 +73,7 @@ const DetailPost = () => {
     e.preventDefault();
     let commentDTO = {
       partyId: meetingId,
-      memberId: loggedInUser.id,
+      memberId: loggedInUser.memberId,
       comment: enteredComment,
     };
     console.log(commentDTO);
@@ -206,7 +205,7 @@ const DetailPost = () => {
   // meeting의 userInfo의 id와 현재 로그인된 사용자의 id를 비교하여 isMyPost 업데이트
   useEffect(() => {
     if (userInfo) {
-      if (userInfo.memberId == loggedInUser.id) {
+      if (userInfo.memberId == loggedInUser.memberId) {
         setIsMyPost(true);
       }
     }
@@ -281,11 +280,11 @@ const DetailPost = () => {
           //   });
         }
         // 아래는 나중에 주석처리
-        setUserInfo({
-          memberId: 1,
-          email: "chfhddl@example.com",
-          nickname: "chfhddl",
-        });
+        // setUserInfo({
+        //   memberId: 1,
+        //   email: "chfhddl@example.com",
+        //   nickname: "chfhddl",
+        // });
         setIsLoading(false);
       })
       .catch((error) => {
@@ -298,7 +297,7 @@ const DetailPost = () => {
   useEffect(() => {
     axios
       .get(
-        `/v1/bookmarks/parties/${meetingId}/bookmark-status?memberId=${loggedInUser.id}`
+        `/v1/bookmarks/parties/${meetingId}/bookmark-status?memberId=${loggedInUser.memberId}`
       )
 
       .then((response) => {
@@ -378,7 +377,7 @@ const DetailPost = () => {
         axios
 
           .post(`/v1/parties/${meetingId}`, {
-            memberId: loggedInUser.id,
+            memberId: loggedInUser.memberId,
             email: loggedInUser.email,
             nickname: loggedInUser.nickname,
           })
@@ -405,7 +404,7 @@ const DetailPost = () => {
   // 현재 로그인한 사용자가 참여 중인 파티를 요청하고 그중에 현재 파티가 있을 경우 참여중으로 판단
   useEffect(() => {
     axios
-      .get(`/v1/parties?partyMemberId=${loggedInUser.id}&page=1&size=3`)
+      .get(`/v1/parties?partyMemberId=${loggedInUser.memberId}&page=1&size=3`)
       .then((response) => {
         const hasParticipatingParty = response.data.data.some(
           (item) => item.partyId == meetingId
@@ -421,7 +420,7 @@ const DetailPost = () => {
   useEffect(() => {
     axios
       .get(
-        `/v1/parties/${meetingId}/partymember-status?memberId=${loggedInUser.id}`
+        `/v1/parties/${meetingId}/partymember-status?memberId=${loggedInUser.memberId}`
       )
       .then((response) => {
         console.log(response.data.isJoined);
@@ -436,7 +435,9 @@ const DetailPost = () => {
   const bookmarkHandler = () => {
     setBookmarked((prev) => !prev);
     axios
-      .post(`/v1/bookmarks/parties/${meetingId}?memberId=${loggedInUser.id}`)
+      .post(
+        `/v1/bookmarks/parties/${meetingId}?memberId=${loggedInUser.memberId}`
+      )
       .then((response) => {
         setMeetingInfo((prev) => ({
           ...prev,

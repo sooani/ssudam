@@ -5,6 +5,8 @@ import { MdSearch } from "react-icons/md";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import { useNavigate, useParams } from "react-router-dom";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 import axios from "../axios";
 const EditPost = () => {
   // useParams로 meetingId를 가져온다.
@@ -22,7 +24,8 @@ const EditPost = () => {
   const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
 
   const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const loggedInUser = useSelector(selectUser);
   const navigate = useNavigate();
   const [meetingInfo, setMeetingInfo] = useState({
     postedtitle: "",
@@ -115,7 +118,7 @@ const EditPost = () => {
 
     let postDTO = {
       title: meetingInfo.title,
-      memberId: loggedInUser.id,
+      memberId: loggedInUser.memberId,
       meetingDate: meetingInfo.meetingDate,
       closingDate: meetingInfo.closingDate,
       latitude: latlng.lat,

@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { FaComment } from "react-icons/fa";
 import replyImg from "../../images/reply.png";
 import axios from "../../axios";
+import { selectUser } from "../../features/userSlice";
+import { useSelector } from "react-redux";
 const Comments = (props) => {
   const [commentLikes, setCommentLikes] = useState({}); // 코멘트들의 좋아요 상태
   const [comments, setComments] = useState(props.comments); // 해당 모집글의 전체 댓글
@@ -15,7 +17,10 @@ const Comments = (props) => {
   const [hasReply, setHasReply] = useState({}); // 대댓글 여부 상태
   const [sortOption, setSortOption] = useState("recent"); // 정렬 상태
   const [sortedComments, setSortedComments] = useState([]); // 정렬된 댓글
-
+  console.log(props.userInfo.nickname);
+  console.log(props.loggedInUser.nickname);
+  const loggedInUser = useSelector(selectUser);
+  console.log(loggedInUser);
   // props의 댓글이 변화할때 마다 comments 업데이트 (상관없나..?)
   useEffect(() => {
     setComments(props.comments);
@@ -31,11 +36,11 @@ const Comments = (props) => {
   }, [replies]);
   useEffect(() => {
     // 댓글들에 대한 현재 로그인한 사용자의 좋아요 상태를 업데이트
-    if (comments) {
+    if (comments && loggedInUser) {
       comments.forEach((comment) => {
         axios
           .get(
-            `/v1/likes/comments/${comment.commentId}/like-status?memberId=${props.loggedInUser.id}`
+            `/v1/likes/comments/${comment.commentId}/like-status?memberId=${loggedInUser.memberId}`
           )
 
           .then((response) => {
@@ -111,7 +116,7 @@ const Comments = (props) => {
 
     // 좋아요 요청 보내기
     axios
-      .post(`/v1/likes/comments/${commentId}?memberId=${props.loggedInUser.id}`)
+      .post(`/v1/likes/comments/${commentId}?memberId=${loggedInUser.memberId}`)
       .then((response) => {
         // 좋아요 상태를 업데이트 하여 comments에 저장 (필요 없나..?)
         const updatedComments = comments.map((comment) => {
@@ -174,7 +179,7 @@ const Comments = (props) => {
 
     let replyDTO = {
       commentId: commentId,
-      memberId: props.loggedInUser.id,
+      memberId: loggedInUser.memberId,
 
       reply: replies[commentId].reply,
     };
