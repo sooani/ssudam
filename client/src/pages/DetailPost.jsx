@@ -11,7 +11,8 @@ import axios from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Comments from "../components/Meeting/Comments";
 import { FaBookmark } from "react-icons/fa";
-import WeatherIcon from "../components/Meeting/WeatherIcon";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import weatherDescKo from "../components/Meeting/weatherDescKo";
@@ -36,6 +37,11 @@ const DetailPost = () => {
   const { meetingId } = useParams();
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  // 리덕스 사용자 정보 불러오기
+  const currentUser = useSelector(selectUser);
+  console.log(currentUser);
+
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   const navigate = useNavigate();
   // 수안님 코드의 경우 (party정보에 memberId가 존재할 경우) 주석 해제
@@ -71,6 +77,7 @@ const DetailPost = () => {
       memberId: loggedInUser.id,
       comment: enteredComment,
     };
+    console.log(commentDTO);
     axios
       .post(`/v1/comments`, commentDTO)
       .then((response) => {
@@ -234,6 +241,7 @@ const DetailPost = () => {
   // 현재는 meetingInfo에 memberId가 없어서 임시로 고정값을 준 상태이다.
   useEffect(() => {
     setIsLoading(true);
+    console.log("get parties");
     axios
       .get(`/v1/parties/${meetingId}`)
       .then((response) => {
@@ -261,21 +269,22 @@ const DetailPost = () => {
             partyStatus: "PARTY_CLOSED",
           };
           // axios로 patch 요청을 보내는 부분
-          axios
-            .patch(`/v1/parties/${meetingInfo.partyId}`, updatedDTO)
-            .then((response) => {
-              setMeetingInfo(response.data.data);
-            })
-            .catch((error) => {
-              console.error("Error updating meeting data: ", error);
-              alert("오류가 발생했습니다!");
-            });
+          // 일단 조회수 때문에 주석처리!
+          // axios
+          //   .patch(`/v1/parties/${meetingInfo.partyId}`, updatedDTO)
+          //   .then((response) => {
+          //     setMeetingInfo(response.data.data);
+          //   })
+          //   .catch((error) => {
+          //     console.error("Error updating meeting data: ", error);
+          //     alert("오류가 발생했습니다!");
+          //   });
         }
         // 아래는 나중에 주석처리
         setUserInfo({
           memberId: 1,
-          email: "user1@example.com",
-          nickname: "당근이",
+          email: "chfhddl@example.com",
+          nickname: "chfhddl",
         });
         setIsLoading(false);
       })
@@ -283,7 +292,8 @@ const DetailPost = () => {
         console.error("Error getting meeting data: ", error);
         setIsLoading(false);
       });
-  }, [isParticipating]);
+  }, []);
+  //원래는 isParticipating이 의존성
   // 현재 모집글에 대한 북마크 상태를 불러오는 로직
   useEffect(() => {
     axios
@@ -292,7 +302,7 @@ const DetailPost = () => {
       )
 
       .then((response) => {
-        console.log(response.data.isBookmarked);
+        console.log(response.data);
         if (response.data.isBookmarked === true) {
           setBookmarked(true);
         } else {
@@ -408,12 +418,31 @@ const DetailPost = () => {
         alert("오류가 발생했습니다!");
       });
   }, [meetingInfo]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/v1/parties/${meetingId}/partymember-status`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setIsParticipating(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error updating meeting data: ", error);
+  //       alert("오류가 발생했습니다!");
+  //     });
+  // }, [meetingInfo]);
   // 북마크를 처리하는 핸들러
   const bookmarkHandler = () => {
     setBookmarked((prev) => !prev);
     axios
       .post(`/v1/bookmarks/parties/${meetingId}?memberId=${loggedInUser.id}`)
-      .then((response) => {})
+      .then((response) => {
+        setMeetingInfo((prev) => ({
+          ...prev,
+          bookmarkCount: bookmarked
+            ? prev.bookmarkCount - 1
+            : prev.bookmarkCount + 1,
+        }));
+      })
       .catch((error) => {
         console.error("Error bookmarking meeting data: ", error);
         alert("오류가 발생했습니다!");
@@ -423,6 +452,9 @@ const DetailPost = () => {
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);
   };
+  useEffect(() => {
+    console.log(meetingInfo);
+  }, [bookmarked]);
   return (
     <div className={classes.wrapper}>
       {(isLoading || !meetingInfo || !userInfo) && (
@@ -466,6 +498,9 @@ const DetailPost = () => {
                       <h4>모집완료</h4>
                     </div>
                   )}
+                  <div className={classes.hits}>
+                    <h4>조회수 {meetingInfo.hits}</h4>
+                  </div>
                 </div>
               </div>
 

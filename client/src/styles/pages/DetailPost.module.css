@@ -84,9 +84,15 @@
 }
 .isRecruiting h4 {
   color: green;
+  border-right: 2px solid gray;
+  padding-right: 1rem;
 }
 .isNotRecruiting h4 {
   color: red;
+  border-right: 2px solid gray;
+  padding-right: 1rem;
+}
+.hits {
 }
 .infoAndBtn .btnCon {
   margin-right: 1.5rem;

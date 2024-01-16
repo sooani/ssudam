@@ -57,10 +57,12 @@ const Comments = (props) => {
           });
       });
       // 대댓글 창 열림 상태는 댓글의 길이만큼 false 배열로 초기화
-      const initialIsReplyOpened = comments.reduce(
-        (acc, comment) => ({ ...acc, [comment.commentId]: false }),
-        {}
-      );
+      const initialIsReplyOpened = comments.reduce((acc, comment) => {
+        const hasReplies = comment.replies && comment.replies.length > 0;
+
+        return { ...acc, [comment.commentId]: hasReplies };
+      }, {});
+
       setIsReplyOpened(initialIsReplyOpened);
 
       // 대댓글들의 상태를 업데이트, commentId가 key 값, 해당 코멘트의 reply가 value 값
@@ -181,7 +183,7 @@ const Comments = (props) => {
       .post(`/v1/replies`, replyDTO)
       .then((response) => {
         alert("대댓글이 등록되었습니다!");
-
+        console.log(response.data);
         const locationHeaderValue = response.headers.location;
 
         // '/v1/comments/{commentId}'에서 commentId 부분을 추출

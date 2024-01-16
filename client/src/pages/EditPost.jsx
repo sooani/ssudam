@@ -40,6 +40,7 @@ const EditPost = () => {
 
   // useParams로 받은 meetingId로 meeting 조회
   useEffect(() => {
+    console.log("get parties");
     axios
       .get(`/v1/parties/${meetingId}`)
       .then((response) => {
@@ -56,8 +57,8 @@ const EditPost = () => {
       .catch((error) => {
         console.error("Error getting meeting data: ", error);
       });
-  }, [meetingId]);
-
+  }, []);
+  // 위에 원래 meetingId 의존성
   const addressHandler = (e) => {
     setAddress((prevAddress) => ({
       ...prevAddress,
@@ -127,7 +128,7 @@ const EditPost = () => {
     };
 
     setSearchkeyword("");
-
+    console.log(postDTO);
     axios
       .patch(`/v1/parties/${meetingInfo.partyId}`, postDTO)
       .then((response) => {
