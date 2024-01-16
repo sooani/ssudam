@@ -114,6 +114,10 @@ public class PartyService {
 
         Optional.ofNullable(party.getMeetingDate())
                 .ifPresent(findParty::setMeetingDate);
+        Optional.ofNullable(party.getClosingDate())
+                .ifPresent(findParty::setClosingDate);
+        Optional.ofNullable(party.getPhoneNumber())
+                .ifPresent(findParty::setPhoneNumber);
         Optional.ofNullable(party.getLongitude())
                 .ifPresent(findParty::setLongitude);
         Optional.ofNullable(party.getLatitude())
@@ -157,18 +161,16 @@ public class PartyService {
     }
 
 
-    // 모임일자가 현재 날짜와 같거나 지났을 때 모집상태를 변경
+    // 모임일자와 모집마감일자가 현재 날짜와 같거나 지났을 때 모집상태를 변경
     @Transactional
     public void updatePartyStatus() {
-        List<Party> parties = partyRepository
-                .findByMeetingDateBeforeAndPartyStatus(LocalDateTime.now(),
-                        Party.PartyStatus.PARTY_OPENED);
-        for (Party party : parties) {
-            if (party.getMeetingDate().isBefore(LocalDateTime.now()) || party.getMeetingDate().isEqual(LocalDateTime.now())) {
-                party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
-                partyRepository.save(party);
-            }
-        }
+        LocalDateTime now = LocalDateTime.now();
+        List<Party> partiesToClose = partyRepository
+                .findByMeetingDateBeforeOrClosingDateBeforeOrPartyStatus(now, now, Party.PartyStatus.PARTY_OPENED);
+        partiesToClose.forEach(party -> {
+            party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
+            partyRepository.save(party);
+        });
     }
 
     // 파티 참가, 권한 추가 필요
