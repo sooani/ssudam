@@ -3,6 +3,7 @@ package com.ssudam.party.service;
 import com.ssudam.exception.BusinessLogicException;
 import com.ssudam.exception.ExceptionCode;
 import com.ssudam.member.entity.Member;
+import com.ssudam.member.service.MemberService;
 import com.ssudam.party.entity.Party;
 import com.ssudam.party.entity.PartyMember;
 import com.ssudam.party.repository.PartyMemberRepository;
@@ -13,11 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +23,14 @@ public class PartyService {
     private final PartyRepository partyRepository;
     private final PartyMemberRepository partyMemberRepository;
     private final WeatherService weatherService;
+    private final MemberService memberService;
 
-    public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository, WeatherService weatherService) {
+    public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository,
+                        WeatherService weatherService, MemberService memberService) {
         this.partyRepository = partyRepository;
         this.partyMemberRepository = partyMemberRepository;
         this.weatherService = weatherService;
+        this.memberService = memberService;
     }
 
     // 파티 생성
@@ -110,10 +109,12 @@ public class PartyService {
     public Party updateParty(Party party) {
         Party findParty = findVerifiedParty(party.getPartyId());
 
-        updatePartyHits(findParty);// 수정 시 조회수 업데이트
-
         Optional.ofNullable(party.getMeetingDate())
                 .ifPresent(findParty::setMeetingDate);
+        Optional.ofNullable(party.getClosingDate())
+                .ifPresent(findParty::setClosingDate);
+        Optional.ofNullable(party.getPhoneNumber())
+                .ifPresent(findParty::setPhoneNumber);
         Optional.ofNullable(party.getLongitude())
                 .ifPresent(findParty::setLongitude);
         Optional.ofNullable(party.getLatitude())
@@ -157,18 +158,16 @@ public class PartyService {
     }
 
 
-    // 모임일자가 현재 날짜와 같거나 지났을 때 모집상태를 변경
+    // 모임일자와 모집마감일자가 현재 날짜와 같거나 지났을 때 모집상태를 변경
     @Transactional
     public void updatePartyStatus() {
-        List<Party> parties = partyRepository
-                .findByMeetingDateBeforeAndPartyStatus(LocalDateTime.now(),
-                        Party.PartyStatus.PARTY_OPENED);
-        for (Party party : parties) {
-            if (party.getMeetingDate().isBefore(LocalDateTime.now()) || party.getMeetingDate().isEqual(LocalDateTime.now())) {
-                party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
-                partyRepository.save(party);
-            }
-        }
+        LocalDateTime now = LocalDateTime.now();
+        List<Party> partiesToClose = partyRepository
+                .findByMeetingDateBeforeOrClosingDateBeforeOrPartyStatus(now, now, Party.PartyStatus.PARTY_OPENED);
+        partiesToClose.forEach(party -> {
+            party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
+            partyRepository.save(party);
+        });
     }
 
     // 파티 참가, 권한 추가 필요
@@ -178,7 +177,7 @@ public class PartyService {
             throw new BusinessLogicException(ExceptionCode.PARTY_CLOSED_ERROR);
         }
 
-        if (isJoinParty(member, party)) {
+        if (isNotJoinParty(member, party)) {
             increasePartyCapacity(party);
             addMemberToParty(member, party);
         } else {
@@ -187,8 +186,14 @@ public class PartyService {
         }
     }
 
-    // 파티에 가입한 멤버인지 검사
-    public boolean isJoinParty(Member member, Party party) {
+    // 파티에 가입하지 않은 멤버인지 검사
+    public boolean isNotJoinParty(Member member, Party party) {
+        return !partyMemberRepository.existsByMemberAndParty(member, party);
+    }
+
+    public boolean isJoinParty(Long memberId, Long partyId) {
+        Member member = memberService.findMember(memberId);
+        Party party = findVerifiedParty(partyId);
         return !partyMemberRepository.existsByMemberAndParty(member, party);
     }
 

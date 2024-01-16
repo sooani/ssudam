@@ -14,8 +14,9 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
     // 모임에 참여한 멤버 조회
     List<Party> findByPartyMembers_Member_MemberId(Long memberId);
 
-    // 모임일자가 현재 날짜보다 이전 + 특정 파티상태 조회
-    List<Party> findByMeetingDateBeforeAndPartyStatus(LocalDateTime meetingDate, Party.PartyStatus partyStatus);
+    //모임 일자와 모임 종료일자가 현재 날짜보다 같거나 이전일때 모임상태 조회
+    List<Party> findByMeetingDateBeforeOrClosingDateBeforeOrPartyStatus(LocalDateTime meetingDate, LocalDateTime closingDate,
+                                                                        Party.PartyStatus partyStatus);
 
     // 특정 시간 이후 조회
     Page<Party> findByCreatedAtAfter(LocalDateTime dateTime, Pageable pageable);

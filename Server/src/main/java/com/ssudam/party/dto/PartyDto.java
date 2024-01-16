@@ -59,6 +59,8 @@ public class PartyDto {
         @Future(message = "모임일자는 현재일자보다 미래여야 합니다.")
         private LocalDateTime meetingDate;
 
+        private LocalDateTime closingDate;
+
         private String longitude; //경도
 
         private String latitude; //위도

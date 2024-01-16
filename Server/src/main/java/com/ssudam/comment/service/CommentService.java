@@ -83,7 +83,7 @@ public class CommentService {
     }
 
     private void findVerifiedPartyStatusForComment(Comment comment) {
-        partyService.findParty(comment.getParty().getPartyId());
+        partyService.findVerifiedParty(comment.getParty().getPartyId());
         if (comment.getParty().getPartyStatus() == Party.PartyStatus.PARTY_CLOSED) {
             throw new BusinessLogicException(ExceptionCode.COMMENT_NOT_ALLOWED);
         }
