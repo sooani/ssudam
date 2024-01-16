@@ -51,10 +51,12 @@ function EditProfile() {
     };
 
     // 닉네임, 이메일 받아오기
+    //$가 들어가면?``
+    //리덕스의 정보를 불러온다(닉네임, 이메일)->이코드를 작성해서 아래코드 대신 적는다.
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('/v1/members/{memberId} ', { timeout: 10000 });  
+                const response = await axios.get(`/v1/members/1` , { timeout: 10000 });  
                 const { email, nickname } = response.data.data;
 
                 setValue('email', email);  
@@ -71,7 +73,7 @@ function EditProfile() {
     //닉네임 중복검사! 이거 엔드포인트가 달라야하는지???
     const GetDuplicateNickname = async (value) => {
         try {
-            const response = await axios.post('/v1/members/{memberId} ', { nickname: value });
+            const response = await axios.post("/v1/members/1", { nickname: value });
             return !response.data.result; // 사용 가능한 닉네임은 false 반환
         } catch (error) {
             console.error('닉네임 중복 검사 오류:', error);

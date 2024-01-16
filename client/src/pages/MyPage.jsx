@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; 
+import { selectUser } from '../features/userSlice';
 
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
@@ -21,8 +22,9 @@ import MyEventCard from '../components/MyPage/MyEventCard';
 
 const MyPage = () => {
     const [userData, setUserData] = useState({});
-    const isAuthenticated = useSelector((state) => state.user.user !== null);
+    // const isAuthenticated = useSelector((state) => state.user.user !== null);
     const navigate = useNavigate();
+    const user = useSelector(selectUser)
 
     useEffect(() => {
         const fetchUserData = () => {
@@ -39,7 +41,12 @@ const MyPage = () => {
         fetchUserData();
     }, []);
 
-    if (!isAuthenticated) {//로그인 안되어있으면 로그인페이지로 이동한다.
+    // if (!isAuthenticated) {//로그인 안되어있으면 로그인페이지로 이동한다.
+    //     navigate('/login');
+    // }
+
+    if (!user) {
+        // 로그인되지 않은 경우 Redirect 컴포넌트를 사용하여 로그인 페이지로 이동
         navigate('/login');
     }
 
