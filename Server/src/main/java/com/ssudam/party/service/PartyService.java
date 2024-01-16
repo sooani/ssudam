@@ -109,8 +109,6 @@ public class PartyService {
     public Party updateParty(Party party) {
         Party findParty = findVerifiedParty(party.getPartyId());
 
-        updatePartyHits(findParty);// 수정 시 조회수 업데이트
-
         Optional.ofNullable(party.getMeetingDate())
                 .ifPresent(findParty::setMeetingDate);
         Optional.ofNullable(party.getClosingDate())
