@@ -1,5 +1,6 @@
 package com.ssudam.review.dto;
 
+import com.ssudam.dto.MemberIdExtractable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.validation.constraints.Positive;
 public class ReviewDto {
     @Getter
     @AllArgsConstructor
-    public static class Post {
+    public static class Post implements MemberIdExtractable {
         @Positive
         private long memberId;
         @NotBlank(message = "제목은 필수 입력 사항입니다.")

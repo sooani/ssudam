@@ -1,5 +1,6 @@
 package com.ssudam.comment.dto;
 
+import com.ssudam.dto.MemberIdExtractable;
 import com.ssudam.reply.dto.ReplyDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 public class CommentDto {
     @Getter
     @AllArgsConstructor
-    public static class Post {
+    public static class Post implements MemberIdExtractable {
         @Positive
         private long partyId;
         @Positive

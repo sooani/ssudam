@@ -1,5 +1,7 @@
 package com.ssudam.comment.controller;
 
+import com.ssudam.annotation.BodyRequest;
+import com.ssudam.annotation.CommentRequest;
 import com.ssudam.comment.dto.CommentDto;
 import com.ssudam.comment.entity.Comment;
 import com.ssudam.comment.mapper.CommentMapper;
@@ -30,7 +32,7 @@ public class CommentController {
         this.commentService = commentService;
         this.mapper = mapper;
     }
-
+    @BodyRequest
     @RequestMapping(value = "/v1/comments", method = RequestMethod.POST)
     public ResponseEntity postComment(@RequestBody @Valid CommentDto.Post requestBody) {
         Comment comment = mapper.commentPostDtoToComment(requestBody);
@@ -40,6 +42,7 @@ public class CommentController {
         return ResponseEntity.created(location).build();
     }
 
+    @CommentRequest
     @RequestMapping(value = "/v1/comments/{comment-id}", method = RequestMethod.PATCH)
     public ResponseEntity patchComment(@PathVariable("comment-id") @Positive long commentId,
                                        @RequestBody @Valid CommentDto.Patch requestBody) {
@@ -110,7 +113,7 @@ public class CommentController {
                 new MultiResponseDto<>(mapper.commentsToCommentResponses(comments), pageComments),
                 HttpStatus.OK);
     }
-
+    @CommentRequest
     @RequestMapping(value = "/v1/comments/{comment-id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteComment(@PathVariable("comment-id") @Positive long commentId) {
         commentService.deleteComment(commentId);

@@ -1,5 +1,6 @@
 package com.ssudam.member.controller;
 
+import com.ssudam.annotation.MemberRequest;
 import com.ssudam.dto.MultiResponseDto;
 import com.ssudam.dto.SingleResponseDto;
 import com.ssudam.exception.BusinessLogicException;
@@ -49,7 +50,7 @@ public class MemberController {
 
         return ResponseEntity.created(location).build();
     }
-
+    @MemberRequest
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
                                       @Valid @RequestBody MemberPatchDto memberPatchDto) {
@@ -84,7 +85,7 @@ public class MemberController {
                 new MultiResponseDto<>(mapper.membersToMemberResponseDto(members), pageMembers),
                 HttpStatus.OK);
     }
-
+    @MemberRequest
     @DeleteMapping("{member-id}")
     public ResponseEntity deleteMember(
             @PathVariable("member-id") @Positive long memberId) {

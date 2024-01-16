@@ -16,7 +16,8 @@ public enum ExceptionCode {
     REPLY_NOT_ALLOWED(422, "Reply not allowed"),
     TODOLIST_NOT_FOUND(404, "TodoList not found"),
     REVIEW_NOT_FOUND(404, "Review not found"),
-    PASSWORD_NOT_MATCH(400, "Password not match");
+    PASSWORD_NOT_MATCH(400, "Password not match"),
+    FORBIDDEN_MEMBER(403, "ForBidden Member");
 
     @Getter
     private int status;

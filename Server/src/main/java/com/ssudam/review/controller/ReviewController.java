@@ -1,5 +1,7 @@
 package com.ssudam.review.controller;
 
+import com.ssudam.annotation.BodyRequest;
+import com.ssudam.annotation.ReviewRequest;
 import com.ssudam.dto.MultiResponseDto;
 import com.ssudam.review.dto.ReviewDto;
 import com.ssudam.review.entity.Review;
@@ -31,6 +33,7 @@ public class ReviewController {
     }
 
     // 후기 등록
+    @BodyRequest
     @PostMapping
     public ResponseEntity postReview(@RequestBody @Valid ReviewDto.Post requestBody) {
         Review review = mapper.reiviewPostDtoToReview(requestBody);
@@ -41,6 +44,7 @@ public class ReviewController {
     }
 
     // 후기 수정
+    @ReviewRequest
     @PutMapping("/{review-id}")
     public ResponseEntity patchReview(@PathVariable("review-id") @Positive long reviewId,
                                       @Valid @RequestBody ReviewDto.Patch requestBody) {
@@ -72,6 +76,7 @@ public class ReviewController {
     }
 
     // 후기 삭제
+    @ReviewRequest
     @DeleteMapping("/{review-id}")
     public ResponseEntity deleteReview(@PathVariable("review-id") long reviewId) {
         reviewService.deleteReview(reviewId);
