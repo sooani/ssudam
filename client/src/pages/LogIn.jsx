@@ -67,12 +67,13 @@ const LogIn = () => {
                 console.log(response.headers.authorization); // Authorization 헤더 값, 주로 인증토큰 담고있음
                 console.log('로그인 되었습니다!');
 
-                const { email, memberId, nickname } = response.data
+                const { email, memberId, nickname, accessToken, refreshToken } = response.data
 
                 localStorage.setItem('Authorization', response.headers.authorization);
                 localStorage.setItem('email', email);
                 localStorage.setItem('memberId', memberId);
-                localStorage.setItem('nickname', nickname)
+                localStorage.setItem('nickname', nickname);
+                localStorage.setItem('token', response.data.token);
                 
                 dispatch(
                     login({
@@ -80,6 +81,8 @@ const LogIn = () => {
                         nickname: nickname,
                         memberId: memberId,
                         loggedIn: true,
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
                     })
                 )
 

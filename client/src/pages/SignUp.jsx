@@ -61,7 +61,7 @@ const SignUp = () => {
         }
 
         axios.post('/v1/members', {
-            username: email,
+            email: email,
             nickname: nickname,
             password: password,
             confirmPassword: confirmPassword,
