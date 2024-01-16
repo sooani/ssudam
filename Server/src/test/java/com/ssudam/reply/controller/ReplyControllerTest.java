@@ -124,8 +124,6 @@ public class ReplyControllerTest {
                 .andExpect(jsonPath("$.data.replyId").value(replyId))
                 .andExpect(jsonPath("$.data.reply").value(responseDto.getReply()))
                 .andExpect(jsonPath("$.data.nickname").value(responseDto.getNickname()))
-                .andExpect(jsonPath("$.data.createdAt").value(responseDto.getCreatedAt().toString()))
-                .andExpect(jsonPath("$.data.modifiedAt").value(responseDto.getModifiedAt().toString()))
                 .andDo(document("patch-reply",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),

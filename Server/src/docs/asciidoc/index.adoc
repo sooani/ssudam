@@ -555,8 +555,93 @@ include::{snippets}/check-bookmark-status/response-fields.adoc[]
 == TodoListController
 === 할일 등록
 
+.curl-request
+include::{snippets}/post-todolist/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-todolist/http-request.adoc[]
+
+.http-response
+include::{snippets}/post-todolist/http-response.adoc[]
+
+.request-fields
+include::{snippets}/post-todolist/request-fields.adoc[]
+
 === 할일 수정
 
-=== 할일 조회
+.curl-request
+include::{snippets}/patch-todolist/curl-request.adoc[]
 
-=== 할일 삭제
+.http-request
+include::{snippets}/patch-todolist/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/patch-todolist/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/patch-todolist/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-todolist/http-response.adoc[]
+
+.response-fields
+include::{snippets}/patch-todolist/response-fields.adoc[]
+
+=== 특정 할일 조회
+
+.curl-request
+include::{snippets}/get-todolist/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-todolist/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-todolist/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-todolist/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-todolist/response-fields.adoc[]
+
+=== 전체 할일 조회
+
+.curl-request
+include::{snippets}/get-todolists/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-todolists/http-request.adoc[]
+
+.request-parameters
+include::{snippets}/get-todolists/request-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-todolists/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-todolists/response-fields.adoc[]
+
+=== 특정 할일 삭제
+
+.curl-request
+include::{snippets}/delete-todolist/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-todolist/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-todolist/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-todolist/http-response.adoc[]
+
+=== 전체 할일 삭제
+
+.curl-request
+include::{snippets}/delete-todolists/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-todolists/http-request.adoc[]
+
+.http-response
+include::{snippets}/delete-todolists/http-response.adoc[]
