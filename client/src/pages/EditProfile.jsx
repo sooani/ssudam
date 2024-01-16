@@ -54,7 +54,7 @@ function EditProfile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('/v1/members/1');  
+                const response = await axios.get('/v1/members/{memberId} ');  
                 const { email, nickname } = response.data.data;
 
                 setValue('email', email);  
@@ -71,7 +71,7 @@ function EditProfile() {
     //닉네임 중복검사! 이거 엔드포인트가 달라야하는지???
     const GetDuplicateNickname = async (value) => {
         try {
-            const response = await axios.post('/v1/members/1', { nickname: value });
+            const response = await axios.post('/v1/members/{memberId} ', { nickname: value });
             return !response.data.result; // 사용 가능한 닉네임은 false 반환
         } catch (error) {
             console.error('닉네임 중복 검사 오류:', error);
@@ -170,7 +170,8 @@ function EditProfile() {
                                     minLength: { value: 8, message: "8글자 이상 입력해주세요." },
                                     maxLength: { value: 20, message: "최대 20글자까지 입력 가능합니다." },
                                     pattern: {
-                                        value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{1,}$/,
+                                        // value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{1,}$/,
+                                        value: /^[a-zA-Z\d@$!%*#?&]+$/ ,
                                         message: "영문 대,소문자와 숫자, 특수기호(@$!%*#?&)가 적어도 1개 이상씩 포함되어야 합니다."
                                     }
                                 })}
