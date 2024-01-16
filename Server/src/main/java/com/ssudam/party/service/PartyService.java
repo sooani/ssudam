@@ -163,10 +163,13 @@ public class PartyService {
     public void updatePartyStatus() {
         LocalDateTime now = LocalDateTime.now();
         List<Party> partiesToClose = partyRepository
-                .findByMeetingDateBeforeOrClosingDateBeforeOrPartyStatus(now, now, Party.PartyStatus.PARTY_OPENED);
+                .findByMeetingDateBeforeOrClosingDateBeforeAndPartyStatus(now, now, Party.PartyStatus.PARTY_OPENED);
         partiesToClose.forEach(party -> {
-            party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
-            partyRepository.save(party);
+            if (party.getMeetingDate().isBefore(now) || party.getClosingDate().isBefore(now)) {
+                party.setPartyStatus(Party.PartyStatus.PARTY_CLOSED);
+                partyRepository.save(party);
+                System.out.println("Party ID: " + party.getPartyId() + " is closed.");
+            }
         });
     }
 
