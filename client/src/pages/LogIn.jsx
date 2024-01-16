@@ -62,27 +62,26 @@ const LogIn = () => {
             },
         })
             .then((response) => {
-                console.log(response)
-                console.log(response.data); // 서버 응답의 body 데이터
+                console.log(response.data);
                 console.log(response.headers.authorization); // Authorization 헤더 값, 주로 인증토큰 담고있음
                 console.log('로그인 되었습니다!');
 
-                const { email, memberId, nickname, accessToken, refreshToken } = response.data
+                const { email, memberId, nickname } = response.data
+                const accessToken = response.headers.authorization
 
-                localStorage.setItem('Authorization', response.headers.authorization);
+                localStorage.setItem('Authorization', accessToken);
                 localStorage.setItem('email', email);
                 localStorage.setItem('memberId', memberId);
                 localStorage.setItem('nickname', nickname);
-                localStorage.setItem('token', response.data.token);
                 
                 dispatch(
                     login({
-                        username: email,
-                        nickname: nickname,
-                        memberId: memberId,
-                        loggedIn: true,
+                        user: {
+                            username: email,
+                            nickname: nickname,
+                            memberId, memberId,
+                        },
                         accessToken: accessToken,
-                        refreshToken: refreshToken,
                     })
                 )
 
