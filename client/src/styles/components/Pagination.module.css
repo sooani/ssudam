@@ -1,0 +1,51 @@
+/* 안민주 */
+/* 안민주의 페이지네이션입니다!!!!!!!!!!*/
+
+/*  |￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣|
+        🤍그냥 페이지네이션 코드입니다🤍  |
+    |＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿|
+　　            ᕱ ᕱ  ||
+　           ( ᴖ ‧̫ ᴖ ||
+  　         /　つ  Φ */
+
+/* 그냥 페이지네이션입니다!!!!!!!!!!!! */
+
+
+/* Pagination.module.css*/
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin: 16px;
+}
+
+.button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 0;
+    background: black;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .button:hover {
+    background: tomato;
+    cursor: pointer;
+    transform: translateY(-2px);
+  }
+  
+  .button[disabled] {
+    background: grey;
+    cursor: revert;
+    transform: revert;
+  }
+  
+  .button[aria-current] {
+    background: deeppink;
+    font-weight: bold;
+    cursor: revert;
+    transform: revert;
+  }
+  

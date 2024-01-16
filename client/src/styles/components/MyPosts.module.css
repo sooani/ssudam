@@ -1,0 +1,12 @@
+/* MyPosts.module.css */
+
+.MyPostsContainer{
+    width: 40vw;
+    height: 120vh;
+    border: 1px solid seagreen;
+}
+
+.MyPostsMSG{
+    text-align: center;
+    border: 1px solid rgb(93, 0, 255);
+}
