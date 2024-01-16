@@ -4,7 +4,6 @@ import footerLogo from '../../images/footerLogo.png';
 import SignUpModal from '../../pages/SignUpModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
-import { useNavigate } from 'react-router-dom';
 
 /*
     게시글 컴포넌트
@@ -14,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 
 const ListCard = ({ party }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigate = useNavigate();
   // Redux store에서 사용자 정보 가져오기
   const user = useSelector(selectUser);
   const handlePostClick = () => {
@@ -24,7 +22,7 @@ const ListCard = ({ party }) => {
       setModalIsOpen(true);
     } else {
       // 사용자 정보가 있다면, 포스트의 세부 정보 페이지로 이동
-      navigate(`/v1/parties/${party?.postId}`);
+      window.location.href = `/meetings/${party.partyId}`;
     }
   };
 

@@ -1,8 +1,9 @@
 import classes from '../../styles/components/Header.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserLarge } from 'react-icons/fa6';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
+import { logout } from '../../features/userSlice';
 
 /*
   헤더
@@ -14,6 +15,7 @@ import { selectUser } from '../../features/userSlice';
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   const gotoPost = () => {
@@ -28,9 +30,14 @@ const Header = () => {
   const gotoMyPage = () => {
     // 마이페이지로 이동
     // 사용자 정보에 따라 동적으로 경로 설정 가능
-    navigate(`/mypage/1`);
+    navigate(`/mypage/${user?.memberId}`);
   };
-
+  const handleLogout = () => {
+    // 로그아웃 액션 디스패치
+    dispatch(logout());
+    // 로그아웃 후 홈페이지로 이동
+    navigate('/');
+  };
   return (
     <header>
       <div className={classes.header}>
@@ -43,7 +50,9 @@ const Header = () => {
           </button>
           {user ? (
             <>
-              <button className={classes.logout}>로그아웃</button>
+              <button className={classes.logout} onClick={handleLogout}>
+                로그아웃
+              </button>
               <button className={classes.mypage} onClick={gotoMyPage}>
                 <FaUserLarge />
               </button>
