@@ -20,15 +20,15 @@ const Header = () => {
     navigate('/meetings/new');
   };
   const gotoLogin = () => {
-    navigate('/Login');
+    navigate('/login');
   };
   const gotoSignUp = () => {
-    navigate('/SignUp');
+    navigate('/signUp');
   };
   const gotoMyPage = () => {
     // 마이페이지로 이동
     // 사용자 정보에 따라 동적으로 경로 설정 가능
-    navigate(`/MyPage/1`);
+    navigate(`/mypage/1`);
   };
 
   return (
