@@ -31,15 +31,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.bottomContents {
+
+.listCardMeetingDate1 {
   display: flex;
-  width: 100vh;
-}
-.listCardMeetingDate {
   font-size: 0.7rem;
   padding-top: 4vh;
 }
-
+.listCardMeetingDate2 {
+  display: flex;
+  font-size: 0.1rem;
+}
+.listCardCurrentCapacity {
+  display: inline;
+}
+.listCardMaxCapacity {
+  display: inline;
+}
 .gotoPost {
   background-color: aqua;
 }

@@ -1,38 +1,49 @@
+// MyEventCard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import classes from '../../styles/components/ListCard.module.css';
+import ssudamhand from '../../images/ssudamhand.png';
+import Pagination from './Pagination';
 
-const MyEventCard = ({ page }) => {
-    const [eventData, setEventData] = useState([]);
+function MyEventCard() {
+  const [events, setEvents] = useState([]);
+  const [page, setPage] = useState(1);
+  const eventsPerPage = 4; 
 
-    useEffect(() => {
-        const fetchEventData = async () => {
-            try {//api 넣어야함
-                const response = await axios.get(`/api/events?page=${page}`);
-                setEventData(response.data);
-            } catch (error) {
-                console.error('나의 모임을 불러오는 중 에러:', error);
-            }
-        };
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get(`/v1/parties?partyMemberId=1&_page=${page}&_limit=${eventsPerPage}`);
+        setEvents(response.data.data);
+      } catch (error) {
+        console.error('나의 모임 받아오기 오류:', error);
+      }
+    };
 
-        fetchEventData();
-    }, [page]);
+    fetchEvents();
+  }, [page]);
 
-    return (
-        <div>
-            {eventData.map((event) => (
-                <div key={event.id} className={classes.EventCard}>
-                    <Link to={`/events/${event.id}`} className={classes.DirectLinkButton}>
-                        {event.title}
-                    </Link>
-
-                    {/* 나머지 컴포넌트 내용 */}
-                </div>
-            ))}
-        </div>
-    );
-};
+  return (
+    <div className={classes.EventCardContainer}>
+      {events.length === 0 ? (
+        <p>아직 참여한 모임이 없어요!</p>
+      ) : (
+        <>
+          {events.map(event => (
+            <div key={event.partyId}>
+              <div className={classes.EventTitle}>
+                {event.title}
+                {event.partyStatus === 'PARTY_OPENED' ? ' (모집중)' : ' (모집완료)'}
+              </div>
+              <img src={ssudamhand} alt="Ssudamhand" />
+              <button>바로가기</button>
+            </div>
+          ))}
+          <Pagination total={events.length} limit={eventsPerPage} page={page} setPage={setPage} />
+        </>
+      )}
+    </div>
+  );
+}
 
 export default MyEventCard;
-

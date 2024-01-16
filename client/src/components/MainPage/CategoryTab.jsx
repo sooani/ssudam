@@ -8,7 +8,6 @@ const CategoryTab = () => {
   const [activeTab, setActiveTab] = useState('recruiting');
   const [recruitingData, setRecruitingData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
-  // const [categoryData, setCategoryData] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     size: 12,
@@ -19,17 +18,17 @@ const CategoryTab = () => {
   const fetchParties = async (page, status) => {
     try {
       const response = await axios.get(
-        `/v1/parties?page=${page}&size=${pageInfo.size}&status=${status}`
+        `/v1/parties?page=${page}&size=12&status=${status}`
       );
       const { data } = response;
 
+      // 전체 데이터를 받아왔을 때, 상태(status)에 따라 데이터를 분류합니다.
       const recruitingParties = data.data.filter(
         (party) => party.partyStatus === 'PARTY_OPENED'
       );
       const completedParties = data.data.filter(
         (party) => party.partyStatus === 'PARTY_CLOSED'
       );
-
       setRecruitingData(recruitingParties);
       setCompletedData(completedParties);
 
@@ -38,6 +37,42 @@ const CategoryTab = () => {
       console.error('Error fetching data:', error);
     }
   };
+
+  //     // 상태에 따라 데이터를 설정합니다.
+  //     if (status === 'recruiting') {
+  //       setRecruitingData(recruitingParties);
+  //     } else if (status === 'completed') {
+  //       setCompletedData(completedParties);
+  //     }
+
+  //     setPageInfo(data.pageInfo);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     setIsLoading(false);
+  //   }
+  // };
+  //   try {
+  //     const response = await axios.get(
+  //       `/v1/parties?page=${page}&size=12&status=${status}`
+  //     );
+  //     const { data } = response;
+
+  //     const recruitingParties = data.data.filter(
+  //       (party) => party.partyStatus === 'PARTY_OPENED'
+  //     );
+  //     const completedParties = data.data.filter(
+  //       (party) => party.partyStatus === 'PARTY_CLOSED'
+  //     );
+
+  //     setRecruitingData(recruitingParties);
+  //     setCompletedData(completedParties);
+
+  //     setPageInfo(data.pageInfo);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
 
   const handlePageChange = (direction) => {
     if (direction === 'prev' && pageInfo.page > 1) {
@@ -51,25 +86,12 @@ const CategoryTab = () => {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    fetchParties(1, tab);
+    fetchParties(1, tab); // 탭이 변경될 때 해당 탭에 맞는 데이터를 가져오도록 수정
   };
 
   useEffect(() => {
     fetchParties(pageInfo.page, activeTab);
   }, [activeTab, pageInfo.page]);
-
-  // useEffect(() => {
-  //   fetchParties(pageInfo.page);
-  // }, []);
-
-  // Initial fetch
-  // const CategoryTab = ({ onSelectTab }) => {
-  //   const [activeTab, setActiveTab] = useState('recruiting');
-
-  //   const handleTabClick = (tab) => {
-  //     setActiveTab(tab);
-  //     onSelectTab(tab);
-  //   };
 
   return (
     <div className={classes.categoryTab}>
@@ -89,6 +111,7 @@ const CategoryTab = () => {
           모집완료
         </button>
       </div>
+
       {activeTab === 'recruiting' && (
         <>
           <CategoryBox categoryData={recruitingData} />
@@ -101,26 +124,6 @@ const CategoryTab = () => {
           <PaginationBar pageInfo={pageInfo} onPageChange={handlePageChange} />
         </>
       )}
-
-      {/* <CategoryBox
-        categoryData={categoryData}
-        pageInfo={pageInfo}
-        onPageChange={handlePageChange}
-      /> */}
-      {/* <div className={classes.categoryTabTitle}>
-        <button
-          onClick={() => handleTabClick('recruiting')}
-          style={{ fontWeight: activeTab === 'recruiting' ? 'bold' : 'normal' }}
-        >
-          모집 중
-        </button>
-        <button
-          onClick={() => handleTabClick('completed')}
-          style={{ fontWeight: activeTab === 'completed' ? 'bold' : 'normal' }}
-        >
-          모집완료
-        </button>
-      </div> */}
     </div>
   );
 };
