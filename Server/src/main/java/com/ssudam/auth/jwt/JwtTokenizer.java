@@ -106,4 +106,18 @@ public class JwtTokenizer {
             return false;
         }
     }
+
+    public String getRefreshToken(String refreshToken) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getKeyFromBase64EncodedKey(encodedBase64SecretKey(secretKey)))
+                    .build()
+                    .parseClaimsJws(refreshToken)
+                    .getBody();
+
+            return claims.getSubject();
+        } catch (JwtException | IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

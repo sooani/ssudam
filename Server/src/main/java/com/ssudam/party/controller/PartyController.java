@@ -65,8 +65,9 @@ public class PartyController {
 
     //파티에 참가한 멤버인지 조회
     @RequestMapping(value = "/v1/parties/{party-id}/partymember-status", method = RequestMethod.GET)
-    public ResponseEntity checkPartyMemberStatus(@PathVariable("party-id") Member member, Party party){
-        boolean isJoinedParty = partyService.isJoinParty(member, party);
+    public ResponseEntity checkPartyMemberStatus(@RequestParam Long memberId,
+                                                 @PathVariable("party-id") Long partyId) {
+        boolean isJoinedParty = partyService.isJoinParty(memberId, partyId);
         Map<String, Boolean> response = new HashMap<>();
         response.put("isJoined", isJoinedParty);
 
