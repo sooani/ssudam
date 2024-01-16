@@ -38,42 +38,6 @@ const CategoryTab = () => {
     }
   };
 
-  //     // 상태에 따라 데이터를 설정합니다.
-  //     if (status === 'recruiting') {
-  //       setRecruitingData(recruitingParties);
-  //     } else if (status === 'completed') {
-  //       setCompletedData(completedParties);
-  //     }
-
-  //     setPageInfo(data.pageInfo);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //     setIsLoading(false);
-  //   }
-  // };
-  //   try {
-  //     const response = await axios.get(
-  //       `/v1/parties?page=${page}&size=12&status=${status}`
-  //     );
-  //     const { data } = response;
-
-  //     const recruitingParties = data.data.filter(
-  //       (party) => party.partyStatus === 'PARTY_OPENED'
-  //     );
-  //     const completedParties = data.data.filter(
-  //       (party) => party.partyStatus === 'PARTY_CLOSED'
-  //     );
-
-  //     setRecruitingData(recruitingParties);
-  //     setCompletedData(completedParties);
-
-  //     setPageInfo(data.pageInfo);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
-
   const handlePageChange = (direction) => {
     if (direction === 'prev' && pageInfo.page > 1) {
       fetchParties(pageInfo.page - 1, activeTab);

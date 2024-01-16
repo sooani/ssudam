@@ -1,6 +1,8 @@
 import classes from '../../styles/components/Header.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-// import { FaUserLarge } from 'react-icons/fa6';
+import { FaUserLarge } from 'react-icons/fa6';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
 
 /*
   헤더
@@ -10,16 +12,23 @@ import { Link, useNavigate } from 'react-router-dom';
   로그인 완료 시 로그아웃으로 변경, 회원가입 버튼 마이페이지 이모티콘으로 변경되서 출력
 */
 
-const Header = (props) => {
+const Header = () => {
   const navigate = useNavigate();
+  const user = useSelector(selectUser);
+
   const gotoPost = () => {
     navigate('/meetings/new');
   };
   const gotoLogin = () => {
-    navigate('/Login');
+    navigate('/login');
   };
   const gotoSignUp = () => {
-    navigate('/SignUp');
+    navigate('/signUp');
+  };
+  const gotoMyPage = () => {
+    // 마이페이지로 이동
+    // 사용자 정보에 따라 동적으로 경로 설정 가능
+    navigate(`/mypage/1`);
   };
 
   return (
@@ -32,74 +41,27 @@ const Header = (props) => {
           <button className={classes.postRegister} onClick={gotoPost}>
             새 글 쓰기
           </button>
-          <button className={classes.login} onClick={gotoLogin}>
-            로그인
-          </button>
-          <button className={classes.join} onClick={gotoSignUp}>
-            회원가입
-          </button>
+          {user ? (
+            <>
+              <button className={classes.logout}>로그아웃</button>
+              <button className={classes.mypage} onClick={gotoMyPage}>
+                <FaUserLarge />
+              </button>
+            </>
+          ) : (
+            <>
+              <button className={classes.login} onClick={gotoLogin}>
+                로그인
+              </button>
+              <button className={classes.join} onClick={gotoSignUp}>
+                회원가입
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>
   );
 };
-// import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { Link, useNavigate } from 'react-router-dom';
-// import { login, logout, selectIsLoggedIn } from '../features/user/userSlice';
-// import classes from '../../styles/components/Header.module.css';
 
-// const Header = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const isLoggedIn = useSelector(selectIsLoggedIn);
-
-//   const gotoPost = () => {
-//     navigate('/meetings/new');
-//   };
-
-//   const gotoLogin = () => {
-//     navigate('/Login');
-//   };
-
-//   const gotoSignUp = () => {
-//     navigate('/SignUp');
-//   };
-
-//   const handleLogout = () => {
-//     dispatch(logout());
-//   };
-
-//   return (
-//     <header>
-//       <div className={classes.header}>
-//         <h1>
-//           <Link to="/">쓰담</Link>
-//         </h1>
-//         <div className={classes.loginElement}>
-//           <button className={classes.postRegister} onClick={gotoPost}>
-//             새 글 쓰기
-//           </button>
-//           {isLoggedIn ? (
-//             <>
-//               <button className={classes.logout} onClick={handleLogout}>
-//                 로그아웃
-//               </button>
-//               <button className={classes.mypage}><FaUserLarge /></button>
-//             </>
-//           ) : (
-//             <>
-//               <button className={classes.login} onClick={gotoLogin}>
-//                 로그인
-//               </button>
-//               <button className={classes.join} onClick={gotoSignUp}>
-//                 회원가입
-//               </button>
-//             </>
-//           )}
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
 export default Header;

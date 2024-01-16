@@ -7,7 +7,11 @@ const CategoryBox = ({ categoryData, pageInfo, onPageChange }) => {
   return (
     <div className={classes.listCardContainer}>
       {categoryData.map((party) => (
-        <ListCard key={party.partyId} party={party} />
+        <ListCard
+          className={classes.ListCard}
+          key={party.partyId}
+          party={party}
+        />
       ))}
       <PaginationBar pageInfo={pageInfo} onPageChange={onPageChange} />
     </div>
