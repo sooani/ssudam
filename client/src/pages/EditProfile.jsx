@@ -54,7 +54,7 @@ function EditProfile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('/v1/members/{memberId} ');  
+                const response = await axios.get('/v1/members/{memberId} ', { timeout: 10000 });  
                 const { email, nickname } = response.data.data;
 
                 setValue('email', email);  

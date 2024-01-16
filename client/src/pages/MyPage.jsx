@@ -21,7 +21,7 @@ const MyPage = () => {
 
     useEffect(() => {
         const fetchUserData = () => {
-            axios.get('v1/members/{member-id}', { timeout: 5000 })
+            axios.get('v1/members/{member-id}', { timeout: 10000 })
                 .then(response => {
                     setUserData(response.data);
                     console.log(response.data);
