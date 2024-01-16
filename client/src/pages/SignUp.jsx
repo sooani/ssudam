@@ -7,7 +7,7 @@ import classes from "../styles/pages/SignUp.module.css"
 // 오류메시지 css 수정 
 // 빈 칸이 있을 때 회원가입 버튼 누르면 나오는 css 수정
 // 유효성 검사 뭘 할지 결정(예시. 이메일, 닉네임 중복) (후순위 개발)
-// 더 추가될 수도 있음
+// 더 추가될 수도 있음 
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -19,8 +19,8 @@ const SignUp = () => {
     const [nicknameError, setNicknameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [emailMessage, setEmailMessage] = useState('')
-    const [nicknameMessage, setNicknameMessage] = useState('');
+    // const [emailMessage, setEmailMessage] = useState('')
+    // const [nicknameMessage, setNicknameMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -61,14 +61,15 @@ const SignUp = () => {
         }
 
         axios.post('/v1/members', {
-            email: email,
+            username: email,
             nickname: nickname,
             password: password,
             confirmPassword: confirmPassword,
         },
         {
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
+                'Accept' : 'application/json',
             }
         })
         .then((response) => {
