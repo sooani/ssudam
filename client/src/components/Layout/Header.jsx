@@ -1,9 +1,11 @@
+import React, { useState } from 'react';
 import classes from '../../styles/components/Header.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserLarge } from 'react-icons/fa6';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { logout } from '../../features/userSlice';
+import SignUpModal from '../../pages/SignUpModal';
 
 /*
   헤더
@@ -17,9 +19,15 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const gotoPost = () => {
-    navigate('/meetings/new');
+    if (!user) {
+      setModalIsOpen(true);
+    } else {
+      // 로그인하지 않은 경우 모달 창 열기
+      navigate('/meetings/new');
+    }
   };
   const gotoLogin = () => {
     navigate('/login');
@@ -65,6 +73,10 @@ const Header = () => {
               <button className={classes.join} onClick={gotoSignUp}>
                 회원가입
               </button>
+              <SignUpModal
+                isOpen={modalIsOpen}
+                onClose={() => setModalIsOpen(false)}
+              />
             </>
           )}
         </div>
