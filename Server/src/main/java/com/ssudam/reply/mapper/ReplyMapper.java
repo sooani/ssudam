@@ -21,7 +21,7 @@ public interface ReplyMapper {
         Reply reply = new Reply();
 
         member.setMemberId(requestBody.getMemberId());
-        comment.setCommentId(requestBody.getMemberId());
+        comment.setCommentId(requestBody.getCommentId());
         reply.addMember(member);
         reply.addComment(comment);
         reply.setReply(requestBody.getReply());
