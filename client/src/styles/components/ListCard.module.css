@@ -32,14 +32,14 @@
   text-overflow: ellipsis;
 }
 
-.listCardMeetingDate1 {
+.listCardMeetingDate {
   display: flex;
   font-size: 0.7rem;
   padding-top: 4vh;
 }
-.listCardMeetingDate2 {
+.listCardClosingDate {
   display: flex;
-  font-size: 0.1rem;
+  font-size: 0.7rem;
 }
 .listCardCurrentCapacity {
   display: inline;

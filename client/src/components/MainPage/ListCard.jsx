@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import classes from '../../styles/components/ListCard.module.css';
 import footerLogo from '../../images/footerLogo.png';
 import SignUpModal from '../../pages/SignUpModal';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 /*
     게시글 컴포넌트
@@ -11,9 +14,18 @@ import SignUpModal from '../../pages/SignUpModal';
 
 const ListCard = ({ party }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
+  // Redux store에서 사용자 정보 가져오기
+  const user = useSelector(selectUser);
   const handlePostClick = () => {
-    // 게시글 클릭 시 모달 열기
-    setModalIsOpen(true);
+    // 사용자 정보가 없으면 (null이면) 로그인되지 않은 상태
+    if (!user) {
+      // 로그인되어 있지 않다면, 회원 가입 모달 열기
+      setModalIsOpen(true);
+    } else {
+      // 사용자 정보가 있다면, 포스트의 세부 정보 페이지로 이동
+      navigate(`/v1/parties/${party?.postId}`);
+    }
   };
 
   return (
@@ -28,16 +40,12 @@ const ListCard = ({ party }) => {
         </div>
       </div>
 
-      <div className={classes.listCardMeetingDate1}>
+      <div className={classes.listCardMeetingDate}>
         <span>{party?.meetingDate}</span>
       </div>
-      <div className={classes.listCardMeetingDate2}>
-        <span>{party?.meetingDate}</span>
-      </div>
-      {/* closingDate 추가되면 넣어야함 */}
-      {/* <div className={classes.listCardclosingDate}>
+      <div className={classes.listCardClosingDate}>
         <span>{party?.closingDate}</span>
-      </div> */}
+      </div>
       <div className={classes.listCardCurrentCapacity}>
         <span>{party?.currentCapacity}&nbsp;/&nbsp;</span>
       </div>
