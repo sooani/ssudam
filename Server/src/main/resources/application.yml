@@ -1,10 +1,6 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  datasource:
-    url: jdbc:h2:mem:test
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     hibernate:
       ddl-auto: create  # (1) ??? ?? ??
@@ -12,20 +8,10 @@ spring:
     properties:
       hibernate:
         format_sql: true  # (3) SQL pretty print
-  sql:
-    init:
-      data-locations: classpath*:db/h2/data.sql
   redis:
-    enable: true
-    lettuce.pool:
     host: 127.0.0.1
     port: 6379
     password:
-    lettuce:
-      pool:
-        max-active: 10
-        max-idle: 10
-        min-idle: 0
 logging:
   level:
     org:
@@ -42,7 +28,7 @@ jwt:
   refresh-token-expiration-minutes: 420
 mail:
   address:
-    admin: admin@gmail.com # 필요한 지 확인 필요
+    admin: choijh0309@naver.com
   smtp:
     host: smtp.gmail.com
     port: 587
