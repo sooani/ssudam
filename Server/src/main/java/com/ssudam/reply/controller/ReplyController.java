@@ -1,5 +1,7 @@
 package com.ssudam.reply.controller;
 
+import com.ssudam.annotation.BodyRequest;
+import com.ssudam.annotation.ReplyRequest;
 import com.ssudam.dto.SingleResponseDto;
 import com.ssudam.reply.dto.ReplyDto;
 import com.ssudam.reply.entity.Reply;
@@ -26,6 +28,7 @@ public class ReplyController {
         this.mapper = mapper;
     }
 
+    @BodyRequest
     @PostMapping
     public ResponseEntity postReply(@RequestBody @Valid ReplyDto.Post requestBody) {
         Reply reply = mapper.replyPostDtoToReply(requestBody);
@@ -35,6 +38,7 @@ public class ReplyController {
         return ResponseEntity.created(location).build();
     }
 
+    @ReplyRequest
     @PatchMapping("/{reply-id}")
     public ResponseEntity patchReply(@PathVariable("reply-id") @Positive long replyId,
                                      @RequestBody @Valid ReplyDto.Patch requestBody) {
@@ -56,6 +60,7 @@ public class ReplyController {
                 HttpStatus.OK);
     }
 
+    @ReplyRequest
     @DeleteMapping("/{reply-id}")
     public ResponseEntity deleteReply(@PathVariable("reply-id") @Positive long replyId) {
         replyService.deleteReply(replyId);

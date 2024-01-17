@@ -1,5 +1,6 @@
 package com.ssudam.party.dto;
 
+import com.ssudam.dto.MemberIdExtractable;
 import com.ssudam.party.entity.Party;
 import com.ssudam.validator.NotSpace;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public class PartyDto {
 
     @Getter
     @AllArgsConstructor
-    public static class Post {
+    public static class Post implements MemberIdExtractable {
 
         @NotBlank(message = "제목을 입력해주세요.")
         private String title;

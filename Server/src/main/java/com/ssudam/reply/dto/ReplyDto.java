@@ -1,5 +1,6 @@
 package com.ssudam.reply.dto;
 
+import com.ssudam.dto.MemberIdExtractable;
 import com.ssudam.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 public class ReplyDto {
     @AllArgsConstructor
     @Getter
-    public static class Post {
+    public static class Post implements MemberIdExtractable {
         private long commentId;
 
         private long memberId;

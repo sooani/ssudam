@@ -18,8 +18,8 @@ public class Scheduler {
         this.partyService = partyService;
     }
 
-    //    @Scheduled(cron = "0 0 */1 * * *")
-    @Scheduled(cron = "*/10 * * * * *")
+        @Scheduled(cron = "0 0 */1 * * *")
+//    @Scheduled(cron = "*/10 * * * * *")
     public void updatePartyStatus() {
 //        log.info("한 시간마다 스케줄러 동작");
         log.info("10초 마다 스케줄러 동작");

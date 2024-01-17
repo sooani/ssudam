@@ -1,5 +1,7 @@
 package com.ssudam.party.controller;
 
+import com.ssudam.annotation.BodyRequest;
+import com.ssudam.annotation.PartyRequest;
 import com.ssudam.dto.MultiResponseDto;
 import com.ssudam.dto.SingleResponseDto;
 import com.ssudam.member.entity.Member;
@@ -37,6 +39,7 @@ public class PartyController {
     }
 
     // 파티 생성
+    @BodyRequest
     @RequestMapping(value = "/v1/parties", method = RequestMethod.POST)
     public ResponseEntity postParty(@RequestBody @Valid PartyDto.Post requestBody) {
         Member member = memberService.findMember(requestBody.getMemberId());
@@ -149,7 +152,7 @@ public class PartyController {
                 HttpStatus.OK);
     }
 
-    // 파티 수정 , 작성한 사람만 수정하게 해야함
+    @PartyRequest
     @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.PATCH)
     public ResponseEntity patchParty(@PathVariable("party-id") @Positive long partyId,
                                      @Valid @RequestBody PartyDto.Patch requestBody) {
@@ -161,7 +164,7 @@ public class PartyController {
                 new SingleResponseDto<>(mapper.partyToPartyResponse(updatedParty)), HttpStatus.OK);
     }
 
-    // 파티 삭제, 작성한 사람이 삭제하게 해야함
+    @PartyRequest
     @RequestMapping(value = "/v1/parties/{party-id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteParty(@PathVariable("party-id") @Positive long partyId) {
         partyService.deleteParty(partyId);
