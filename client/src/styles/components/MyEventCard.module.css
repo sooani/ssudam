@@ -1,0 +1,20 @@
+/* MyEventCard.module.css */
+
+.CardContainer{
+    width:10vw;
+    height:10vh;
+    border: 2px solid yellow;
+    background-color: rgb(92, 183, 252);
+    display: flex; 
+    flex-direction: column;
+}
+.CardImage{
+    width:5vh;
+    height:5vh;
+}
+.CardTitle{
+    text-align: center;
+}
+.CardButton{
+    border:1px solid green;
+}

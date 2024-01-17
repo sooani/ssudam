@@ -1,5 +1,9 @@
 // EditProfile.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/userSlice';
+
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import LeaveModal from './LeaveModal';
@@ -10,7 +14,9 @@ import axios from '../axios';
 function EditProfile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [isNicknameBlurred, setIsNicknameBlurred] = useState(false);
-
+    const navigate = useNavigate();
+    const user = useSelector(selectUser)
+    
     //닉네임이랑 비번 분리안되는오류가 있는것같음
     //이부분 데이터 넣고 테스트 해보기 (초기로드시에 닉네임이 있으니까)
 
@@ -74,9 +80,24 @@ function EditProfile() {
     const GetDuplicateNickname = async (value) => {
         try {
             const response = await axios.post("/v1/members/1", { nickname: value });
-            return !response.data.result; // 사용 가능한 닉네임은 false 반환
+            if (!response.data.result) {
+                // 사용 가능한 닉네임은 false 반환
+                console.log('닉네임 중복 체크 결과: 사용 가능한 닉네임');
+                return true;
+            } else {
+                console.log('닉네임 중복 체크 결과: 이미 사용 중인 닉네임');
+                return false;
+            }
         } catch (error) {
             console.error('닉네임 중복 검사 오류:', error);
+            console.error('에러 메시지:', error.message);
+
+            if (error.response) {
+                console.error('에러 응답 데이터:', error.response.data);
+                console.error('에러 응답 상태 코드:', error.response.status);
+                console.error('에러 응답 헤더:', error.response.headers);
+            }
+    
             throw error;
         }
     }
@@ -110,6 +131,11 @@ function EditProfile() {
             alert('회원정보 수정 중 오류가 발생했습니다.');
         }
     };
+
+    if (!user) {
+        // 로그인아닐때 로그인 페이지로 이동(로그인 상태유지 부분)
+        navigate('/login');
+    }
 
 
     return (

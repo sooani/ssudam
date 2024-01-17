@@ -66,8 +66,9 @@ function LeaveModal() {
       await axios.delete('v1/members/{member-id}');
       console.log('회원 정보 삭제 성공');
       // 회원 정보 삭제 성공 시, 로컬 스토리지에서 JWT 토큰 삭제
-      localStorage.removeItem('jwtToken');
-      console.log('JWT 토큰이 로컬 스토리지에서 삭제되었습니다.');
+      // localStorage.removeItem('jwtToken');
+      // console.log('JWT 토큰이 로컬 스토리지에서 삭제되었습니다.');
+      // 토큰삭제는 구현안된부분이라고함!!
       setModalIsOpen(false);
       setLeaveSuccess(true);
     } catch (error) {
