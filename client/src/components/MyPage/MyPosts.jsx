@@ -1,6 +1,6 @@
 // MyPosts.jsx
 import React, { useState, useEffect } from 'react';
-import instance from 'axios';
+import instance from '../../axios';
 import Pagination from './Pagination';
 import classes from '../../styles/components/MyPosts.module.css';
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import Pagination from "./Pagination";
-import instance from 'axios';
+import instance from '../../axios';
 import classes from '../../styles/components/MyComment.module.css';
 
 function MyComment() {
