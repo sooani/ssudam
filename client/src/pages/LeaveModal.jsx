@@ -53,7 +53,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import classes from '../styles/pages/LeaveModal.module.css';
-import axios from '../axios';
+import instance from '../axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from "../features/userSlice";
 import { useDispatch } from 'react-redux';
@@ -66,7 +66,7 @@ function LeaveModal() {
 
   const handleLeave = async () => {
     try {
-      await axios.delete('v1/members/{member-id}');
+      await instance.delete('v1/members/{member-id}');
       console.log('회원 정보 삭제 성공');
       // 회원 정보 삭제 성공 시, 로컬 스토리지에서 JWT 토큰 삭제
       // localStorage.removeItem('jwtToken');

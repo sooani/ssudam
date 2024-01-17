@@ -13,7 +13,7 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import footerLogo from '../images/footerLogo.png';
 import classes from '../styles/pages/MyPage.module.css';
-import axios from '../axios';
+import instance from '../axios';
 // import MySlider from '../components/MyPage/MySlider';
 import MyComment from '../components/MyPage/MyComment';
 import MyPosts from '../components/MyPage/MyPosts';
@@ -28,7 +28,7 @@ const MyPage = () => {
 
     useEffect(() => {
         const fetchUserData = () => {
-            axios.get('/v1/members', { timeout: 10000 })
+            instance.get('/v1/members', { timeout: 10000 })
                 .then(response => {
                     setUserData(response.data);
                     console.log(response.data);

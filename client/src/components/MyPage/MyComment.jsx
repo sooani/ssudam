@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import Pagination from "./Pagination";
-import axios from 'axios';
+import instance from 'axios';
 import classes from '../../styles/components/MyComment.module.css';
 
 function MyComment() {
@@ -14,7 +14,7 @@ function MyComment() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get('/v1/comments');
+        const response = await instance.get('/v1/comments');
         // 이 부분에서 'comment' 필드만 추출하여 저장합니다.
         const extractedComments = response.data.data.map(comment => comment.comment);
         setComments(extractedComments);

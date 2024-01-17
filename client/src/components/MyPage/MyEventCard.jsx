@@ -1,6 +1,6 @@
 // MyEventCard.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import instance from 'axios';
 import classes from '../../styles/components/MyEventCard.module.css';
 import ssudamhand from '../../images/ssudamhand.png';
 import Pagination from './Pagination';
@@ -13,7 +13,7 @@ function MyEventCard() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`/v1/parties?partyMemberId=1&_page=${page}&_limit=${eventsPerPage}`);
+        const response = await instance.get(`/v1/parties?partyMemberId=1&_page=${page}&_limit=${eventsPerPage}`);
         setEvents(response.data.data);
       } catch (error) {
         console.error('나의 모임 받아오기 오류:', error);

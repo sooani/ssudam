@@ -9,7 +9,7 @@ import Footer from '../components/Layout/Footer';
 import LeaveModal from './LeaveModal';
 import classes from '../styles/pages/EditProfile.module.css';
 import { useForm } from "react-hook-form";
-import axios from '../axios';
+import instance from '../axios';
 
 function EditProfile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -62,7 +62,7 @@ function EditProfile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/v1/members/1` , { timeout: 10000 });  
+                const response = await instance.get(`/v1/members/1` , { timeout: 10000 });  
                 const { email, nickname } = response.data.data;
 
                 setValue('email', email);  
@@ -79,7 +79,7 @@ function EditProfile() {
     //닉네임 중복검사! 이거 엔드포인트가 달라야하는지???
     const GetDuplicateNickname = async (value) => {
         try {
-            const response = await axios.post("/v1/members/1", { nickname: value });
+            const response = await instance.post("/v1/members/1", { nickname: value });
             if (!response.data.result) {
                 // 사용 가능한 닉네임은 false 반환
                 console.log('닉네임 중복 체크 결과: 사용 가능한 닉네임');
@@ -119,7 +119,7 @@ function EditProfile() {
                 };
             }
     
-            await axios.post('/v1/members/1', updatedUserData, {
+            await instance.post('/v1/members/1', updatedUserData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },

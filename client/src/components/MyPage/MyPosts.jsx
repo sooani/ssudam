@@ -1,6 +1,6 @@
 // MyPosts.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import instance from 'axios';
 import Pagination from './Pagination';
 import classes from '../../styles/components/MyPosts.module.css';
 
@@ -13,7 +13,7 @@ function MyPosts() {
   useEffect(() => {
     const fetchPartyTitles = async () => {
       try {
-        const response = await axios.get('/v1/comments');
+        const response = await instance.get('/v1/comments');
         const extractedPartyTitles = response.data.data.map(comment => comment.partyTitle);
         setPartyTitles(extractedPartyTitles);
       } catch (error) {
