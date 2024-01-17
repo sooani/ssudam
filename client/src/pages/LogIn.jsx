@@ -73,6 +73,7 @@ const LogIn = () => {
         // const { email, memberId, nickname } = response.data;
         const accessToken = response.headers.authorization;
 
+        localStorage.setItem("Authorization", accessToken);
         const tokenWithoutBearer = accessToken.replace("Bearer ", "");
         console.log(tokenWithoutBearer);
         // 토큰 해석
