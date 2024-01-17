@@ -16,8 +16,7 @@ import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import weatherDescKo from "../components/Meeting/weatherDescKo";
-const DetailPost = () => {
-  const [address, setAddress] = useState({}); // 도로명 주소
+const DetailReview = () => {
   const [comments, setComments] = useState(null); // 전체 댓글
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
   const [meetingInfo, setMeetingInfo] = useState(null); // 현재 파티의 정보
@@ -34,7 +33,7 @@ const DetailPost = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const [weather, setWeather] = useState("");
   const commentsPerPage = 10; // 한 페이지에 표시할 댓글 수
-  const { meetingId } = useParams();
+  const { reviewId } = useParams();
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
@@ -756,4 +755,4 @@ const DetailPost = () => {
     </div>
   );
 };
-export default DetailPost;
+export default DetailReview;

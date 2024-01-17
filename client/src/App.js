@@ -10,6 +10,9 @@ import EditProfile from "./pages/EditProfile";
 import EditPost from "./pages/EditPost";
 import DetailPost from "./pages/DetailPost";
 import SignUpModal from "./pages/SignUpModal";
+import MakeReview from "./pages/MakeReview";
+import EditReview from "./pages/EditReview";
+import Freeboard from "./pages/Freeboard";
 
 function App() {
   return (
@@ -25,6 +28,10 @@ function App() {
 
         <Route path="/meetings/:meetingId/edit" element={<EditPost />} />
         <Route path="/meetings/:meetingId" element={<DetailPost />} />
+        <Route path="/reviews/new" element={<MakeReview />} />
+        <Route path="/reviews/:reviewId/edit" element={<EditReview />} />
+        <Route path="/reviews/:reviewId" element={<DetailPost />} />
+        <Route path="/freeboard" element={<Freeboard />} />
       </Routes>
     </BrowserRouter>
   );
