@@ -1,6 +1,6 @@
 // EditProfile.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams  } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
 
@@ -15,7 +15,8 @@ function EditProfile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [isNicknameBlurred, setIsNicknameBlurred] = useState(false);
     const navigate = useNavigate();
-    const user = useSelector(selectUser)
+    const user = useSelector(selectUser);
+    const { memberId } = useParams(); 
     
     //닉네임이랑 비번 분리안되는오류가 있는것같음
     //이부분 데이터 넣고 테스트 해보기 (초기로드시에 닉네임이 있으니까)
@@ -62,7 +63,7 @@ function EditProfile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await instance.get(`/v1/members/1` , { timeout: 10000 });  
+                const response = await instance.get(`/v1/members/${memberId}` , { timeout: 10000 });  
                 const { email, nickname } = response.data.data;
 
                 setValue('email', email);  
@@ -74,7 +75,7 @@ function EditProfile() {
         };
 
         fetchData();
-    }, []);  
+    }, [memberId]);  
 
     //닉네임 중복검사! 이거 엔드포인트가 달라야하는지???
     const GetDuplicateNickname = async (value) => {

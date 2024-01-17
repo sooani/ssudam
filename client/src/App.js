@@ -20,8 +20,8 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/mypage/:memberId" element={<MyPage />} />
+        <Route path="/edit-profile/:memberId" element={<EditProfile />} />
 
         <Route path="/meetings/:meetingId/edit" element={<EditPost />} />
         <Route path="/meetings/:meetingId" element={<DetailPost />} />

@@ -4,7 +4,7 @@
 
 // MyPage.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; 
 import { selectUser } from '../features/userSlice';
@@ -24,11 +24,12 @@ const MyPage = () => {
     const [userData, setUserData] = useState({});
     // const isAuthenticated = useSelector((state) => state.user.user !== null);
     const navigate = useNavigate();
-    const user = useSelector(selectUser)
+    const user = useSelector(selectUser);
+    const { memberId } = useParams(); 
 
     useEffect(() => {
         const fetchUserData = () => {
-            instance.get('/v1/members', { timeout: 10000 })
+            instance.get(`/v1/members/${memberId}`, { timeout: 10000 })
                 .then(response => {
                     setUserData(response.data);
                     console.log(response.data);
@@ -39,7 +40,7 @@ const MyPage = () => {
         };
 
         fetchUserData();
-    }, []);
+    }, [memberId]);
 
     //깃 푸시할때 아래부분 주석 꼭 해제하기!
     // 로그인아닐때 로그인 페이지로 이동 (로그인 상태유지 부분)
