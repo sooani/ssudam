@@ -39,16 +39,16 @@ const ListCard = ({ party }) => {
       </div>
 
       <div className={classes.listCardMeetingDate}>
-        <span>{party?.meetingDate}</span>
+        <span>모임날짜 : {party?.meetingDate}</span>
       </div>
       <div className={classes.listCardClosingDate}>
-        <span>{party?.closingDate}</span>
+        <span>모집마감일 : {party?.closingDate}</span>
       </div>
       <div className={classes.listCardCurrentCapacity}>
-        <span>{party?.currentCapacity}&nbsp;/&nbsp;</span>
+        <span>인원 : {party?.currentCapacity}&nbsp;/&nbsp;</span>
       </div>
       <div className={classes.listCardMaxCapacity}>
-        <span>{party?.maxCapacity}</span>
+        <span>{party?.maxCapacity} </span>
       </div>
       <button className={classes.gotoPost} onClick={handlePostClick}>
         모임 가기
