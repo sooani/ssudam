@@ -9,8 +9,8 @@ spring:
   thymeleaf:
       cache: false
   jpa:
-    hibernate:
-      ddl-auto: create  # (1) ??? ?? ??
+#    hibernate:
+#      ddl-auto: create  # (1) ??? ?? ??
     show-sql: true      # (2) SQL ?? ??
     properties:
       hibernate:
