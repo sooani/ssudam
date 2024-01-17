@@ -23,7 +23,7 @@ public class BookmarkController {
     @PostMapping("/parties/{party-id}")
     public ResponseEntity toggleBookmarkToParty(@PathVariable("party-id") @Positive long partyId,
                                                 @RequestParam @Positive long memberId) {
-        bookmarkService.toggleBookmark(memberId, partyId);
+        bookmarkService.toggleBookmark(partyId, memberId);
         return ResponseEntity.ok().build();
     }
 
