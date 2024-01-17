@@ -55,6 +55,7 @@ import Modal from 'react-modal';
 import classes from '../styles/pages/LeaveModal.module.css';
 import axios from '../axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { logout } from "../features/userSlice";
 
 function LeaveModal() {
   const navigate = useNavigate();
@@ -71,6 +72,7 @@ function LeaveModal() {
       // 토큰삭제는 구현안된부분이라고함!!
       setModalIsOpen(false);
       setLeaveSuccess(true);
+      dispatch(logout()); // 로그아웃 액션 호출
     } catch (error) {
       console.error('회원 정보 삭제 실패:', error);
     }
@@ -81,7 +83,7 @@ function LeaveModal() {
       setTimeout(() => {
         setLeaveSuccess(false);
         navigate('/'); // 메인 화면으로 이동
-      }, 2000);
+      });
     }
   }, [leaveSuccess, navigate]);
 
