@@ -74,7 +74,9 @@ public class TodoListControllerTest {
         System.out.println("[ postTodo test ]");
 
         // given
-        TodoListDto.Post post = new TodoListDto.Post("쓰레기 줍기", 1);
+        TodoListDto.Post post = (TodoListDto.Post) TodoListStub.getRequestBody(HttpMethod.POST);
+        String content = gson.toJson(post);
+
         given(mapper.todoPostDtoToTodoList(any(TodoListDto.Post.class)))
                 .willReturn(new TodoList());
 
@@ -82,12 +84,6 @@ public class TodoListControllerTest {
         mockTodoList.setTodolistId(1L);
         given(todoListService.createTodoList(any(TodoList.class)))
                 .willReturn(mockTodoList);
-
-        Gson gson = new Gson();
-
-        String content = gson.toJson(post);
-        URI uri = UriComponentsBuilder.newInstance().path("/v1/todos").build().toUri();
-        System.out.println("JSON : " + content);
 
         // when
         ResultActions actions =
@@ -101,7 +97,7 @@ public class TodoListControllerTest {
         actions
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", is(startsWith("/v1/todos/"))))
-                .andDo(document("post-TodoList",
+                .andDo(document("post-todolist",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestFields(
@@ -133,13 +129,7 @@ public class TodoListControllerTest {
         given(todoListService.updateTodoList(any(TodoList.class))).willReturn(new TodoList());
         given(mapper.todoToTodoListResponseDto(any(TodoList.class))).willReturn(responseDto);
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext) ->
-                        new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
-                .create();
-
         String content = gson.toJson(patch);
-        System.out.println("Json : " + content);
 
         // when
         ResultActions actions =
@@ -251,10 +241,8 @@ public class TodoListControllerTest {
         queryParams.add("page", page);
         queryParams.add("size", size);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/v1/todos").build().toUri();
-
         // when
-        ResultActions actions = mockMvc.perform(get(uri)
+        ResultActions actions = mockMvc.perform(get("/v1/todos")
                 .params(queryParams)
                 .accept(MediaType.APPLICATION_JSON));
 

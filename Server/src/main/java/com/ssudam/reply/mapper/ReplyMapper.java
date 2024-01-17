@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 public interface ReplyMapper {
     static ReplyMapper create() {
         return Mappers.getMapper(ReplyMapper.class);
-    }
+}
 
     default Reply replyPostDtoToReply(ReplyDto.Post requestBody) {
         Member member = new Member();

@@ -4,13 +4,15 @@ import com.ssudam.dto.MemberIdExtractable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 
 public class ReviewDto {
-    @Getter
     @AllArgsConstructor
+    @Getter
     public static class Post implements MemberIdExtractable {
         @Positive
         private long memberId;
@@ -18,34 +20,27 @@ public class ReviewDto {
         private String title;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String content;
-
-        public Post(long memberId) {
-            this.memberId = memberId;
-        }
     }
 
     @Getter
+    @Setter
+    @AllArgsConstructor
     public static class Patch {
         private long reviewId;
-        @NotBlank(message = "제목은 필수 입력 사항입니다.")
+
         private String title;
 
-        @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String content;
-
-        public void addReviewId(long reviewId) {
-            this.reviewId = reviewId;
-        }
-
     }
 
     @Getter
     @Builder
     public static class Response {
+        private long memberId;
         private long reviewId;
         private String title;
         private String content;
-        private String createdAt;
-        private String modifiedAt;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 }

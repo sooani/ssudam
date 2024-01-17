@@ -3,6 +3,7 @@ package com.ssudam.review.controller;
 import com.ssudam.annotation.BodyRequest;
 import com.ssudam.annotation.ReviewRequest;
 import com.ssudam.dto.MultiResponseDto;
+import com.ssudam.dto.SingleResponseDto;
 import com.ssudam.review.dto.ReviewDto;
 import com.ssudam.review.entity.Review;
 import com.ssudam.review.mapper.ReviewMapper;
@@ -36,7 +37,7 @@ public class ReviewController {
     @BodyRequest
     @PostMapping
     public ResponseEntity postReview(@RequestBody @Valid ReviewDto.Post requestBody) {
-        Review review = mapper.reiviewPostDtoToReview(requestBody);
+        Review review = mapper.reviewPostDtoToReview(requestBody);
         Review createdReview = reviewService.createReview(review);
         URI location = UriCreator.createUri(REVIEW_DEFAULT_URL, createdReview.getReviewId());
 
@@ -45,24 +46,30 @@ public class ReviewController {
 
     // 후기 수정
     @ReviewRequest
-    @PutMapping("/{review-id}")
+    @PatchMapping("/{review-id}")
     public ResponseEntity patchReview(@PathVariable("review-id") @Positive long reviewId,
                                       @Valid @RequestBody ReviewDto.Patch requestBody) {
-        requestBody.addReviewId(reviewId);
-        Review updatedReview = reviewService.updateReview(mapper.reviewPatchDtoToReview(requestBody));
+        requestBody.setReviewId(reviewId);
+        Review review = mapper.reviewPatchDtoToReview(requestBody);
+        Review updatedReview = reviewService.updateReview(review);
 
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.reviewToReviewResponseDto(updatedReview));
+        return new ResponseEntity(
+                new SingleResponseDto<>
+                        (mapper.reviewToReviewResponseDto(updatedReview)), HttpStatus.OK);
     }
 
-    // 해당 멤버가 쓴 후기 조회
-    @GetMapping("/{member-id}/reviews")
+    // 특정 멤버 후기 조회
+    @GetMapping("/{member-id}")
     public ResponseEntity getReviewsByMember(@PathVariable("member-id") @Positive long memberId,
                                              @Positive @RequestParam int page,
                                              @Positive @RequestParam int size) {
-        Page<Review> pageReview = reviewService.findAllReviewsByMemberId(memberId, page - 1, size);
+        Page<Review> pageReview
+                = reviewService.findAllReviewsByMemberId(memberId, page - 1, size);
         List<Review> reviews = pageReview.getContent();
 
-        return ResponseEntity.ok(new MultiResponseDto<>(mapper.reviewsToReviewResponseDtos(reviews), pageReview));
+        return new ResponseEntity(
+                new MultiResponseDto<>
+                        (mapper.reviewsToReviewResponseDtos(reviews), pageReview), HttpStatus.OK);
     }
 
     // 전체 후기 조회
@@ -72,7 +79,9 @@ public class ReviewController {
         Page<Review> pageReview = reviewService.findAll(page, size);
         List<Review> reviews = pageReview.getContent();
 
-        return ResponseEntity.ok(new MultiResponseDto(mapper.reviewsToReviewResponseDtos(reviews), pageReview));
+        return new ResponseEntity(
+                new MultiResponseDto<>
+                        (mapper.reviewsToReviewResponseDtos(reviews), pageReview), HttpStatus.OK);
     }
 
     // 후기 삭제
@@ -80,7 +89,7 @@ public class ReviewController {
     @DeleteMapping("/{review-id}")
     public ResponseEntity deleteReview(@PathVariable("review-id") long reviewId) {
         reviewService.deleteReview(reviewId);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 

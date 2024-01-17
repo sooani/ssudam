@@ -43,7 +43,8 @@ public class ReviewService {
     public Page<Review> findAllReviewsByMemberId(long memberId, int page, int size) {
         // 해당 멤버 ID에 대한 리뷰를 가져오는 리포지토리 메서드 호출
         List<Review> reviews = reviewRepository.findByMember_MemberId(memberId);
-        Page<Review> pageReviews = new PageImpl<>(reviews, PageRequest.of(page, size, Sort.by("createdAt").descending()), reviews.size());
+        Page<Review> pageReviews = new PageImpl<>(reviews, PageRequest.of
+                (page, size, Sort.by("createdAt").descending()), reviews.size());
 
         return pageReviews;
     }
