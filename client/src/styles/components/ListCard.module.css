@@ -11,16 +11,16 @@
   overflow: hidden;
   /* border: 1px solid black; */
   /* text-align: center; */
-  background-color: #b5ee63;
+  background-color: #66ff00;
   border-radius: 10px;
 }
 
 .listCardTitle {
   text-align: left;
   padding-top: 30px;
-  padding-left: 6%;
-  font-size: 1.25rem;
-  font-weight: 600;
+  padding-left: 3%;
+  font-size: 1.5rem;
+  font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -37,13 +37,15 @@
 }
 
 .listCardMeetingDate {
-  display: flex;
-  font-size: 0.7rem;
-  padding-top: 4vh;
+  /* display: flex; */
+  font-size: 0.9rem;
+  padding-top: 3vh;
+  text-align: justify;
 }
 .listCardClosingDate {
-  display: flex;
-  font-size: 0.7rem;
+  /* display: flex; */
+  font-size: 0.9rem;
+  text-align: justify;
 }
 .listCardCurrentCapacity {
   display: inline;
@@ -52,7 +54,11 @@
   display: inline;
 }
 .gotoPost {
-  background-color: aqua;
+  background-color: rgb(0, 213, 255);
+  height: 3vh;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 .gotoPost:hover {
   cursor: pointer;
