@@ -25,7 +25,7 @@ const reissueToken = () => {
                 dispatch(updateAccessToken(newAccessToken));
 
                 // 새로운 액세스 토큰을 로컬 스토리지에 저장
-                localStorage.setItem('accessToken', newAccessToken);
+                localStorage.setItem('Authorization', newAccessToken);
             })
             .catch(error => {
                 console.error('액세스 토큰 갱신 실패:', error);
