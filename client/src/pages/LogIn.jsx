@@ -80,7 +80,7 @@ const LogIn = () => {
 
         console.log(decoded);
 
-        localStorage.setItem("Authorization", accessToken);
+        localStorage.setItem("accessToken", accessToken);
 
         // localStorage.setItem("email", email);
         // localStorage.setItem("memberId", memberId);
@@ -103,7 +103,7 @@ const LogIn = () => {
         navigate("/");
       })
       .catch((error) => {
-        // 서버로부터 에러 응답이 온 경우
+        // 서버로부터 에러 응답이 온 경우 에러 코드에 맞춰 에러메시지 수정
         if (error.response) {
           setError("이메일/비밀번호가 일치하지 않습니다.");
         } else {
