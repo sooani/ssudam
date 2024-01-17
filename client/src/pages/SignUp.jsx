@@ -60,18 +60,21 @@ const SignUp = () => {
             return;
         }
 
-        axios.post('/v1/members', {
+        const memberDTO = {
             email: email,
             nickname: nickname,
             password: password,
             confirmPassword: confirmPassword,
-        },
-        {
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Accept' : 'application/json',
-            }
-        })
+          };
+          console.log(memberDTO);
+          axios
+            .post("/v1/members", memberDTO, {
+              headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                Accept: "application/json",
+              },
+            })
+
         .then((response) => {
             // 회원가입 성공 시 입력 필드 초기화, 메인페이지로 이동
             console.log(response)
