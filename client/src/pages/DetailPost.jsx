@@ -346,9 +346,7 @@ const DetailPost = () => {
         axios
 
           .post(`/v1/parties/${meetingId}`, {
-            memberId: loggedInUser.id,
-            email: loggedInUser.email,
-            nickname: loggedInUser.nickname,
+            memberId: loggedInUser.memberId,
           })
           .then((response) => {
             setMeetingInfo((prev) => ({
@@ -378,8 +376,6 @@ const DetailPost = () => {
 
           .post(`/v1/parties/${meetingId}`, {
             memberId: loggedInUser.memberId,
-            email: loggedInUser.email,
-            nickname: loggedInUser.nickname,
           })
           .then((response) => {
             console.log(response);
