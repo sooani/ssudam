@@ -132,10 +132,11 @@ function EditProfile() {
         }
     };
 
-    if (!user) {
-        // 로그인아닐때 로그인 페이지로 이동(로그인 상태유지 부분)
-        navigate('/login');
-    }
+    // 로그인아닐때 로그인 페이지로 이동(로그인 상태유지 부분)
+    //푸시할때 주석해제
+    // if (!user) {
+    //     navigate('/login');
+    // }
 
 
     return (
