@@ -402,21 +402,21 @@ const DetailPost = () => {
   };
   // 참여 중 여부를 업데이트하는 로직
   // 현재 로그인한 사용자가 참여 중인 파티를 요청하고 그중에 현재 파티가 있을 경우 참여중으로 판단
-  useEffect(() => {
-    axios
-      .get(`/v1/parties?partyMemberId=${loggedInUser.memberId}&page=1&size=3`)
-      .then((response) => {
-        const hasParticipatingParty = response.data.data.some(
-          (item) => item.partyId == meetingId
-        );
+  // useEffect(() => {
+  //   axios
+  //     .get(`/v1/parties?partyMemberId=${loggedInUser.memberId}&page=1&size=3`)
+  //     .then((response) => {
+  //       const hasParticipatingParty = response.data.data.some(
+  //         (item) => item.partyId == meetingId
+  //       );
 
-        setIsParticipating(hasParticipatingParty);
-      })
-      .catch((error) => {
-        console.error("Error updating meeting data: ", error);
-        alert("오류가 발생했습니다!");
-      });
-  }, [meetingInfo]);
+  //       setIsParticipating(hasParticipatingParty);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error updating meeting data: ", error);
+  //       alert("오류가 발생했습니다!");
+  //     });
+  // }, [meetingInfo]);
   useEffect(() => {
     axios
       .get(
