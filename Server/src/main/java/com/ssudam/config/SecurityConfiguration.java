@@ -76,6 +76,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/*/todos/**").hasRole("ADMIN")
                         .antMatchers(HttpMethod.GET, "/*/todos").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/*/todos/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.PUT, "/*/todos/**").hasRole("ADMIN")
                         .antMatchers(HttpMethod.POST, "/*/reviews").hasRole("USER")
                         .antMatchers(HttpMethod.PATCH, "/*/reviews/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/reviews").permitAll()
@@ -94,9 +95,13 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
-
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"
+                ,"http://localhost:3000"
+                ,"http://ssdam.s3-website.ap-northeast-2.amazonaws.com"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "PUT"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh", "Location"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
