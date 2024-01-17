@@ -33,7 +33,7 @@ const Header = () => {
     navigate('/login');
   };
   const gotoSignUp = () => {
-    navigate('/signUp');
+    navigate('/signup');
   };
   const gotoMyPage = () => {
     // 마이페이지로 이동
