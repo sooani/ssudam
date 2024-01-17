@@ -197,7 +197,7 @@ public class PartyService {
     public boolean isJoinParty(Long memberId, Long partyId) {
         Member member = memberService.findMember(memberId);
         Party party = findVerifiedParty(partyId);
-        return !partyMemberRepository.existsByMemberAndParty(member, party);
+        return partyMemberRepository.existsByMemberAndParty(member, party);
     }
 
     // 파티 참가인원 증가
