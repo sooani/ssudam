@@ -27,7 +27,7 @@ const MainPage = () => {
       .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
         setData(response.data.data);
-        setPage(response.data.data);
+        setPage(response.data.pageInfo);
       })
       .catch((error) => {
         console.error('Error party data:', error);

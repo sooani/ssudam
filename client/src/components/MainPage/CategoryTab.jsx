@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
 import PaginationBar from './PaginationBar';
 
+// 모집중 / 모집완료 탭을 구분 하는 컴포넌트
+
 const CategoryTab = () => {
   const [activeTab, setActiveTab] = useState('recruiting');
   const [recruitingData, setRecruitingData] = useState([]);
@@ -62,17 +64,25 @@ const CategoryTab = () => {
       <div>
         <button
           onClick={() => handleTabChange('recruiting')}
-          style={{ fontWeight: activeTab === 'recruiting' ? 'bold' : 'normal' }}
+          style={{
+            fontWeight: activeTab === 'recruiting' ? 'bold' : 'normal',
+            background: 'transparent',
+            fontSize: '1.25rem',
+          }}
           className={activeTab === 'recruiting' ? 'active' : ''}
         >
-          모집중
+          <p className={classes.join}>모집중</p>
         </button>
         <button
           onClick={() => handleTabChange('completed')}
-          style={{ fontWeight: activeTab === 'completed' ? 'bold' : 'normal' }}
+          style={{
+            fontWeight: activeTab === 'completed' ? 'bold' : 'normal',
+            background: 'transparent',
+            fontSize: '1.25rem',
+          }}
           className={activeTab === 'completed' ? 'active' : ''}
         >
-          모집완료
+          <p>모집완료</p>
         </button>
       </div>
 

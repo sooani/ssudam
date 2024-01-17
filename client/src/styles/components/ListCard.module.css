@@ -6,11 +6,13 @@
 }
 .listCard {
   margin: 10px 0 0 10px;
-  height: 17vh;
+  height: auto;
   width: 14vw;
+  overflow: hidden;
   /* border: 1px solid black; */
   /* text-align: center; */
   background-color: #b5ee63;
+  border-radius: 10px;
 }
 
 .listCardTitle {
@@ -21,6 +23,7 @@
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .listCardContent {
@@ -30,6 +33,7 @@
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .listCardMeetingDate {
