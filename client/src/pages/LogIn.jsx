@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../features/userSlice";
-import axios from "axios";
-import classes from "../styles/pages/LogIn.module.css";
-import { jwtDecode } from "jwt-decode";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../features/userSlice';
+import instance from '../axios';
+import classes from '../styles/pages/LogIn.module.css';
+import { jwtDecode } from 'jwt-decode';
 // 해결할 문제
 // 오류메시지 css 수정
 // 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
@@ -12,9 +12,9 @@ import { jwtDecode } from "jwt-decode";
 // 더 추가될 수 있음
 
 const LogIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -22,33 +22,33 @@ const LogIn = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
-    console.log("handleLogin 함수 호출");
+    console.log('handleLogin 함수 호출');
     e.preventDefault();
 
     // 이메일이나 비밀번호를 입력하지 않았을 때
-    if (email === "") {
+    if (email === '') {
       setEmailError(true);
       setTimeout(() => setEmailError(false), 1500);
     } else {
       setEmailError(false);
     }
 
-    if (password === "") {
+    if (password === '') {
       setPasswordError(true);
       setTimeout(() => setPasswordError(false), 1500);
     } else {
       setPasswordError(false);
     }
 
-    if (email === "" || password === "") {
-      setError("이메일 또는 비밀번호를 입력하세요.");
-      console.log("이메일 또는 비밀번호를 입력하세요.");
+    if (email === '' || password === '') {
+      setError('이메일 또는 비밀번호를 입력하세요.');
+      console.log('이메일 또는 비밀번호를 입력하세요.');
       return;
     }
 
-    axios
+    instance
       .post(
-        "/v1/auth/login",
+        '/v1/auth/login',
         {
           username: email,
           password: password,
@@ -56,32 +56,32 @@ const LogIn = () => {
         {
           headers: {
             // 'Content-Type' : 'application/json', //클라이언트가 서버한테 요청하는(원하는) 타입
-            "Content-Type": "application/json;charset=UTF-8",
+            'Content-Type': 'application/json;charset=UTF-8',
             // 서버로부터 받고자 하는 응답 데이터의 타입
-            Accept: "application/json",
+            Accept: 'application/json',
             // CORS 정책에 관련된 헤더, '*' 값은 모든 도메인에서 이 서버에 접근할 수 있다는 것
             // 보안상의 이유로 '*' 대신에 특정 도메인을 명시하는 것이 좋으니 url 나오면 수정(?)
-            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Origin': '*',
           },
         }
       )
       .then((response) => {
         console.log(response.data);
         console.log(response.headers.authorization); // Authorization 헤더 값, 주로 인증토큰 담고있음
-        console.log("로그인 되었습니다!");
+        console.log('로그인 되었습니다!');
 
         // const { email, memberId, nickname } = response.data;
         const accessToken = response.headers.authorization;
 
-        localStorage.setItem("Authorization", accessToken);
-        const tokenWithoutBearer = accessToken.replace("Bearer ", "");
+        localStorage.setItem('Authorization', accessToken);
+        const tokenWithoutBearer = accessToken.replace('Bearer ', '');
         console.log(tokenWithoutBearer);
         // 토큰 해석
         const decoded = jwtDecode(tokenWithoutBearer);
 
         console.log(decoded);
 
-        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem('accessToken', accessToken);
 
         // localStorage.setItem("email", email);
         // localStorage.setItem("memberId", memberId);
@@ -98,19 +98,19 @@ const LogIn = () => {
         );
 
         // 로그인 성공 시 입력 필드 초기화, 메인 페이지로 이동
-        setEmail("");
-        setPassword("");
+        setEmail('');
+        setPassword('');
 
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
         // 서버로부터 에러 응답이 온 경우 에러 코드에 맞춰 에러메시지 수정
         if (error.response) {
-          setError("이메일/비밀번호가 일치하지 않습니다.");
+          setError('이메일/비밀번호가 일치하지 않습니다.');
         } else {
           // 네트워크 오류 등으로 인한 경우
-          console.error("로그인 오류:", error.message);
-          setError("로그인 중 오류가 발생했습니다.");
+          console.error('로그인 오류:', error.message);
+          setError('로그인 중 오류가 발생했습니다.');
         }
       });
   };
@@ -132,7 +132,7 @@ const LogIn = () => {
             />
             <label
               htmlFor="email"
-              className={emailError ? classes.warning : ""}
+              className={emailError ? classes.warning : ''}
             >
               이메일
             </label>
@@ -148,12 +148,12 @@ const LogIn = () => {
             />
             <label
               htmlFor="pw"
-              className={passwordError ? classes.warning : ""}
+              className={passwordError ? classes.warning : ''}
             >
               비밀번호
             </label>
           </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
           <div className={classes.btnArea}>
             <button type="submit">로그인</button>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal'
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import instance from '../axios';
 import classes from "../styles/pages/SignUpModal.module.css"
 
 // 해결할 문제
@@ -60,7 +60,7 @@ const SignUpModal = ({isOpen, onClose}) => {
             return;
         }
 
-        axios.post('/v1/members', {
+        instance.post('/v1/members', {
             email: email,
             nickname: nickname,
             password: password,

@@ -5,7 +5,7 @@ import banner from '../images/banner.png';
 import TodoList from '../components/MainPage/TodoList';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
-import axios from '../axios';
+import instance from '../axios';
 import React, { useState, useEffect } from 'react';
 
 /*
@@ -23,7 +23,7 @@ const MainPage = () => {
 
   // 메인 모집중 게시글
   useEffect(() => {
-    axios
+    instance
       .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
         setData(response.data.data);
@@ -36,7 +36,7 @@ const MainPage = () => {
 
   // 새로운 모임
   useEffect(() => {
-    axios
+    instance
       .get(`/v1/parties/latest?page=${page}&size=12`)
       .then((response) => {
         setLatest(response.data.data);

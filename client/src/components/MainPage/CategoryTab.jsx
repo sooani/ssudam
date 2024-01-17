@@ -1,5 +1,5 @@
 import classes from '../../styles/components/CategoryTab.module.css';
-import axios from 'axios';
+import instance from '../../axios';
 import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
 import PaginationBar from './PaginationBar';
@@ -19,7 +19,7 @@ const CategoryTab = () => {
 
   const fetchParties = async (page, status) => {
     try {
-      const response = await axios.get(
+      const response = await instance.get(
         `/v1/parties?page=${page}&size=12&status=${status}`
       );
       const { data } = response;

@@ -1,11 +1,11 @@
 import classes from '../../styles/components/TodoList.module.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import instance from '../../axios';
 const TodoList = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = () => {
-      axios
+      instance
         .get(`/v1/todos?page=1&size=3`)
         .then((response) => {
           setData(response.data.data);
