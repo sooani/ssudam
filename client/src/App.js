@@ -13,6 +13,7 @@ import SignUpModal from "./pages/SignUpModal";
 import MakeReview from "./pages/MakeReview";
 import EditReview from "./pages/EditReview";
 import Freeboard from "./pages/Freeboard";
+import DetailReview from "./pages/DetailReview";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path="/meetings/:meetingId" element={<DetailPost />} />
         <Route path="/reviews/new" element={<MakeReview />} />
         <Route path="/reviews/:reviewId/edit" element={<EditReview />} />
-        <Route path="/reviews/:reviewId" element={<DetailPost />} />
+        <Route path="/reviews/:reviewId" element={<DetailReview />} />
         <Route path="/freeboard" element={<Freeboard />} />
       </Routes>
     </BrowserRouter>

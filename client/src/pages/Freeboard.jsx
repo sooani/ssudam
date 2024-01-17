@@ -75,12 +75,7 @@ const Freeboard = () => {
                   <div className={classes.box1_title}> {post.title}</div>
                 </div>
                 <div className={classes.box2}>
-                  {post.memberId}{" "}
-                  {new Date(post.createdAt).toLocaleString("ko-KR", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                  })}
+                  {post.memberId} {post.createdAt.split("T")[0]}
                 </div>
               </div>
             ))}
