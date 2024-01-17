@@ -53,11 +53,11 @@ const Header = () => {
           <Link to="/">쓰담</Link>
         </h1>
         <div className={classes.loginElement}>
-          <button className={classes.postRegister} onClick={gotoPost}>
-            새 글 쓰기
-          </button>
           {user ? (
             <>
+              <button className={classes.postRegister} onClick={gotoPost}>
+                새 글 쓰기
+              </button>
               <button className={classes.logout} onClick={handleLogout}>
                 로그아웃
               </button>
@@ -67,6 +67,9 @@ const Header = () => {
             </>
           ) : (
             <>
+              <button className={classes.postRegister} onClick={gotoSignUp}>
+                새 글 쓰기
+              </button>
               <button className={classes.login} onClick={gotoLogin}>
                 로그인
               </button>
