@@ -75,7 +75,7 @@ const Freeboard = () => {
                   <div className={classes.box1_title}> {post.title}</div>
                 </div>
                 <div className={classes.box2}>
-                  {post.memberId} {post.createdAt.split("T")[0]}
+                  {post.createdAt.split("T")[0]}
                 </div>
               </div>
             ))}

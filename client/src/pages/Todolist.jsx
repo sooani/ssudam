@@ -12,13 +12,18 @@ const Todolist = () => {
   const [totalPages, setTotalPages] = useState(null); // 전체 페이지 수
   const [totalLength, setTotalLength] = useState(null); // 전체 투두 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-  const commentsPerPage = 10; // 한 페이지에 표시할 투두 수
+  const commentsPerPage = 5; // 한 페이지에 표시할 투두 수
   const [todos, setTodos] = useState([]);
   const [page, setPage] = useState(1);
   const [entered, setEntered] = useState("");
   const loggedInUser = useSelector(selectUser);
   const [editMode, setEditMode] = useState(null);
+  const [order, setOrder] = useState("");
+  const [editedTitle, setEditedTitle] = useState(null);
+  const [editedOrder, setEditedOrder] = useState(null);
   const navigate = useNavigate();
+  const [selectedTab, setSelectedTab] = useState(1);
+  const [total, setTotal] = useState(null);
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);
@@ -26,25 +31,29 @@ const Todolist = () => {
   useEffect(() => {
     console.log(commentsPerPage);
     console.log(currentPage);
-  }, [commentsPerPage, currentPage]);
-  useEffect(() => {
+    console.log(selectedTab);
     getTodos(currentPage, commentsPerPage);
-  }, [currentPage, commentsPerPage]);
+  }, [commentsPerPage, currentPage]);
+
   const getTodos = async (currentPage, commentsPerPage) => {
     console.log(currentPage, commentsPerPage);
     let page = currentPage ? currentPage : 1;
-    let size = commentsPerPage ? commentsPerPage : 10;
+    let size = commentsPerPage ? commentsPerPage : 5;
     try {
       // pagination 동작하면 size와 page 값을 동적으로 줘야 함.
       const res = await axios.get(`/v1/todos?page=${page}&size=${size}`);
-      const todos = res.data.data;
+      const allTodos = res.data.data;
+
+      //   const filteredTodos = allTodos.filter(
+      //     (todo) => todo.todoOrder === selectedTab
+      //   );
+      //   console.log(filteredTodos);
       const totalPages = res.data.pageInfo.totalPages;
       const totalLength = res.data.pageInfo.totalElements;
-      console.log(totalPages);
+
       setTotalPages(totalPages);
       setTotalLength(totalLength);
-      console.log(todos);
-      setTodos(todos);
+      setTodos(allTodos);
       console.log("todos are updated successfully");
     } catch (error) {
       console.error("Error fetching todo datas: ", error);
@@ -52,25 +61,40 @@ const Todolist = () => {
   };
 
   const addTodo = () => {
-    setTodos([
-      ...todos,
-      { id: todos.length + 1, text: entered, completed: false },
-    ]);
+    if (totalLength === 3) {
+      alert(
+        "최대 3개를 등록하여 더 이상 등록할 수 없습니다! 기존 목록을 수정하거나 삭제하고 등록해주세요!"
+      );
+      setEntered("");
+      setOrder("");
+      return;
+    }
+    // setTodos([
+    //   ...todos,
+    //   { id: todos.length + 1, text: entered, completed: false },
+    // ]);
+    if (!entered || !order) {
+      alert("내용과 순위를 입력해주세요...");
+      return;
+    }
+
     const todoDTO = {
       title: entered,
-      todoOrder: 1,
+      todoOrder: order,
     };
-    // axios
-    //   .post(`/v1/todos`, todoDTO)
-    //   .then((response) => {
-    //     alert("할 일이 등록되었습니다!");
-    //     window.location.href = "/";
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error updating todo data: ", error);
-    //     alert("오류가 발생했습니다!");
-    //   });
+    console.log(todoDTO);
+    axios
+      .post(`/v1/todos`, todoDTO)
+      .then((response) => {
+        alert("할 일이 등록되었습니다!");
+        getTodos(currentPage, commentsPerPage);
+      })
+      .catch((error) => {
+        console.error("Error updating todo data: ", error);
+        alert("오류가 발생했습니다!");
+      });
     setEntered("");
+    setOrder("");
   };
 
   const toggleTodo = (id) => {
@@ -82,23 +106,40 @@ const Todolist = () => {
   };
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-    // axios
-    //   .delete(`/v1/todos/${id}`)
-    //   .then((response) => {
-    //     alert("할 일이 삭제되었습니다!");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error deleting todo data: ", error);
-    //     alert("오류가 발생했습니다!");
-    //   });
+    // setTodos(todos.filter((todo) => todo.id !== id));
+    axios
+      .delete(`/v1/todos/${id}`)
+      .then((response) => {
+        alert("할 일이 삭제되었습니다!");
+        getTodos(currentPage, commentsPerPage);
+      })
+      .catch((error) => {
+        console.error("Error deleting todo data: ", error);
+        alert("오류가 발생했습니다!");
+      });
   };
-  const editTodo = (id) => {};
-  const toggleEditMode = (id) => {
+
+  const toggleEditMode = (id, title, order) => {
     setEditMode(id === editMode ? null : id);
+    setEditedTitle(title);
+    setEditedOrder(order);
   };
-  const handleEditChange = (id, newValue) => {
-    // Handle the logic to update the Todo item with the new value
+  const handleEditChange = (id, updatedTitle, updatedOrder) => {
+    const updatedDTO = {
+      title: updatedTitle,
+      todoOrder: updatedOrder,
+    };
+    axios
+      .put(`/v1/todos/${id}`, updatedDTO)
+      .then((response) => {
+        alert("할 일이 수정되었습니다!");
+        getTodos(currentPage, commentsPerPage);
+        toggleEditMode(null, "", ""); // 수정이 완료되면 초기화
+      })
+      .catch((error) => {
+        console.error("Error updating todo data: ", error);
+        alert("오류가 발생했습니다!");
+      });
   };
   return (
     <div className={classes.wrapper}>
@@ -107,48 +148,95 @@ const Todolist = () => {
         <h1>Todolist</h1>
         <div className={classes.inputTab}>
           <input
+            className={classes.todoInput}
             type="text"
-            placeholder="할 일을 추가하세요..."
+            placeholder="최대 3개의 할 일을 추가하세요..."
             value={entered}
+            required={true}
             onChange={(e) => setEntered(e.target.value)}
+          />
+          <input
+            type="number"
+            className={classes.orderInput}
+            placeholder="순위"
+            min={1}
+            value={order}
+            required={true}
+            onChange={(e) => setOrder(e.target.value)}
           />
           <button onClick={addTodo} className={classes.submitBtn}>
             추가
           </button>
         </div>
+        {/* <div className={classes.tabs}>
+          <button
+            className={selectedTab === 1 ? classes.activeTab : ""}
+            onClick={() => {
+              setSelectedTab(1);
+            }}
+          >
+            1순위
+          </button>
+          <button
+            className={selectedTab === 2 ? classes.activeTab : ""}
+            onClick={() => {
+              setSelectedTab(2);
+            }}
+          >
+            2순위
+          </button>
+        </div> */}
         <ul className={classes.list}>
           {todos &&
             todos.map((todo) => (
-              <li key={todo.id}>
-                {editMode === todo.id ? (
-                  <input
-                    type="text"
-                    // value={/* value for the input based on the todo item */}
-                    // onChange={(e) => /* handle input change */}
-                  />
+              <li key={todo.todolistId}>
+                {editMode === todo.todolistId ? (
+                  <div className={classes.inputTab}>
+                    <input
+                      className={classes.todoInput}
+                      type="text"
+                      value={editedTitle}
+                      required
+                      onChange={(e) => setEditedTitle(e.target.value)}
+                    />
+                    <input
+                      type="number"
+                      className={classes.orderInput}
+                      placeholder="순위"
+                      min={1}
+                      value={editedOrder}
+                      required
+                      onChange={(e) => setEditedOrder(e.target.value)}
+                    />
+                  </div>
                 ) : (
-                  <span className={todo.completed ? classes.completed : ""}>
-                    {todo.text}
-                  </span>
+                  <div className={classes.box}>
+                    <div className={classes.order}>{todo.todoOrder}순위</div>{" "}
+                    <div className={classes.title}>{todo.title}</div>
+                  </div>
                 )}
                 <div className={classes.btnCon}>
                   <button
                     className={classes.editBtn}
-                    onClick={() => {
-                      if (editMode === todo.id) {
-                        handleEditChange(
-                          todo.id /* new value from the input */
-                        );
-                      } else {
-                        toggleEditMode(todo.id);
-                      }
-                    }}
+                    onClick={() =>
+                      editMode === todo.todolistId
+                        ? handleEditChange(
+                            todo.todolistId,
+                            editedTitle,
+                            editedOrder
+                          ) /* new values from the input */
+                        : toggleEditMode(
+                            todo.todolistId,
+                            todo.title,
+                            todo.todoOrder
+                          )
+                    }
                   >
                     {editMode === todo.id ? "완료" : "수정"}
                   </button>
                   <button
                     className={classes.deleteBtn}
-                    onClick={() => deleteTodo(todo.id)}
+                    onClick={() => deleteTodo(todo.todolistId)}
                   >
                     삭제
                   </button>
@@ -161,19 +249,20 @@ const Todolist = () => {
               </li>
             ))}
         </ul>
-
-        {totalPages > 0 && (
-          <ReactPaginate
-            previousLabel={<FiChevronLeft />}
-            nextLabel={<FiChevronRight />}
-            pageCount={totalPages}
-            onPageChange={handlePageClick}
-            containerClassName={classes.pagination}
-            pageLinkClassName={classes.pagination__link}
-            activeLinkClassName={classes.pagination__link__active}
-            renderPagination={() => null}
-          />
-        )}
+        <div className={classes.paginate}>
+          {totalPages > 0 && (
+            <ReactPaginate
+              previousLabel={<FiChevronLeft />}
+              nextLabel={<FiChevronRight />}
+              pageCount={totalPages}
+              onPageChange={handlePageClick}
+              containerClassName={classes.pagination}
+              pageLinkClassName={classes.pagination__link}
+              activeLinkClassName={classes.pagination__link__active}
+              renderPagination={() => null}
+            />
+          )}
+        </div>
       </div>
       <Footer />
     </div>

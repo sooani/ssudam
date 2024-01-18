@@ -13,13 +13,7 @@ import { useSelector } from "react-redux";
 
 const DetailReview = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
-  const [reviewInfo, setReviewInfo] = useState({
-    memberId: 1,
-    title: "제목",
-    content: "리뷰의 내용",
-    createdAt: "2024-01-17T21:45:34.723232",
-    modifiedAt: "2024-01-17T21:45:34.723232",
-  }); // 현재 후기의 정보
+  const [reviewInfo, setReviewInfo] = useState(null); // 현재 후기의 정보
 
   const [userInfo, setUserInfo] = useState({
     memberId: 1,
@@ -37,25 +31,19 @@ const DetailReview = () => {
   // loggedInUser의 해당 글에 대한 코멘트가 존재할 경우 댓글창 대신 해당 댓글을 보여준다.
   const navigate = useNavigate();
   // 수안님 코드의 경우 (party정보에 memberId가 존재할 경우) 주석 해제
-  // useEffect(() => {
-  //   if (meetingInfo && meetingInfo.memberId) {
-  //     axios
-  //       .get(`/v1/members/${meetingInfo.memberId}`)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         setUserInfo(response.data.data);
-  //         // setUserInfo({
-  //         //   memberId: 1,
-  //         //   email: "user1@example.com",
-  //         //   nickname: "당근이",
-  //         // });
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error getting user data: ", error);
-  //       });
-  //     // console.log(userInfo);
-  //   }
-  // }, [meetingInfo]);
+  useEffect(() => {
+    if (reviewInfo && reviewInfo.memberId) {
+      axios
+        .get(`/v1/members/${reviewInfo.memberId}`)
+        .then((response) => {
+          console.log(response.data);
+          setUserInfo(response.data.data);
+        })
+        .catch((error) => {
+          console.error("Error getting user data: ", error);
+        });
+    }
+  }, [reviewInfo]);
   // useEffect(() => {
   //   console.log(commentsPerPage);
   //   console.log(currentPage);
@@ -63,13 +51,13 @@ const DetailReview = () => {
 
   // localStorage를 쓸지 함수를 쓸지 추후에 방식 변경 가능성 존재
   // meeting의 userInfo의 id와 현재 로그인된 사용자의 id를 비교하여 isMyPost 업데이트
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     if (userInfo.memberId == loggedInUser.memberId) {
-  //       setIsMyReview(true);
-  //     }
-  //   }
-  // }, [userInfo]);
+  useEffect(() => {
+    if (reviewInfo) {
+      if (reviewInfo.memberId === loggedInUser.memberId) {
+        setIsMyReview(true);
+      }
+    }
+  }, [reviewInfo]);
 
   // 파티를 삭제하는 핸들러
   const deleteReviewHandler = () => {
@@ -89,21 +77,22 @@ const DetailReview = () => {
   };
   // 처음 party의 상태를 업데이트 하는 로직.
   // 현재는 meetingInfo에 memberId가 없어서 임시로 고정값을 준 상태이다.
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   console.log("get reviews");
-  //   axios
-  //     .get(`/v1/reviews/${reviewId}`)
-  //     .then((response) => {
-  //       setReviewInfo(response.data.data);
+  useEffect(() => {
+    setIsLoading(true);
+    console.log("get reviews");
+    axios
+      .get(`/v1/reviews/${reviewId}`)
+      .then((response) => {
+        console.log(response.data);
+        setReviewInfo(response.data);
 
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting reveiew data: ", error);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error getting reveiew data: ", error);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <div className={classes.wrapper}>

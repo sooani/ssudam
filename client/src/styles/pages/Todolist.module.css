@@ -38,10 +38,15 @@
   margin: 1rem auto;
   width: 65%;
 }
-input {
+.todoInput {
   padding: 0.5rem;
   border-radius: 5px;
   width: 500px;
+}
+.orderInput {
+  padding: 0.5rem;
+  border-radius: 5px;
+  width: 50px;
 }
 .inputTab button {
   margin-right: 0.5rem;
@@ -113,7 +118,7 @@ ul {
   flex-direction: column;
   /* border: 1px solid black; */
   width: 65%;
-  height: 50px;
+  /* height: 50px; */
   gap: 1rem;
   margin: 0;
 }
@@ -134,4 +139,44 @@ ul {
 .btnCon {
   display: flex;
   gap: 0.5rem;
+}
+.paginate {
+  /* border: 1px solid red; */
+}
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  /* margin-left: 5rem; */
+  margin-top: 1rem;
+
+  > * {
+    cursor: pointer;
+  }
+  li {
+    list-style-type: none;
+  }
+}
+
+.pagination__link {
+  transition: all 0.25s;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
+}
+
+.pagination__link__active {
+  background-color: green;
+  color: white;
+}
+.box {
+  display: flex;
+  gap: 0.5rem;
+}
+.box .order {
+  padding-right: 0.5rem;
+  border-right: 2px solid gray;
+}
+.box .title {
+  /* margin-left: 0.5rem; */
 }
