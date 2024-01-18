@@ -118,9 +118,9 @@ public class PartyControllerTest {
                         getResponsePreProcessor(),
                         requestFields(
                                 List.of(
-                                        fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 날짜"),
+                                        fieldWithPath("meetingDate").type(JsonFieldType.STRING).description("모임 일자"),
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 날짜"),
+                                        fieldWithPath("closingDate").type(JsonFieldType.STRING).description("모임 모집 마감 일자"),
                                         fieldWithPath("longitude").type(JsonFieldType.STRING).description("경도"),
                                         fieldWithPath("latitude").type(JsonFieldType.STRING).description("위도"),
                                         fieldWithPath("address").type(JsonFieldType.STRING).description("도로명 주소"),
