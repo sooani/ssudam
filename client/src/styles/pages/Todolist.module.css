@@ -75,7 +75,7 @@
     margin-right: 0rem;
   }
 }
-.btnCon button {
+button {
   /* margin-right: 0.5rem; */
   /* border: 1px solid black; */
   padding: 0.3rem 0.6rem;
@@ -140,8 +140,19 @@ ul {
   display: flex;
   gap: 0.5rem;
 }
+.under {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 .paginate {
   /* border: 1px solid red; */
+}
+.under .deleteBtn {
+  background-color: white;
+  color: red;
 }
 .pagination {
   width: 100%;

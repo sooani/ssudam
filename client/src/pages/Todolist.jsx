@@ -118,6 +118,21 @@ const Todolist = () => {
         alert("오류가 발생했습니다!");
       });
   };
+  const deleteAllHandler = () => {
+    const userConfirmed = window.confirm("모든 할 일을 삭제하시겠습니까?");
+
+    if (userConfirmed) {
+      axios
+        .delete(`/v1/todos`)
+        .then((response) => {
+          alert("모든 할일이 삭제되었습니다!");
+          getTodos(currentPage, commentsPerPage);
+        })
+        .catch((error) => {
+          console.error("Error deleting todo datas: ", error);
+        });
+    }
+  };
 
   const toggleEditMode = (id, title, order) => {
     setEditMode(id === editMode ? null : id);
@@ -249,19 +264,24 @@ const Todolist = () => {
               </li>
             ))}
         </ul>
-        <div className={classes.paginate}>
-          {totalPages > 0 && (
-            <ReactPaginate
-              previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
-              nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
-              pageCount={totalPages}
-              onPageChange={handlePageClick}
-              containerClassName={classes.pagination}
-              pageLinkClassName={classes.pagination__link}
-              activeLinkClassName={classes.pagination__link__active}
-              renderPagination={() => null}
-            />
-          )}
+        <div className={classes.under}>
+          <div className={classes.paginate}>
+            {totalPages > 0 && (
+              <ReactPaginate
+                previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
+                nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
+                pageCount={totalPages}
+                onPageChange={handlePageClick}
+                containerClassName={classes.pagination}
+                pageLinkClassName={classes.pagination__link}
+                activeLinkClassName={classes.pagination__link__active}
+                renderPagination={() => null}
+              />
+            )}
+          </div>
+          <button className={classes.deleteBtn} onClick={deleteAllHandler}>
+            모두 삭제
+          </button>
         </div>
       </div>
       <Footer />

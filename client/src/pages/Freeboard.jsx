@@ -53,14 +53,26 @@ const Freeboard = () => {
       <Header />
       <div className={classes.box}>
         <div className={classes.container}>
-          <h1>게시판</h1>
+          <div className={classes.header}>
+            <h1>게시판</h1>
+            <div className={classes.btnCon}>
+              <button
+                className={classes.postBtn}
+                onClick={() => {
+                  navigate("/reviews/new");
+                }}
+              >
+                후기 등록
+              </button>
+            </div>
+          </div>
           <div className={classes.posts}>
             <div className={classes.post}>
               <div className={classes.box1_}>
                 <div className={classes.box1_id_}>번호</div>
                 <div className={classes.box1_title_}>제목</div>
               </div>
-              <div className={classes.box2_}>등록 일자</div>
+              <div className={classes.box2_}>등록일</div>
             </div>
             {reviews.map((post) => (
               <div
@@ -83,30 +95,35 @@ const Freeboard = () => {
         </div>
         <div className={classes.under}>
           {totalPages > 0 && (
-            <ReactPaginate
-              previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
-              nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
-              pageCount={totalPages}
-              onPageChange={handlePageClick}
-              containerClassName={classes.pagination}
-              pageLinkClassName={classes.pagination__link}
-              activeLinkClassName={classes.pagination__link__active}
-              renderPagination={() => null}
-            />
+            <>
+              <ReactPaginate
+                previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
+                nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
+                pageCount={totalPages}
+                onPageChange={handlePageClick}
+                containerClassName={classes.pagination}
+                pageLinkClassName={classes.pagination__link}
+                activeLinkClassName={classes.pagination__link__active}
+                renderPagination={() => null}
+              />
+
+              {/* <div className={classes.btnCon}>
+                <button
+                  className={classes.postBtn}
+                  onClick={() => {
+                    navigate("/reviews/new");
+                  }}
+                >
+                  새 글 등록
+                </button>
+              </div> */}
+            </>
           )}
-          <div className={classes.btnCon}>
-            <button
-              className={classes.postBtn}
-              onClick={() => {
-                navigate("/reviews/new");
-              }}
-            >
-              새 글 등록
-            </button>
-          </div>
         </div>
       </div>
-      <Footer />
+      <div className={classes.footer}>
+        <Footer />
+      </div>
     </div>
   );
 };
