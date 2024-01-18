@@ -23,4 +23,6 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
     // 제목과 내용 검색
     Page<Party> findByTitleContainingOrContentContaining(String title, String content, Pageable pageable);
+
+    Page<Party> findByBookmarks_Member_MemberId(Long memberId, Pageable pageable);
 }

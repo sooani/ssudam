@@ -138,6 +138,18 @@ public class PartyController {
                         pageParties),
                 HttpStatus.OK);
     }
+    //특정 회원이 북마크한 모든 모집글 조회
+    @RequestMapping(value = "/v1/parties/bookmarks", method = RequestMethod.GET, params = {"memberId"})
+    public ResponseEntity getBookmarkedParties(@Positive @RequestParam long memberId,
+                                               @Positive @RequestParam int page,
+                                               @Positive @RequestParam int size){
+        Page<Party> pageParties = partyService.findPartiesByBookmarkByMember(memberId, page - 1, size);
+        List<Party> parties = pageParties.getContent();
+
+        return new ResponseEntity(
+                new MultiResponseDto<>(mapper.partiesToPartyResponses(parties), pageParties),
+                HttpStatus.OK);
+    }
 
     //키워드로 제목,글내용 검색
     @RequestMapping(value = "/v1/parties/search", method = RequestMethod.GET)
