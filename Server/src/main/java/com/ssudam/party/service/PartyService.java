@@ -95,6 +95,13 @@ public class PartyService {
                 Sort.by("partyId").descending()));
 
     }
+    //특정 회원이 북마크한 모든 모집글 조회
+    @Transactional(readOnly = true)
+    public Page<Party> findPartiesByBookmarkByMember(long memberId, int page, int size) {
+        Page<Party> pageParties = partyRepository.findByBookmarks_Member_MemberId(memberId,
+                PageRequest.of(page, size, Sort.by("closingDate")));
+        return pageParties;
+    }
 
     //키워드로 제목,글내용 검색
     @Transactional(readOnly = true)
