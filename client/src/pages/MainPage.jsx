@@ -65,7 +65,6 @@ const MainPage = () => {
         {/* 투두 리스트  */}
         <div className={classes.todoList}>
           <TodoList />
-          {/* <TodoList todos={randomData} /> */}
         </div>
         {/* 새로운 모임 */}
         <div className={classes.newPost}>
@@ -76,8 +75,6 @@ const MainPage = () => {
       {/* 메인 구역 */}
       <section className={classes.mainContainer}>
         <CategoryTab data={data} />
-        {/* <CategoryTab onSelectTab={handleTabSelect}/> */}
-        {/* <CategoryBox data={data} activeTab={activeTab} /> */}
       </section>
 
       {/* 푸터 */}

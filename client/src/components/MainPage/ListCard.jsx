@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import classes from '../../styles/components/ListCard.module.css';
-import footerLogo from '../../images/footerLogo.png';
 import SignUpModal from '../../pages/SignUpModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
@@ -26,34 +25,32 @@ const ListCard = ({ party }) => {
     }
   };
 
+  // 전체 날짜 및 시간에서 날짜만 추출하는 함수
+  const extractDate = (fullDate) => {
+    const dateObject = new Date(fullDate);
+    // 날짜를 'YYYY-MM-DD' 형식으로 변환
+    const formattedDate = dateObject.toISOString().split('T')[0];
+    return formattedDate;
+  };
   return (
-    <div className={classes.listCard}>
-      <div className={classes.topContents}>
-        <img src={footerLogo} alt="게시판 이미지" />
-        <div className={classes.listCardTitle}>
-          <span>{party?.title}</span>
-        </div>
-        <div className={classes.listCardContent}>
-          <span>{party?.content}</span>
-        </div>
+    <div className={classes.listCard} onClick={handlePostClick}>
+      <div className={classes.listCardTitle}>
+        <span>{party?.title}</span>
       </div>
-
       <div className={classes.listCardMeetingDate}>
-        <span>모임날짜 : {party?.meetingDate}</span>
+        <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
       </div>
       <div className={classes.listCardClosingDate}>
-        <span>모집마감일 : {party?.closingDate}</span>
+        <span>마감일 : {extractDate(party?.closingDate)}</span>
       </div>
+      ----------------------------------
+      <div>닉네임</div>
       <div className={classes.listCardCurrentCapacity}>
-        <span>인원 : {party?.currentCapacity}&nbsp;/&nbsp;</span>
+        <span>{party?.currentCapacity}/</span>
       </div>
       <div className={classes.listCardMaxCapacity}>
-        <span>{party?.maxCapacity} </span>
+        <span>{party?.maxCapacity}</span>
       </div>
-      <button className={classes.gotoPost} onClick={handlePostClick}>
-        모임 가기
-      </button>
-
       <SignUpModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
     </div>
   );

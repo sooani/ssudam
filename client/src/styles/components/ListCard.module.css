@@ -1,65 +1,52 @@
-.listCard img {
-  height: 10vh;
-  width: 3vw;
-  float: left;
-  /* background-color: aliceblue; */
-}
 .listCard {
   margin: 10px 0 0 10px;
   height: auto;
   width: 14vw;
   overflow: hidden;
-  /* border: 1px solid black; */
-  /* text-align: center; */
-  background-color: #66ff00;
   border-radius: 10px;
+  border: 1px solid black;
+}
+
+.listCard:hover {
+  cursor: pointer;
 }
 
 .listCardTitle {
-  text-align: left;
+  text-align: center;
   padding-top: 30px;
   padding-left: 3%;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.listCardContent {
-  padding-top: 10px;
-  padding-left: 7%;
-  text-align: left;
-  white-space: wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .listCardMeetingDate {
-  /* display: flex; */
-  font-size: 0.9rem;
-  padding-top: 3vh;
-  text-align: justify;
+  font-size: 1.25rem;
+  padding-top: 2vh;
+  text-align: center;
 }
 .listCardClosingDate {
   /* display: flex; */
-  font-size: 0.9rem;
-  text-align: justify;
+  font-size: 1.25rem;
+  text-align: center;
 }
 .listCardCurrentCapacity {
   display: inline;
+  text-align: right;
 }
 .listCardMaxCapacity {
   display: inline;
+  text-align: right;
 }
-.gotoPost {
-  background-color: rgb(0, 213, 255);
+/* .gotoPost {
   height: 3vh;
   text-align: center;
   font-size: 1.1rem;
   font-weight: 600;
-}
-.gotoPost:hover {
+  display: flex;
+} */
+/* .gotoPost:hover {
   cursor: pointer;
-}
+} */
