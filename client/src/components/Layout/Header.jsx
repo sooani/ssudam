@@ -20,6 +20,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const isAdmin = user && user.roles.includes("ADMIN");
 
   const gotoPost = () => {
     if (!user) {
@@ -43,6 +44,9 @@ const Header = () => {
     // 사용자 정보에 따라 동적으로 경로 설정 가능
     navigate(`/mypage/${user?.memberId}`);
   };
+  const gotoTodolist = () => {
+    navigate(`/todolist`);
+  };
   const handleLogout = () => {
     // 로그아웃 액션 디스패치
     dispatch(logout());
@@ -58,6 +62,11 @@ const Header = () => {
         <div className={classes.loginElement}>
           {user ? (
             <>
+              {isAdmin && (
+                <button className={classes.postRegister} onClick={gotoTodolist}>
+                  관리자
+                </button>
+              )}
               <button className={classes.postRegister} onClick={gotoFreeboard}>
                 게시판
               </button>

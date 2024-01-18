@@ -16,7 +16,7 @@ const DetailReview = () => {
   const [reviewInfo, setReviewInfo] = useState(null); // 현재 후기의 정보
 
   const [userInfo, setUserInfo] = useState(null); // 현재 후기의 작성자 정보
-  const [isMyReview, setIsMyReview] = useState(true); // 내 후기인지 여부
+  const [isMyReview, setIsMyReview] = useState(false); // 내 후기인지 여부
 
   // const { reviewId } = useParams();
   const { reviewId } = useParams();
