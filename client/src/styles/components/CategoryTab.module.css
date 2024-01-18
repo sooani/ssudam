@@ -2,11 +2,16 @@
   width: 300px;
   height: 100px;
   position: relative;
-  margin-top: 10%;
+  margin-top: 2%;
 }
 .categoryTab:hover {
   cursor: pointer;
 }
 .join {
   padding-right: 30px;
+  font-size: 1.7rem;
+}
+.end {
+  padding-right: 30px;
+  font-size: 1.7rem;
 }

@@ -3,9 +3,7 @@ import instance from '../../axios';
 import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
 import PaginationBar from './PaginationBar';
-
 // 모집중 / 모집완료 탭을 구분 하는 컴포넌트
-
 const CategoryTab = () => {
   const [activeTab, setActiveTab] = useState('recruiting');
   const [recruitingData, setRecruitingData] = useState([]);
@@ -16,14 +14,12 @@ const CategoryTab = () => {
     totalElements: 'totalElements',
     totalPages: 'totalPages',
   });
-
   const fetchParties = async (page, status) => {
     try {
       const response = await instance.get(
         `/v1/parties?page=${page}&size=12&status=${status}`
       );
       const { data } = response;
-
       // 전체 데이터를 받아왔을 때, 상태(status)에 따라 데이터를 분류합니다.
       const recruitingParties = data.data.filter(
         (party) => party.partyStatus === 'PARTY_OPENED'
@@ -65,9 +61,9 @@ const CategoryTab = () => {
         <button
           onClick={() => handleTabChange('recruiting')}
           style={{
-            fontWeight: activeTab === 'recruiting' ? 'bold' : 'normal',
+            fontWeight: activeTab === 'recruiting' ? 'bold' : '600',
             background: 'transparent',
-            fontSize: '1.25rem',
+            color: activeTab === 'recruiting' ? 'black' : 'gray',
           }}
           className={activeTab === 'recruiting' ? 'active' : ''}
         >
@@ -76,16 +72,15 @@ const CategoryTab = () => {
         <button
           onClick={() => handleTabChange('completed')}
           style={{
-            fontWeight: activeTab === 'completed' ? 'bold' : 'normal',
+            fontWeight: activeTab === 'completed' ? 'bold' : '600',
             background: 'transparent',
-            fontSize: '1.25rem',
+            color: activeTab === 'completed' ? 'black' : 'gray',
           }}
           className={activeTab === 'completed' ? 'active' : ''}
         >
-          <p>모집완료</p>
+          <p className={classes.end}>모집완료</p>
         </button>
       </div>
-
       {activeTab === 'recruiting' && (
         <>
           <CategoryBox categoryData={recruitingData} />
@@ -101,5 +96,4 @@ const CategoryTab = () => {
     </div>
   );
 };
-
 export default CategoryTab;

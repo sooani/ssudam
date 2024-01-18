@@ -1,5 +1,5 @@
 .PaginationBar {
-  width: 100%; /* 부모 너비에 맞추기 */
-  text-align: center; /* 텍스트를 중앙 정렬 */
-  margin-top: 20px; /* PaginationBar와 ListCard 사이의 간격 조절 */
+  bottom: 0;
+  width: 100vw;
+  text-align: right;
 }
