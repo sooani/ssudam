@@ -3,40 +3,46 @@ import React, { useState, useEffect } from 'react';
 import instance from '../../axios';
 import Pagination from './Pagination';
 import classes from '../../styles/components/MyPosts.module.css';
+import { useParams } from 'react-router-dom';
 
 function MyPosts() {
-  const [partyTitles, setPartyTitles] = useState([]);  // 상태 변수 이름 수정
+  const [titles, settitles] = useState([]);  
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
+  const { memberId } = useParams();
+  const [size, setSize] = useState(10);
 
   useEffect(() => {
-    const fetchPartyTitles = async () => {
-      try {
-        const response = await instance.get('/v1/comments');
-        const extractedPartyTitles = response.data.data.map(comment => comment.partyTitle);
-        setPartyTitles(extractedPartyTitles);
-      } catch (error) {
-        console.error('Error fetching partyTitles:', error);
-      }
+    const fetchComments = () => {
+      instance
+        // .get(`/v1/comments?memberId=${memberId}`)
+        .get(`/v1/parties`, { params: { memberId, page, limit, size } })
+        .then((response) => {
+          const extractedTitles = response.data.data.map((title) => title.title);
+          settitles(extractedTitles);
+        })
+        .catch((error) => {
+          console.error('글제목 받아오기 오류!:', error.response?.data || '알 수 없는 오류');
+        });
     };
 
-    fetchPartyTitles();
-  }, [limit, page]);
+    fetchComments();
+  }, [limit, page, memberId,size]);
 
   return (
     <div className={classes.MyPostsContainer}>
-      {partyTitles.length === 0 ? (
+      {titles.length === 0 ? (
         <p className={classes.MyPostsMSG}>아직 작성한 댓글이 없습니다.</p>
       ) : (
-        partyTitles.slice(offset, offset + limit).map((partyTitle, index) => (
+        titles.slice(offset, offset + limit).map((title, index) => (
           <article key={index}>
-            <p className={classes.PartyTitle}>{partyTitle}</p>
+            <p className={classes.Partyitle}>{title}</p>
           </article>
         ))
       )}
 
-      <Pagination total={partyTitles.length} limit={limit} page={page} setPage={setPage} />
+      <Pagination total={titles.length} limit={limit} page={page} setPage={setPage} />
     </div>
   );
 }
