@@ -43,7 +43,7 @@ const MakeReview = () => {
       .post(`/v1/reviews`, reviewDTO)
       .then((response) => {
         alert("후기글이 등록되었습니다!");
-        window.location.href = "/";
+        window.location.href = "/freeboard";
       })
       .catch((error) => {
         console.error("Error posting review data: ", error);

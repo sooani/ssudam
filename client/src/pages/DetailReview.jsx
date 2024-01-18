@@ -15,14 +15,11 @@ const DetailReview = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
   const [reviewInfo, setReviewInfo] = useState(null); // 현재 후기의 정보
 
-  const [userInfo, setUserInfo] = useState({
-    memberId: 1,
-    nickname: "zhzhfhd",
-  }); // 현재 후기의 작성자 정보
+  const [userInfo, setUserInfo] = useState(null); // 현재 후기의 작성자 정보
   const [isMyReview, setIsMyReview] = useState(true); // 내 후기인지 여부
 
   // const { reviewId } = useParams();
-  const reviewId = 1;
+  const { reviewId } = useParams();
 
   // 리덕스 사용자 정보 불러오기
   const loggedInUser = useSelector(selectUser);
@@ -84,7 +81,7 @@ const DetailReview = () => {
       .get(`/v1/reviews/${reviewId}`)
       .then((response) => {
         console.log(response.data);
-        setReviewInfo(response.data);
+        setReviewInfo(response.data.data);
 
         setIsLoading(false);
       })
