@@ -46,7 +46,7 @@ const MakeMap = (props) => {
             <div style={{ padding: "5px", color: "#000" }}>
               <a
                 href={`https://map.kakao.com/link/map/${position.lat},${position.lng}`}
-                style={{ color: "blue" }}
+                style={{ color: "#86b6f6" }}
                 target="_blank"
                 rel="noreferrer"
               >

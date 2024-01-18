@@ -125,7 +125,7 @@ const SearchMap = (props) => {
                 {marker.content} <br />
                 <a
                   href={`https://map.kakao.com/link/map/${marker.content},${marker.position.lat},${marker.position.lng} `}
-                  style={{ color: "blue" }}
+                  style={{ color: "#86b6f6" }}
                   target="_blank"
                   rel="noreferrer"
                 >

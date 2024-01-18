@@ -541,7 +541,7 @@ const DetailPost = () => {
                 <div className={classes.bookmark}>
                   <FaBookmark
                     style={{
-                      color: bookmarked ? "green" : "black",
+                      color: bookmarked ? "#86b6f6" : "black",
                       fontSize: "2rem",
                     }}
                     onClick={bookmarkHandler}

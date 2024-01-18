@@ -85,7 +85,7 @@
   padding-right: 1rem;
 }
 .isRecruiting h4 {
-  color: green;
+  color: #86b6f6;
   border-right: 2px solid gray;
   padding-right: 1rem;
 }
@@ -140,7 +140,7 @@
   }
 }
 .btnCon .joinBtn {
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
   text-align: center;
   display: flex;
@@ -222,7 +222,7 @@
   }
 }
 .btnCon_1 .joinBtn {
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
   display: flex;
   flex-direction: row;
@@ -258,7 +258,7 @@
 .comment h3 {
   margin: 0.5rem 2rem;
   margin-top: 2rem;
-  color: green;
+  color: #86b6f6;
 }
 .comment textarea {
   height: 100px;
@@ -305,7 +305,7 @@
 }
 .btnCon_2 .joinBtn {
   margin-right: 1rem;
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
   @media screen and (max-width: 1070px) {
     margin-right: 0rem;
@@ -313,7 +313,7 @@
 }
 .btnCon_2 .joinBtn_1 {
   margin-right: 2rem;
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
   @media screen and (max-width: 1070px) {
     margin-right: 0rem;
@@ -393,6 +393,6 @@
 }
 
 .pagination__link__active {
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
 }

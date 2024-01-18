@@ -1,12 +1,26 @@
 .App {
   text-align: center;
+  font-family: sans-serif;
 }
-
+* {
+  font-family: "Spoqa", sans-serif;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
+@font-face {
+  font-family: "Spoqa";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../public/fonts/SpoqaHanSansNeo-Regular.ttf");
+}
+@font-face {
+  font-family: "Cafe";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
