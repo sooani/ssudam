@@ -4,6 +4,7 @@ import com.ssudam.exception.BusinessLogicException;
 import com.ssudam.exception.ExceptionCode;
 import com.ssudam.review.entity.Review;
 import com.ssudam.review.repository.ReviewRepository;
+import com.ssudam.todolist.entity.TodoList;
 import com.ssudam.utils.CustomBeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

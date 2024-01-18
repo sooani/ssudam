@@ -4,10 +4,14 @@ import com.ssudam.annotation.BodyRequest;
 import com.ssudam.annotation.ReviewRequest;
 import com.ssudam.dto.MultiResponseDto;
 import com.ssudam.dto.SingleResponseDto;
+import com.ssudam.member.entity.Member;
+import com.ssudam.member.service.MemberService;
 import com.ssudam.review.dto.ReviewDto;
 import com.ssudam.review.entity.Review;
 import com.ssudam.review.mapper.ReviewMapper;
 import com.ssudam.review.service.ReviewService;
+import com.ssudam.todolist.dto.TodoListDto;
+import com.ssudam.todolist.entity.TodoList;
 import com.ssudam.utils.UriCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -26,10 +30,12 @@ import java.util.List;
 public class ReviewController {
     private final static String REVIEW_DEFAULT_URL = "/v1/reviews";
     private final ReviewService reviewService;
+    private final MemberService memberService;
     private final ReviewMapper mapper;
 
-    public ReviewController(ReviewService reviewService, ReviewMapper mapper) {
+    public ReviewController(ReviewService reviewService, MemberService memberService, ReviewMapper mapper) {
         this.reviewService = reviewService;
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
@@ -37,7 +43,9 @@ public class ReviewController {
     @BodyRequest
     @PostMapping
     public ResponseEntity postReview(@RequestBody @Valid ReviewDto.Post requestBody) {
+        Member member = memberService.findMember(requestBody.getMemberId());
         Review review = mapper.reviewPostDtoToReview(requestBody);
+        review.setMember(member);
         Review createdReview = reviewService.createReview(review);
         URI location = UriCreator.createUri(REVIEW_DEFAULT_URL, createdReview.getReviewId());
 
@@ -59,7 +67,7 @@ public class ReviewController {
     }
 
     // 특정 멤버 후기 조회
-    @GetMapping("/{member-id}")
+    @GetMapping("/member/{member-id}")
     public ResponseEntity getReviewsByMember(@PathVariable("member-id") @Positive long memberId,
                                              @Positive @RequestParam int page,
                                              @Positive @RequestParam int size) {
@@ -71,6 +79,16 @@ public class ReviewController {
                 new MultiResponseDto<>
                         (mapper.reviewsToReviewResponseDtos(reviews), pageReview), HttpStatus.OK);
     }
+
+    // 특정 후기 조회
+    @GetMapping("/{review-id}")
+    public ResponseEntity getReview(@PathVariable("review-id") @Positive long reviewId) {
+        Review foundReview = reviewService.findReview(reviewId);
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(mapper.reviewToReviewResponseDto(foundReview)), HttpStatus.OK);
+    }
+
 
     // 전체 후기 조회
     @GetMapping
