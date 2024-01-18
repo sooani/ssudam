@@ -308,8 +308,8 @@
   gap: 0.5rem;
 }
 .btnCon_1 .deleteBtn {
-  background-color: gray;
-  color: black;
+  background-color: white;
+  color: gray;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -398,8 +398,8 @@
 }
 .btnCon_2 .deleteBtn {
   margin-right: 2rem;
-  background-color: gray;
-  color: black;
+  background-color: white;
+  color: gray;
   @media screen and (max-width: 1070px) {
     margin-right: 0rem;
   }

@@ -324,7 +324,7 @@ const Comments = (props) => {
                             isReplyOpened[comment.commentId] ||
                             hasReply[comment.commentId]
                               ? "#86b6f6"
-                              : "black",
+                              : "gray",
                         }}
                       />
                     </div>
@@ -340,7 +340,7 @@ const Comments = (props) => {
                         fontSize: "1.5rem",
                         color: commentLikes[comment.commentId]
                           ? "#86b6f6"
-                          : "black",
+                          : "gray",
                       }}
                     />
                     {comment.likeCount}

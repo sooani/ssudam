@@ -110,7 +110,7 @@ const DetailReview = () => {
               <div className={classes.info}>
                 <div className={classes.title}>
                   <IoIosArrowBack
-                    style={{ fontSize: "2rem" }}
+                    style={{ fontSize: "2rem", color: "#86B6F6" }}
                     onClick={() => {
                       navigate(-1);
                     }}

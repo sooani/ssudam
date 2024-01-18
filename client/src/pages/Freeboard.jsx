@@ -84,8 +84,8 @@ const Freeboard = () => {
         <div className={classes.under}>
           {totalPages > 0 && (
             <ReactPaginate
-              previousLabel={<FiChevronLeft />}
-              nextLabel={<FiChevronRight />}
+              previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
+              nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
               pageCount={totalPages}
               onPageChange={handlePageClick}
               containerClassName={classes.pagination}

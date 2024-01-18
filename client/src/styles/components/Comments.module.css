@@ -201,8 +201,8 @@
   }
 }
 .btnCon_2 .deleteBtn {
-  background-color: gray;
-  color: black;
+  background-color: white;
+  color: gray;
   @media screen and (max-width: 1070px) {
     margin-right: 1rem;
   }

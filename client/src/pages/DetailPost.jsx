@@ -507,7 +507,7 @@ const DetailPost = () => {
               <div className={classes.info}>
                 <div className={classes.title}>
                   <IoIosArrowBack
-                    style={{ fontSize: "2rem" }}
+                    style={{ fontSize: "2rem", color: "#86B6F6" }}
                     onClick={() => {
                       navigate(-1);
                     }}
@@ -541,7 +541,7 @@ const DetailPost = () => {
                 <div className={classes.bookmark}>
                   <FaBookmark
                     style={{
-                      color: bookmarked ? "#86b6f6" : "black",
+                      color: bookmarked ? "#86b6f6" : "gray",
                       fontSize: "2rem",
                     }}
                     onClick={bookmarkHandler}
@@ -739,8 +739,8 @@ const DetailPost = () => {
 
             {totalPages > 0 && (
               <ReactPaginate
-                previousLabel={<FiChevronLeft />}
-                nextLabel={<FiChevronRight />}
+                previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
+                nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
                 pageCount={totalPages}
                 onPageChange={handlePageClick}
                 containerClassName={classes.pagination}

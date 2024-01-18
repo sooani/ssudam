@@ -96,15 +96,15 @@
 }
 .btnCon .deleteBtn {
   /* margin-right: 2rem; */
-  background-color: red;
-  color: white;
+  background-color: white;
+  color: gray;
   @media screen and (max-width: 1070px) {
     margin-right: 0rem;
   }
 }
 .btnCon .editBtn {
-  background-color: gray;
-  color: black;
+  background-color: white;
+  color: #86b6f6;
   @media screen and (max-width: 1070px) {
     margin-right: 0rem;
   }
