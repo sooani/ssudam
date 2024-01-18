@@ -4,6 +4,7 @@ import com.ssudam.member.entity.Member;
 import com.ssudam.review.dto.ReviewDto;
 import com.ssudam.review.entity.Review;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -24,6 +25,7 @@ public interface ReviewMapper {
     }
 
     Review reviewPatchDtoToReview(ReviewDto.Patch requestBody);
+    @Mapping(target = "memberId", source = "member.memberId")
     ReviewDto.Response reviewToReviewResponseDto(Review review);
     List<ReviewDto.Response> reviewsToReviewResponseDtos(List<Review> reviews);
 }
