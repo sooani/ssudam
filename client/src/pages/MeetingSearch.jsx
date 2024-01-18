@@ -16,6 +16,7 @@ const MeetingSearch = () => {
   const commentsPerPage = 10; // 한 페이지에 표시할 검색 결과 수
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
+  const { searchkeyword: urlSearchKeyword } = useParams();
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);
@@ -24,7 +25,12 @@ const MeetingSearch = () => {
     console.log(commentsPerPage);
     console.log(currentPage);
   }, [commentsPerPage, currentPage]);
-
+  useEffect(() => {
+    getResults();
+  }, [searchkeyword]);
+  useEffect(() => {
+    setSearchkeyword(urlSearchKeyword || "");
+  }, [urlSearchKeyword]);
   const getResults = async (currentPage, commentsPerPage) => {
     console.log(currentPage, commentsPerPage);
     let page = currentPage ? currentPage : 1;

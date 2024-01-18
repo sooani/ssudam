@@ -37,7 +37,7 @@ function App() {
         <Route path="/freeboard" element={<Freeboard />} />
         {/* 관리자일경우만 가능하게 수정 필요 */}
         <Route path="/todolist" element={<Todolist />} />
-        <Route path="/search" element={<MeetingSearch />} />
+        <Route path="/search/:searchkeyword" element={<MeetingSearch />} />
       </Routes>
     </BrowserRouter>
   );

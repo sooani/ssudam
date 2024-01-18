@@ -1,5 +1,5 @@
 .header {
-  background-image: url('../../images/11.png');
+  background-image: url("../../images/11.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -41,4 +41,36 @@ button {
 .join {
   font-weight: 600;
   font-size: 1rem;
+}
+
+/* 검색창 관련 */
+.search {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid gray; */
+  width: 250px;
+  /* margin-right: 1rem; */
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+.search input {
+  /* margin: 0 auto; */
+  /* border: 1px solid black; */
+  border: none;
+  padding: 0.5rem;
+  width: 75%;
+}
+.search .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: black;
+  margin-left: 0.5rem;
+}
+.search button {
+  background-color: white;
 }
