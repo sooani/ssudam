@@ -25,7 +25,7 @@ const MakePost = () => {
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
   const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
-
+  const [contact, setContact] = useState("");
   const navigate = useNavigate();
 
   // 모임 글 정보
@@ -59,6 +59,24 @@ const MakePost = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
+
+    // const fieldName = e.target.name;
+    // const value = e.target.value;
+    // console.log(fieldName);
+    // switch (fieldName) {
+    //   case "contact":
+    //     const isValidPhoneNumber = e.target.checkValidity();
+    //     console.log(isValidPhoneNumber);
+    //     if (!isValidPhoneNumber) {
+    //       e.target.setCustomValidity("000-0000-0000 형식으로 입력해주세요!");
+    //     } else {
+    //       e.target.setCustomValidity(""); // 유효한 경우 오류 메시지 제거
+    //     }
+    //     break;
+    //   // 다른 필드에 대한 처리 추가 가능
+    //   default:
+    //     break;
+    // }
 
     // form에서 값 추출
     const data = new FormData(e.target);
@@ -107,6 +125,25 @@ const MakePost = () => {
         alert("오류가 발생했습니다!");
       });
   };
+  // const handleInputChange = (e) => {
+  //   const fieldName = e.target.name;
+  //   const value = e.target.value;
+  //   console.log(fieldName);
+  //   switch (fieldName) {
+  //     case "contact":
+  //       const isValidPhoneNumber = e.target.checkValidity();
+  //       console.log(isValidPhoneNumber);
+  //       if (!isValidPhoneNumber) {
+  //         e.target.setCustomValidity("000-0000-0000 형식으로 입력해주세요!");
+  //       } else {
+  //         e.target.setCustomValidity(""); // 유효한 경우 오류 메시지 제거
+  //       }
+  //       break;
+  //     // 다른 필드에 대한 처리 추가 가능
+  //     default:
+  //       break;
+  //   }
+  // };
   return (
     <div className={classes.wrapper}>
       <Header />
@@ -168,9 +205,12 @@ const MakePost = () => {
                 <h4>연락 방법</h4>
                 <input
                   type="tel"
-                  pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                  pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
                   required
                   name="contact"
+                  title="000-0000-0000 형식으로 입력해주세요!"
+                  // onChange={handleInputChange}
+                  // value={contact}
                 />
               </div>
             </div>

@@ -224,6 +224,8 @@ const EditPost = () => {
                   value={meetingInfo.phoneNumber}
                   name="contact"
                   onChange={contactHandler}
+                  required
+                  title="000-0000-0000 형식으로 입력해주세요!"
                 />
               </div>
             </div>
