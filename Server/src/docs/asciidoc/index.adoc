@@ -702,6 +702,23 @@ include::{snippets}/get-review-by-member/http-response.adoc[]
 .response-fields
 include::{snippets}/get-review-by-member/response-fields.adoc[]
 
+=== 특정 후기 조회
+
+.curl-request
+include::{snippets}/get-review/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-review/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-review/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-review/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-review/response-fields.adoc[]
+
 === 전체 후기 조회
 
 .curl-request

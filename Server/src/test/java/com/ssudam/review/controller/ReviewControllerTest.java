@@ -3,6 +3,7 @@ package com.ssudam.review.controller;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import com.ssudam.member.entity.Member;
+import com.ssudam.member.service.MemberService;
 import com.ssudam.review.dto.ReviewDto;
 import com.ssudam.review.entity.Review;
 import com.ssudam.review.mapper.ReviewMapper;
@@ -59,23 +60,22 @@ public class ReviewControllerTest {
     @MockBean
     private ReviewService reviewService;
     @MockBean
+    private MemberService memberService;
+    @MockBean
     private ReviewMapper mapper;
 
     @Test
     void postReviewTest() throws Exception {
-        System.out.println("[ postReview test ]");
-
         // given
         ReviewDto.Post post = (ReviewDto.Post) ReviewStub.getRequestBody(HttpMethod.POST);
         String content = gson.toJson(post);
 
-        given(mapper.reviewPostDtoToReview(any(ReviewDto.Post.class))).willReturn(new Review());
-        Member member = new Member();
-        member.setMemberId(1L);
+        Member mockMember = new Member();
+        mockMember.setMemberId(1L);
+        given(memberService.findMember(Mockito.anyLong())).willReturn(mockMember);
         Review mockResultReview = new Review();
-        mockResultReview.setMember(member);
-        mockResultReview.setReviewId(1L);
-
+        mockResultReview.setMember(mockMember);
+        given(mapper.reviewPostDtoToReview(any(ReviewDto.Post.class))).willReturn(new Review());
         given(reviewService.createReview(Mockito.any(Review.class))).willReturn(mockResultReview);
 
         // when
@@ -109,8 +109,6 @@ public class ReviewControllerTest {
 
     @Test
     public void patchReviewTest() throws Exception {
-        System.out.println("[ patchReview test ]");
-
         // given
         long reviewId = 1L;
 
@@ -153,6 +151,7 @@ public class ReviewControllerTest {
                         responseFields(
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과데이터"),
+                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
                                         fieldWithPath("data.reviewId").type(JsonFieldType.NUMBER).description("후기 식별자"),
                                         fieldWithPath("data.title").type(JsonFieldType.STRING).description("후기 제목"),
                                         fieldWithPath("data.content").type(JsonFieldType.STRING).description("후기 내용"),
@@ -165,8 +164,6 @@ public class ReviewControllerTest {
 
     @Test
     public void getReviewsByMemberTest() throws Exception {
-        System.out.println("[ getReviewsByMember test ]");
-
         // given
         long memberId = 1L;
 
@@ -186,7 +183,7 @@ public class ReviewControllerTest {
         // when
         ResultActions actions =
                 mockMvc.perform(
-                        get("/v1/reviews/{member-id}", memberId)
+                        get("/v1/reviews/member/{member-id}", memberId)
                                 .params(queryParams)
                                 .accept(MediaType.APPLICATION_JSON)
                 );
@@ -225,9 +222,46 @@ public class ReviewControllerTest {
     }
 
     @Test
-    public void getReviewsTest() throws Exception {
-        System.out.println("[ getReviews test ]");
+    public void getReviewTest() throws Exception {
+        // given
+        long reviewId = 1L;
 
+        ReviewDto.Response responseDto = ReviewStub.getSingleResponseBody();
+
+        given(reviewService.findReview(reviewId)).willReturn(new Review());
+        given(mapper.reviewToReviewResponseDto(any(Review.class))).willReturn(responseDto);
+
+        // when
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/v1/reviews/{review-id}", reviewId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON));
+
+        // then
+        actions.andExpect(status().isOk())
+                .andDo(document("get-review",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("review-id").description("후기 식별자")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과데이터"),
+                                        fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("멤버 식별자"),
+                                        fieldWithPath("data.reviewId").type(JsonFieldType.NUMBER).description("후기 식별자"),
+                                        fieldWithPath("data.title").type(JsonFieldType.STRING).description("후기 제목"),
+                                        fieldWithPath("data.content").type(JsonFieldType.STRING).description("후기 내용"),
+                                        fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("후기 등록 날짜"),
+                                        fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("후기 수정 날짜")
+                                )
+                        )
+                ));
+    }
+
+    @Test
+    public void getReviewsTest() throws Exception {
         // given
         Page<Review> reviews = ReviewStub.getMultiReviews();
         List<ReviewDto.Response> responses = ReviewStub.getMultiResponseBody();
@@ -279,8 +313,6 @@ public class ReviewControllerTest {
 
     @Test
     public void deleteReviewTest() throws Exception {
-        System.out.println("[ deleteReview test ]");
-
         // given
         long reviewId = 1L;
 
