@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import classes from '../../styles/components/Header.module.css';
+import classes from '../../styles/components/MainHeader.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserLarge } from 'react-icons/fa6';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { logout } from '../../features/userSlice';
 import SignUpModal from '../../pages/SignUpModal';
+import banner from '../../images/11.png';
 
 /*
   헤더
@@ -15,7 +16,7 @@ import SignUpModal from '../../pages/SignUpModal';
   로그인 완료 시 로그아웃으로 변경, 회원가입 버튼 마이페이지 이모티콘으로 변경되서 출력
 */
 
-const Header = () => {
+const MainHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -56,6 +57,11 @@ const Header = () => {
   return (
     <header>
       <div className={classes.header}>
+        {/* <img
+            className={classes.bannerImage}
+            alt="배너 이미지 구역"
+            src={banner}
+          /> */}
         <h1>
           <Link to="/">쓰담</Link>
         </h1>
@@ -106,4 +112,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default MainHeader;
