@@ -86,7 +86,7 @@ const Todolist = () => {
     axios
       .post(`/v1/todos`, todoDTO)
       .then((response) => {
-        alert("할 일이 등록되었습니다!");
+        // alert("할 일이 등록되었습니다!");
         getTodos(currentPage, commentsPerPage);
       })
       .catch((error) => {
@@ -156,20 +156,20 @@ const Todolist = () => {
         alert("오류가 발생했습니다!");
       });
   };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      addTodo();
+    }
+  };
   return (
     <div className={classes.wrapper}>
       <Header />
       <div className={classes.container}>
-        <h1>Todolist</h1>
+        <div className={classes.header}>
+          <h1>Todolist</h1>
+        </div>
+
         <div className={classes.inputTab}>
-          <input
-            className={classes.todoInput}
-            type="text"
-            placeholder="최대 3개의 할 일을 추가하세요..."
-            value={entered}
-            required={true}
-            onChange={(e) => setEntered(e.target.value)}
-          />
           <input
             type="number"
             className={classes.orderInput}
@@ -178,9 +178,22 @@ const Todolist = () => {
             value={order}
             required={true}
             onChange={(e) => setOrder(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+          <input
+            className={classes.todoInput}
+            type="text"
+            placeholder="최대 3개의 할 일을 추가하세요..."
+            value={entered}
+            required={true}
+            onChange={(e) => setEntered(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
           <button onClick={addTodo} className={classes.submitBtn}>
             추가
+          </button>{" "}
+          <button className={classes.deleteBtn} onClick={deleteAllHandler}>
+            모두 삭제
           </button>
         </div>
         {/* <div className={classes.tabs}>
@@ -208,13 +221,6 @@ const Todolist = () => {
                 {editMode === todo.todolistId ? (
                   <div className={classes.inputTab}>
                     <input
-                      className={classes.todoInput}
-                      type="text"
-                      value={editedTitle}
-                      required
-                      onChange={(e) => setEditedTitle(e.target.value)}
-                    />
-                    <input
                       type="number"
                       className={classes.orderInput}
                       placeholder="순위"
@@ -222,6 +228,13 @@ const Todolist = () => {
                       value={editedOrder}
                       required
                       onChange={(e) => setEditedOrder(e.target.value)}
+                    />
+                    <input
+                      className={classes.todoInput}
+                      type="text"
+                      value={editedTitle}
+                      required
+                      onChange={(e) => setEditedTitle(e.target.value)}
                     />
                   </div>
                 ) : (
@@ -279,9 +292,6 @@ const Todolist = () => {
               />
             )}
           </div>
-          <button className={classes.deleteBtn} onClick={deleteAllHandler}>
-            모두 삭제
-          </button>
         </div>
       </div>
       <Footer />

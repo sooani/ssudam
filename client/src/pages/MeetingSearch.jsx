@@ -9,7 +9,7 @@ import Footer from "../components/Layout/Footer";
 import { MdSearch } from "react-icons/md";
 const MeetingSearch = () => {
   const [searched, setSearched] = useState(null);
-  const [searchkeyword, setSearchkeyword] = useState("");
+  const [searchkeyword, setSearchkeyword] = useState(null);
   const [totalPages, setTotalPages] = useState(null); // 전체 페이지 수
   const [totalLength, setTotalLength] = useState(null); // 전체 검색 결과 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
@@ -27,7 +27,9 @@ const MeetingSearch = () => {
     getResults(currentPage, commentsPerPage);
   }, [commentsPerPage, currentPage]);
   useEffect(() => {
-    getResults(currentPage, commentsPerPage);
+    if (searchkeyword) {
+      getResults(currentPage, commentsPerPage);
+    }
   }, [searchkeyword]);
   useEffect(() => {
     setSearchkeyword(urlSearchKeyword || "");
