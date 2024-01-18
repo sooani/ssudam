@@ -15,6 +15,7 @@ import EditReview from "./pages/EditReview";
 import Freeboard from "./pages/Freeboard";
 import DetailReview from "./pages/DetailReview";
 import Todolist from "./pages/Todolist";
+import MeetingSearch from "./pages/MeetingSearch";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/freeboard" element={<Freeboard />} />
         {/* 관리자일경우만 가능하게 수정 필요 */}
         <Route path="/todolist" element={<Todolist />} />
+        <Route path="/search" element={<MeetingSearch />} />
       </Routes>
     </BrowserRouter>
   );
