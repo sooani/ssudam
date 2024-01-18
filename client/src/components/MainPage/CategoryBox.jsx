@@ -3,7 +3,7 @@ import ListCard from './ListCard';
 import classes from '../../styles/components/CategoryBox.module.css';
 // import PaginationBar from './PaginationBar';
 
-const CategoryBox = ({ categoryData, pageInfo, onPageChange }) => {
+const CategoryBox = ({ categoryData }) => {
   return (
     <div className={classes.listCardContainer}>
       {categoryData.map((party) => (
