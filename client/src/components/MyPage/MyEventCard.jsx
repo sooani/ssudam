@@ -7,13 +7,19 @@ import classes from "../../styles/components/MyEventCard.module.css";
 import ssudamhand from "../../images/ssudamhand.png";
 import Pagination from "./Pagination";
 
+import SignUpModal from "../../pages/SignUpModal";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
+
 function MyEventCard() {
   const { partyMemberId } = useParams();
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const eventsPerPage = 4;
-  // const instance = useAxiosInstance();
   const instance = useAxiosInterceptors();
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const user = useSelector(selectUser);
   useEffect(() => {
     const fetchEvents = () => {
       instance
@@ -35,6 +41,16 @@ function MyEventCard() {
     fetchEvents();
   }, [page, partyMemberId]);
 
+  const EventPostClick = (event) => {
+    console.log("클릭된 이벤트:", event);
+
+    if (!user) {
+      setModalIsOpen(true);
+    } else {
+      window.location.href = `/meetings/${event.partyId}`;
+    }
+  };
+
   return (
     <div className={classes.EventCardContainer}>
       <div className={classes.EventCardMain}>
@@ -43,13 +59,15 @@ function MyEventCard() {
         ) : (
           <>
             {events.map((event) => (
-              <div key={event.partyId}>
-                <p className={classes.Status}>
-                  {" "}
-                  {event.partyStatus === "PARTY_OPENED"
-                    ? " 모집중"
-                    : " 모집완료"}
-                </p>
+              <div key={event.partyId} onClick={() => EventPostClick(event)}>
+                <div className={classes.Statuscontainer}>
+                  <p className={classes.Status}>
+                    {" "}
+                    {event.partyStatus === "PARTY_OPENED"
+                      ? " 모집중"
+                      : " 모집완료"}
+                  </p>
+                </div>
                 <div className={classes.EventTitleBox}>
                   <div className={classes.Title}>{event.title}</div>
                   {/* <img className={classes.Img} src={ssudamhand} alt="Ssudamhand" /> */}

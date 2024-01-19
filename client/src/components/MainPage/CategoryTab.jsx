@@ -1,5 +1,5 @@
 import classes from "../../styles/components/CategoryTab.module.css";
-import instance from "../../axios";
+import { useAxiosInterceptors } from "../../axios";
 import React, { useState, useEffect } from "react";
 import CategoryBox from "./CategoryBox";
 import PaginationBar from "./PaginationBar";
@@ -7,6 +7,7 @@ import PaginationBar from "./PaginationBar";
 const CategoryTab = () => {
   // const instance = useAxiosInstance();
   const [activeTab, setActiveTab] = useState("recruiting");
+
   const [recruitingData, setRecruitingData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
   const [pageInfo, setPageInfo] = useState({
@@ -15,6 +16,7 @@ const CategoryTab = () => {
     totalElements: "totalElements",
     totalPages: "totalPages",
   });
+  const instance = useAxiosInterceptors();
   const fetchParties = async (page, status) => {
     try {
       const response = await instance.get(

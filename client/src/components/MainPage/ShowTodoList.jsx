@@ -42,10 +42,7 @@ const ShowTodoList = () => {
 
   return (
     <div className={classes.todoListSection}>
-      <div className={classes.todoTitle}>
-        {formattedDate}
-        <p>오늘 할 일!</p>
-      </div>
+      <div className={classes.todoTitle}>{formattedDate}</div>
       <div className={classes.todoList}>
         {data.map((todo) => (
           <li key={todo.todolistId}>{todo.title}</li>

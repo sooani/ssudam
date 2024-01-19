@@ -1,8 +1,8 @@
 /* 링크 밑줄 없애기, 실제 HTML에서는 <router-link>라는 태그를 <a> 태그로 인식 */
-a {
+/* a {
   text-decoration: none;
   color: #000000;
-}
+} */
 
 .header {
   background-image: url("../../images/11.png");

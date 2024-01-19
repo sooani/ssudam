@@ -1,7 +1,11 @@
+.newWrapper {
+  width: 3240px;
+}
 .listCard {
-  margin: 10px 0 0 10px;
-  width: 100%;
-  height: 340px;
+  display: inline-block;
+  padding: 20px 25px;
+  margin: 0px 12px;
+  /* width: 318px; */
   overflow: hidden;
   border-radius: 10px;
   border: 2px solid rgb(186, 186, 186);
@@ -13,31 +17,30 @@
 
 .listCardTitle {
   text-align: left;
-  padding-top: 20px;
+  padding-top: 10px;
   padding-left: 3%;
   font-weight: 700;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
   overflow: hidden;
 }
 .title {
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .listCardMeetingDate {
-  font-size: 1.25rem;
+  font-size: 1rem;
   padding-top: 2vh;
   text-align: left;
 }
 .listCardClosingDate {
-  font-size: 1.25rem;
+  font-size: 1rem;
   text-align: left;
-}
-
-.nickName {
-  display: inline;
 }
 .listCardCurrentCapacity {
   display: inline;
-  margin-left: 70%;
   text-align: right;
 }
 .listCardMaxCapacity {

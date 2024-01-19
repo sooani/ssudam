@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import classes from '../../styles/components/ListCard.module.css';
+import classes from '../../styles/components/NewListCard.module.css';
 import SignUpModal from '../../pages/SignUpModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
@@ -10,7 +10,7 @@ import { selectUser } from '../../features/userSlice';
     제목, 내용, 작성일 출력
 */
 
-const ListCard = ({ party }) => {
+const NewListCard = ({ party }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   // Redux store에서 사용자 정보 가져오기
   const user = useSelector(selectUser);
@@ -33,26 +33,30 @@ const ListCard = ({ party }) => {
     return formattedDate;
   };
   return (
-    <div className={classes.listCard} onClick={handlePostClick}>
-      <div className={classes.listCardMeetingDate}>
-        <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
-      </div>
-      <div className={classes.listCardClosingDate}>
-        <span>마감일 : {extractDate(party?.closingDate)}</span>
+    <div className={classes.newWrapper}>
+      <div className={classes.listCard} onClick={handlePostClick}>
+        <div className={classes.listCardMeetingDate}>
+          <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
+        </div>
+        <div className={classes.listCardClosingDate}>
+          <span>마감일 : {extractDate(party?.closingDate)}</span>
+        </div>
         <div className={classes.listCardTitle}>
           <h1 className={classes.title}>{party?.title}</h1>
         </div>
+        <div className={classes.listCardCurrentCapacity}>
+          <span>{party?.currentCapacity}/</span>
+        </div>
+        <div className={classes.listCardMaxCapacity}>
+          <span>{party?.maxCapacity}</span>
+        </div>
+        <SignUpModal
+          isOpen={modalIsOpen}
+          onClose={() => setModalIsOpen(false)}
+        />
       </div>
-      <div className={classes.nickName}>닉네임</div>
-      <div className={classes.listCardCurrentCapacity}>
-        <span>{party?.currentCapacity}/</span>
-      </div>
-      <div className={classes.listCardMaxCapacity}>
-        <span>{party?.maxCapacity}</span>
-      </div>
-      <SignUpModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
     </div>
   );
 };
 
-export default ListCard;
+export default NewListCard;
