@@ -7,7 +7,7 @@ import MakeMap from "../components/Map/MakeMap";
 import { FaUsers } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Comments from "../components/Meeting/Comments";
 import { FaBookmark } from "react-icons/fa";
@@ -37,7 +37,7 @@ const DetailPost = () => {
   const { meetingId } = useParams();
   // 현재 로그인된 사용자의 정보를 가져오는 코드로 나중에 변경
   // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
+  const axios = useAxiosInterceptors();
   // 리덕스 사용자 정보 불러오기
   const loggedInUser = useSelector(selectUser);
   console.log(loggedInUser);

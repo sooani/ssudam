@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import classes from "../styles/pages/LogIn.module.css";
 import { jwtDecode } from "jwt-decode";
-import instance from '../axios'
+import { useAxiosInterceptors } from "../axios";
 
 // 해결할 문제
 // 오류메시지 css 수정
@@ -18,7 +18,7 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  
+  const instance = useAxiosInterceptors();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

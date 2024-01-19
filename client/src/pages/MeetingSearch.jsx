@@ -1,12 +1,14 @@
 import ReactPaginate from "react-paginate";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import classes from "../styles/pages/MeetingSearch.module.css";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import { MdSearch } from "react-icons/md";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 const MeetingSearch = () => {
   const [searched, setSearched] = useState(null);
   const [searchkeyword, setSearchkeyword] = useState(null);
@@ -15,7 +17,9 @@ const MeetingSearch = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const commentsPerPage = 10; // 한 페이지에 표시할 검색 결과 수
   const [page, setPage] = useState(1);
+  const axios = useAxiosInterceptors();
   const navigate = useNavigate();
+  const loggedInUser = useSelector(selectUser);
   // const axios = useAxiosInstance();
   const { searchkeyword: urlSearchKeyword } = useParams();
   // 페이지네이션 페이지를 선택하는 핸들러
@@ -104,7 +108,11 @@ const MeetingSearch = () => {
                 key={post.partyId}
                 className={classes.post}
                 onClick={() => {
-                  navigate(`/meetings/${post.partyId}`);
+                  if (loggedInUser) {
+                    navigate(`/meetings/${post.partyId}`);
+                  } else {
+                    navigate("/login");
+                  }
                 }}
               >
                 <div className={classes.box1}>

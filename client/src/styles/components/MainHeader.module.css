@@ -5,8 +5,8 @@ a {
 }
 
 .header {
-  background-image: url('../../images/11.png');
-  background-size: 100% 100%;
+  background-image: url("../../images/11.png");
+  background-size: 100% auto;
   display: flex;
   height: 400px;
 }

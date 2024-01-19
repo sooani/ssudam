@@ -7,7 +7,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 const Todolist = () => {
   const [totalPages, setTotalPages] = useState(null); // 전체 페이지 수
   const [totalLength, setTotalLength] = useState(null); // 전체 투두 수
@@ -25,6 +25,7 @@ const Todolist = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const [total, setTotal] = useState(null);
   // const axios = useAxiosInstance();
+  const axios = useAxiosInterceptors();
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);

@@ -1,11 +1,11 @@
 // MyEventCard.jsx
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import instance from '../../axios';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAxiosInterceptors } from "../../axios";
 // import useAxiosInstance from "../../axios";
-import classes from '../../styles/components/MyEventCard.module.css';
-import ssudamhand from '../../images/ssudamhand.png';
-import Pagination from './Pagination';
+import classes from "../../styles/components/MyEventCard.module.css";
+import ssudamhand from "../../images/ssudamhand.png";
+import Pagination from "./Pagination";
 
 function MyEventCard() {
   const { partyMemberId } = useParams();
@@ -13,11 +13,11 @@ function MyEventCard() {
   const [page, setPage] = useState(1);
   const eventsPerPage = 4;
   // const instance = useAxiosInstance();
-
+  const instance = useAxiosInterceptors();
   useEffect(() => {
     const fetchEvents = () => {
       instance
-        .get('/v1/parties', {
+        .get("/v1/parties", {
           params: {
             partyMemberId,
             page,
@@ -28,7 +28,7 @@ function MyEventCard() {
           setEvents(response.data.data);
         })
         .catch((error) => {
-          console.error('나의 모임 받아오기 오류:', error);
+          console.error("나의 모임 받아오기 오류:", error);
         });
     };
 
@@ -44,7 +44,12 @@ function MyEventCard() {
           <>
             {events.map((event) => (
               <div key={event.partyId}>
-                <p className={classes.Status}> {event.partyStatus === 'PARTY_OPENED' ? ' 모집중' : ' 모집완료'}</p>
+                <p className={classes.Status}>
+                  {" "}
+                  {event.partyStatus === "PARTY_OPENED"
+                    ? " 모집중"
+                    : " 모집완료"}
+                </p>
                 <div className={classes.EventTitleBox}>
                   <div className={classes.Title}>{event.title}</div>
                   {/* <img className={classes.Img} src={ssudamhand} alt="Ssudamhand" /> */}
@@ -57,7 +62,12 @@ function MyEventCard() {
         )}
       </div>
       <div className={classes.CardPagination}>
-          <Pagination total={events.length} limit={eventsPerPage} page={page} setPage={setPage} />
+        <Pagination
+          total={events.length}
+          limit={eventsPerPage}
+          page={page}
+          setPage={setPage}
+        />
       </div>
     </div>
   );

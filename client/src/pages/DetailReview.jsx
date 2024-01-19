@@ -5,7 +5,7 @@ import Footer from "../components/Layout/Footer";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { selectUser } from "../features/userSlice";
@@ -17,7 +17,7 @@ const DetailReview = () => {
   // const axios = useAxiosInstance();
   const [userInfo, setUserInfo] = useState(null); // 현재 후기의 작성자 정보
   const [isMyReview, setIsMyReview] = useState(false); // 내 후기인지 여부
-
+  const axios = useAxiosInterceptors();
   // const { reviewId } = useParams();
   const { reviewId } = useParams();
 
@@ -29,7 +29,7 @@ const DetailReview = () => {
   const navigate = useNavigate();
   // 수안님 코드의 경우 (party정보에 memberId가 존재할 경우) 주석 해제
   useEffect(() => {
-    if (reviewInfo && reviewInfo.memberId) {
+    if (loggedInUser && reviewInfo && reviewInfo.memberId) {
       axios
         .get(`/v1/members/${reviewInfo.memberId}`)
         .then((response) => {
@@ -50,7 +50,7 @@ const DetailReview = () => {
   // meeting의 userInfo의 id와 현재 로그인된 사용자의 id를 비교하여 isMyPost 업데이트
   useEffect(() => {
     if (reviewInfo) {
-      if (reviewInfo.memberId === loggedInUser.memberId) {
+      if (loggedInUser && reviewInfo.memberId === loggedInUser.memberId) {
         setIsMyReview(true);
       }
     }

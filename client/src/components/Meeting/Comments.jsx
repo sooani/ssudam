@@ -5,7 +5,8 @@ import { FaThumbsUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { FaComment } from "react-icons/fa";
 import replyImg from "../../images/reply.png";
-import axios from "../../axios";
+// import axios from "../../axios";
+import { useAxiosInterceptors } from "../../axios";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
 const Comments = (props) => {
@@ -20,6 +21,7 @@ const Comments = (props) => {
   console.log(props.userInfo.nickname);
   console.log(props.loggedInUser.nickname);
   const loggedInUser = useSelector(selectUser);
+  const axios = useAxiosInterceptors;
   console.log(loggedInUser);
   // props의 댓글이 변화할때 마다 comments 업데이트 (상관없나..?)
   useEffect(() => {

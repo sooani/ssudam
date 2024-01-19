@@ -1,10 +1,10 @@
-import MainHeader from '../components/Layout/MainHeader';
+import MainHeader from "../components/Layout/MainHeader";
 // import Footer from '../components/Layout/Footer';
-import classes from '../styles/pages/MainPage.module.css';
-// import ListSlider from '../components/MainPage/ListSlider';
-// import CategoryTab from '../components/MainPage/CategoryTab';
-import useAxiosInstance from '../axios';
-import React, { useState, useEffect } from 'react';
+import classes from "../styles/pages/MainPage.module.css";
+// import ListSlider from "../components/MainPage/ListSlider";
+// import CategoryTab from "../components/MainPage/CategoryTab";
+import { useAxiosInterceptors } from "../axios";
+import React, { useState, useEffect } from "react";
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -18,7 +18,7 @@ const MainPage = () => {
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
   const [page, setPage] = useState(1);
-  const instance = useAxiosInstance();
+  const instance = useAxiosInterceptors();
 
   // 메인 모집중 게시글
   useEffect(() => {
@@ -29,7 +29,7 @@ const MainPage = () => {
         // setPage(response.data.pageInfo);
       })
       .catch((error) => {
-        console.error('Error party data:', error);
+        console.error("Error party data:", error);
       });
   }, []);
 
@@ -41,7 +41,7 @@ const MainPage = () => {
         setLatest(response.data.data);
       })
       .catch((error) => {
-        console.error('Error party data:', error);
+        console.error("Error party data:", error);
       });
   }, []);
 
