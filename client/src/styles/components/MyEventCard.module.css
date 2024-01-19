@@ -24,23 +24,35 @@
 .EventCardContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border: 2px solid black;
+    /* align-items: center; */
+    /* border: 2px solid black; */
 }
 .EventCardMain{
     display: flex;
     flex-direction: row;
-    border: 2px solid red;
+    /* border: 2px solid red; */
+    /* border: 2px solid black; */
+    border-radius: 5px;
 }
+.EventCardMain > div {
+    margin-right: 1rem; /* Adjust the value as needed for the desired spacing */
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    height: 30vh;
+    weight: 10vw;
+  }
+  
+  /* Style for the last child to prevent extra margin */
+  .EventCardMain > div:last-child {
+    margin-right: 0;
+  }
   
   .EventTitleBox {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     margin-bottom: 1rem; 
-    border: 2px solid black;
-    border-radius: 5px;
-    margin: 2rem;
+    margin: 1rem;
   }
   
   .Title {
@@ -48,17 +60,28 @@
     font-weight: bold; 
   }
   
+  .Statuscontainer{
+    display: flex;
+    /* border: 1px solid black; */
+    justify-content: right;
+    height:4vh;
+    margin:0.5rem;
+  }
   /* 모집중 모집완료 */
   .Status {
     display: flex;
-    font-size: 1rem; 
-    border: 1px solid black;
+    font-size: 0.9rem; 
+    border: 1px solid #86B6F6;
     border-radius: 10px;
+    background-color: #86B6F6;
     width: 4vw;
     text-align: center;
     font-weight: bold; 
     align-items: center;
-    justify-content: right;
+    justify-content: center;
+    /* width: 3rem; */
+    height:3vh;
+    margin:0;
   }
   
   /* .Img {
