@@ -9,11 +9,19 @@
     background-color: rgba(240, 240, 240, 1);
 }
 
+@font-face {
+    font-family: "Cafe";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
+
 .loginForm h1{
     font-size: 55px; 
     color: rgb(0, 130, 36, 1);
     text-align: center;
     margin-bottom: 15px;
+    font-family:  "Cafe", sans-serif;
 }
 
 .loginForm h3{
