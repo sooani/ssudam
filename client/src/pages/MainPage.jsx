@@ -1,8 +1,6 @@
-import Header from '../components/Layout/Header';
+import MainHeader from '../components/Layout/MainHeader';
 import Footer from '../components/Layout/Footer';
 import classes from '../styles/pages/MainPage.module.css';
-import banner from '../images/banner.png';
-import TodoList from '../components/MainPage/TodoList';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
 import instance from '../axios';
@@ -27,7 +25,7 @@ const MainPage = () => {
       .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
         setData(response.data.data);
-        setPage(response.data.pageInfo);
+        // setPage(response.data.pageInfo);
       })
       .catch((error) => {
         console.error('Error party data:', error);
@@ -49,28 +47,12 @@ const MainPage = () => {
   return (
     <main>
       {/* 헤더 */}
-      <Header />
+      <MainHeader />
 
-      {/* 배너 이미지 출력 */}
-      <section className={classes.banner}>
-        <img
-          className={classes.bannerImage}
-          alt="배너 이미지 구역"
-          src={banner}
-        />
-      </section>
-
-      {/* 투두리스트와 새로운 모임 출력 섹션 */}
-      <section className={classes.todoAndNewSection}>
-        {/* 투두 리스트  */}
-        <div className={classes.todoList}>
-          <TodoList />
-        </div>
-        {/* 새로운 모임 */}
-        <div className={classes.newPost}>
-          <ListSlider latest={latest} />
-        </div>
-      </section>
+      {/* 새로운 모임 */}
+      <div className={classes.newPost}>
+        <ListSlider latest={latest} />
+      </div>
 
       {/* 메인 구역 */}
       <section className={classes.mainContainer}>

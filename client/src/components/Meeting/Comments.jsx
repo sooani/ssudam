@@ -320,7 +320,11 @@ const Comments = (props) => {
                       <FaComment
                         style={{
                           fontSize: "1.5rem",
-                          color: "black",
+                          color:
+                            isReplyOpened[comment.commentId] ||
+                            hasReply[comment.commentId]
+                              ? "#86b6f6"
+                              : "gray",
                         }}
                       />
                     </div>
@@ -335,8 +339,8 @@ const Comments = (props) => {
                       style={{
                         fontSize: "1.5rem",
                         color: commentLikes[comment.commentId]
-                          ? "green"
-                          : "black",
+                          ? "#86b6f6"
+                          : "gray",
                       }}
                     />
                     {comment.likeCount}

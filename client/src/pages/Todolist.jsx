@@ -232,7 +232,7 @@ const Todolist = () => {
                           )
                     }
                   >
-                    {editMode === todo.id ? "완료" : "수정"}
+                    {editMode === todo.todolistId ? "완료" : "수정"}
                   </button>
                   <button
                     className={classes.deleteBtn}
@@ -252,8 +252,8 @@ const Todolist = () => {
         <div className={classes.paginate}>
           {totalPages > 0 && (
             <ReactPaginate
-              previousLabel={<FiChevronLeft />}
-              nextLabel={<FiChevronRight />}
+              previousLabel={<FiChevronLeft style={{ color: "#86B6F6" }} />}
+              nextLabel={<FiChevronRight style={{ color: "#86B6F6" }} />}
               pageCount={totalPages}
               onPageChange={handlePageClick}
               containerClassName={classes.pagination}

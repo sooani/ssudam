@@ -1,0 +1,76 @@
+.header {
+  background-image: url("../../images/11.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: #fff;
+}
+
+/* 링크 밑줄 없애기, 실제 HTML에서는 <router-link>라는 태그를 <a> 태그로 인식 */
+/* a {
+  text-decoration: none;
+  color: #008224;
+} */
+
+/* 새 글 쓰기, 로그인, 회원가입 버튼 관련 */
+.loginElement {
+  padding-right: 10%;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.postRegister {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.login {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.join {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* 검색창 관련 */
+.search {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid gray; */
+  width: 250px;
+  /* margin-right: 1rem; */
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+.search input {
+  /* margin: 0 auto; */
+  /* border: 1px solid black; */
+  border: none;
+  padding: 0.5rem;
+  width: 75%;
+}
+.search .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: black;
+  margin-left: 0.5rem;
+}
+.search button {
+  background-color: white;
+}

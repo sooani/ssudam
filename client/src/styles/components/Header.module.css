@@ -11,7 +11,12 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
 }
-
+@font-face {
+  font-family: "Cafe";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../../../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
 .header h1 {
   padding-left: 10%;
 }
@@ -20,6 +25,7 @@
 a {
   text-decoration: none;
   color: #008224;
+  font-family: "Cafe", sans-serif;
 }
 
 /* 새 글 쓰기, 로그인, 회원가입 버튼 관련 */

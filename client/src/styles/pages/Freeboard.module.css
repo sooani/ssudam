@@ -62,7 +62,7 @@
 }
 
 .pagination__link__active {
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
 }
 .btnCon button {
@@ -80,12 +80,12 @@
   color: black;
 }
 .btnCon .postBtn {
-  background-color: green;
+  background-color: #86b6f6;
   color: white;
 }
 .btnCon .onBtn {
   background-color: white;
-  color: green;
+  color: #86b6f6;
 }
 .btnCon .offBtn {
   background-color: white;

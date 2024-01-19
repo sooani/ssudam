@@ -1,0 +1,144 @@
+.wrapper {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  overflow-x: hidden;
+  background-color: white;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid gray; */
+  width: 300px;
+  margin-right: 1rem;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+.search input {
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border: none;
+  padding: 0.5rem;
+}
+.search .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: white;
+  margin-left: 0.5rem;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+  width: 65%;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 2rem;
+  margin-bottom: 8rem;
+  @media screen and (max-width: 1070px) {
+  }
+}
+.posts {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid pink; */
+  height: 90vh;
+}
+.post {
+  border-bottom: 1px solid gray;
+  margin: 0 1rem;
+  padding: 1.5rem;
+  font-size: large;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-left: 5rem;
+  margin-top: 1rem;
+
+  > * {
+    cursor: pointer;
+  }
+  li {
+    list-style-type: none;
+  }
+}
+
+.pagination__link {
+  transition: all 0.25s;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
+}
+
+.pagination__link__active {
+  background-color: #86b6f6;
+  color: white;
+}
+.box1 {
+  flex-basis: 90%;
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+.box1 .box1_id {
+  flex-basis: 7%;
+  width: 40px;
+  text-align: center;
+}
+.box1 .box1_title {
+  flex-basis: 80%;
+  margin: 0 auto;
+  text-align: center;
+  /* border: 1px solid blue; */
+}
+.box2 {
+  flex-basis: 10%;
+  text-align: center;
+  /* border: 1px solid blue; */
+}
+.box1_ {
+  flex-basis: 90%;
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  font-weight: 700;
+}
+.box1_ .box1_id_ {
+  flex-basis: 7%;
+  width: 40px;
+  text-align: center;
+}
+.box1_ .box1_title_ {
+  flex-basis: 80%;
+  margin: 0 auto;
+  text-align: center;
+  /* border: 1px solid blue; */
+}
+.box2_ {
+  flex-basis: 10%;
+  text-align: center;
+  /* border: 1px solid blue; */
+  font-weight: 700;
+}
+.box {
+  /* height: 100vh; */
+  /* border: 1px solid blue; */
+}

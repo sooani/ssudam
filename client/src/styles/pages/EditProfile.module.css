@@ -235,6 +235,6 @@
 }
 
 .DisabledButton {
-    background-color: gray;
+    /* background-color: gray; */
     cursor: not-allowed; /* 선택적으로 커서를 변경할 수 있음 */
 }
