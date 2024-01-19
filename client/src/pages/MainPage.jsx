@@ -1,9 +1,9 @@
 import MainHeader from '../components/Layout/MainHeader';
-import Footer from '../components/Layout/Footer';
+// import Footer from '../components/Layout/Footer';
 import classes from '../styles/pages/MainPage.module.css';
-import ListSlider from '../components/MainPage/ListSlider';
-import CategoryTab from '../components/MainPage/CategoryTab';
-import instance from '../axios';
+// import ListSlider from '../components/MainPage/ListSlider';
+// import CategoryTab from '../components/MainPage/CategoryTab';
+import useAxiosInstance from '../axios';
 import React, { useState, useEffect } from 'react';
 
 /*
@@ -18,6 +18,7 @@ const MainPage = () => {
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
   const [page, setPage] = useState(1);
+  const instance = useAxiosInstance();
 
   // 메인 모집중 게시글
   useEffect(() => {
@@ -45,22 +46,22 @@ const MainPage = () => {
   }, []);
 
   return (
-    <main>
+    <main className={classes.pageWrapper}>
       {/* 헤더 */}
       <MainHeader />
 
       {/* 새로운 모임 */}
-      <div className={classes.newPost}>
+      {/* <div className={classes.newPost}>
         <ListSlider latest={latest} />
-      </div>
+      </div> */}
 
       {/* 메인 구역 */}
-      <section className={classes.mainContainer}>
+      {/* <div className={classes.mainContainer}>
         <CategoryTab data={data} />
-      </section>
+      </div> */}
 
       {/* 푸터 */}
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

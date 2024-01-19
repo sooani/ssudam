@@ -1,6 +1,7 @@
 // MyPosts.jsx
 import React, { useState, useEffect } from 'react';
 import instance from '../../axios';
+// import useAxiosInstance from "../../axios";
 import Pagination from './Pagination';
 import classes from '../../styles/components/MyPosts.module.css';
 import { useParams } from 'react-router-dom';
@@ -12,6 +13,7 @@ function MyPosts() {
   const offset = (page - 1) * limit;
   const { memberId } = useParams();
   const [size, setSize] = useState(10);
+  // const instance = useAxiosInstance();
 
   useEffect(() => {
     const fetchComments = () => {

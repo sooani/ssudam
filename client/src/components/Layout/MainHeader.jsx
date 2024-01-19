@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import classes from "../../styles/components/MainHeader.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { FaUserLarge } from "react-icons/fa6";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser } from "../../features/userSlice";
-import { logout } from "../../features/userSlice";
-import SignUpModal from "../../pages/SignUpModal";
-import banner from "../../images/11.png";
-import { MdSearch } from "react-icons/md";
+import React, { useState } from 'react';
+import classes from '../../styles/components/MainHeader.module.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaUserLarge } from 'react-icons/fa6';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
+import { logout } from '../../features/userSlice';
+import SignUpModal from '../../pages/SignUpModal';
+import { MdSearch } from 'react-icons/md';
+import ShowTodoList from '../MainPage/ShowTodoList';
 /*
   헤더
   로고 왼쪽에 표시 클릭 시 메인페이지로 이동
@@ -23,24 +23,24 @@ const MainHeader = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   // const isAdmin = user && user.roles.includes('ADMIN');
 
-  const [searchkeyword, setSearchkeyword] = useState("");
+  const [searchkeyword, setSearchkeyword] = useState('');
 
   const gotoPost = () => {
     if (!user) {
       setModalIsOpen(true);
     } else {
       // 로그인하지 않은 경우 모달 창 열기
-      navigate("/meetings/new");
+      navigate('/meetings/new');
     }
   };
   const gotoLogin = () => {
-    navigate("/login");
+    navigate('/login');
   };
   const gotoSignUp = () => {
-    navigate("/signup");
+    navigate('/signup');
   };
   const gotoFreeboard = () => {
-    navigate("/freeboard");
+    navigate('/freeboard');
   };
   const gotoMyPage = () => {
     // 마이페이지로 이동
@@ -54,7 +54,7 @@ const MainHeader = () => {
     // 로그아웃 액션 디스패치
     dispatch(logout());
     // 로그아웃 후 홈페이지로 이동
-    navigate("/");
+    navigate('/');
   };
 
   // 입력된 검색 키워드를 state로 저장하는 function
@@ -62,82 +62,76 @@ const MainHeader = () => {
     setSearchkeyword(e.target.value);
   };
   const onSearchHandler = () => {
-    if (searchkeyword.trim() === "") {
-      alert("키워드를 입력하세요!");
+    if (searchkeyword.trim() === '') {
+      alert('키워드를 입력하세요!');
     } else {
       navigate(`/search/${searchkeyword}`);
     }
   };
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       onSearchHandler();
     }
   };
   return (
-    <header>
-      <div className={classes.header}>
-        {/* <img
-            className={classes.bannerImage}
-            alt="배너 이미지 구역"
-            src={banner}
-          /> */}
-        <h1>
-          <Link to="/">쓰담</Link>
-        </h1>
-        <div className={classes.search}>
-          <input
-            type="text"
-            placeholder="검색할 키워드를 입력하세요..."
-            value={searchkeyword}
-            onChange={onKeywordHandler}
-            onKeyPress={handleKeyPress}
-          />
-          <MdSearch className={classes.icon} onClick={onSearchHandler}>
-            검색
-          </MdSearch>
-        </div>
-        <div className={classes.loginElement}>
-          {user ? (
-            <>
-              {/* {isAdmin && (
+    <header className={classes.header}>
+      <h1 className={classes.logo}>
+        <Link to="/">쓰담</Link>
+      </h1>
+      <ShowTodoList />
+      <div className={classes.search}>
+        <input
+          type="text"
+          placeholder="검색할 키워드를 입력하세요..."
+          value={searchkeyword}
+          onChange={onKeywordHandler}
+          onKeyPress={handleKeyPress}
+        />
+        <MdSearch className={classes.icon} onClick={onSearchHandler}>
+          검색
+        </MdSearch>
+      </div>
+      <div className={classes.loginElement}>
+        {user ? (
+          <>
+            {/* {isAdmin && (
                 <button className={classes.postRegister} onClick={gotoTodolist}>
                   관리자
                 </button>
               )} */}
-              <button className={classes.postRegister} onClick={gotoFreeboard}>
-                게시판
-              </button>
-              <button className={classes.postRegister} onClick={gotoPost}>
-                새 글 쓰기
-              </button>
-              <button className={classes.logout} onClick={handleLogout}>
-                로그아웃
-              </button>
-              <button className={classes.mypage} onClick={gotoMyPage}>
-                <FaUserLarge />
-              </button>
-            </>
-          ) : (
-            <>
-              <button className={classes.postRegister} onClick={gotoFreeboard}>
-                게시판
-              </button>
-              <button className={classes.postRegister} onClick={gotoSignUp}>
-                새 글 쓰기
-              </button>
-              <button className={classes.login} onClick={gotoLogin}>
-                로그인
-              </button>
-              <button className={classes.join} onClick={gotoSignUp}>
-                회원가입
-              </button>
-              <SignUpModal
-                isOpen={modalIsOpen}
-                onClose={() => setModalIsOpen(false)}
-              />
-            </>
-          )}
-        </div>
+            <div className={classes.postRegister} onClick={gotoFreeboard}>
+              게시판
+            </div>
+            <div className={classes.postRegister} onClick={gotoPost}>
+              새 글 쓰기
+            </div>
+            <div className={classes.logout} onClick={handleLogout}>
+              로그아웃
+            </div>
+            <div className={classes.mypage} onClick={gotoMyPage}>
+              <FaUserLarge />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={classes.postRegister} onClick={gotoFreeboard}>
+              게시판
+            </div>
+            <div className={classes.postRegister} onClick={gotoSignUp}>
+              새 글 쓰기
+            </div>
+            <div className={classes.login} onClick={gotoLogin}>
+              로그인
+            </div>
+            <div className={classes.join} onClick={gotoSignUp}>
+              회원가입
+            </div>
+            <SignUpModal
+              isOpen={modalIsOpen}
+              onClose={() => setModalIsOpen(false)}
+            />
+          </>
+        )}
       </div>
     </header>
   );

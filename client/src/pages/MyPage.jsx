@@ -14,11 +14,11 @@ import Footer from '../components/Layout/Footer';
 import footerLogo from '../images/footerLogo.png';
 import classes from '../styles/pages/MyPage.module.css';
 import instance from '../axios';
-// import MySlider from '../components/MyPage/MySlider';
+// import useAxiosInstance from "../axios";
 import MyComment from '../components/MyPage/MyComment';
 import MyPosts from '../components/MyPage/MyPosts';
 import MyEventCard from '../components/MyPage/MyEventCard';
-
+import LeaveModal from './LeaveModal';
 
 const MyPage = () => {
     const [userData, setUserData] = useState({});
@@ -26,27 +26,50 @@ const MyPage = () => {
     const navigate = useNavigate();
     const user = useSelector(selectUser);
     const { memberId } = useParams(); 
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    // const instance = useAxiosInstance();
 
+    // useEffect(() => {
+    //     const fetchUserData = () => {
+    //         await instance.get(`/v1/members/${memberId}`, { timeout: 10000 })
+    //             .then(response => {
+    //                 setUserData(response.data);
+    //                 console.log(response.data);
+    //             })
+    //             .catch(error => {
+    //                 console.error('사용자 데이터를 가져오는 중 오류 발생', error);
+    //             });
+    //     };
+
+    //     fetchUserData();
+    // }, [memberId]);
     useEffect(() => {
-        const fetchUserData = () => {
-            instance.get(`/v1/members/${memberId}`, { timeout: 10000 })
-                .then(response => {
-                    setUserData(response.data);
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.error('사용자 데이터를 가져오는 중 오류 발생', error);
-                });
+        const fetchUserData = async () => {
+            try {
+                const response = await instance.get(`/v1/members/${memberId}`, { timeout: 10000 });
+                setUserData(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('사용자 데이터를 가져오는 중 오류 발생', error);
+            }
         };
-
+    
         fetchUserData();
     }, [memberId]);
 
+    //탈퇴관련코드!!
+    // useEffect(() => {
+    //     if (leaveSuccess) {
+    //       navigate('/');
+    //     }
+    //   }, [leaveSuccess, navigate]);
+    
+
     //깃 푸시할때 아래부분 주석 꼭 해제하기!
     // 로그인아닐때 로그인 페이지로 이동 (로그인 상태유지 부분)
-    if (!user) {
-        navigate('/login');
-    }
+    // if (!user) {
+    //     navigate('/login');
+    // }
 
     return (
         <div className={classes.Mypageroom}>
@@ -108,6 +131,10 @@ const MyPage = () => {
                         <MyComment className={classes.MyCommentContents} memberId={userData.id} />
                     </div>
                     
+                </div>
+                {/* <LeaveModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} setLeaveSuccess={setLeaveSuccess}/> */}
+                <div className={classes.ModalContainer}>
+                    <LeaveModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
                 </div>
             </div>
             <Footer />

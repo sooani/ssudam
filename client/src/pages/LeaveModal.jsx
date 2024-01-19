@@ -1,82 +1,34 @@
-//LeaveModal.jsx
-//회원정보수정>회원탈퇴시 뜨는 확인 팝업입니다. (작업자:안민주) 
-
-// LeaveModal.jsx
-// import React, { useState } from 'react';
-// import Modal from 'react-modal';
-// import classes from '../styles/pages/LeaveModal.module.css';
-// import axios from 'axios';
-// import { Link } from 'react-router-dom';
-
-// function LeaveModal() {
-//   const [modalIsOpen, setModalIsOpen] = useState(false);
-
-//   return (
-//     <div>
-//       <button className={classes.LeaveButton} onClick={() => setModalIsOpen(true)}>
-//         회원탈퇴
-//       </button>
-//       <Modal
-//         isOpen={modalIsOpen}
-//         className={classes['custom-modal']} 
-//         overlayClassName={classes['custom-overlay']}
-//       >
-//         <button className={classes.X} onClick={() => setModalIsOpen(false)}>
-//           X
-//         </button>
-//         <p className={classes['leave-message']}>정말 탈퇴 하시겠습니까?</p>
-//         <div className={classes.buttons}>
-//           <Link to="/"
-//             className={classes.Yes}
-//             onClick={() => {
-//               setModalIsOpen(false);
-//             }}
-//           >
-//             예
-//           </Link>
-//           <button className={classes.No} onClick={() => setModalIsOpen(false)}>
-//             아니오
-//           </button>
-//         </div>
-//       </Modal>
-//     </div>
-//   );
-// }
-
-// export default LeaveModal;
-
-
-
-
-
 // LeaveModal.jsx
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import classes from '../styles/pages/LeaveModal.module.css';
 import instance from '../axios';
-import { Link, useNavigate } from 'react-router-dom';
+// import useAxiosInstance from "../axios";
+import { useNavigate } from 'react-router-dom';
 import { logout } from "../features/userSlice";
 import { useDispatch } from 'react-redux';
+import { useParams} from 'react-router-dom';
 
-function LeaveModal() {
+function LeaveModal({}) {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [leaveSuccess, setLeaveSuccess] = useState(false);
   const dispatch = useDispatch();
+  const { memberId } = useParams(); 
+  // const instance = useAxiosInstance();
 
   const handleLeave = async () => {
     try {
-      await instance.delete('v1/members/{member-id}');
+      await instance.delete(`/v1/members/${memberId}`);
       console.log('회원 정보 삭제 성공');
-      // 회원 정보 삭제 성공 시, 로컬 스토리지에서 JWT 토큰 삭제
-      // localStorage.removeItem('jwtToken');
-      // console.log('JWT 토큰이 로컬 스토리지에서 삭제되었습니다.');
+      // 회원 정보 삭제 성공 시, 로컬 스토리지에서 JWT 토큰 삭제?
       // 토큰삭제는 구현안된부분이라고함!!
       setModalIsOpen(false);
       setLeaveSuccess(true);
       dispatch(logout()); // 로그아웃 액션 호출
     } catch (error) {
       console.error('회원 정보 삭제 실패:', error);
+
     }
   };
 
@@ -84,8 +36,8 @@ function LeaveModal() {
     if (leaveSuccess) {
       setTimeout(() => {
         setLeaveSuccess(false);
-        navigate('/'); // 메인 화면으로 이동
-      });
+        navigate('/'); 
+      }, 100); // 0.1초 후 이동
     }
   }, [leaveSuccess, navigate]);
 

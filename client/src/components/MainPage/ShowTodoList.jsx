@@ -1,8 +1,21 @@
-import classes from '../../styles/components/TodoList.module.css';
+import classes from '../../styles/components/ShowTodoList.module.css';
 import React, { useState, useEffect } from 'react';
-import instance from '../../axios';
-const TodoList = () => {
+import useAxiosInstance from '../../axios';
+const ShowTodoList = () => {
+  const instance = useAxiosInstance();
   const [data, setData] = useState([]);
+  const today = new Date();
+
+  // 날짜를 어떻게 표시할지를 설정
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  // 한국어로 표시
+  const formattedDate = today.toLocaleDateString('ko-KR', options);
+
   useEffect(() => {
     const fetchData = () => {
       instance
@@ -28,7 +41,10 @@ const TodoList = () => {
 
   return (
     <div className={classes.todoListSection}>
-      <div className={classes.todoTitle}>Todo List</div>
+      <div className={classes.todoTitle}>
+        {formattedDate}
+        <p>오늘 할 일!</p>
+      </div>
       <div className={classes.todoList}>
         {data.map((todo) => (
           <li key={todo.todolistId}>{todo.title}</li>
@@ -38,4 +54,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default ShowTodoList;

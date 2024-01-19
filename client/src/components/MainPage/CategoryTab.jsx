@@ -1,10 +1,11 @@
 import classes from '../../styles/components/CategoryTab.module.css';
-import instance from '../../axios';
+import useAxiosInstance from '../axios';
 import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
 import PaginationBar from './PaginationBar';
 // 모집중 / 모집완료 탭을 구분 하는 컴포넌트
 const CategoryTab = () => {
+  const instance = useAxiosInstance();
   const [activeTab, setActiveTab] = useState('recruiting');
   const [recruitingData, setRecruitingData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
