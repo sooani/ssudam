@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import classes from '../../styles/components/MainHeader.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaUserLarge } from 'react-icons/fa6';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
-import { logout } from '../../features/userSlice';
-import SignUpModal from '../../pages/SignUpModal';
-import { MdSearch } from 'react-icons/md';
-import ShowTodoList from '../MainPage/ShowTodoList';
+import React, { useState } from "react";
+import classes from "../../styles/components/MainHeader.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserLarge } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../../features/userSlice";
+import { logout } from "../../features/userSlice";
+import SignUpModal from "../../pages/SignUpModal";
+import { MdSearch } from "react-icons/md";
+import ShowTodoList from "../MainPage/ShowTodoList";
 /*
   헤더
   로고 왼쪽에 표시 클릭 시 메인페이지로 이동
@@ -22,29 +22,29 @@ const MainHeader = () => {
   const user = useSelector(selectUser);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const isAdmin = user && user.roles.includes('ADMIN');
+  const isAdmin = user && user.roles.includes("ADMIN");
 
-  const [searchkeyword, setSearchkeyword] = useState('');
+  const [searchkeyword, setSearchkeyword] = useState("");
 
   const gotoHome = () => {
-    navigate('/');
+    navigate("/");
   };
   const gotoPost = () => {
     if (!user) {
       setModalIsOpen(true);
     } else {
       // 로그인하지 않은 경우 모달 창 열기
-      navigate('/meetings/new');
+      navigate("/meetings/new");
     }
   };
   const gotoLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
   const gotoSignUp = () => {
-    navigate('/signup');
+    navigate("/signup");
   };
   const gotoFreeboard = () => {
-    navigate('/freeboard');
+    navigate("/freeboard");
   };
   const gotoMyPage = () => {
     // 마이페이지로 이동
@@ -55,10 +55,11 @@ const MainHeader = () => {
     navigate(`/todolist`);
   };
   const handleLogout = () => {
+    localStorage.removeItem("Authorization");
     // 로그아웃 액션 디스패치
     dispatch(logout());
     // 로그아웃 후 홈페이지로 이동
-    navigate('/');
+    navigate("/");
   };
 
   // 입력된 검색 키워드를 state로 저장하는 function
@@ -66,14 +67,14 @@ const MainHeader = () => {
     setSearchkeyword(e.target.value);
   };
   const onSearchHandler = () => {
-    if (searchkeyword.trim() === '') {
-      alert('키워드를 입력하세요!');
+    if (searchkeyword.trim() === "") {
+      alert("키워드를 입력하세요!");
     } else {
       navigate(`/search/${searchkeyword}`);
     }
   };
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onSearchHandler();
     }
   };
