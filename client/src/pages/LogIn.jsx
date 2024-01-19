@@ -82,7 +82,7 @@ const LogIn = () => {
 
         console.log(decoded);
 
-        localStorage.setItem("accessToken", accessToken);
+        // localStorage.setItem("accessToken", accessToken);
 
         // localStorage.setItem("email", email);
         // localStorage.setItem("memberId", memberId);

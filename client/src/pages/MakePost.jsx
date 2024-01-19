@@ -250,7 +250,7 @@ const MakePost = () => {
           </div>
         </div>
       </form>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

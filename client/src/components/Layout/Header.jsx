@@ -49,6 +49,7 @@ const Header = () => {
   };
   const handleLogout = () => {
     // 로그아웃 액션 디스패치
+    localStorage.removeItem("Authorization");
     dispatch(logout());
     // 로그아웃 후 홈페이지로 이동
     navigate("/");
