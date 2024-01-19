@@ -1,8 +1,8 @@
 // MyEventCard.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import instance from '../../axios';
-import useAxiosInstance from "../../axios";
+import instance from '../../axios';
+// import useAxiosInstance from "../../axios";
 import classes from '../../styles/components/MyEventCard.module.css';
 import ssudamhand from '../../images/ssudamhand.png';
 import Pagination from './Pagination';
@@ -12,7 +12,7 @@ function MyEventCard() {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const eventsPerPage = 4;
-  const instance = useAxiosInstance();
+  // const instance = useAxiosInstance();
 
   useEffect(() => {
     const fetchEvents = () => {

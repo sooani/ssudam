@@ -9,8 +9,8 @@ import Footer from '../components/Layout/Footer';
 // import LeaveModal from './LeaveModal';
 import classes from '../styles/pages/EditProfile.module.css';
 import { useForm } from "react-hook-form";
-// import instance from '../axios';
-import useAxiosInstance from "../axios";
+import instance from '../axios';
+// import useAxiosInstance from "../axios";
 import { Link } from 'react-router-dom';
 
 function EditProfile() {
@@ -24,7 +24,7 @@ function EditProfile() {
     const [page, setPage] = useState();
     const [size, setSize] = useState();
     const navigateFunc = useNavigate();
-    const instance = useAxiosInstance();
+    // const instance = useAxiosInstance();
     // const instance = useAxiosInstance();
     //닉네임이랑 비번 분리안되는오류가 있는것같음
     //이부분 데이터 넣고 테스트 해보기 (초기로드시에 닉네임이 있으니까)

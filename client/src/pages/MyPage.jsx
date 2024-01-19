@@ -13,8 +13,8 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import footerLogo from '../images/footerLogo.png';
 import classes from '../styles/pages/MyPage.module.css';
-// import instance from '../axios';
-import useAxiosInstance from "../axios";
+import instance from '../axios';
+// import useAxiosInstance from "../axios";
 import MyComment from '../components/MyPage/MyComment';
 import MyPosts from '../components/MyPage/MyPosts';
 import MyEventCard from '../components/MyPage/MyEventCard';
@@ -27,7 +27,7 @@ const MyPage = () => {
     const user = useSelector(selectUser);
     const { memberId } = useParams(); 
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const instance = useAxiosInstance();
+    // const instance = useAxiosInstance();
 
     // useEffect(() => {
     //     const fetchUserData = () => {

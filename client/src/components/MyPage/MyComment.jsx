@@ -1,8 +1,8 @@
 //MyComment.jsx
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
-// import instance from '../../axios';
-import useAxiosInstance from "../../axios";
+import instance from '../../axios';
+// import useAxiosInstance from "../../axios";
 import classes from '../../styles/components/MyComment.module.css';
 import { useParams } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ function MyComment() {
   const offset = (page - 1) * limit;
   const { memberId } = useParams();
   const [size, setSize] = useState(10);
-  const instance = useAxiosInstance();
+  // const instance = useAxiosInstance();
 
   useEffect(() => {
     const fetchComments = () => {
