@@ -1,54 +1,18 @@
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-  overflow-y: auto;
-  background-color: white;
-}
-
-/* 배너 이미지 */
-.bannerImage {
-  position: relative;
-  height: 25vh;
-  width: 100vw;
-  display: flex;
-}
-
-.mainContainer {
-  box-sizing: border-box;
-  max-width: 1200px;
-  margin: 0 18%;
-  padding: 20px;
+/* .pageWrapper {
   min-height: 100vh;
-  position: relative;
-  justify-content: center; /* 수평 중앙 정렬을 위해 추가 */
-  align-items: center; /* 수직 중앙 정렬을 위해 추가 */
-}
+  width: 100%;
+  margin: 0;
+  padding: 0;
+} */
 
-.todoAndNewSection {
+/* .mainContainer {
   display: flex;
-  gap: 20px; /* 각 섹션 사이의 간격 조절 */
-}
-
-.todoList {
-  width: 20%; /* 전체의 20%만 차지하도록 설정 */
-  min-height: 1vh;
-  overflow-x: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }
 
 .newPost {
-  width: 80%; /* 전체의 80%만 차지하도록 설정 */
-  min-height: 1vh;
-  text-align: right;
-}
+  width: 30%;
+  margin-right: 20px;
+} */

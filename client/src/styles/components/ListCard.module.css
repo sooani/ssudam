@@ -1,7 +1,7 @@
-.listCard {
+/* .listCard {
   margin: 10px 0 0 10px;
   height: auto;
-  width: 14vw;
+  width: 100%;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid black;
@@ -28,7 +28,6 @@
   text-align: center;
 }
 .listCardClosingDate {
-  /* display: flex; */
   font-size: 1.25rem;
   text-align: center;
 }
@@ -39,14 +38,4 @@
 .listCardMaxCapacity {
   display: inline;
   text-align: right;
-}
-/* .gotoPost {
-  height: 3vh;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 600;
-  display: flex;
-} */
-/* .gotoPost:hover {
-  cursor: pointer;
 } */

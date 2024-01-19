@@ -1,14 +1,14 @@
-.listCardContainer {
+/* .listCardContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, auto);
   gap: 40px;
   box-sizing: border-box;
-  max-width: 1200px;
+  width: 100%;
 }
 
 .ListCard {
-  width: 100%; /* 너비 100%로 설정 */
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -28,4 +28,4 @@
   .ListCard {
     width: 100%;
   }
-}
+} */
