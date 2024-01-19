@@ -1,5 +1,5 @@
 import classes from '../../styles/components/CategoryTab.module.css';
-import instance from '../axios';
+import instance from '../../axios';
 import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
 import PaginationBar from './PaginationBar';

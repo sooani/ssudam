@@ -1,8 +1,8 @@
 import MainHeader from '../components/Layout/MainHeader';
-// import Footer from '../components/Layout/Footer';
+import Footer from '../components/Layout/Footer';
 import classes from '../styles/pages/MainPage.module.css';
 import ListSlider from '../components/MainPage/ListSlider';
-// import CategoryTab from '../components/MainPage/CategoryTab';
+import CategoryTab from '../components/MainPage/CategoryTab';
 import instance from '../axios';
 import React, { useState, useEffect } from 'react';
 
@@ -55,9 +55,9 @@ const MainPage = () => {
       </div>
 
       {/* 메인 구역 */}
-      {/* <div className={classes.mainContainer}>
+      <div className={classes.mainContainer}>
         <CategoryTab data={data} />
-      </div> */}
+      </div>
 
       {/* 푸터 */}
       {/* <Footer /> */}

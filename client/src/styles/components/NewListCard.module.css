@@ -1,10 +1,14 @@
+.newWrapper {
+  width: 3240px;
+}
 .listCard {
+  display: inline-block;
+  padding: 20px 25px;
   margin: 0px 12px;
-  height: auto;
-  width: 318px;
+  /* width: 318px; */
   overflow: hidden;
   border-radius: 10px;
-  border: 1px solid black;
+  border: 2px solid rgb(186, 186, 186);
 }
 
 .listCard:hover {
@@ -12,10 +16,9 @@
 }
 
 .listCardTitle {
-  text-align: center;
-  padding-top: 30px;
+  text-align: left;
+  padding-top: 10px;
   padding-left: 3%;
-  font-size: 1.7rem;
   font-weight: 700;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -23,15 +26,18 @@
   word-break: break-all;
   overflow: hidden;
 }
+.title {
+  font-size: 18px;
+}
 
 .listCardMeetingDate {
-  font-size: 1.25rem;
+  font-size: 1rem;
   padding-top: 2vh;
-  text-align: center;
+  text-align: left;
 }
 .listCardClosingDate {
-  font-size: 1.25rem;
-  text-align: center;
+  font-size: 1rem;
+  text-align: left;
 }
 .listCardCurrentCapacity {
   display: inline;

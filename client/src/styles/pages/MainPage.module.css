@@ -1,18 +1,13 @@
-/* .pageWrapper {
-  min-height: 100vh;
+.pageWrapper {
   width: 100%;
   margin: 0;
   padding: 0;
-} */
+}
 
-/* .mainContainer {
+.mainContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  min-height: 100%;
 }
-
-.newPost {
-  width: 30%;
-  margin-right: 20px;
-} */

@@ -14,7 +14,7 @@ const ListSlider = ({ latest }) => {
   const settings = {
     dots: false, // 페이지 점 표시 여부
     // infinite: true, // 무한 반복 여부
-    speed: 1000, // 전환 속도
+    // speed: 1000, // 전환 속도
     slidesToShow: 4, // 보여질 슬라이드 수
     slidesToScroll: 4, // 스크롤 시 이동할 슬라이드 수
     arrows: true, // 화살표 표시 여부
