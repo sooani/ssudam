@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import instance from '../../axios';
+// import useAxiosInstance from "../axios";
 import classes from '../../styles/components/MyEventCard.module.css';
 import ssudamhand from '../../images/ssudamhand.png';
 import Pagination from './Pagination';
@@ -35,24 +36,28 @@ function MyEventCard() {
 
   return (
     <div className={classes.EventCardContainer}>
-      {events.length === 0 ? (
-        <p>아직 참여한 모임이 없어요!</p>
-      ) : (
-        <>
-          {events.map((event) => (
-            <div key={event.partyId}>
-              <div className={classes.EventTitleBox}>
-                <div className={classes.Title}>{event.title}</div>
+      <div className={classes.EventCardMain}>
+        {events.length === 0 ? (
+          <p>아직 참여한 모임이 없어요!</p>
+        ) : (
+          <>
+            {events.map((event) => (
+              <div key={event.partyId}>
                 <p className={classes.Status}> {event.partyStatus === 'PARTY_OPENED' ? ' 모집중' : ' 모집완료'}</p>
-                <img className={classes.Img} src={ssudamhand} alt="Ssudamhand" />
-                <p className={classes.Date}> {event.meetingDate}</p>
-                <button>바로가기</button>
+                <div className={classes.EventTitleBox}>
+                  <div className={classes.Title}>{event.title}</div>
+                  {/* <img className={classes.Img} src={ssudamhand} alt="Ssudamhand" /> */}
+                  <p className={classes.Date}> {event.meetingDate}</p>
+                  {/* <button>바로가기</button> */}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </>
+        )}
+      </div>
+      <div className={classes.CardPagination}>
           <Pagination total={events.length} limit={eventsPerPage} page={page} setPage={setPage} />
-        </>
-      )}
+      </div>
     </div>
   );
 }
