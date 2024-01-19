@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import classes from '../styles/pages/LeaveModal.module.css';
-import instance from '../axios';
-// import useAxiosInstance from "../axios";
+// import instance from '../axios';
+import useAxiosInstance from "../axios";
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../features/userSlice";
 import { useDispatch } from 'react-redux';
@@ -15,7 +15,7 @@ function LeaveModal({}) {
   const [leaveSuccess, setLeaveSuccess] = useState(false);
   const dispatch = useDispatch();
   const { memberId } = useParams(); 
-  // const instance = useAxiosInstance();
+  const instance = useAxiosInstance();
 
   const handleLeave = async () => {
     try {

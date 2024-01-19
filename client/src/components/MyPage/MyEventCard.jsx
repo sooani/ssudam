@@ -1,8 +1,8 @@
 // MyEventCard.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import instance from '../../axios';
-// import useAxiosInstance from "../axios";
+// import instance from '../../axios';
+import useAxiosInstance from "../../axios";
 import classes from '../../styles/components/MyEventCard.module.css';
 import ssudamhand from '../../images/ssudamhand.png';
 import Pagination from './Pagination';
