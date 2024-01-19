@@ -35,6 +35,7 @@ const NewListCard = ({ party }) => {
   return (
     <div className={classes.newWrapper}>
       <div className={classes.listCard} onClick={handlePostClick}>
+        new 여기 뜰꺼임
         <div className={classes.listCardMeetingDate}>
           <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
         </div>
