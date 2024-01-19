@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/ad3282fd-8c9d-40d6-9e8a-ea1da42b5b87" alt="ssudam-logo1">
+  <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/8cf4b8d0-124a-4511-a01d-03bf2e42db39" alt="ssudam-logo1">
 </p>
-
-<br><br>
 
 ## 🚩 개요
 - 프로젝트 이름 : 쓰담 (SSUDAM)
