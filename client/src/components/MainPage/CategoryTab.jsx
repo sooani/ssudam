@@ -1,19 +1,22 @@
-import classes from '../../styles/components/CategoryTab.module.css';
-import instance from '../../axios';
-import React, { useState, useEffect } from 'react';
-import CategoryBox from './CategoryBox';
-import PaginationBar from './PaginationBar';
+import classes from "../../styles/components/CategoryTab.module.css";
+import { useAxiosInterceptors } from "../../axios";
+import React, { useState, useEffect } from "react";
+import CategoryBox from "./CategoryBox";
+import PaginationBar from "./PaginationBar";
 // 모집중 / 모집완료 탭을 구분 하는 컴포넌트
 const CategoryTab = () => {
-  const [activeTab, setActiveTab] = useState('recruiting');
+  // const instance = useAxiosInstance();
+  const [activeTab, setActiveTab] = useState("recruiting");
+
   const [recruitingData, setRecruitingData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     size: 12,
-    totalElements: 'totalElements',
-    totalPages: 'totalPages',
+    totalElements: "totalElements",
+    totalPages: "totalPages",
   });
+  const instance = useAxiosInterceptors();
   const fetchParties = async (page, status) => {
     try {
       const response = await instance.get(
@@ -22,26 +25,26 @@ const CategoryTab = () => {
       const { data } = response;
       // 전체 데이터를 받아왔을 때, 상태(status)에 따라 데이터를 분류합니다.
       const recruitingParties = data.data.filter(
-        (party) => party.partyStatus === 'PARTY_OPENED'
+        (party) => party.partyStatus === "PARTY_OPENED"
       );
       const completedParties = data.data.filter(
-        (party) => party.partyStatus === 'PARTY_CLOSED'
+        (party) => party.partyStatus === "PARTY_CLOSED"
       );
       setRecruitingData(recruitingParties);
       setCompletedData(completedParties);
 
       setPageInfo(data.pageInfo);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   const handlePageChange = (direction) => {
-    if (direction === 'prev' && pageInfo.page > 1) {
+    if (direction === "prev" && pageInfo.page > 1) {
       fetchParties(pageInfo.page - 1, activeTab);
-    } else if (direction === 'next' && pageInfo.page < pageInfo.totalPages) {
+    } else if (direction === "next" && pageInfo.page < pageInfo.totalPages) {
       fetchParties(pageInfo.page + 1, activeTab);
-    } else if (typeof direction === 'number') {
+    } else if (typeof direction === "number") {
       fetchParties(direction, activeTab);
     }
   };
@@ -59,35 +62,35 @@ const CategoryTab = () => {
     <div className={classes.categoryTab}>
       <div>
         <button
-          onClick={() => handleTabChange('recruiting')}
+          onClick={() => handleTabChange("recruiting")}
           style={{
-            fontWeight: activeTab === 'recruiting' ? 'bold' : '600',
-            background: 'transparent',
-            color: activeTab === 'recruiting' ? 'black' : 'gray',
+            fontWeight: activeTab === "recruiting" ? "bold" : "600",
+            background: "transparent",
+            color: activeTab === "recruiting" ? "black" : "gray",
           }}
-          className={activeTab === 'recruiting' ? 'active' : ''}
+          className={activeTab === "recruiting" ? "active" : ""}
         >
           <p className={classes.join}>모집중</p>
         </button>
         <button
-          onClick={() => handleTabChange('completed')}
+          onClick={() => handleTabChange("completed")}
           style={{
-            fontWeight: activeTab === 'completed' ? 'bold' : '600',
-            background: 'transparent',
-            color: activeTab === 'completed' ? 'black' : 'gray',
+            fontWeight: activeTab === "completed" ? "bold" : "600",
+            background: "transparent",
+            color: activeTab === "completed" ? "black" : "gray",
           }}
-          className={activeTab === 'completed' ? 'active' : ''}
+          className={activeTab === "completed" ? "active" : ""}
         >
           <p className={classes.end}>모집완료</p>
         </button>
       </div>
-      {activeTab === 'recruiting' && (
+      {activeTab === "recruiting" && (
         <>
           <CategoryBox categoryData={recruitingData} />
           <PaginationBar pageInfo={pageInfo} onPageChange={handlePageChange} />
         </>
       )}
-      {activeTab === 'completed' && (
+      {activeTab === "completed" && (
         <>
           <CategoryBox categoryData={completedData} />
           <PaginationBar pageInfo={pageInfo} onPageChange={handlePageChange} />

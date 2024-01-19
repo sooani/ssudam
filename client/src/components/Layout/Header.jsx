@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import classes from '../../styles/components/Header.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaUserLarge } from 'react-icons/fa6';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
-import { logout } from '../../features/userSlice';
-import SignUpModal from '../../pages/SignUpModal';
+import React, { useState } from "react";
+import classes from "../../styles/components/Header.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserLarge } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../../features/userSlice";
+import { logout } from "../../features/userSlice";
+import SignUpModal from "../../pages/SignUpModal";
 
 /*
   헤더
@@ -20,24 +20,24 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const isAdmin = user && user.roles.includes('ADMIN');
+  const isAdmin = user && user.roles.includes("ADMIN");
 
   const gotoPost = () => {
     if (!user) {
       setModalIsOpen(true);
     } else {
       // 로그인하지 않은 경우 모달 창 열기
-      navigate('/meetings/new');
+      navigate("/meetings/new");
     }
   };
   const gotoLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
   const gotoSignUp = () => {
-    navigate('/signup');
+    navigate("/signup");
   };
   const gotoFreeboard = () => {
-    navigate('/freeboard');
+    navigate("/freeboard");
   };
   const gotoMyPage = () => {
     // 마이페이지로 이동
@@ -51,7 +51,7 @@ const Header = () => {
     // 로그아웃 액션 디스패치
     dispatch(logout());
     // 로그아웃 후 홈페이지로 이동
-    navigate('/');
+    navigate("/");
   };
   return (
     <header>
@@ -62,11 +62,11 @@ const Header = () => {
         <div className={classes.loginElement}>
           {user ? (
             <>
-              {/* {isAdmin && (
+              {isAdmin && (
                 <button className={classes.postRegister} onClick={gotoTodolist}>
                   관리자
                 </button>
-              )} */}
+              )}
               <button className={classes.postRegister} onClick={gotoFreeboard}>
                 게시판
               </button>

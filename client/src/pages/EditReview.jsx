@@ -2,7 +2,7 @@ import { useState } from "react";
 import classes from "../styles/pages/MakeReview.module.css";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
@@ -16,6 +16,7 @@ const EditReview = () => {
   // const axios = useAxiosInstance();
   // 리뷰 글 정보
   const [reviewInfo, setReviewInfo] = useState(null);
+  const axios = useAxiosInterceptors();
   // 첫 렌더링 시 후기 정보 가져와서 정보 채움
   useEffect(() => {
     axios

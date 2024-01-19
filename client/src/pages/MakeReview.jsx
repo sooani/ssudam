@@ -2,7 +2,7 @@ import { useState } from "react";
 import classes from "../styles/pages/MakeReview.module.css";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ const MakeReview = () => {
   const loggedInUser = useSelector(selectUser);
   // const axios = useAxiosInstance();
   const navigate = useNavigate();
-
+  const axios = useAxiosInterceptors();
   // 리뷰 글 정보
   const [postedInfo, setPostedInfo] = useState({
     postedtitle: "",

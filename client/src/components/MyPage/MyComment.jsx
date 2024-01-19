@@ -1,10 +1,10 @@
 //MyComment.jsx
-import React, { useState, useEffect } from 'react';
-import Pagination from './Pagination';
-import instance from '../../axios';
+import React, { useState, useEffect } from "react";
+import Pagination from "./Pagination";
+import { useAxiosInterceptors } from "../../axios";
 // import useAxiosInstance from "../../axios";
-import classes from '../../styles/components/MyComment.module.css';
-import { useParams } from 'react-router-dom';
+import classes from "../../styles/components/MyComment.module.css";
+import { useParams } from "react-router-dom";
 
 function MyComment() {
   const [comments, setComments] = useState([]);
@@ -14,24 +14,29 @@ function MyComment() {
   const { memberId } = useParams();
   const [size, setSize] = useState(10);
   // const instance = useAxiosInstance();
-
+  const instance = useAxiosInterceptors();
   useEffect(() => {
     const fetchComments = () => {
       instance
         // .get(`/v1/comments?memberId=${memberId}`)
         .get(`/v1/comments`, { params: { memberId, page, limit, size } })
         .then((response) => {
-          const extractedComments = response.data.data.map((comment) => comment.comment);
+          const extractedComments = response.data.data.map(
+            (comment) => comment.comment
+          );
           setComments(extractedComments);
         })
         .catch((error) => {
-          console.error('댓글 받아오기 오류!:', error.response?.data || '알 수 없는 오류');
+          console.error(
+            "댓글 받아오기 오류!:",
+            error.response?.data || "알 수 없는 오류"
+          );
           // 여기에서 에러 처리를 추가할 수 있습니다.
         });
     };
 
     fetchComments();
-  }, [limit, page, memberId,size]);
+  }, [limit, page, memberId, size]);
 
   return (
     <div className={classes.MyCommentContainer}>
@@ -45,11 +50,14 @@ function MyComment() {
         ))
       )}
 
-      <Pagination total={comments.length} limit={limit} page={page} setPage={setPage} />
+      <Pagination
+        total={comments.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
     </div>
   );
 }
 
 export default MyComment;
-
-

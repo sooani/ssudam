@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import instance from '../axios'
+import { useAxiosInterceptors } from "../axios";
 import classes from "../styles/pages/SignUp.module.css";
 
 // 해결할 문제
@@ -19,7 +19,7 @@ const SignUp = () => {
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
- 
+  const instance = useAxiosInterceptors();
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -67,7 +67,7 @@ const SignUp = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setEmailError(true);
-      setError('올바른 이메일 주소 형식을 입력하세요.');
+      setError("올바른 이메일 주소 형식을 입력하세요.");
       return;
     } else {
       setEmailError(false);
@@ -76,17 +76,20 @@ const SignUp = () => {
     // 닉네임 길이 검증
     if (nickname.length < 2 || nickname.length > 12) {
       setNicknameError(true);
-      setError('닉네임은 2~12자여야 합니다.');
+      setError("닉네임은 2~12자여야 합니다.");
       return;
     } else {
       setNicknameError(false);
     }
 
     // 비밀번호 요구사항 검증
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
     if (!passwordRegex.test(password)) {
       setPasswordError(true);
-      setError('비밀번호는 특수문자, 대문자, 소문자, 숫자를 혼합하여 8자 이상 20자 이하로 입력하세요.');
+      setError(
+        "비밀번호는 특수문자, 대문자, 소문자, 숫자를 혼합하여 8자 이상 20자 이하로 입력하세요."
+      );
       return;
     } else {
       setPasswordError(false);
@@ -95,7 +98,7 @@ const SignUp = () => {
     // 비밀번호 확인 일치 검증
     if (confirmPassword !== password) {
       setConfirmPasswordError(true);
-      setError('비밀번호가 일치하지 않습니다.');
+      setError("비밀번호가 일치하지 않습니다.");
       return;
     } else {
       setConfirmPasswordError(false);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import classes from "../styles/pages/Freeboard.module.css";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ const Freeboard = () => {
   const [page, setPage] = useState(1);
   const loggedInUser = useSelector(selectUser);
   const navigate = useNavigate();
+  const axios = useAxiosInterceptors();
   // const axios = useAxiosInstance();
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {
@@ -80,7 +81,11 @@ const Freeboard = () => {
                 key={post.reviewId}
                 className={classes.post}
                 onClick={() => {
-                  navigate(`/reviews/${post.reviewId}`);
+                  if (loggedInUser) {
+                    navigate(`/reviews/${post.reviewId}`);
+                  } else {
+                    navigate("/login");
+                  }
                 }}
               >
                 <div className={classes.box1}>

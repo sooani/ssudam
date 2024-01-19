@@ -1,19 +1,21 @@
-import classes from '../../styles/components/ShowTodoList.module.css';
-import React, { useState, useEffect } from 'react';
-import instance from '../../axios';
+import classes from "../../styles/components/ShowTodoList.module.css";
+import React, { useState, useEffect } from "react";
+
+import { useAxiosInterceptors } from "../../axios";
 const ShowTodoList = () => {
+  // const instance = useAxiosInstance();
   const [data, setData] = useState([]);
   const today = new Date();
-
+  const instance = useAxiosInterceptors();
   // 날짜를 어떻게 표시할지를 설정
   const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   };
   // 한국어로 표시
-  const formattedDate = today.toLocaleDateString('ko-KR', options);
+  const formattedDate = today.toLocaleDateString("ko-KR", options);
 
   useEffect(() => {
     const fetchData = () => {
@@ -23,7 +25,7 @@ const ShowTodoList = () => {
           setData(response.data.data);
         })
         .catch((error) => {
-          console.error('데이터를 받아오는 동안 오류가 발생했습니다:', error);
+          console.error("데이터를 받아오는 동안 오류가 발생했습니다:", error);
         });
     };
     // Load initial data

@@ -7,7 +7,7 @@ import Footer from "../components/Layout/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 const EditPost = () => {
   // useParams로 meetingId를 가져온다.
   const { meetingId } = useParams();
@@ -15,7 +15,7 @@ const EditPost = () => {
   const [address, setAddress] = useState({});
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
-
+  const axios = useAxiosInterceptors();
   const today = new Date();
   // const axios = useAxiosInstance();
   // 현재 날짜에 1일(24시간)을 더하여 하루 뒤의 일시를 얻음

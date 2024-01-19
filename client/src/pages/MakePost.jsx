@@ -4,7 +4,7 @@ import SearchMap from "../components/Map/SearchMap";
 import { MdSearch } from "react-icons/md";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
-import axios from "../axios";
+import { useAxiosInterceptors } from "../axios";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const MakePost = () => {
   const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
-
+  const axios = useAxiosInterceptors();
   const today = new Date();
   // const axios = useAxiosInstance();
   // 현재 날짜에 1일(24시간)을 더하여 하루 뒤의 일시를 얻음
