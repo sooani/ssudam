@@ -13,6 +13,8 @@ body {
 }
 
 .modal {
+    position: relative;
+    top: 70px;
     background-color: rgba(217, 217, 217, 1);
     width: 450px; /* 모달의 너비 조절 */
     margin: auto; /* 수평 가운데 정렬 */

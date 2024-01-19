@@ -1,6 +1,6 @@
 /* MyEventCard.module.css */
 
-.CardContainer{
+/* .CardContainer{
     width:10vw;
     height:10vh;
     border: 2px solid yellow;
@@ -9,12 +9,51 @@
     flex-direction: column;
 }
 .CardImage{
-    width:5vh;
-    height:5vh;
+    width:1vh;
+    height:1vh;
 }
 .CardTitle{
     text-align: center;
 }
 .CardButton{
     border:1px solid green;
-}
+} */
+
+/* MyEventCard.module.css */
+
+.EventCardContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .EventTitleBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px; /* 선택적으로 조절 가능한 여백 */
+  }
+  
+  .Title {
+    font-size: 1.5rem; /* 선택적으로 조절 가능한 글꼴 크기 */
+    font-weight: bold; /* 선택적으로 조절 가능한 글꼴 두께 */
+  }
+  
+  .Status {
+    font-size: 1rem; /* 선택적으로 조절 가능한 글꼴 크기 */
+  }
+  
+  .Img {
+    width: 2vw; /* 이미지 너비를 2vw로 설정 */
+    height: 2vh; /* 이미지 높이를 2vh로 설정 */
+    margin-bottom: 5px; /* 선택적으로 조절 가능한 여백 */
+  }
+  
+  .Date {
+    font-size: 1rem; /* 선택적으로 조절 가능한 글꼴 크기 */
+    margin-bottom: 5px; /* 선택적으로 조절 가능한 여백 */
+  }
+  
+  button {
+    /* 여기에 버튼에 대한 스타일을 추가하세요 */
+  }

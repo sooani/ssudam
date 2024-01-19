@@ -22,7 +22,7 @@ import MyEventCard from '../components/MyPage/MyEventCard';
 
 const MyPage = () => {
     const [userData, setUserData] = useState({});
-    // const isAuthenticated = useSelector((state) => state.user.user !== null);
+    const isAuthenticated = useSelector((state) => state.user.user !== null);
     const navigate = useNavigate();
     const user = useSelector(selectUser);
     const { memberId } = useParams(); 
@@ -44,9 +44,9 @@ const MyPage = () => {
 
     //깃 푸시할때 아래부분 주석 꼭 해제하기!
     // 로그인아닐때 로그인 페이지로 이동 (로그인 상태유지 부분)
-    // if (!user) {
-    //     navigate('/login');
-    // }
+    if (!user) {
+        navigate('/login');
+    }
 
     return (
         <div className={classes.Mypageroom}>
@@ -58,7 +58,7 @@ const MyPage = () => {
                         <div className={classes.ProfileImageContainer}>
                             <img alt="ProfileImage" src={footerLogo} width="50px" height="50px" />
                         </div>
-                        <Link to="/edit-profile" className={classes.Btn_EditProfile}>
+                        <Link to={`/edit-profile/${memberId}`} className={classes.Btn_EditProfile}>
                             회원정보수정
                         </Link>
                     </div>
@@ -66,15 +66,32 @@ const MyPage = () => {
                         <div className={classes.NicknameContainer}>
                             <p className={classes.Nickname}>닉네임</p>
                             <div className={classes.UserNickname}>
-                                {userData.nickname}
+                                {userData.data && userData.data.nickname}
                             </div>
                         </div>
                         <div className={classes.EmailContainer}>
                             <p className={classes.Email}>이메일</p>
                             <div className={classes.UserEmail}>
-                                {userData.email}
+                                {userData.data && userData.data.email}
                             </div>
                         </div>
+                        {/* {userData.data && (
+                            <div className={classes.NicknameContainer}>
+                                <p className={classes.Nickname}>닉네임</p>
+                                <div className={classes.UserNickname}>
+                                {userData.data.nickname}
+                                </div>
+                            </div>
+                            )}
+
+                        {userData.data && (
+                            <div className={classes.EmailContainer}>
+                                <p className={classes.Email}>이메일</p>
+                                <div className={classes.UserEmail}>
+                                {userData.data.email}
+                                </div>
+                            </div>
+                            )} */}
                     </div>
                 </div>
                 <div className={classes.MyEvent}>
