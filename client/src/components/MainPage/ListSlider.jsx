@@ -23,9 +23,9 @@ const ListSlider = ({ latest }) => {
   };
 
   return (
-    <section className={classes.slider}>
+    <div className={classes.slider}>
       {/* 제목을 나타내는 h1 태그, 스타일은 글자 크기와 색상 설정 */}
-      <span>새로운 모임</span>
+      <h2 className={classes.sliderName}>새로운 모임</h2>
       {/* react-slick의 Slider 컴포넌트, 설정은 settings 객체로 전달 */}
       <Slider {...settings}>
         {/* 각각의 아이템에 대해 ItemCard 컴포넌트를 렌더링 */}
@@ -33,7 +33,7 @@ const ListSlider = ({ latest }) => {
           <NewListCard key={party.partyId} party={party} />
         ))}
       </Slider>
-    </section>
+    </div>
   );
 };
 export default ListSlider;

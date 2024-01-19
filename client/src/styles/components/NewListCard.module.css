@@ -1,7 +1,7 @@
 .listCard {
-  margin: 10px 0 0 10px;
+  margin: 0px 12px;
   height: auto;
-  width: 70%;
+  width: 318px;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid black;
@@ -17,9 +17,11 @@
   padding-left: 3%;
   font-size: 1.7rem;
   font-weight: 700;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .listCardMeetingDate {

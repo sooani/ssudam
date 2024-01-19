@@ -33,24 +33,29 @@ const NewListCard = ({ party }) => {
     return formattedDate;
   };
   return (
-    <div className={classes.listCard} onClick={handlePostClick}>
-      <div className={classes.listCardTitle}>
-        <span>{party?.title}</span>
+    <div className={classes.newWrapper}>
+      <div className={classes.listCard} onClick={handlePostClick}>
+        <div className={classes.listCardTitle}>
+          <span>{party?.title}</span>
+        </div>
+        <div className={classes.listCardMeetingDate}>
+          <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
+        </div>
+        <div className={classes.listCardClosingDate}>
+          <span>마감일 : {extractDate(party?.closingDate)}</span>
+        </div>
+        <div>닉네임</div>
+        <div className={classes.listCardCurrentCapacity}>
+          <span>{party?.currentCapacity}/</span>
+        </div>
+        <div className={classes.listCardMaxCapacity}>
+          <span>{party?.maxCapacity}</span>
+        </div>
+        <SignUpModal
+          isOpen={modalIsOpen}
+          onClose={() => setModalIsOpen(false)}
+        />
       </div>
-      <div className={classes.listCardMeetingDate}>
-        <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
-      </div>
-      <div className={classes.listCardClosingDate}>
-        <span>마감일 : {extractDate(party?.closingDate)}</span>
-      </div>
-      <div>닉네임</div>
-      <div className={classes.listCardCurrentCapacity}>
-        <span>{party?.currentCapacity}/</span>
-      </div>
-      <div className={classes.listCardMaxCapacity}>
-        <span>{party?.maxCapacity}</span>
-      </div>
-      <SignUpModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
     </div>
   );
 };

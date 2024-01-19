@@ -1,7 +1,9 @@
 .slider {
-  min-height: 10vw;
+  width: 3240px;
   position: relative;
-  border: 1px solid black;
+  padding: 0px 15px;
+  margin: 100px auto 60px;
+  box-sizing: inherit;
 }
 
 @media screen and (max-width: 1300px) {
@@ -9,13 +11,11 @@
     max-width: 960px;
   }
 }
-.slider > span {
-  text-align: left;
+
+.sliderName {
   display: flex;
-  margin-top: 2%;
-  margin-bottom: 1%;
-  font-size: 1.7rem;
-  font-weight: 700;
+  padding-left: 15px;
+  box-sizing: inherit;
 }
 
 .slick-prev::before,
