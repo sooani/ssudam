@@ -1,6 +1,7 @@
-## **Main Project**
+<p align="center">
+  <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/ad3282fd-8c9d-40d6-9e8a-ea1da42b5b87" alt="ssudam-logo1">
+</p>
 
-----------
 <br><br>
 
 ## 🚩 개요
