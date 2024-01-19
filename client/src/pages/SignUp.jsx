@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import instance from '../axios';
 import classes from '../styles/pages/SignUp.module.css';
+import useAxiosInstance from '../axios';
 
 // 해결할 문제
 // 오류메시지 css 수정
@@ -19,10 +19,9 @@ const SignUp = () => {
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-  // const [emailMessage, setEmailMessage] = useState('')
-  // const [nicknameMessage, setNicknameMessage] = useState('');
 
   const navigate = useNavigate();
+  const instance = useAxiosInstance();
 
   const handleSignUp = async (e) => {
     e.preventDefault();

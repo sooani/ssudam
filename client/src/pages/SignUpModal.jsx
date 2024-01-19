@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal'
 import { Link, useNavigate } from 'react-router-dom';
-import instance from '../axios';
 import classes from "../styles/pages/SignUpModal.module.css"
+import useAxiosInstance from '../axios';
 
 // 해결할 문제
 // 모달창 X 버튼, 모달창 바깥부분 눌러도 안닫힘
@@ -23,6 +23,7 @@ const SignUpModal = ({isOpen, onClose}) => {
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
     const navigate = useNavigate();
+    const instance = useAxiosInstance();
 
     const handleSignUp = async (e) => {
         e.preventDefault();

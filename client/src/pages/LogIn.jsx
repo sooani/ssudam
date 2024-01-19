@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
-import instance from "../axios";
 import classes from "../styles/pages/LogIn.module.css";
 import { jwtDecode } from "jwt-decode";
+import useAxiosInstance from "../axios";
 // 해결할 문제
 // 오류메시지 css 수정
 // 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
@@ -20,6 +20,7 @@ const LogIn = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const instance = useAxiosInstance();
 
   const handleLogin = async (e) => {
     console.log("handleLogin 함수 호출");
