@@ -3,7 +3,7 @@ import classes from '../../styles/components/ListSlider.module.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import ListCard from './ListCard';
+import NewListCard from '../MainPage/NewListCard';
 
 /*
   새로운 모임을 위한 슬라이더 컴포넌트
@@ -30,7 +30,7 @@ const ListSlider = ({ latest }) => {
       <Slider {...settings}>
         {/* 각각의 아이템에 대해 ItemCard 컴포넌트를 렌더링 */}
         {latest.map((party) => (
-          <ListCard key={party.partyId} party={party} />
+          <NewListCard key={party.partyId} party={party} />
         ))}
       </Slider>
     </section>

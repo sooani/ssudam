@@ -1,0 +1,41 @@
+.listCard {
+  margin: 10px 0 0 10px;
+  height: auto;
+  width: 70%;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.listCard:hover {
+  cursor: pointer;
+}
+
+.listCardTitle {
+  text-align: center;
+  padding-top: 30px;
+  padding-left: 3%;
+  font-size: 1.7rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.listCardMeetingDate {
+  font-size: 1.25rem;
+  padding-top: 2vh;
+  text-align: center;
+}
+.listCardClosingDate {
+  font-size: 1.25rem;
+  text-align: center;
+}
+.listCardCurrentCapacity {
+  display: inline;
+  text-align: right;
+}
+.listCardMaxCapacity {
+  display: inline;
+  text-align: right;
+}

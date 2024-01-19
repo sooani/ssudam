@@ -1,8 +1,7 @@
 import classes from '../../styles/components/ShowTodoList.module.css';
 import React, { useState, useEffect } from 'react';
-import useAxiosInstance from '../../axios';
+import instance from '../../axios';
 const ShowTodoList = () => {
-  const instance = useAxiosInstance();
   const [data, setData] = useState([]);
   const today = new Date();
 
@@ -41,10 +40,7 @@ const ShowTodoList = () => {
 
   return (
     <div className={classes.todoListSection}>
-      <div className={classes.todoTitle}>
-        {formattedDate}
-        <p>오늘 할 일!</p>
-      </div>
+      <div className={classes.todoTitle}>{formattedDate}</div>
       <div className={classes.todoList}>
         {data.map((todo) => (
           <li key={todo.todolistId}>{todo.title}</li>
