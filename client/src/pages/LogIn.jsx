@@ -5,6 +5,7 @@ import { login } from "../features/userSlice";
 import instance from "../axios";
 import classes from "../styles/pages/LogIn.module.css";
 import { jwtDecode } from "jwt-decode";
+import useAxiosInstance from "../axios";
 // 해결할 문제
 // 오류메시지 css 수정
 // 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
@@ -17,7 +18,7 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
+  const instance = useAxiosInstance();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import instance from '../axios';
-import classes from '../styles/pages/SignUp.module.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useAxiosInstance from "../axios";
+import classes from "../styles/pages/SignUp.module.css";
 
 // 해결할 문제
 // 오류메시지 css 수정
@@ -10,45 +10,45 @@ import classes from '../styles/pages/SignUp.module.css';
 // 더 추가될 수도 있음
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   // const [emailMessage, setEmailMessage] = useState('')
   // const [nicknameMessage, setNicknameMessage] = useState('');
-
+  const instance = useAxiosInstance();
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (email === '') {
+    if (email === "") {
       setEmailError(true);
       setTimeout(() => setEmailError(false), 1500);
     } else {
       setEmailError(false);
     }
 
-    if (nickname === '') {
+    if (nickname === "") {
       setNicknameError(true);
       setTimeout(() => setNicknameError(false), 1500);
     } else {
       setNicknameError(false);
     }
 
-    if (password === '') {
+    if (password === "") {
       setPasswordError(true);
       setTimeout(() => setPasswordError(false), 1500);
     } else {
       setPasswordError(false);
     }
 
-    if (confirmPassword === '' || confirmPassword !== password) {
+    if (confirmPassword === "" || confirmPassword !== password) {
       setConfirmPasswordError(true);
       setTimeout(() => setConfirmPasswordError(false), 1500);
     } else {
@@ -56,18 +56,18 @@ const SignUp = () => {
     }
 
     if (
-      email === '' ||
-      nickname === '' ||
-      password === '' ||
-      confirmPassword === ''
+      email === "" ||
+      nickname === "" ||
+      password === "" ||
+      confirmPassword === ""
     ) {
-      setError('모든 정보를 입력하세요.');
+      setError("모든 정보를 입력하세요.");
       return;
     }
 
     instance
       .post(
-        '/v1/members',
+        "/v1/members",
         {
           email: email,
           nickname: nickname,
@@ -76,26 +76,26 @@ const SignUp = () => {
         },
         {
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            Accept: 'application/json',
+            "Content-Type": "application/json;charset=utf-8",
+            Accept: "application/json",
           },
         }
       )
       .then((response) => {
         // 회원가입 성공 시 입력 필드 초기화, 메인페이지로 이동
         console.log(response);
-        console.log('회원가입이 되었습니다!');
-        setEmail('');
-        setNickname('');
-        setPassword('');
-        setConfirmPassword('');
+        console.log("회원가입이 되었습니다!");
+        setEmail("");
+        setNickname("");
+        setPassword("");
+        setConfirmPassword("");
 
-        navigate('/');
+        navigate("/");
       })
       .catch((error) => {
         // 회원가입 실패 처리 (기존 에러 처리와 유사)
-        console.error('회원가입 오류:', error.message);
-        setError('회원가입 중 오류가 발생했습니다.');
+        console.error("회원가입 오류:", error.message);
+        setError("회원가입 중 오류가 발생했습니다.");
       });
   };
 
@@ -116,7 +116,7 @@ const SignUp = () => {
             />
             <label
               htmlFor="email"
-              className={emailError ? classes.warning : ''}
+              className={emailError ? classes.warning : ""}
             >
               이메일
             </label>
@@ -132,7 +132,7 @@ const SignUp = () => {
             />
             <label
               htmlFor="nickname"
-              className={nicknameError ? classes.warning : ''}
+              className={nicknameError ? classes.warning : ""}
             >
               닉네임
             </label>
@@ -148,7 +148,7 @@ const SignUp = () => {
             />
             <label
               htmlFor="pw"
-              className={passwordError ? classes.warning : ''}
+              className={passwordError ? classes.warning : ""}
             >
               비밀번호
             </label>
@@ -164,12 +164,12 @@ const SignUp = () => {
             />
             <label
               htmlFor="confirmPw"
-              className={confirmPasswordError ? classes.warning : ''}
+              className={confirmPasswordError ? classes.warning : ""}
             >
               비밀번호 확인
             </label>
           </div>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div className={classes.btnArea}>
             <button type="submit">회원가입</button>
           </div>
