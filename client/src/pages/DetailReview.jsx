@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 const DetailReview = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 여부
   const [reviewInfo, setReviewInfo] = useState(null); // 현재 후기의 정보
-
+  // const axios = useAxiosInstance();
   const [userInfo, setUserInfo] = useState(null); // 현재 후기의 작성자 정보
   const [isMyReview, setIsMyReview] = useState(false); // 내 후기인지 여부
 

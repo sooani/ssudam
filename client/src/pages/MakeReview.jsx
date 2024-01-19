@@ -8,7 +8,7 @@ import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 const MakeReview = () => {
   const loggedInUser = useSelector(selectUser);
-
+  // const axios = useAxiosInstance();
   const navigate = useNavigate();
 
   // 리뷰 글 정보

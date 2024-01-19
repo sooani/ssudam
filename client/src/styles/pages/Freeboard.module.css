@@ -34,9 +34,10 @@
 .post {
   border-bottom: 1px solid gray;
   margin: 0 1rem;
-  padding: 1.5rem;
+  padding: 1rem;
   font-size: large;
-
+  /* height: 5px; */
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;

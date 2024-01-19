@@ -16,6 +16,7 @@ const MeetingSearch = () => {
   const commentsPerPage = 10; // 한 페이지에 표시할 검색 결과 수
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
+  // const axios = useAxiosInstance();
   const { searchkeyword: urlSearchKeyword } = useParams();
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {

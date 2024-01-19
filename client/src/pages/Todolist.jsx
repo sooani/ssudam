@@ -24,6 +24,7 @@ const Todolist = () => {
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState(1);
   const [total, setTotal] = useState(null);
+  // const axios = useAxiosInstance();
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);

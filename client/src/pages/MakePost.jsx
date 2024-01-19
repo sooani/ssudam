@@ -20,7 +20,7 @@ const MakePost = () => {
   const [searchkeyword, setSearchkeyword] = useState("");
 
   const today = new Date();
-
+  // const axios = useAxiosInstance();
   // 현재 날짜에 1일(24시간)을 더하여 하루 뒤의 일시를 얻음
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
@@ -112,7 +112,7 @@ const MakePost = () => {
     });
 
     setSearchkeyword("");
-
+    console.log(postDTO);
     axios
 
       .post(`/v1/parties`, postDTO)

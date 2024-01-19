@@ -13,6 +13,7 @@ const EditReview = () => {
   // const { reviewId } = useParams();
   const navigate = useNavigate();
   const { reviewId } = useParams();
+  // const axios = useAxiosInstance();
   // 리뷰 글 정보
   const [reviewInfo, setReviewInfo] = useState(null);
   // 첫 렌더링 시 후기 정보 가져와서 정보 채움

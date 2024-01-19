@@ -17,6 +17,7 @@ const Freeboard = () => {
   const [page, setPage] = useState(1);
   const loggedInUser = useSelector(selectUser);
   const navigate = useNavigate();
+  // const axios = useAxiosInstance();
   // 페이지네이션 페이지를 선택하는 핸들러
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);
