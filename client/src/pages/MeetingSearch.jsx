@@ -9,7 +9,7 @@ import Footer from "../components/Layout/Footer";
 import { MdSearch } from "react-icons/md";
 const MeetingSearch = () => {
   const [searched, setSearched] = useState(null);
-  const [searchkeyword, setSearchkeyword] = useState("");
+  const [searchkeyword, setSearchkeyword] = useState(null);
   const [totalPages, setTotalPages] = useState(null); // 전체 페이지 수
   const [totalLength, setTotalLength] = useState(null); // 전체 검색 결과 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
@@ -24,9 +24,12 @@ const MeetingSearch = () => {
   useEffect(() => {
     console.log(commentsPerPage);
     console.log(currentPage);
+    getResults(currentPage, commentsPerPage);
   }, [commentsPerPage, currentPage]);
   useEffect(() => {
-    getResults();
+    if (searchkeyword) {
+      getResults(currentPage, commentsPerPage);
+    }
   }, [searchkeyword]);
   useEffect(() => {
     setSearchkeyword(urlSearchKeyword || "");
@@ -62,21 +65,29 @@ const MeetingSearch = () => {
     console.log("입력 완료");
   };
   const searchHandler = () => {
-    getResults();
+    getResults(currentPage, commentsPerPage);
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onSearchHandler();
+    }
   };
   return (
     <div className={classes.wrapper}>
       <Header />
       <div className={classes.container}>
         <div className={classes.search}>
-          <MdSearch className={classes.icon} onClick={onSearchHandler} />
+          {/* <MdSearch className={classes.icon} onClick={onSearchHandler} /> */}
           <input
             type="text"
             placeholder="검색할 키워드를 입력하세요..."
             value={searchkeyword}
             onChange={onKeywordHandler}
+            onKeyPress={handleKeyPress}
           />
-          <button onClick={searchHandler}>검색</button>
+          <MdSearch onClick={searchHandler} className={classes.icon}>
+            검색
+          </MdSearch>
         </div>
         <div className={classes.posts}>
           <div className={classes.post}>
@@ -118,7 +129,9 @@ const MeetingSearch = () => {
           />
         )}
       </div>
-      <Footer />
+      <div className={classes.footer}>
+        <Footer />
+      </div>
     </div>
   );
 };
