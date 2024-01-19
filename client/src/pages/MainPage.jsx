@@ -1,10 +1,10 @@
-import MainHeader from "../components/Layout/MainHeader";
+import MainHeader from '../components/Layout/MainHeader';
 // import Footer from '../components/Layout/Footer';
-import classes from "../styles/pages/MainPage.module.css";
-import ListSlider from "../components/MainPage/ListSlider";
-import CategoryTab from "../components/MainPage/CategoryTab";
-import { useAxiosInterceptors } from "../axios";
-import React, { useState, useEffect } from "react";
+import classes from '../styles/pages/MainPage.module.css';
+import ListSlider from '../components/MainPage/ListSlider';
+import CategoryTab from '../components/MainPage/CategoryTab';
+import { useAxiosInterceptors } from '../axios';
+import React, { useState, useEffect } from 'react';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -29,7 +29,7 @@ const MainPage = () => {
         // setPage(response.data.pageInfo);
       })
       .catch((error) => {
-        console.error("Error party data:", error);
+        console.error('Error party data:', error);
       });
   }, []);
 
@@ -41,7 +41,7 @@ const MainPage = () => {
         setLatest(response.data.data);
       })
       .catch((error) => {
-        console.error("Error party data:", error);
+        console.error('Error party data:', error);
       });
   }, []);
 
