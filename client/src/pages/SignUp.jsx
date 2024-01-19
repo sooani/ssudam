@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useAxiosInstance from "../axios";
+import instance from '../axios'
 import classes from "../styles/pages/SignUp.module.css";
 
 // 해결할 문제
@@ -21,7 +21,6 @@ const SignUp = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
  
   const navigate = useNavigate();
-  const instance = useAxiosInstance();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -47,7 +46,7 @@ const SignUp = () => {
       setPasswordError(false);
     }
 
-    if (confirmPassword === "" || confirmPassword !== password) {
+    if (confirmPassword === "") {
       setConfirmPasswordError(true);
       setTimeout(() => setConfirmPasswordError(false), 1500);
     } else {
@@ -60,8 +59,46 @@ const SignUp = () => {
       password === "" ||
       confirmPassword === ""
     ) {
-      setError("모든 정보를 입력하세요.");
+      setError("입력하지 않은 정보가 있습니다.");
       return;
+    }
+
+    // 이메일 형식 검증
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError(true);
+      setError('올바른 이메일 주소 형식을 입력하세요.');
+      return;
+    } else {
+      setEmailError(false);
+    }
+
+    // 닉네임 길이 검증
+    if (nickname.length < 2 || nickname.length > 12) {
+      setNicknameError(true);
+      setError('닉네임은 2~12자여야 합니다.');
+      return;
+    } else {
+      setNicknameError(false);
+    }
+
+    // 비밀번호 요구사항 검증
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordError(true);
+      setError('비밀번호는 특수문자, 대문자, 소문자, 숫자를 혼합하여 8자 이상 20자 이하로 입력하세요.');
+      return;
+    } else {
+      setPasswordError(false);
+    }
+
+    // 비밀번호 확인 일치 검증
+    if (confirmPassword !== password) {
+      setConfirmPasswordError(true);
+      setError('비밀번호가 일치하지 않습니다.');
+      return;
+    } else {
+      setConfirmPasswordError(false);
     }
 
     instance
@@ -80,6 +117,7 @@ const SignUp = () => {
           },
         }
       )
+
       .then((response) => {
         // 회원가입 성공 시 입력 필드 초기화, 메인페이지로 이동
         console.log(response);
