@@ -21,7 +21,7 @@
 
 |**강혜주**|**김수안**|**최준하**|**조은희**|
 |:--:|:--:|:--:|:--:|
-|<img src="https://github.com/codestates-seb/abc02_002/assets/118452650/f316cf92-de9c-472b-80b3-8e98eae90e93" width="140px" height="140px">|<img src="https://github.com/codestates-seb/abc02_002/assets/118452650/7e73b89a-2d91-4e36-ba36-70931d1154ee" width="140px" height="140px"> | <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/6c1cc0e2-8455-4044-a71b-4fab234faa9f" width="140px" height="140px"> | <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/d1606042-8a8d-4456-b836-abde279c122f" width="140px" height="140px">|
+|<img src="https://github.com/codestates-seb/abc02_002/assets/118452650/f316cf92-de9c-472b-80b3-8e98eae90e93" width="150px" height="150px">|<img src="https://github.com/codestates-seb/abc02_002/assets/118452650/7e73b89a-2d91-4e36-ba36-70931d1154ee" width="150px" height="150px"> | <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/6c1cc0e2-8455-4044-a71b-4fab234faa9f" width="150px" height="150px"> | <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/d1606042-8a8d-4456-b836-abde279c122f" width="150px" height="150px">|
 |BE(팀장)|BE|BE|BE|
 |[hyezuu](https://github.com/hyezuu)|[sooani](https://github.com/sooani)|[choijh0309](https://github.com/choijh0309)|[eunhee78](https://github.com/eunhee78)|
 
