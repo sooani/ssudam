@@ -12,6 +12,7 @@ function MyEventCard() {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const eventsPerPage = 4;
+  const instance = useAxiosInstance();
 
   useEffect(() => {
     const fetchEvents = () => {

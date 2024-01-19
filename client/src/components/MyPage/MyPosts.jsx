@@ -13,6 +13,7 @@ function MyPosts() {
   const offset = (page - 1) * limit;
   const { memberId } = useParams();
   const [size, setSize] = useState(10);
+  const instance = useAxiosInstance();
 
   useEffect(() => {
     const fetchComments = () => {
