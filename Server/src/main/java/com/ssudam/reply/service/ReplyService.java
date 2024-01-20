@@ -26,6 +26,7 @@ public class ReplyService {
     public Reply createReply(Reply reply){
         Comment comment = commentService.findComment(reply.getComment().getCommentId());
         findVerifiedMemberForReply(reply, comment);
+        findCommentReply(comment);
         return replyRepository.save(reply);
     }
 
@@ -40,17 +41,23 @@ public class ReplyService {
     }
 
     public void deleteReply(long replyId){
-        replyRepository.delete(findVerifiedReply(replyId));
+       // Reply reply = findVerifiedReply(replyId);
+        replyRepository.deleteById(replyId);
     }
-
 
     private static void findVerifiedMemberForReply(Reply reply, Comment comment) {
         if(reply.getMember().getMemberId()!= comment.getParty().getMember().getMemberId()){
             throw new BusinessLogicException(ExceptionCode.REPLY_NOT_ALLOWED);
         }
     }
-    private Reply findVerifiedReply(long replyId) {
+    public Reply findVerifiedReply(long replyId) {
         return replyRepository.findById(replyId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REPLY_NOT_FOUND));
+    }
+
+    private static void findCommentReply(Comment comment) {
+        if(comment.getReply() != null){
+            throw new BusinessLogicException(ExceptionCode.REPLY_EXIST);
+        }
     }
 }

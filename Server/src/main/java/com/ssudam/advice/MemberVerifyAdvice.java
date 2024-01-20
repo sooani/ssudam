@@ -72,7 +72,7 @@ public class MemberVerifyAdvice {
     public void compareMemberIdFromReplyId(JoinPoint joinPoint) {
         int securityContextMemberId = extractMemberId();
         long replyId = extractIdFromPathVariable(joinPoint.getArgs());
-        long memberId = replyService.findReply(replyId).getMember().getMemberId();
+        long memberId = replyService.findVerifiedReply(replyId).getMember().getMemberId();
         compareMemberId(memberId, securityContextMemberId);
     }
 
