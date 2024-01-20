@@ -266,7 +266,7 @@ public class ReviewControllerTest {
         Page<Review> reviews = ReviewStub.getMultiReviews();
         List<ReviewDto.Response> responses = ReviewStub.getMultiResponseBody();
 
-        given(reviewService.findAll( 1, 10)).willReturn(reviews);
+        given(reviewService.findAll( Mockito.anyInt(), Mockito.anyInt())).willReturn(reviews);
         given(mapper.reviewsToReviewResponseDtos(Mockito.anyList())).willReturn(responses);
 
         String page = "1";
