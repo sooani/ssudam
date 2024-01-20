@@ -3,6 +3,7 @@ import classes from '../../styles/components/NewListCard.module.css';
 import SignUpModal from '../../pages/SignUpModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
+import { FaRegLightbulb } from 'react-icons/fa';
 
 /*
     게시글 컴포넌트
@@ -33,9 +34,14 @@ const NewListCard = ({ party }) => {
     return formattedDate;
   };
   return (
-    <div className={classes.newWrapper}>
+    <div
+      className={classes.newWrapper}
+      style={{ width: '100%', display: 'inline-block' }}
+    >
       <div className={classes.listCard} onClick={handlePostClick}>
-        new 여기 뜰꺼임
+        <div className={classes.new}>
+          <FaRegLightbulb />
+        </div>
         <div className={classes.listCardMeetingDate}>
           <span>모임날짜 : {extractDate(party?.meetingDate)}</span>
         </div>

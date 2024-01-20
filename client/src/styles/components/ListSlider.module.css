@@ -1,17 +1,17 @@
 .slider {
   width: 100%;
   max-width: 1300px;
-  position: relative;
+  /* position: relative; */
   padding: 0px 15px;
   margin: 100px auto 60px;
   box-sizing: inherit;
 }
 
-@media screen and (max-width: 1300px) {
+/* @media screen and (max-width: 1300px) {
   .slider {
     max-width: 960px;
   }
-}
+} */
 
 .sliderName {
   display: flex;

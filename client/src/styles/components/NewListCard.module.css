@@ -1,16 +1,30 @@
 .newWrapper {
   width: 324px;
-  width: 100%;
+  /* width: 100%; */
   display: inline-block;
+}
+
+.new {
+  display: flex;
+  height: 26px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(255, 183, 0);
+  font-size: 2rem;
 }
 
 /* 게시글 하나하나 */
 .listCard {
-  padding: 20px 25px;
+  min-height: 200px;
+  padding: 30px 30px;
   margin: 0px 12px;
   overflow: hidden;
   border-radius: 20px;
   border: 2px solid rgb(186, 186, 186);
+  background: white;
+  color: black;
 }
 
 .listCard:hover {
@@ -18,22 +32,12 @@
 }
 
 .listCardTitle {
-  /* text-align: left;
-  padding-top: 10px;
-  padding-left: 3%;
-  font-weight: 700;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  word-break: break-all;
-  overflow: hidden; */
   margin: 10px 0px 0px;
-  color: rgb(0, 0, 0);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 140%;
-  letter-spacing: -1px;
+  letter-spacing: 1px;
   min-height: 50px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
