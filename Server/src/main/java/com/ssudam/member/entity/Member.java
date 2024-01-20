@@ -38,10 +38,10 @@ public class Member extends Auditable {
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<Party> partyLeaders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<PartyMember> partyMembers = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)

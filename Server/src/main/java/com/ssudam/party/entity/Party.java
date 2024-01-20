@@ -23,7 +23,7 @@ public class Party extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long partyId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

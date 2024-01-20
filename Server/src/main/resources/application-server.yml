@@ -7,14 +7,10 @@ spring:
     username: root
     password: ${MYSQL_PASSWORD}
   thymeleaf:
-      cache: false
+    cache: false
   jpa:
     hibernate:
       ddl-auto: update  # (1) ??? ?? ??
-    show-sql: true      # (2) SQL ?? ??
-    properties:
-      hibernate:
-        format_sql: true  # (3) SQL pretty print
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
