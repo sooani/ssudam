@@ -41,8 +41,8 @@ public class ReplyService {
     }
 
     public void deleteReply(long replyId){
-       // Reply reply = findVerifiedReply(replyId);
-        replyRepository.deleteById(replyId);
+        Reply reply = findVerifiedReply(replyId);
+        replyRepository.delete(reply);
     }
 
     private static void findVerifiedMemberForReply(Reply reply, Comment comment) {
