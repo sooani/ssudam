@@ -1,6 +1,11 @@
 <p align="center">
   <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/8cf4b8d0-124a-4511-a01d-03bf2e42db39" alt="ssudam-logo1">
 </p>
+<h3 align='center'> 쓰담(SSUDAM)은 쓰레기 담기의 줄인말로 
+<br>
+  지역 생태계 보호와 걷기를 통한 주민들의 건강 증진을 돕는 커뮤니티 사이트입니다. </h3>
+  
+<br>
 
 ## 🚩 개요
 - 프로젝트 이름 : 쓰담 (SSUDAM)
