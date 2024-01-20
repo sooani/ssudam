@@ -52,7 +52,7 @@ public class ReviewService {
 
     // 전체 후기 조회
     public Page<Review> findAll(int page, int size) {
-        return reviewRepository.findAll(PageRequest.of(page - 1, size, Sort.by("reviewId").descending()));
+        return reviewRepository.findAll(PageRequest.of(page, size, Sort.by("reviewId").descending()));
     }
 
     // 후기 삭제

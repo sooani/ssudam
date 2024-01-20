@@ -94,7 +94,7 @@ public class ReviewController {
     @GetMapping
     public ResponseEntity getReviews(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
-        Page<Review> pageReview = reviewService.findAll(page, size);
+        Page<Review> pageReview = reviewService.findAll(page - 1, size);
         List<Review> reviews = pageReview.getContent();
 
         return new ResponseEntity(
