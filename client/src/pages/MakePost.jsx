@@ -194,7 +194,7 @@ const MakePost = () => {
                 />
               </div>
               <div className={classes.field}>
-                <h4>모집 마감일</h4>
+                <h4>모집 마감</h4>
                 <input
                   type="datetime-local"
                   min={formattedTomorrow}
