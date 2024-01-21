@@ -10,13 +10,14 @@ import { selectUser } from "../features/userSlice";
 
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
-import footerLogo from "../images/footerLogo.png";
+import S_LOGO from "../images/S_LOGO.png";
 import classes from "../styles/pages/MyPage.module.css";
 import { useAxiosInterceptors } from "../axios";
 // import useAxiosInstance from "../axios";
 import MyComment from "../components/MyPage/MyComment";
 import MyPosts from "../components/MyPage/MyPosts";
 import MyEventCard from "../components/MyPage/MyEventCard";
+import MyBookmark from "../components/MyPage/MyBookmark";
 import LeaveModal from "./LeaveModal";
 
 const MyPage = () => {
@@ -82,17 +83,11 @@ const MyPage = () => {
             <div className={classes.ProfileImageContainer}>
               <img
                 alt="ProfileImage"
-                src={footerLogo}
+                src={S_LOGO}
                 width="50px"
                 height="50px"
               />
             </div>
-            {/* <Link
-              to={`/edit-profile/${memberId}`}
-              className={classes.Btn_EditProfile}
-            >
-              회원정보수정
-            </Link> */}
             <button 
             onClick={() => navigate(`/edit-profile/${memberId}`)} 
             className={classes.Btn_EditProfile}
@@ -113,28 +108,15 @@ const MyPage = () => {
                 {userData.data && userData.data.email}
               </div>
             </div>
-            {/* {userData.data && (
-                            <div className={classes.NicknameContainer}>
-                                <p className={classes.Nickname}>닉네임</p>
-                                <div className={classes.UserNickname}>
-                                {userData.data.nickname}
-                                </div>
-                            </div>
-                            )}
-
-                        {userData.data && (
-                            <div className={classes.EmailContainer}>
-                                <p className={classes.Email}>이메일</p>
-                                <div className={classes.UserEmail}>
-                                {userData.data.email}
-                                </div>
-                            </div>
-                            )} */}
           </div>
         </div>
         <div className={classes.MyEvent}>
           <h1 className={classes.MyEventHeader}>나의 모임</h1>
           <MyEventCard memberId={userData.id} />
+        </div>
+        <div className={classes.MyBookmark}>
+          <h1 className={classes.MyBookmarkHeader}>나의 북마크</h1>
+          <MyBookmark memberId={userData.id} />
         </div>
         <div className={classes.MyContents}>
           <div className={classes.MyPostContainer}>

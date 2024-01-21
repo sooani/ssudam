@@ -44,8 +44,8 @@ function MyComment() {
         <p className={classes.MyCommentMSG}>아직 작성한 댓글이 없습니다.</p>
       ) : (
         comments.slice(offset, offset + limit).map((comment, index) => (
-          <article key={index}>
-            <p>{comment}</p>
+          <article key={index} className={classes.CommentKey}>
+            <p className={classes.Comment}>{comment}</p>
           </article>
         ))
       )}

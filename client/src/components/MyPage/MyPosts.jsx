@@ -44,7 +44,7 @@ function MyPosts() {
       ) : (
         titles.slice(offset, offset + limit).map((title, index) => (
           <article key={index}>
-            <p className={classes.Partyitle}>{title}</p>
+            <p className={classes.Partytitle}>{title}</p>
           </article>
         ))
       )}
