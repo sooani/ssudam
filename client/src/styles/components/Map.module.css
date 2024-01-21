@@ -27,7 +27,8 @@
   width: 40%;
   /* flex-grow: 1; */
   /* padding: 10px 0; */
-  /* background-color: #f5f5f5; */
+  background-color: #eef5ff;
+  border-radius: 5px;
   overflow-y: auto;
   max-height: 37vh;
   overflow-y: auto;

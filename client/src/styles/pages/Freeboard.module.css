@@ -30,6 +30,7 @@
   /* border: 1px solid pink; */
   /* height: 90vh; */
   min-height: 80vh;
+  text-align: center;
 }
 .post {
   border-bottom: 1px solid gray;

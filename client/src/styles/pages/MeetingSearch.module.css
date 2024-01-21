@@ -62,6 +62,7 @@
   /* height: 90vh; */
   width: 100%;
   min-height: 70vh;
+  text-align: center;
 }
 .post {
   border-bottom: 1px solid gray;

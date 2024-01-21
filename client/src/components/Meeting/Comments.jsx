@@ -317,6 +317,9 @@ const Comments = (props) => {
           </select>
         </div>
       )}
+      {comments && comments.length === 0 && (
+        <p>등록된 댓글이 없습니다! 댓글을 처음으로 남겨보세요!☺️</p>
+      )}
       {/* 댓글이 있는 경우 정렬된 댓글을 보여준다 */}
       {!props.isLoading &&
         comments &&

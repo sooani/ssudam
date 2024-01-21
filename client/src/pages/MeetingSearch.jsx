@@ -102,6 +102,9 @@ const MeetingSearch = () => {
             </div>
             <div className={classes.box2_}>등록일</div>
           </div>
+          {searched && searched.length === 0 && (
+            <p>검색 결과가 없습니다😢 다른 키워드로 검색해보세요!</p>
+          )}
           {searched &&
             searched.map((post) => (
               <div

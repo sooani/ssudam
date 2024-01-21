@@ -217,6 +217,7 @@ const Todolist = () => {
           </button>
         </div> */}
         <ul className={classes.list}>
+          {todos && todos.length === 0 && <p>투두를 등록해보세요!💚</p>}
           {todos &&
             todos.map((todo) => (
               <li key={todo.todolistId}>

@@ -76,27 +76,31 @@ const Freeboard = () => {
               </div>
               <div className={classes.box2_}>등록일</div>
             </div>
-            {reviews.map((post) => (
-              <div
-                key={post.reviewId}
-                className={classes.post}
-                onClick={() => {
-                  if (loggedInUser) {
-                    navigate(`/reviews/${post.reviewId}`);
-                  } else {
-                    navigate("/login");
-                  }
-                }}
-              >
-                <div className={classes.box1}>
-                  <div className={classes.box1_id}>{post.reviewId}</div>
-                  <div className={classes.box1_title}> {post.title}</div>
+            {reviews && reviews.length === 0 && (
+              <p>등록된 후기가 없습니다! 후기를 처음으로 남겨보세요!☺️</p>
+            )}
+            {reviews &&
+              reviews.map((post) => (
+                <div
+                  key={post.reviewId}
+                  className={classes.post}
+                  onClick={() => {
+                    if (loggedInUser) {
+                      navigate(`/reviews/${post.reviewId}`);
+                    } else {
+                      navigate("/login");
+                    }
+                  }}
+                >
+                  <div className={classes.box1}>
+                    <div className={classes.box1_id}>{post.reviewId}</div>
+                    <div className={classes.box1_title}> {post.title}</div>
+                  </div>
+                  <div className={classes.box2}>
+                    {post.createdAt.split("T")[0]}
+                  </div>
                 </div>
-                <div className={classes.box2}>
-                  {post.createdAt.split("T")[0]}
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
         <div className={classes.under}>

@@ -144,29 +144,30 @@ const SearchMap = (props) => {
         </Map>
       </div>{" "}
       <div className={classes.sidebar}>
-        {markers.length === 0 && (
+        {markers && markers.length === 0 && (
           <p>
             원하는 위치를
             <br /> 검색해보세요!🏃🏻
           </p>
         )}
-        {markers.map((marker, index) => (
-          <div
-            key={index}
-            onClick={() => {
-              handleSidebarMarkerClick(marker);
-            }}
-            style={{
-              color:
-                selectedMarker && selectedMarker.content === marker.content
-                  ? "black"
-                  : "gray",
-            }}
-            className={classes.sidebarItem}
-          >
-            {marker.content}
-          </div>
-        ))}
+        {markers &&
+          markers.map((marker, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                handleSidebarMarkerClick(marker);
+              }}
+              style={{
+                color:
+                  selectedMarker && selectedMarker.content === marker.content
+                    ? "black"
+                    : "gray",
+              }}
+              className={classes.sidebarItem}
+            >
+              {marker.content}
+            </div>
+          ))}
       </div>
     </div>
   );
