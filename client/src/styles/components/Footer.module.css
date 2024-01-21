@@ -1,13 +1,12 @@
-/* .footer {
+.footer {
   height: 10vh;
   width: 100%;
-  background-color: rgb(164, 164, 164);
+  background-color: rgb(101, 147, 255);
   flex-direction: column;
   align-items: center;
   display: flex;
   justify-content: center;
   bottom: 0;
-  position: fixed;
 }
 
 .logoContainer {
@@ -22,4 +21,4 @@
 }
 p {
   padding-top: 10px;
-} */
+}

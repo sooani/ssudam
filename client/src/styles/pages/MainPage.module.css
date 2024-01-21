@@ -1,13 +1,13 @@
 .pageWrapper {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  /* width: 100%; */
+  min-height: 100%;
 }
 
 .mainContainer {
+  min-height: 60rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  flex-direction: column;
+  margin: 0 auto;
   min-height: 100%;
+  box-sizing: inherit;
 }

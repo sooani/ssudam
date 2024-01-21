@@ -37,21 +37,8 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 1.3rem;
-  height: 30px;
+  height: auto;
 }
-
-/* .postRegister {
-  font-weight: 600;
-  font-size: 1rem;
-}
-.login {
-  font-weight: 600;
-  font-size: 1rem;
-}
-.join {
-  font-weight: 600;
-  font-size: 1rem;
-} */
 
 /* 검색창 관련 */
 .search {
