@@ -6,14 +6,29 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgba(240, 240, 240, 1);
+    background-color: rgb(238, 245, 255);
 }
+
+.signupForm {
+    width: 100%; /* 또는 다른 값을 지정하여 가로 크기 조절 */
+    max-width: 425px; /* 예시로 최대 가로 크기 지정 */
+    margin: 0 auto; /* 수평 가운데 정렬을 위해 margin을 auto로 설정 */
+}
+
+@font-face {
+    font-family: "Cafe";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
+
 
 .signupForm h1{
     font-size: 55px; 
-    color: rgba(0, 130, 36, 1);
+    color: rgb(134, 182, 246);
     text-align: center;
     margin-bottom: 15px;
+    font-family:  "Cafe", sans-serif;
 }
 
 .signupForm h3{
@@ -36,7 +51,8 @@
 }
 
 .inputArea label {
-    position: absolute; 
+    position: absolute;
+    padding-top: 3px;
     left: 10px;
     top: 12px;
     font-size: 20px;
@@ -63,7 +79,7 @@
     top: 0;
     font-size: 13px;
     font-weight: bold;
-    color: rgba(0, 130, 36, 1);
+    color: rgb(134, 182, 246);
 }
 
 .btnArea {
@@ -73,7 +89,7 @@
 .btnArea button {
     width: 100%;
     height: 50px;
-    background-color: rgba(0, 130, 36, 1);
+    background-color: rgb(134, 182, 246);
     color: white;
     font-size: 20px;
     font-weight: 550;
@@ -85,4 +101,8 @@
 .caption {
     margin-top: 20px;
     text-align: center;
+}
+
+.loginLink {
+    color: rgb(134, 182, 246);
 }

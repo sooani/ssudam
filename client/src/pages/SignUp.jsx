@@ -224,7 +224,7 @@ const SignUp = () => {
           </div>
         </form>
         <div className={classes.caption}>
-          이미 가입하셨나요? <Link to="/login">로그인</Link>
+          이미 가입하셨나요? <span className={classes.loginLink} onClick={() => navigate("/login")}>로그인</span>
         </div>
       </section>
     </div>
