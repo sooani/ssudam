@@ -37,13 +37,15 @@
     background-color: white;
     border-radius: 10px;
     margin : 3rem;
+    flex-wrap: wrap;
+    overflow-x: auto;
 }
 .EventCardMain > div {
     margin-right: 1rem; 
     border: 2px solid rgb(186, 186, 186);
     border-radius: 20px;
     height: 30vh;
-    width: 20vw;
+    width: 200px;
   }
   .EventCard0{   
     width: 20vw;
@@ -89,6 +91,10 @@
     margin:0.5rem;
   }
 
+  .Statuscontainer{
+    display: flex;
+    flex-wrap: nowrap;
+  }
   /* 모집중 모집완료 */
   .OpenStatus{
     display: flex;
@@ -105,6 +111,8 @@
     height:3vh;
     margin:0;
     padding: 0.3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
   .ClosedStatus{    
     display: flex;
@@ -120,7 +128,11 @@
     /* width: 3rem; */
     height:3vh;
     margin:0;
-    padding: 0.3px;}
+    padding: 0.3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  
+  }
   
   /* .Img {
     width: 2vw; 

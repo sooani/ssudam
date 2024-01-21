@@ -13,18 +13,17 @@
     /* border: 2px solid red; */
     /* border: 2px solid black; */
     border-radius: 5px;
+    margin : 3rem;
+    flex-wrap: wrap;
+    overflow-x: auto;
 }
 .EventCardMain > div {
-    margin-right: 2rem; 
-    border: 2px solid rgb(186, 186, 186);
-    border-radius: 20px;
-    height: 30vh;
-    width: 20vw;
-    padding: 20px 25px;
-    margin: 0px 12px;
-    overflow: hidden;
-  }
-  
+  margin-right: 1rem; 
+  border: 2px solid rgb(186, 186, 186);
+  border-radius: 20px;
+  height: 30vh;
+  width: 200px;
+}
   /* Style for the last child to prevent extra margin */
   .EventCardMain > div:last-child {
     margin-right: 0;
@@ -47,11 +46,13 @@
     display: flex;
     /* border: 1px solid black; */
     justify-content: right;
-    height:4vh;
+    /* height:4vh; */
     margin:0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
   }
   /* 모집중 모집완료 */
-  .Status {
+  /* .Status {
     display: flex;
     font-size: 0.9rem; 
     border: 1px solid #86B6F6;
@@ -62,10 +63,46 @@
     font-weight: bold; 
     align-items: center;
     justify-content: center;
+    height:3vh;
+    margin:0;
+  } */
+  .OpenStatus{
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #B4D4FF;
+    border-radius: 20px;
+    background-color: #B4D4FF;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
     /* width: 3rem; */
     height:3vh;
     margin:0;
+    padding: 0.3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
+  .ClosedStatus{    
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #4f5255;
+    border-radius: 20px;
+    background-color: #4f5255;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
+    /* width: 3rem; */
+    height:3vh;
+    margin:0;
+    padding: 0.3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
   
   /* .Img {
     width: 2vw; 

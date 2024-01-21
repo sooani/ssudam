@@ -111,7 +111,7 @@ function Pagination({ total, limit, page, setPage }) {
   // if (numPages <= 1) {
   //   return null; // 내용이 없으면 화면에 아무 요소도 나타나지 않음!
   // }
-  if (!Number.isFinite(numPages) || numPages <= 1) {
+  if (!Number.isFinite(numPages) || numPages < 1) {
     return null; // 내용이 없으면 화면에 아무 요소도 나타나지 않음!
     
   }
