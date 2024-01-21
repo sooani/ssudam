@@ -59,7 +59,8 @@ const Header = () => {
     <header>
       <div className={classes.header}>
         <h1>
-          <Link to="/">쓰담</Link>
+          {/* <Link to="/">쓰담</Link> */}
+          <span className={classes.headerLogo} onClick={() => navigate('/')}>쓰담</span>
         </h1>
         <div className={classes.loginElement}>
           {user ? (
