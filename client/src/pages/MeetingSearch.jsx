@@ -100,7 +100,7 @@ const MeetingSearch = () => {
               <div className={classes.box1_id_}>번호</div>
               <div className={classes.box1_title_}>제목</div>
             </div>
-            <div className={classes.box2_}>등록 일자</div>
+            <div className={classes.box2_}>등록일</div>
           </div>
           {searched &&
             searched.map((post) => (

@@ -172,10 +172,8 @@
   /* gap: 1rem; */
   @media screen and (max-width: 1070px) {
     /* gap: 1rem; */
-
-    margin-right: 0rem;
-
-    /* justify-content: center; */
+    margin-bottom: 1rem;
+    margin-right: -2rem;
   }
 }
 .btnCon_2 button {

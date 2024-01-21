@@ -116,7 +116,7 @@
   margin-right: 0.5rem;
 
   @media screen and (max-width: 1070px) {
-    top: 4.5rem;
+    top: 6.5rem;
   }
 }
 .btnCon button {
@@ -134,7 +134,7 @@
 
   right: 0.5rem;
   @media screen and (max-width: 1070px) {
-    top: 1.5rem;
+    top: 3rem;
   }
 }
 .btnCon .joinBtn {
