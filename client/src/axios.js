@@ -66,9 +66,14 @@ const useAxiosInterceptors = () => {
       return response;
     },
     (error) => {
+      const originalRequest = error.config.baseURL;
+      console.log(originalRequest);
       if (error.response) {
-        if (error.response.status === 401) {
-          alert("로그인 정보가 일치하지 않거나 세션이 만료되었습니다!");
+        if (
+          error.response.status === 401 &&
+          originalRequest !== "http://localhost:8080"
+        ) {
+          alert("세션이 만료되어 로그아웃 되었습니다!");
           localStorage.removeItem("Authorization");
           dispatch(logout());
           navigate("/");

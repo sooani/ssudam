@@ -21,7 +21,7 @@ const Comments = (props) => {
   console.log(props.userInfo.nickname);
   console.log(props.loggedInUser.nickname);
   const loggedInUser = useSelector(selectUser);
-  const axios = useAxiosInterceptors;
+  const axios = useAxiosInterceptors();
   console.log(loggedInUser);
   // props의 댓글이 변화할때 마다 comments 업데이트 (상관없나..?)
   useEffect(() => {
@@ -38,7 +38,7 @@ const Comments = (props) => {
   }, [replies]);
   useEffect(() => {
     // 댓글들에 대한 현재 로그인한 사용자의 좋아요 상태를 업데이트
-    if (comments && loggedInUser) {
+    if (comments && comments.length > 0 && loggedInUser) {
       comments.forEach((comment) => {
         axios
           .get(
@@ -251,17 +251,29 @@ const Comments = (props) => {
         .delete(`/v1/replies/${replyId}`)
         .then((response) => {
           alert("대댓글이 삭제되었습니다!");
+          console.log(response);
+          // setReplies((prev) => {
+          //   const newReplies = { ...prev };
 
+          //   comments.forEach((comment) => {
+          //     newReplies[comment.commentId] = {
+          //       ...newReplies[comment.commentId],
+
+          //       reply: "",
+          //     };
+          //   });
+
+          //   return newReplies;
+          // });
           setReplies((prev) => {
             const newReplies = { ...prev };
 
-            comments.forEach((comment) => {
-              newReplies[comment.commentId] = {
-                ...newReplies[comment.commentId],
+            newReplies[commentId] = {
+              ...newReplies[commentId],
 
-                reply: "",
-              };
-            });
+              reply: null,
+              replyId: null,
+            };
 
             return newReplies;
           });
@@ -275,7 +287,7 @@ const Comments = (props) => {
         });
     }
   };
-
+  useEffect(() => {}, [hasReply, replies]);
   return (
     <div className={classes.comments}>
       {/* 정렬된 댓글이 2개이상일 경우만 정렬 기준을 선택할 수 있도록 한다 */}
