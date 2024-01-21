@@ -18,6 +18,7 @@ const Comments = (props) => {
   const [hasReply, setHasReply] = useState({}); // 대댓글 여부 상태
   const [sortOption, setSortOption] = useState("recent"); // 정렬 상태
   const [sortedComments, setSortedComments] = useState([]); // 정렬된 댓글
+  const [editMode, setEditMode] = useState(null);
   console.log(props.userInfo.nickname);
   console.log(props.loggedInUser.nickname);
   const loggedInUser = useSelector(selectUser);
@@ -64,13 +65,13 @@ const Comments = (props) => {
           });
       });
       // 대댓글 창 열림 상태는 댓글의 길이만큼 false 배열로 초기화
-      const initialIsReplyOpened = comments.reduce((acc, comment) => {
-        const hasReplies = comment.replies && comment.replies.length > 0;
+      // const initialIsReplyOpened = comments.reduce((acc, comment) => {
+      //   const hasReplies = comment.replies && comment.replies.length > 0;
 
-        return { ...acc, [comment.commentId]: hasReplies };
-      }, {});
+      //   return { ...acc, [comment.commentId]: hasReplies };
+      // }, {});
 
-      setIsReplyOpened(initialIsReplyOpened);
+      // setIsReplyOpened(initialIsReplyOpened);
 
       // 대댓글들의 상태를 업데이트, commentId가 key 값, 해당 코멘트의 reply가 value 값
       setReplies((prev) => {
@@ -115,24 +116,29 @@ const Comments = (props) => {
       ...prevState,
       [commentId]: !prevState[commentId],
     }));
-
+    console.log(comments);
     // 좋아요 요청 보내기
     axios
       .post(`/v1/likes/comments/${commentId}?memberId=${loggedInUser.memberId}`)
       .then((response) => {
+        console.log(response);
+
         // 좋아요 상태를 업데이트 하여 comments에 저장 (필요 없나..?)
-        const updatedComments = comments.map((comment) => {
-          if (comment.commentId === commentId) {
-            return {
-              ...comment,
-              likeCount: commentLikes[commentId]
-                ? comment.likeCount - 1
-                : comment.likeCount + 1,
-            };
-          }
-          return comment;
-        });
-        setComments(updatedComments);
+        // const updatedComments = comments.map((comment) => {
+        //   if (comment.commentId === commentId) {
+        //     return {
+        //       ...comment,
+        //       likeCount: commentLikes[commentId]
+        //         ? comment.likeCount - 1
+        //         : comment.likeCount + 1,
+        //     };
+        //   }
+        //   return comment;
+        // });
+        // console.log(updatedComments);
+        console.log(hasReply);
+        // setComments(updatedComments);
+        props.getComments();
       })
       .catch((error) => {
         console.error("Error liking comment data: ", error);
@@ -200,23 +206,24 @@ const Comments = (props) => {
           const replyId = replyIdMatch[1];
           console.log("Extracted Reply ID:", replyId);
           axios.get(`/v1/replies/${replyId}`).then((response) => {
-            setReplies((prev) => {
-              const newReplies = { ...prev };
+            // setReplies((prev) => {
+            //   const newReplies = { ...prev };
 
-              newReplies[commentId] = {
-                ...newReplies[commentId],
+            //   newReplies[commentId] = {
+            //     ...newReplies[commentId],
 
-                reply: newReplies[commentId].reply,
-                replyId: replyId,
-              };
+            //     reply: newReplies[commentId].reply,
+            //     replyId: replyId,
+            //   };
 
-              return newReplies;
-            });
-            // 대댓글 보유 상태를 변경
-            setHasReply((prevHasReply) => ({
-              ...prevHasReply,
-              [commentId]: true,
-            }));
+            //   return newReplies;
+            // });
+            // // 대댓글 보유 상태를 변경
+            // setHasReply((prevHasReply) => ({
+            //   ...prevHasReply,
+            //   [commentId]: true,
+            // }));
+            props.getComments();
           });
         } else {
           console.error("Comment ID not found in Location header.");
@@ -237,6 +244,7 @@ const Comments = (props) => {
       .patch(`/v1/replies/${replyId}`, updatedDTO)
       .then((response) => {
         alert("대댓글이 수정되었습니다!");
+        props.getComments();
       })
       .catch((error) => {
         console.error("Error patching reply data: ", error);
@@ -265,27 +273,37 @@ const Comments = (props) => {
 
           //   return newReplies;
           // });
-          setReplies((prev) => {
-            const newReplies = { ...prev };
+          // setReplies((prev) => {
+          //   const newReplies = { ...prev };
 
-            newReplies[commentId] = {
-              ...newReplies[commentId],
+          //   newReplies[commentId] = {
+          //     ...newReplies[commentId],
 
-              reply: null,
-              replyId: null,
-            };
+          //     reply: null,
+          //     replyId: null,
+          //   };
 
-            return newReplies;
-          });
-          setHasReply((prevHasReply) => ({
-            ...prevHasReply,
-            [commentId]: false,
-          }));
+          //   return newReplies;
+          // });
+          // setHasReply((prevHasReply) => ({
+          //   ...prevHasReply,
+          //   [commentId]: false,
+          // }));
+          props.getComments();
         })
         .catch((error) => {
           console.error("Error deleting reply data: ", error);
         });
     }
+  };
+  // 대댓글 수정 모드를 관리하는 핸들러
+  const enterEditMode = (replyId) => {
+    setEditMode(replyId);
+  };
+
+  // 대댓글 수정 모드를 종료하는 핸들러
+  const exitEditMode = () => {
+    setEditMode(null);
   };
   useEffect(() => {}, [hasReply, replies]);
   return (
@@ -316,7 +334,8 @@ const Comments = (props) => {
                   <div className={classes.user}>
                     <div>{comment.nickname}</div>
                     <div>
-                      {new Date(comment.modifiedAt).toLocaleString("ko-KR")}
+                      {new Date(comment.createdAt).toLocaleString("ko-KR")}
+                      {comment.createdAt !== comment.modifiedAt && " (수정됨)"}
                     </div>
                   </div>
                 </div>
@@ -362,10 +381,12 @@ const Comments = (props) => {
                 </div>
               </div>
               <>
-                {/* 현재 로그인한 사용자와 해당 모임장이 같은 사람이고, 대댓글 창이 열리거나 대댓글이 존재하는 경우 렌더링 */}
+                {/* 현재 로그인한 사용자와 해당 모임장이 같은 사람이고, 대댓글 창이 열리고 대댓글이 비존재하는 경우 렌더링 */}
                 {props.userInfo.nickname === props.loggedInUser.nickname &&
-                  (isReplyOpened[comment.commentId] ||
-                    hasReply[comment.commentId]) && (
+                  ((isReplyOpened[comment.commentId] &&
+                    !hasReply[comment.commentId]) ||
+                    (hasReply[comment.commentId] &&
+                      editMode === comment.commentId)) && (
                     <div className={classes.reply}>
                       <div className={classes.info}>
                         <img
@@ -412,11 +433,12 @@ const Comments = (props) => {
                                     comment.commentId,
                                     replies[comment.commentId].replyId
                                   );
+                                  exitEditMode();
                                 }}
                               >
-                                수정
+                                수정 완료
                               </button>
-                              <button
+                              {/* <button
                                 className={classes.deleteBtn}
                                 onClick={() => {
                                   replyDeleteHandler(
@@ -426,44 +448,78 @@ const Comments = (props) => {
                                 }}
                               >
                                 삭제
-                              </button>
+                              </button> */}
                             </div>
                           )}
                         </div>
                       </div>
                     </div>
                   )}
-                {/* 현재 모임장과 로그인한 유저가 다른사람이고 대댓글이 존재하는 경우 대댓글을 보여준다. */}
-                {!(props.userInfo.nickname === props.loggedInUser.nickname) &&
-                  comment.reply && (
-                    <div className={classes.reply}>
-                      <div className={classes.info}>
-                        <img
-                          alt="replyImage"
-                          src={replyImg}
-                          width="30px"
-                          height="30px"
-                        />
-                        <img
-                          alt="ProfileImage"
-                          src={footerLogo}
-                          width="50px"
-                          height="50px"
-                        />
-                        <div className={classes.user}>
-                          <div>{comment.reply.nickname}</div>
-                          <div>
-                            {new Date(comment.reply.createdAt).toLocaleString(
-                              "ko-KR"
-                            )}
-                          </div>
+                {/* 현재 모임장과 로그인한 유저가 다른사람이거나 대댓글이 존재하는 경우 대댓글을(full) 보여준다. */}
+                {((props.userInfo.nickname !== props.loggedInUser.nickname &&
+                  comment.reply) ||
+                  (props.userInfo.nickname === props.loggedInUser.nickname &&
+                    editMode !== comment.commentId &&
+                    comment.reply)) && (
+                  <div className={classes.reply}>
+                    <div className={classes.info}>
+                      <img
+                        alt="replyImage"
+                        src={replyImg}
+                        width="30px"
+                        height="30px"
+                      />
+                      <img
+                        alt="ProfileImage"
+                        src={footerLogo}
+                        width="50px"
+                        height="50px"
+                      />
+                      <div className={classes.user}>
+                        <div>{comment.reply.nickname}</div>
+                        <div>
+                          {new Date(comment.reply.createdAt).toLocaleString(
+                            "ko-KR"
+                          )}
+                          {comment.reply.createdAt !==
+                            comment.reply.modifiedAt && " (수정됨)"}
                         </div>
                       </div>
-                      <div className={classes.commcontent}>
-                        {comment.reply.reply}
-                      </div>
                     </div>
-                  )}
+
+                    <div className={classes.commcontent}>
+                      <div className={classes.reply}>{comment.reply.reply}</div>
+                      {props.userInfo.nickname ===
+                        props.loggedInUser.nickname && (
+                        <div className={classes.btnCon_2}>
+                          <button
+                            className={classes.joinBtn}
+                            onClick={() => {
+                              // replyEditHandler(
+                              //   comment.commentId,
+                              //   replies[comment.commentId].replyId
+                              // );
+                              enterEditMode(comment.commentId);
+                            }}
+                          >
+                            수정
+                          </button>
+                          <button
+                            className={classes.deleteBtn}
+                            onClick={() => {
+                              replyDeleteHandler(
+                                comment.commentId,
+                                replies[comment.commentId].replyId
+                              );
+                            }}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </>
             </div>
           );
