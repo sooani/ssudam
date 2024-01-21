@@ -134,7 +134,15 @@ const SignUpModal = ({ isOpen, onClose }) => {
       .catch((error) => {
         // 회원가입 실패 처리 (기존 에러 처리와 유사)
         console.error("회원가입 오류:", error.message);
-        setError("회원가입 중 오류가 발생했습니다.");
+        
+        // 이메일 또는 닉네임 중복 검증
+        if (error.response && error.response.status === 409) {
+          setEmailError(true);
+          setNicknameError(true);
+          setError("이메일 또는 닉네임이 이미 사용 중입니다.")
+        } else {
+          setError("회원가입 중 오류가 발생했습니다.");
+        }
       });
   };
 
