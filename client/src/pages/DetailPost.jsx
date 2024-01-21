@@ -607,7 +607,7 @@ const DetailPost = () => {
                       </div>
                     </h4>
                     <h4>
-                      모집 마감일
+                      모집 마감
                       <div className={classes.emp}>
                         {new Date(meetingInfo.closingDate).toLocaleString(
                           "ko-KR",

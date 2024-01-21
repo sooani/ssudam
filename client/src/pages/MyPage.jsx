@@ -87,12 +87,18 @@ const MyPage = () => {
                 height="50px"
               />
             </div>
-            <Link
+            {/* <Link
               to={`/edit-profile/${memberId}`}
               className={classes.Btn_EditProfile}
             >
               회원정보수정
-            </Link>
+            </Link> */}
+            <button 
+            onClick={() => navigate(`/edit-profile/${memberId}`)} 
+            className={classes.Btn_EditProfile}
+            >
+  회원정보수정
+</button>
           </div>
           <div className={classes.MyData}>
             <div className={classes.NicknameContainer}>

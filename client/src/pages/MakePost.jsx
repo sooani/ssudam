@@ -122,7 +122,8 @@ const MakePost = () => {
       })
       .catch((error) => {
         console.error("Error posting meeting data: ", error);
-        alert("오류가 발생했습니다!");
+        alert(error.response.data.message);
+        // alert("오류가 발생했습니다!");
       });
   };
   // const handleInputChange = (e) => {
@@ -193,7 +194,7 @@ const MakePost = () => {
                 />
               </div>
               <div className={classes.field}>
-                <h4>모집 마감일</h4>
+                <h4>모집 마감</h4>
                 <input
                   type="datetime-local"
                   min={formattedTomorrow}
@@ -250,7 +251,7 @@ const MakePost = () => {
           </div>
         </div>
       </form>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
