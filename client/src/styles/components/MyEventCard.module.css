@@ -88,8 +88,9 @@
     height:4vh;
     margin:0.5rem;
   }
+
   /* 모집중 모집완료 */
-  .Status {
+  .OpenStatus{
     display: flex;
     font-size: 0.9rem; 
     border: 1px solid #B4D4FF;
@@ -105,6 +106,21 @@
     margin:0;
     padding: 0.3px;
   }
+  .ClosedStatus{    
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #4f5255;
+    border-radius: 20px;
+    background-color: #4f5255;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
+    /* width: 3rem; */
+    height:3vh;
+    margin:0;
+    padding: 0.3px;}
   
   /* .Img {
     width: 2vw; 
