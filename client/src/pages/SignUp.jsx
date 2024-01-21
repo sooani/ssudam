@@ -84,11 +84,11 @@ const SignUp = () => {
 
     // 비밀번호 요구사항 검증
     const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
     if (!passwordRegex.test(password)) {
       setPasswordError(true);
       setError(
-        "비밀번호는 특수문자, 대문자, 소문자, 숫자를 혼합하여 8자 이상 20자 이하로 입력하세요."
+        "비밀번호는 영문, 특수문자, 숫자를 혼합하여 8~20자로 입력하세요."
       );
       return;
     } else {
@@ -135,7 +135,16 @@ const SignUp = () => {
       .catch((error) => {
         // 회원가입 실패 처리 (기존 에러 처리와 유사)
         console.error("회원가입 오류:", error.message);
-        setError("회원가입 중 오류가 발생했습니다.");
+        
+        // 이메일 또는 닉네임 중복 검증
+        if (error.response && error.response.status === 409) {
+          setEmailError(true);
+          setNicknameError(true);
+          setError("이메일 또는 닉네임이 이미 사용 중입니다.")
+        } else {
+          setError("회원가입 중 오류가 발생했습니다.");
+        }
+        
       });
   };
 
@@ -215,7 +224,7 @@ const SignUp = () => {
           </div>
         </form>
         <div className={classes.caption}>
-          이미 가입하셨나요? <Link to="/login">로그인</Link>
+          이미 가입하셨나요? <span className={classes.loginLink} onClick={() => navigate("/login")}>로그인</span>
         </div>
       </section>
     </div>

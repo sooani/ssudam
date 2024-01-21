@@ -160,7 +160,7 @@ const LogIn = () => {
           </div>
         </form>
         <div className={classes.caption}>
-          계정이 없으신가요? <Link to="/signup">회원가입</Link>
+          계정이 없으신가요? <span className={classes.signupLink} onClick={() => navigate("/signup")}>회원가입</span>
         </div>
       </section>
     </div>
