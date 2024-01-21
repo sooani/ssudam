@@ -1,0 +1,80 @@
+/* MyBookmark.module.css */
+
+
+.EventCardContainer {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* border: 2px solid black; */
+}
+.EventCardMain{
+    display: flex;
+    flex-direction: row;
+    /* border: 2px solid red; */
+    /* border: 2px solid black; */
+    border-radius: 5px;
+}
+.EventCardMain > div {
+    margin-right: 2rem; 
+    border: 2px solid rgb(186, 186, 186);
+    border-radius: 20px;
+    height: 30vh;
+    width: 20vw;
+    padding: 20px 25px;
+    margin: 0px 12px;
+    overflow: hidden;
+  }
+  
+  /* Style for the last child to prevent extra margin */
+  .EventCardMain > div:last-child {
+    margin-right: 0;
+  }
+  
+  .EventTitleBox {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    margin-bottom: 1rem; 
+    margin: 1rem;
+  }
+  
+  .Title {
+    font-size: 1.5rem; 
+    font-weight: bold; 
+  }
+  
+  .Statuscontainer{
+    display: flex;
+    /* border: 1px solid black; */
+    justify-content: right;
+    height:4vh;
+    margin:0.5rem;
+  }
+  /* 모집중 모집완료 */
+  .Status {
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #86B6F6;
+    border-radius: 10px;
+    background-color: #86B6F6;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
+    /* width: 3rem; */
+    height:3vh;
+    margin:0;
+  }
+  
+  /* .Img {
+    width: 2vw; 
+    height: 2vh; 
+    margin-bottom: 5px; 
+  } */
+  
+  .Date {
+    font-size: 1rem; 
+    margin-bottom: 5px; 
+  }
+  

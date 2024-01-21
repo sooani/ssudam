@@ -1,15 +1,9 @@
 .listCardContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, auto);
-  gap: 40px;
+  gap: 30px;
   box-sizing: border-box;
   width: 100%;
-}
-
-.ListCard {
-  width: 100%;
-  box-sizing: border-box;
 }
 
 @media (min-width: 1200px) {

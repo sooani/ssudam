@@ -3,10 +3,22 @@
 .MyCommentContainer{
     width: 40vw;
     height: 120vh;
-    border: 1px solid seagreen;
+    /* border: 1px solid seagreen; */
 }
 
 .MyCommentMSG{
     text-align: center;
     border: 1px solid rgb(93, 0, 255);
+}
+
+/* .CommentKey{ */
+    /* border: 1px solid blue; */
+    /* background-color: rgb(238, 245, 255); */
+/* } */
+.Comment {
+    margin: 1rem;
+    border: 1px solid rgb(238, 245, 255);
+    background-color: rgb(238, 245, 255);
+    padding: 1rem;
+    border-radius: 3rem;
 }

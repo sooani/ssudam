@@ -1,7 +1,6 @@
 import React from 'react';
 import ListCard from './ListCard';
 import classes from '../../styles/components/CategoryBox.module.css';
-// import PaginationBar from './PaginationBar';
 
 const CategoryBox = ({ categoryData }) => {
   return (
@@ -13,7 +12,6 @@ const CategoryBox = ({ categoryData }) => {
           party={party}
         />
       ))}
-      {/* <PaginationBar pageInfo={pageInfo} onPageChange={onPageChange} /> */}
     </div>
   );
 };

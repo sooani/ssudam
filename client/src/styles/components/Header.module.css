@@ -3,14 +3,17 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 5vh;
-  background-color: #f0f0f0;
+  height: 10vh;
+  /* background-color: #f0f0f0; */
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); */
+  border-bottom: 1px solid #ccc; /*박스아래에 회색선(내일보고결정해요!)*/
   z-index: 10;
 }
+
 @font-face {
   font-family: 'Cafe';
   font-style: normal;
@@ -21,6 +24,7 @@
 .headerLogo {
   font-family: 'Cafe';
   cursor: pointer;
+  color:rgb(134, 182, 246);
 }
 .header h1 {
   padding-left: 10%;
@@ -39,6 +43,7 @@
   display: flex;
   gap: 30px;
   align-items: center;
+  background-color: white;
 }
 
 button {
@@ -51,16 +56,37 @@ button {
 
 .postRegister {
   font-weight: 600;
-  /* font-size: 1rem; */
   padding: 0;
 }
 .login {
   font-weight: 600;
-  /* font-size: 1rem; */
   padding: 0;
 }
 .join {
   font-weight: 600;
   /* font-size: 1rem; */
   padding: 0;
+  background-color: white;
 }
+
+/* 로그인 했을때 헤더에 보이는 버튼(관리자, 게시판, 새글쓰기, 로그아웃, 마이페이지아이콘)*/
+
+.postRegister{  
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 0;
+  background-color: white;
+}
+
+.logout {
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 0;
+  background-color: white;
+}
+
+.mypage{
+  background-color: white;
+  font-size: 1.2rem;
+}
+

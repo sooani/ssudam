@@ -1,5 +1,5 @@
 import MainHeader from '../components/Layout/MainHeader';
-// import Footer from '../components/Layout/Footer';
+import Footer from '../components/Layout/Footer';
 import classes from '../styles/pages/MainPage.module.css';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
@@ -61,7 +61,7 @@ const MainPage = () => {
       </div>
 
       {/* 푸터 */}
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };
