@@ -25,6 +25,7 @@
 
 .sidebar {
   width: 40%;
+  height: 100%;
   /* flex-grow: 1; */
   /* padding: 10px 0; */
   background-color: #eef5ff;
