@@ -1,5 +1,5 @@
 import classes from "../../styles/components/Comments.module.css";
-import footerLogo from "../../images/footerLogo.png";
+import footerLogo from "../../images/logo.png";
 import ReactPaginate from "react-paginate";
 import { FaThumbsUp } from "react-icons/fa";
 import { useState, useEffect } from "react";

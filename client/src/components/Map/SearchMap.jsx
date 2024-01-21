@@ -90,75 +90,84 @@ const SearchMap = (props) => {
   };
 
   return (
-    <div className={classes.container}>
-      <Map
-        center={{
-          lat: props.lat ? props.lat : 37.566826,
-          lng: props.lng ? props.lng : 126.9786567,
-        }}
-        style={{
-          width: "90%",
-          height: "37vh",
-        }}
-        level={level}
-        onCreate={setMap}
-        onClick={(_t, mouseEvent) => {
-          handleMarkerClick({
-            lat: mouseEvent.latLng.getLat(),
-            lng: mouseEvent.latLng.getLng(),
-          });
-        }}
-      >
-        {markers.map((marker) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => {
-              handleMarkerClick(marker.position);
-              setInfo(marker);
-              setSelectedMarker(marker);
-            }}
-          >
-            {/* 선택된 마커이면 마커의 정보를 보여준다 */}
-            {selectedMarker && selectedMarker.content === marker.content && (
-              <div style={{ padding: "5px", color: "#000" }}>
-                {marker.content} <br />
-                <a
-                  href={`https://map.kakao.com/link/map/${marker.content},${marker.position.lat},${marker.position.lng} `}
-                  style={{ color: "#86b6f6" }}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  큰지도보기
-                </a>
-              </div>
-            )}
-          </MapMarker>
-        ))}
-        {/* 모임 글 수정의 경우 기존의 위치를 처음에 마커로 찍어준다 */}
-        {props.lat && props.lng && (
-          <MapMarker position={{ lat: props.lat, lng: props.lng }} />
-        )}
-        {/* 검색 목록이 나오는 리스트 */}
-        <div className={classes.sidebar}>
-          {markers.map((marker, index) => (
-            <div
-              key={index}
+    <div className={`${classes.container} ${classes.rightSidebar}`}>
+      <div className={classes.mapContainer}>
+        <Map
+          center={{
+            lat: props.lat ? props.lat : 37.566826,
+            lng: props.lng ? props.lng : 126.9786567,
+          }}
+          style={{
+            width: "90%",
+            height: "37vh",
+          }}
+          level={level}
+          onCreate={setMap}
+          onClick={(_t, mouseEvent) => {
+            handleMarkerClick({
+              lat: mouseEvent.latLng.getLat(),
+              lng: mouseEvent.latLng.getLng(),
+            });
+          }}
+        >
+          {markers.map((marker) => (
+            <MapMarker
+              key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+              position={marker.position}
               onClick={() => {
-                handleSidebarMarkerClick(marker);
-              }}
-              style={{
-                color:
-                  selectedMarker && selectedMarker.content === marker.content
-                    ? "black"
-                    : "gray",
+                handleMarkerClick(marker.position);
+                setInfo(marker);
+                setSelectedMarker(marker);
               }}
             >
-              {marker.content}
-            </div>
+              {/* 선택된 마커이면 마커의 정보를 보여준다 */}
+              {selectedMarker && selectedMarker.content === marker.content && (
+                <div style={{ padding: "5px", color: "#000" }}>
+                  {marker.content} <br />
+                  <a
+                    href={`https://map.kakao.com/link/map/${marker.content},${marker.position.lat},${marker.position.lng} `}
+                    style={{ color: "#86b6f6" }}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    큰지도보기
+                  </a>
+                </div>
+              )}
+            </MapMarker>
           ))}
-        </div>
-      </Map>
+          {/* 모임 글 수정의 경우 기존의 위치를 처음에 마커로 찍어준다 */}
+          {props.lat && props.lng && (
+            <MapMarker position={{ lat: props.lat, lng: props.lng }} />
+          )}
+          {/* 검색 목록이 나오는 리스트 */}
+        </Map>
+      </div>{" "}
+      <div className={classes.sidebar}>
+        {markers.length === 0 && (
+          <p>
+            원하는 위치를
+            <br /> 검색해보세요!🏃🏻
+          </p>
+        )}
+        {markers.map((marker, index) => (
+          <div
+            key={index}
+            onClick={() => {
+              handleSidebarMarkerClick(marker);
+            }}
+            style={{
+              color:
+                selectedMarker && selectedMarker.content === marker.content
+                  ? "black"
+                  : "gray",
+            }}
+            className={classes.sidebarItem}
+          >
+            {marker.content}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
