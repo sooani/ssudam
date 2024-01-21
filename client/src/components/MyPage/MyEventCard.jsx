@@ -20,26 +20,40 @@ function MyEventCard() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const user = useSelector(selectUser);
+
   useEffect(() => {
     const fetchEvents = () => {
-      instance
-        .get("/v1/parties", {
-          params: {
-            partyMemberId,
-            page,
-            size: eventsPerPage,
-          },
-        })
-        .then((response) => {
-          setEvents(response.data.data);
-        })
-        .catch((error) => {
-          console.error("나의 모임 받아오기 오류:", error);
-        });
+      // user 객체에서 user.memberId가 있다고 가정합니다
+      const memberId = user ? user.memberId : null;
+
+      if (memberId !== null) {
+        instance
+          .get("/v1/parties", {
+            params: {
+              partyMemberId: memberId,
+              page,
+              size: eventsPerPage,
+            },
+          })
+          .then((response) => {
+            setEvents(response.data.data);
+          })
+          .catch((error) => {
+            console.error("나의 모임 받아오기 오류:", error);
+          });
+      }
     };
 
     fetchEvents();
-  }, [page, partyMemberId]);
+  }, [page, user]); 
+
+    //날짜 형식 표시
+    const extractDate = (fullDate) => {
+      const dateObject = new Date(fullDate);
+      // 날짜를 'YYYY-MM-DD' 형식으로 변환
+      const formattedDate = dateObject.toISOString().split('T')[0];
+      return formattedDate;
+    };
 
   const EventPostClick = (event) => {
     console.log("클릭된 이벤트:", event);
@@ -71,7 +85,10 @@ function MyEventCard() {
                 <div className={classes.EventTitleBox}>
                   <div className={classes.Title}>{event.title}</div>
                   {/* <img className={classes.Img} src={ssudamhand} alt="Ssudamhand" /> */}
-                  <p className={classes.Date}> {event.meetingDate}</p>
+                  <div className={classes.Datecontainer}>
+                    <p className={classes.meetingDate}> 모임날짜 | {extractDate(event.meetingDate)}</p>
+                    <p className={classes.closingDate}> 모임마감 | {extractDate(event.closingDate)}</p>
+                  </div>
                   {/* <button>바로가기</button> */}
                 </div>
               </div>

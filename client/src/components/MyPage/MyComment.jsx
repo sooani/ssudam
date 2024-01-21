@@ -41,7 +41,8 @@ function MyComment() {
   return (
     <div className={classes.MyCommentContainer}>
       {comments.length === 0 ? (
-        <p className={classes.MyCommentMSG}>아직 작성한 댓글이 없습니다.</p>
+        <p className={classes.MyCommentMSG}>아직 작성한 댓글이 없습니다! 😉</p>
+
       ) : (
         comments.slice(offset, offset + limit).map((comment, index) => (
           <article key={index} className={classes.CommentKey}>

@@ -40,7 +40,7 @@ function MyPosts() {
   return (
     <div className={classes.MyPostsContainer}>
       {titles.length === 0 ? (
-        <p className={classes.MyPostsMSG}>아직 작성한 댓글이 없습니다.</p>
+        <p className={classes.MyPostsMSG}>아직 작성한 글이 없습니다!😊</p>
       ) : (
         titles.slice(offset, offset + limit).map((title, index) => (
           <article key={index}>

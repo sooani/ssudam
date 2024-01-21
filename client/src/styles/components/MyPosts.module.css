@@ -3,12 +3,20 @@
 .MyPostsContainer{
     width: 40vw;
     height: 120vh;
-    border: 1px solid seagreen;
+    /* border: 1px solid seagreen; */
+    margin-top : 1rem;
 }
 
 .MyPostsMSG{
+    /* text-align: center;
+    border: 1px solid rgb(93, 0, 255); */
+    width: 20vw;
     text-align: center;
-    border: 1px solid rgb(93, 0, 255);
+    /* border: 1px solid rgb(93, 0, 255); */
+    padding: 3rem;
+    background-color: rgb(238, 245, 255);
+    border-radius: 10px;
+    margin : 3rem;
 }
 
 .Partytitle {
