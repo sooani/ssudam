@@ -1,24 +1,37 @@
-.footer {
-  height: 10vh;
+@font-face {
+  font-family: "Cafe";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../../../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
+.container {
+  /* height: 10vh; */
   width: 100%;
-  background-color: rgb(101, 147, 255);
-  flex-direction: column;
-  align-items: center;
+  background-color: #eef5ff;
   display: flex;
+  align-items: center;
   justify-content: center;
+  padding: 0.5rem 0;
   bottom: 0;
 }
 
 .logoContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
 }
-
-.logoContainer > img {
-  width: 2.5rem;
+.logoContainer p {
+  font-family: "Cafe";
+  font-size: x-large;
+  margin: 0.5rem 0;
 }
-p {
-  padding-top: 10px;
+/* .logoContainer > img {
+  width: 2.5rem;
+} */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
