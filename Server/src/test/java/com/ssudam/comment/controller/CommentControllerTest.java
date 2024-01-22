@@ -153,6 +153,7 @@ public class CommentControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
                                         fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모집글 식별자"),
                                         fieldWithPath("data.partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                         fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                         fieldWithPath("data.likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
@@ -205,6 +206,7 @@ public class CommentControllerTest {
                                 List.of(
                                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터").optional(),
                                         fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                        fieldWithPath("data.partyId").type(JsonFieldType.NUMBER).description("모집글 식별자"),
                                         fieldWithPath("data.partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                         fieldWithPath("data.reply").type(JsonFieldType.OBJECT).description("대댓글"),
                                         fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
@@ -262,6 +264,7 @@ public class CommentControllerTest {
                                                 List.of(
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모집글 식별자"),
                                                         fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
@@ -332,6 +335,7 @@ public class CommentControllerTest {
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
                                                         fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모집글 식별자"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
@@ -401,6 +405,7 @@ public class CommentControllerTest {
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
                                                         fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모집글 식별자"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),
@@ -470,6 +475,7 @@ public class CommentControllerTest {
                                                         fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터").optional(),
                                                         fieldWithPath("data[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
                                                         fieldWithPath("data[].partyTitle").type(JsonFieldType.STRING).description("모집글 제목"),
+                                                        fieldWithPath("data[].partyId").type(JsonFieldType.NUMBER).description("모집글 식별자"),
                                                         fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
                                                         fieldWithPath("data[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                                         fieldWithPath("data[].comment").type(JsonFieldType.STRING).description("댓글 내용"),

@@ -35,6 +35,7 @@ public class CommentStub {
     public static CommentDto.Response getSingleResponseBody() {
         return CommentDto.Response.builder()
                 .commentId(1L)
+                .partyId(1L)
                 .partyTitle("모임")
                 .nickname("쓰담")
                 .likeCount(0)
@@ -50,6 +51,7 @@ public class CommentStub {
         CommentDto.Response responseDto1
                 = CommentDto.Response.builder()
                 .commentId(1L)
+                .partyId(1L)
                 .partyTitle("모임1")
                 .nickname("쓰담1")
                 .likeCount(1)
@@ -61,6 +63,7 @@ public class CommentStub {
         CommentDto.Response responseDto2
                 = CommentDto.Response.builder()
                 .commentId(2L)
+                .partyId(2L)
                 .partyTitle("모임2")
                 .nickname("쓰담2")
                 .likeCount(2)
@@ -72,6 +75,7 @@ public class CommentStub {
         CommentDto.Response responseDto3
                 = CommentDto.Response.builder()
                 .commentId(3L)
+                .partyId(3L)
                 .partyTitle("모임3")
                 .nickname("쓰담3")
                 .likeCount(3)
@@ -86,6 +90,7 @@ public class CommentStub {
         CommentDto.Response responseDto1
                 = CommentDto.Response.builder()
                 .commentId(1L)
+                .partyId(1L)
                 .partyTitle("모임1")
                 .nickname("쓰담1")
                 .likeCount(1)
@@ -97,6 +102,7 @@ public class CommentStub {
         CommentDto.Response responseDto2
                 = CommentDto.Response.builder()
                 .commentId(2L)
+                .partyId(1L)
                 .partyTitle("모임1")
                 .nickname("쓰담2")
                 .likeCount(2)
@@ -111,6 +117,7 @@ public class CommentStub {
         CommentDto.Response responseDto1
                 = CommentDto.Response.builder()
                 .commentId(1L)
+                .partyId(1L)
                 .partyTitle("모임1")
                 .nickname("쓰담1")
                 .likeCount(1)
@@ -123,6 +130,7 @@ public class CommentStub {
                 = CommentDto.Response.builder()
                 .commentId(2L)
                 .partyTitle("모임1")
+                .partyId(1L)
                 .nickname("쓰담2")
                 .likeCount(2)
                 .reply(getReplyDtoResponse())
@@ -147,6 +155,7 @@ public class CommentStub {
         CommentDto.Response responseDto3
                 = CommentDto.Response.builder()
                 .commentId(3L)
+                .partyId(2L)
                 .partyTitle("모임2")
                 .nickname("쓰담1")
                 .likeCount(3)
