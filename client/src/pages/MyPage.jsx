@@ -59,74 +59,74 @@ const MyPage = () => {
   // }
 
   return (
-    <div className={classes.Mypageroom}>
-      <Header />
-      <div className={classes.MypageContainer}>
-        <div className={classes.MyInfo}>
-          <div className={classes.Myprofile}>
-            <h1 className={classes.ProfileHeader}>내 프로필</h1>
-            <div className={classes.ProfileImageContainer}>
-              <img
-                alt="ProfileImage"
-                src={S_LOGO}
-                width="50px"
-                height="50px"
+      <div className={classes.Mypageroom}>
+        <Header />
+        <div className={classes.MypageContainer}>
+          <div className={classes.MyInfo}>
+            <div className={classes.Myprofile}>
+              <h1 className={classes.ProfileHeader}>내 프로필</h1>
+              <div className={classes.ProfileImageContainer}>
+                <img
+                  alt="ProfileImage"
+                  src={S_LOGO}
+                  width="50px"
+                  height="50px"
+                />
+              </div>
+              <button 
+              onClick={() => navigate(`/edit-profile/${memberId}`)} 
+              className={classes.Btn_EditProfile}
+              >회원정보수정</button>
+            </div>
+            <div className={classes.MyData}>
+              <div className={classes.NicknameContainer}>
+                <p className={classes.Nickname}>닉네임</p>
+                <div className={classes.UserNickname}>
+                  {userData.data && userData.data.nickname}
+                </div>
+              </div>
+              <div className={classes.EmailContainer}>
+                <p className={classes.Email}>이메일</p>
+                <div className={classes.UserEmail}>
+                  {userData.data && userData.data.email}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={classes.MyEvent}>
+            <h1 className={classes.MyEventHeader}>나의 모임</h1>
+            <MyEventCard memberId={userData.id} />
+          </div>
+          <div className={classes.MyBookmark}>
+            <h1 className={classes.MyBookmarkHeader}>나의 북마크</h1>
+            <MyBookmark memberId={userData.id} />
+          </div>
+          <div className={classes.MyContents}>
+            <div className={classes.MyPostContainer}>
+              <h1 className={classes.MyPostHeader}>나의 글</h1>
+              <MyPosts
+                className={classes.MyPostContents}
+                memberId={userData.id}
               />
             </div>
-            <button 
-            onClick={() => navigate(`/edit-profile/${memberId}`)} 
-            className={classes.Btn_EditProfile}
-            >회원정보수정</button>
-          </div>
-          <div className={classes.MyData}>
-            <div className={classes.NicknameContainer}>
-              <p className={classes.Nickname}>닉네임</p>
-              <div className={classes.UserNickname}>
-                {userData.data && userData.data.nickname}
-              </div>
-            </div>
-            <div className={classes.EmailContainer}>
-              <p className={classes.Email}>이메일</p>
-              <div className={classes.UserEmail}>
-                {userData.data && userData.data.email}
-              </div>
+            <div className={classes.MyCommentContainer}>
+              <h1 className={classes.MyCommentHeader}>나의 댓글</h1>
+              <MyComment
+                className={classes.MyCommentContents}
+                memberId={userData.id}
+              />
             </div>
           </div>
-        </div>
-        <div className={classes.MyEvent}>
-          <h1 className={classes.MyEventHeader}>나의 모임</h1>
-          <MyEventCard memberId={userData.id} />
-        </div>
-        <div className={classes.MyBookmark}>
-          <h1 className={classes.MyBookmarkHeader}>나의 북마크</h1>
-          <MyBookmark memberId={userData.id} />
-        </div>
-        <div className={classes.MyContents}>
-          <div className={classes.MyPostContainer}>
-            <h1 className={classes.MyPostHeader}>나의 글</h1>
-            <MyPosts
-              className={classes.MyPostContents}
-              memberId={userData.id}
-            />
-          </div>
-          <div className={classes.MyCommentContainer}>
-            <h1 className={classes.MyCommentHeader}>나의 댓글</h1>
-            <MyComment
-              className={classes.MyCommentContents}
-              memberId={userData.id}
+          {/* <LeaveModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} setLeaveSuccess={setLeaveSuccess}/> */}
+          <div className={classes.ModalContainer}>
+            <LeaveModal
+              modalIsOpen={modalIsOpen}
+              setModalIsOpen={setModalIsOpen}
             />
           </div>
         </div>
-        {/* <LeaveModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} setLeaveSuccess={setLeaveSuccess}/> */}
-        <div className={classes.ModalContainer}>
-          <LeaveModal
-            modalIsOpen={modalIsOpen}
-            setModalIsOpen={setModalIsOpen}
-          />
-        </div>
+        <Footer className={classes.MypageFooter}/>
       </div>
-      <Footer />
-    </div>
   );
 };
 
