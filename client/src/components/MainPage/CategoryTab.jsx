@@ -2,7 +2,7 @@ import classes from '../../styles/components/CategoryTab.module.css';
 import { useAxiosInterceptors } from '../../axios';
 import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
-// import InfiniteScroll from '../MainPage/InfiniteScroll';
+import InfiniteScroll from '../MainPage/InfiniteScroll';
 // 모집중 / 모집완료 탭을 구분 하는 컴포넌트
 const CategoryTab = () => {
   const instance = useAxiosInterceptors();
@@ -11,14 +11,14 @@ const CategoryTab = () => {
   const [completedData, setCompletedData] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    size: 10000,
+    size: 50,
     totalElements: 'totalElements',
     totalPages: 'totalPages',
   });
   const fetchParties = async (page, status) => {
     try {
       const response = await instance.get(
-        `/v1/parties?page=${page}&size=10000&status=${status}`
+        `/v1/parties?page=${page}&size=50&status=${status}`
       );
       const { data } = response;
       const recruitingParties = data.data.filter(
@@ -27,6 +27,48 @@ const CategoryTab = () => {
       const completedParties = data.data.filter(
         (party) => party.partyStatus === 'PARTY_CLOSED'
       );
+      //     if (status === 'recruiting' && activeTab === 'recruiting') {
+      //       // 중복 데이터 필터링
+      //       setRecruitingData((prevData) => [
+      //         ...prevData,
+      //         ...recruitingParties.filter(
+      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
+      //         ),
+      //       ]);
+      //     } else if (status === 'completed' && activeTab === 'completed') {
+      //       // 중복 데이터 필터링
+      //       setCompletedData((prevData) => [
+      //         ...prevData,
+      //         ...completedParties.filter(
+      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
+      //         ),
+      //       ]);
+      //     }
+      //     if (status === 'completed' && activeTab === 'recruiting') {
+      //       // 중복 데이터 필터링
+      //       setRecruitingData((prevData) => [
+      //         ...prevData,
+      //         ...recruitingParties.filter(
+      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
+      //         ),
+      //       ]);
+      //       setCompletedData((prevData) => [
+      //         ...prevData,
+      //         ...completedParties.filter(
+      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
+      //         ),
+      //       ]);
+      //     }
+
+      //     // 페이지 정보 업데이트
+      //     setPageInfo((prevPageInfo) => ({
+      //       ...prevPageInfo,
+      //       page: page + 1,
+      //     }));
+      //   } catch (error) {
+      //     console.error('데이터를 불러오는 중 에러 발생:', error);
+      //   }
+      // };
 
       if (status === 'recruiting' && activeTab === 'recruiting') {
         setRecruitingData((prevData) => [
@@ -92,13 +134,13 @@ const CategoryTab = () => {
       {activeTab === 'recruiting' && (
         <>
           <CategoryBox categoryData={recruitingData} />
-          {/* <InfiniteScroll onScrollEnd={handlePageChange} /> */}
+          <InfiniteScroll onScrollEnd={handlePageChange} />
         </>
       )}
       {activeTab === 'completed' && (
         <>
           <CategoryBox categoryData={completedData} />
-          {/* <InfiniteScroll onScrollEnd={handlePageChange} /> */}
+          <InfiniteScroll onScrollEnd={handlePageChange} />
         </>
       )}
     </div>
