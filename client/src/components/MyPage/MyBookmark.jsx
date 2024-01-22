@@ -20,6 +20,7 @@ function MyBookmark() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const user = useSelector(selectUser);
+
   useEffect(() => {
     const fetchEvents = () => {
       instance
@@ -42,6 +43,19 @@ function MyBookmark() {
     fetchEvents();
   }, [page, memberId]);
 
+
+  // console.log("북마크 현재페이지:",page);
+  // console.log("북마크된 글 수:",events.length);
+  // console.log("페이지당 이벤트",eventsPerPage);
+
+    //날짜 형식 표시
+    const extractDate = (fullDate) => {
+      const dateObject = new Date(fullDate);
+      // 날짜를 'YYYY-MM-DD' 형식으로 변환
+      const formattedDate = dateObject.toISOString().split('T')[0];
+      return formattedDate;
+    };
+
   const EventPostClick = (event) => {
     console.log("클릭된 나의 북마크:", event);
 
@@ -62,18 +76,17 @@ function MyBookmark() {
             {events.map((event) => (
               <div key={event.partyId} onClick={() => EventPostClick(event)}>
                 <div className={classes.Statuscontainer}>
-                  <p className={classes.Status}>
-                    {" "}
-                    {event.partyStatus === "PARTY_OPENED"
-                      ? " 모집중"
-                      : " 모집완료"}
+                <p className={`${classes.Status} ${event.partyStatus === "PARTY_OPENED" ? classes.OpenStatus : classes.ClosedStatus}`}>
+                    {event.partyStatus === "PARTY_OPENED" ? " 모집중" : " 모집완료"}
                   </p>
                 </div>
                 <div className={classes.EventTitleBox}>
                   <div className={classes.Title}>{event.title}</div>
                   {/* <img className={classes.Img} src={ssudamhand} alt="Ssudamhand" /> */}
-                  <p className={classes.Date}> {event.meetingDate}</p>
-                  {/* <button>바로가기</button> */}
+                  <div className={classes.Datecontainer}> 
+                    <p className={classes.meetingDate}> 모임날짜 | {extractDate(event.meetingDate)}</p>
+                    <p className={classes.closingDate}> 모임마감 | {extractDate(event.closingDate)}</p>
+                  </div>
                 </div>
               </div>
             ))}

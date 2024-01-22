@@ -1,10 +1,11 @@
+import React, { useState, useEffect, useRef } from 'react';
 import MainHeader from '../components/Layout/MainHeader';
 import Footer from '../components/Layout/Footer';
-import classes from '../styles/pages/MainPage.module.css';
 import ListSlider from '../components/MainPage/ListSlider';
 import CategoryTab from '../components/MainPage/CategoryTab';
+import ScrollToTopButton from '../components/MainPage/ScrollToTopButton';
+import classes from '../styles/pages/MainPage.module.css';
 import { useAxiosInterceptors } from '../axios';
-import React, { useState, useEffect } from 'react';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -15,10 +16,13 @@ import React, { useState, useEffect } from 'react';
 */
 
 const MainPage = () => {
+  const instance = useAxiosInterceptors();
+  const scrollRef = useRef(null);
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
   const [page, setPage] = useState(1);
-  const instance = useAxiosInterceptors();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [targetScroll, setTargetScroll] = useState(0);
 
   // 메인 모집중 게시글
   useEffect(() => {
@@ -45,6 +49,34 @@ const MainPage = () => {
       });
   }, []);
 
+  // 스크롤 위치 변경 처리
+  const handleScroll = () => {
+    setScrollPosition(window.scrollY);
+  };
+
+  // 맨 위로 스크롤하는 함수
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  // 특정 위치로 스크롤하는 함수
+  const scrollToTarget = () => {
+    window.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <main className={classes.pageWrapper}>
       {/* 헤더 */}
@@ -59,7 +91,23 @@ const MainPage = () => {
       <div className={classes.mainContainer}>
         <CategoryTab data={data} />
       </div>
+      {/* 맨 위로 스크롤 버튼 */}
+      <ScrollToTopButton onClick={scrollToTop} />
 
+      {/* 특정 위치로 스크롤 버튼과 입력 폼 */}
+      <div className={classes.scrollToTargetSection}>
+        <input
+          type="number"
+          value={targetScroll}
+          onChange={(e) => setTargetScroll(e.target.value)}
+        />
+        <button onClick={scrollToTarget}>해당 위치로 이동</button>
+      </div>
+
+      {/* 현재 스크롤 위치 표시 */}
+      <div className={classes.scrollPositionInfo}>
+        현재 스크롤 위치: {scrollPosition}
+      </div>
       {/* 푸터 */}
       <Footer />
     </main>

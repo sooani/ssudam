@@ -139,7 +139,7 @@
     display: flex; 
     /* align-items: center;  */
     width: 80vw;
-    height: 60vh;
+    height: auto;
     flex-direction: column;
 }
 
@@ -152,7 +152,13 @@
     flex-direction: row;
 }
 
+.MyPostHeader,
+.MyCommentHeader{
+    margin-top:1rem;
+}
+
 .MyPostContainer{
+    margin-top:5rem;
     width: 40vw;
     height: 100vh;
     /* border: 1px solid blue; */
@@ -160,12 +166,15 @@
     flex-direction: column;
 }
 .MyCommentContainer{
+    margin-top:5rem;
     width: 40vw;
     height: 100vh;
     /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
 }
+
+
 
 .ModalContainer{
     display: flex;

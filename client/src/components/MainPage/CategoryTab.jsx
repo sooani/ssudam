@@ -1,13 +1,11 @@
 import classes from '../../styles/components/CategoryTab.module.css';
 import { useAxiosInterceptors } from '../../axios';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import CategoryBox from './CategoryBox';
-// import PaginationBar from './PaginationBar';
-
+import InfiniteScroll from '../MainPage/InfiniteScroll';
 // 모집중 / 모집완료 탭을 구분 하는 컴포넌트
 const CategoryTab = () => {
   const instance = useAxiosInterceptors();
-  const loadingRef = useRef(null);
   const [activeTab, setActiveTab] = useState('recruiting');
   const [recruitingData, setRecruitingData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
@@ -17,7 +15,6 @@ const CategoryTab = () => {
     totalElements: 'totalElements',
     totalPages: 'totalPages',
   });
-
   const fetchParties = async (page, status) => {
     try {
       const response = await instance.get(
@@ -31,81 +28,45 @@ const CategoryTab = () => {
       const completedParties = data.data.filter(
         (party) => party.partyStatus === 'PARTY_CLOSED'
       );
+      if (status === 'recruiting' && activeTab === 'recruiting') {
+        // 모집 중인 탭에서 모집 완료된 게시물 제외
+        setRecruitingData((prevData) => [
+          ...prevData.filter((party) => party.partyStatus === 'PARTY_OPENED'),
+          ...recruitingParties,
+        ]);
+      } else if (status === 'completed' && activeTab === 'completed') {
+        setCompletedData((prevData) => [...prevData, ...completedParties]);
+      }
+
+      // Recruitment closed에서 Recruitment completed로 이동
+      if (status === 'completed' && activeTab === 'recruiting') {
+        setRecruitingData((prevData) => [
+          ...prevData.filter((party) => party.partyStatus === 'PARTY_OPENED'),
+          ...recruitingParties,
+        ]);
+        setCompletedData((prevData) => [...prevData, ...completedParties]);
+      }
+      setPageInfo(data.pageInfo);
       // setRecruitingData(recruitingParties);
       // setCompletedData(completedParties);
-
-      // 무한 스크롤일 때는 기존 데이터에 추가
-      setRecruitingData((prevData) => [...prevData, ...recruitingParties]);
-      setCompletedData((prevData) => [...prevData, ...completedParties]);
-
-      setPageInfo(data.pageInfo);
-
-      // 더 이상 가져올 데이터가 없을 때 로딩 메시지를 숨김
-      if (data.pageInfo.page >= data.pageInfo.totalPages) {
-        loadingRef.current.style.display = 'none';
-      } else {
-        loadingRef.current.style.display = 'block';
-      }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('데이터를 불러오는 중 에러 발생:', error);
     }
   };
 
+  // 무한 스크롤에서는 사용자가 스크롤을 아래로 내릴 때마다 페이지를 증가시킴
   const handlePageChange = () => {
-    // 무한 스크롤에서는 사용자가 스크롤을 아래로 내릴 때마다 페이지를 증가시킴
     fetchParties(pageInfo.page + 1, activeTab);
   };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    // 탭이 변경될 때 기존 데이터 초기화
-    setRecruitingData([]);
-    setCompletedData([]);
     fetchParties(1, tab);
   };
 
   useEffect(() => {
-    // 초기 렌더링 시 데이터 로드
     fetchParties(pageInfo.page, activeTab);
-  }, [activeTab]);
-
-  // 무한 스크롤을 감지하는 이벤트 핸들러
-  const handleScroll = () => {
-    if (
-      loadingRef.current &&
-      loadingRef.current.getBoundingClientRect().bottom <= window.innerHeight
-    ) {
-      handlePageChange();
-    }
-  };
-
-  useEffect(() => {
-    // 스크롤 이벤트 리스너 등록
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      // 컴포넌트 언마운트 시 이벤트 리스너 해제
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
-
-  // const handlePageChange = (direction) => {
-  //   if (direction === 'prev' && pageInfo.page > 1) {
-  //     fetchParties(pageInfo.page - 1, activeTab);
-  //   } else if (direction === 'next' && pageInfo.page < pageInfo.totalPages) {
-  //     fetchParties(pageInfo.page + 1, activeTab);
-  //   } else if (typeof direction === 'number') {
-  //     fetchParties(direction, activeTab);
-  //   }
-  // };
-
-  // const handleTabChange = (tab) => {
-  //   setActiveTab(tab);
-  //   fetchParties(1, tab); // 탭이 변경될 때 해당 탭에 맞는 데이터를 가져오도록 수정
-  // };
-
-  // useEffect(() => {
-  //   fetchParties(pageInfo.page, activeTab);
-  // }, [activeTab, pageInfo.page]);
+  }, [activeTab, pageInfo.page]);
 
   return (
     <div className={classes.categoryTab}>
@@ -136,17 +97,13 @@ const CategoryTab = () => {
       {activeTab === 'recruiting' && (
         <>
           <CategoryBox categoryData={recruitingData} />
-          <div ref={loadingRef} style={{ display: 'none' }}>
-            로딩 중...
-          </div>
+          <InfiniteScroll onScrollEnd={handlePageChange} />
         </>
       )}
       {activeTab === 'completed' && (
         <>
           <CategoryBox categoryData={completedData} />
-          <div ref={loadingRef} style={{ display: 'none' }}>
-            로딩 중...
-          </div>
+          <InfiniteScroll onScrollEnd={handlePageChange} />
         </>
       )}
     </div>

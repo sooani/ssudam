@@ -22,7 +22,7 @@
 
 .button {
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 8px;
     margin: 0;
     background: black;
@@ -37,15 +37,22 @@
   }
   
   .button[disabled] {
-    background: grey;
+    background: white;
+    color: rgb(134, 182, 246);
     cursor: revert;
     transform: revert;
   }
   
   .button[aria-current] {
-    background: deeppink;
+    background: rgb(134, 182, 246);
     font-weight: bold;
     cursor: revert;
     transform: revert;
+    border-radius: 5px;
   }
-  
+
+
+  .button:not([aria-current]) {
+    background: white; 
+    color: rgb(134, 182, 246);
+}
