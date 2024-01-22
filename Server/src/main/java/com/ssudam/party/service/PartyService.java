@@ -75,9 +75,8 @@ public class PartyService {
     // 특정 멤버가 참여한 모든 모임 목록 조회
     @Transactional(readOnly = true)
     public Page<Party> findPartiesByPartyMember(long partyMemberId, int page, int size) {
-        List<Party> parties = partyRepository.findByPartyMembers_Member_MemberId(partyMemberId);
-        Page<Party> pageParties = new PageImpl<>(parties,
-                PageRequest.of(page, size, Sort.by("createdAt").descending()), parties.size());
+        Page<Party> pageParties = partyRepository.findByPartyMembers_Member_MemberId(partyMemberId,
+                PageRequest.of(page, size, Sort.by("createdAt").descending()));
         return pageParties;
     }
 

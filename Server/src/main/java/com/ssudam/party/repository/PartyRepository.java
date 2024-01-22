@@ -12,7 +12,7 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
     List<Party> findByMember_MemberId(Long memberId);
 
     // 모임에 참여한 멤버 조회
-    List<Party> findByPartyMembers_Member_MemberId(Long memberId);
+    Page<Party> findByPartyMembers_Member_MemberId(Long memberId, Pageable pageable);
 
     //모임 일자와 모임 종료일자가 현재 날짜보다 같거나 이전일때 모임상태 조회
     List<Party> findByMeetingDateBeforeOrClosingDateBeforeAndPartyStatus(LocalDateTime meetingDate, LocalDateTime closingDate,
