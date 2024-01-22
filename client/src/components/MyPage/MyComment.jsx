@@ -5,6 +5,7 @@ import { useAxiosInterceptors } from "../../axios";
 // import useAxiosInstance from "../../axios";
 import classes from "../../styles/components/MyComment.module.css";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MyComment() {
   const [comments, setComments] = useState([]);
@@ -15,6 +16,10 @@ function MyComment() {
   const [size, setSize] = useState(10);
   // const instance = useAxiosInstance();
   const instance = useAxiosInterceptors();
+  const navigate = useNavigate();
+
+
+
   useEffect(() => {
     const fetchComments = () => {
       instance
@@ -46,7 +51,8 @@ function MyComment() {
       ) : (
         comments.slice(offset, offset + limit).map((comment, index) => (
           <article key={index} className={classes.CommentKey}>
-            <p className={classes.Comment}>{comment}</p>
+            <p className={classes.Comment}
+            onClick={() => navigate(`/meetings/${comment.partyId}`)}>{comment}</p>
           </article>
         ))
       )}

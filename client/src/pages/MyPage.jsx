@@ -28,22 +28,7 @@ const MyPage = () => {
   const { memberId } = useParams();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const instance = useAxiosInterceptors();
-  // const instance = useAxiosInstance();
 
-  // useEffect(() => {
-  //     const fetchUserData = () => {
-  //         await instance.get(`/v1/members/${memberId}`, { timeout: 10000 })
-  //             .then(response => {
-  //                 setUserData(response.data);
-  //                 console.log(response.data);
-  //             })
-  //             .catch(error => {
-  //                 console.error('사용자 데이터를 가져오는 중 오류 발생', error);
-  //             });
-  //     };
-
-  //     fetchUserData();
-  // }, [memberId]);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -91,9 +76,7 @@ const MyPage = () => {
             <button 
             onClick={() => navigate(`/edit-profile/${memberId}`)} 
             className={classes.Btn_EditProfile}
-            >
-  회원정보수정
-</button>
+            >회원정보수정</button>
           </div>
           <div className={classes.MyData}>
             <div className={classes.NicknameContainer}>
