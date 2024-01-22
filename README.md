@@ -26,7 +26,7 @@
 
 |**배정현**|**이혜원**|**안민주**|**김윤한**|
 |:--:|:--:|:--:|:--:|
-|image|<img src="[https://github.com/codestates-seb/abc02_002/assets/118452650/6c1cc0e2-8455-4044-a71b-4fab234faa9f](https://github.com/codestates-seb/abc02_002/issues/112)" width="150px" height="150px"> |image|image|
+|image|<img src="https://github.com/codestates-seb/abc02_002/issues/112" width="150px" height="150px"> |image|image|
 |FE(팀장)|FE|FE|FE|
 |[bjh0524](https://github.com/bjh0524)|[hyehye225](https://github.com/hyehye225)|[anminjoo](https://github.com/anminjoo)|[YunHanKIM](https://github.com/YunHanKIM)|
 
