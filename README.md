@@ -26,7 +26,7 @@
 
 |**배정현**|**이혜원**|**안민주**|**김윤한**|
 |:--:|:--:|:--:|:--:|
-|<img src="https://i.namu.wiki/i/dCfctGiBtIhlNvrYVKHez9BMIyUZAwd5-N35oTRXxuZs_KRkDOK9laZuXxcf2IJmlA6kVInSeQ7h5XjGS3MUuc_eAanFwTPQ1OkuuS80kwp8gYrbYIguJMvLqlxYntSMRY2UFlZLuSk8erpT40dfNw.webp" width="150px" height="150px">|<img src="srbCqpZfNdcLJfOm91Z9BAncS862x9vsQPx0U5l62Y7yBz23iexnelKuZ8916D2NkEtQv5emlPMUGZczv6gZTelexPgnJSSdXbntOUtMUaxQrkpNUnCWv2GwM" width="150px" height="150px"> |image|<img src="https://i.namu.wiki/i/wur9NgvV6sdaofR378YBXGIb0lIV4D4BpGznnDq5Ro_JUWQcEaSd0Gg9OHXSfvvWM9rtVYpEnw8cTAAEL-3dQA.webp" width="150px" height="150px">|
+|<img src="https://i.namu.wiki/i/dCfctGiBtIhlNvrYVKHez9BMIyUZAwd5-N35oTRXxuZs_KRkDOK9laZuXxcf2IJmlA6kVInSeQ7h5XjGS3MUuc_eAanFwTPQ1OkuuS80kwp8gYrbYIguJMvLqlxYntSMRY2UFlZLuSk8erpT40dfNw.webp" width="150px" height="150px">|<img src="https://i.namu.wiki/i/srbCqpZfNdcLJfOm91Z9BAncS862x9vsQPx0U5l62Y7yBz23iexnelKuZ8916D2NkEtQv5emlPMUGZczv6gZTelexPgnJSSdXbntOUtMUaxQrkpNUnCWv2GwM-FGQm4h76CWIy8i2RJX39Y-cA3qOg.webp" width="150px" height="150px"> |image|<img src="https://i.namu.wiki/i/wur9NgvV6sdaofR378YBXGIb0lIV4D4BpGznnDq5Ro_JUWQcEaSd0Gg9OHXSfvvWM9rtVYpEnw8cTAAEL-3dQA.webp" width="150px" height="150px">|
 |FE(팀장)|FE|FE|FE|
 |[bjh0524](https://github.com/bjh0524)|[hyehye225](https://github.com/hyehye225)|[anminjoo](https://github.com/anminjoo)|[YunHanKIM](https://github.com/YunHanKIM)|
 
