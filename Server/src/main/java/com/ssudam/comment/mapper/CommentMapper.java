@@ -35,6 +35,7 @@ public interface CommentMapper {
 
         return CommentDto.Response.builder()
                 .commentId(comment.getCommentId())
+                .partyId(comment.getParty().getPartyId())
                 .partyTitle(comment.getParty().getTitle())
                 .nickname(comment.getMember().getNickname())
                 .likeCount(comment.getLikeCount())

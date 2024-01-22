@@ -39,6 +39,7 @@ public class CommentDto {
     @Getter
     public static class Response {
         private long commentId;
+        private long partyId;
         private String partyTitle;
         private String nickname;
         private int likeCount;
