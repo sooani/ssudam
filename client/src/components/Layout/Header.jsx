@@ -46,7 +46,12 @@ const Header = () => {
     navigate(`/mypage/${user?.memberId}`);
   };
   const gotoTodolist = () => {
-    navigate(`/todolist`);
+    if (!user) {
+      setModalIsOpen(true);
+    } else {
+      // 로그인하지 않은 경우 모달 창 열기
+      navigate(`/todolist`);
+    }
   };
   const handleLogout = () => {
     // 로그아웃 액션 디스패치
@@ -60,7 +65,9 @@ const Header = () => {
       <div className={classes.header}>
         <h1>
           {/* <Link to="/">쓰담</Link> */}
-          <span className={classes.headerLogo} onClick={() => navigate('/')}>쓰담</span>
+          <span className={classes.headerLogo} onClick={() => navigate("/")}>
+            쓰담
+          </span>
         </h1>
         <div className={classes.loginElement}>
           {user ? (
@@ -85,7 +92,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <button className={classes.postRegister} onClick={gotoFreeboard}>
+              <button className={classes.postRegister} onClick={gotoSignUp}>
                 게시판
               </button>
               <button className={classes.postRegister} onClick={gotoSignUp}>
