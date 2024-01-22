@@ -97,6 +97,10 @@ const MakePost = () => {
       alert("모집 마감일은 모임 일시 이전이어야 합니다.");
       return;
     }
+    if (latlng.lat === 33.450701 && latlng.lng === 126.570667) {
+      alert("지도에서 정확한 위치를 선택해주세요!");
+      return;
+    }
     let postDTO = {
       title: postedtitle,
       memberId: loggedInUser.memberId,
