@@ -142,6 +142,10 @@ const Todolist = () => {
     setEditedOrder(order);
   };
   const handleEditChange = (id, updatedTitle, updatedOrder) => {
+    if (updatedTitle === "" || updatedOrder === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     const updatedDTO = {
       title: updatedTitle,
       todoOrder: updatedOrder,

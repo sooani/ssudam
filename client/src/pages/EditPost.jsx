@@ -16,12 +16,16 @@ const EditPost = () => {
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
   const axios = useAxiosInterceptors();
-  const today = new Date();
+  // const today = new Date();
   // const axios = useAxiosInstance();
   // 현재 날짜에 1일(24시간)을 더하여 하루 뒤의 일시를 얻음
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
+  // const tomorrow = new Date(today);
+  // tomorrow.setDate(today.getDate() + 1);
+  // const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
+  const today = new Date();
+  const koreaTime = new Date(today.getTime() + 9 * 60 * 60 * 1000);
+
+  const formattedToday = koreaTime.toISOString().slice(0, 16);
 
   const [latlng, setLatLng] = useState({ lat: 33.450701, lng: 126.570667 });
   // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -115,7 +119,10 @@ const EditPost = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-
+    if (meetingInfo.closingDate >= meetingInfo.meetingDate) {
+      alert("모집 마감일은 모임 일시 이전이어야 합니다.");
+      return;
+    }
     let postDTO = {
       title: meetingInfo.title,
       memberId: loggedInUser.memberId,
@@ -200,7 +207,7 @@ const EditPost = () => {
                 <h4>모임 일시</h4>
                 <input
                   type="datetime-local"
-                  min={formattedTomorrow}
+                  min={formattedToday}
                   value={meetingInfo.meetingDate}
                   name="meetingdate"
                   onChange={dateHandler}
@@ -210,7 +217,7 @@ const EditPost = () => {
                 <h4>모집 마감</h4>
                 <input
                   type="datetime-local"
-                  min={formattedTomorrow}
+                  min={formattedToday}
                   value={meetingInfo.closingDate}
                   name="duedate"
                   onChange={dueHandler}

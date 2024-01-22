@@ -71,6 +71,10 @@ const DetailPost = () => {
   // 코멘트 등록 핸들러
   const commentSubmitHandler = (e) => {
     e.preventDefault();
+    if (enteredComment === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     let commentDTO = {
       partyId: meetingId,
       memberId: loggedInUser.memberId,
@@ -152,6 +156,10 @@ const DetailPost = () => {
   }, [comments]);
   // 나의 코멘트를 수정하는 핸들러
   const commentEditHandler = () => {
+    if (myComment.comment === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
     let updatedDTO = {
       comment: myComment.comment,

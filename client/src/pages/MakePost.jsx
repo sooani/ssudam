@@ -19,12 +19,18 @@ const MakePost = () => {
   // 검색용 키워드
   const [searchkeyword, setSearchkeyword] = useState("");
   const axios = useAxiosInterceptors();
-  const today = new Date();
+  // const today = new Date();
   // const axios = useAxiosInstance();
   // 현재 날짜에 1일(24시간)을 더하여 하루 뒤의 일시를 얻음
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
+  // const tomorrow = new Date(today);
+  // tomorrow.setDate(today.getDate() + 1);
+  // const formattedTomorrow = tomorrow.toISOString().slice(0, 16);
+
+  const today = new Date();
+  const koreaTime = new Date(today.getTime() + 9 * 60 * 60 * 1000);
+
+  const formattedToday = koreaTime.toISOString().slice(0, 16);
+
   const [contact, setContact] = useState("");
   const navigate = useNavigate();
 
@@ -87,6 +93,10 @@ const MakePost = () => {
     const duedate = data.get("duedate");
     const contact = data.get("contact");
 
+    if (duedate >= meetingdate) {
+      alert("모집 마감일은 모임 일시 이전이어야 합니다.");
+      return;
+    }
     let postDTO = {
       title: postedtitle,
       memberId: loggedInUser.memberId,
@@ -188,16 +198,17 @@ const MakePost = () => {
                 <h4>모임 일시</h4>
                 <input
                   type="datetime-local"
-                  min={formattedTomorrow}
+                  min={formattedToday}
                   required
                   name="meetingdate"
+                  // placeholder="최소 하루 뒤로 선택해주세요"
                 />
               </div>
               <div className={classes.field}>
                 <h4>모집 마감</h4>
                 <input
                   type="datetime-local"
-                  min={formattedTomorrow}
+                  min={formattedToday}
                   required
                   name="duedate"
                 />
@@ -206,10 +217,11 @@ const MakePost = () => {
                 <h4>연락 방법</h4>
                 <input
                   type="tel"
-                  pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
+                  pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
                   required
                   name="contact"
-                  title="000-0000-0000 형식으로 입력해주세요!"
+                  title="000-000-0000 형식으로 입력해주세요!"
+                  placeholder="000-000-0000 형식으로 입력"
                   // onChange={handleInputChange}
                   // value={contact}
                 />
