@@ -181,6 +181,7 @@ const MakePost = () => {
                   onChange={addressHandler}
                   required
                   name="address"
+                  placeholder="지도에서 위치 선택 + 상세주소 (선택)"
                 />
               </div>
               <div className={classes.field}>
