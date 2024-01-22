@@ -18,7 +18,7 @@
 .logoContainer {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .logoContainer p {
   font-family: "Cafe";

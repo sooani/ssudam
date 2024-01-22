@@ -7,9 +7,14 @@ import footerLogo from "../../images/logo.png";
 const Footer = (props) => {
   return (
     <footer className={classes.container}>
-      <img src={footerLogo} alt="footerLogo" height={"80px"} weight={"80px"} />
       <div className={classes.footer}>
         <div className={classes.logoContainer}>
+          <img
+            src={footerLogo}
+            alt="footerLogo"
+            height={"50px"}
+            weight={"50px"}
+          />
           <p>쓰담</p>
         </div>
         <p>© {new Date().getFullYear()} 쓰담. All rights reserved.</p>
