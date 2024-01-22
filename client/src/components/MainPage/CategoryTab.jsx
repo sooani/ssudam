@@ -1,113 +1,83 @@
 import classes from '../../styles/components/CategoryTab.module.css';
 import { useAxiosInterceptors } from '../../axios';
 import React, { useState, useEffect } from 'react';
-import CategoryBox from './CategoryBox';
-import InfiniteScroll from '../MainPage/InfiniteScroll';
-// 모집중 / 모집완료 탭을 구분 하는 컴포넌트
+import CategoryBox from '../MainPage/CategoryBox';
+
 const CategoryTab = () => {
   const instance = useAxiosInterceptors();
-  const [activeTab, setActiveTab] = useState('recruiting');
-  const [recruitingData, setRecruitingData] = useState([]);
-  const [completedData, setCompletedData] = useState([]);
-  const [pageInfo, setPageInfo] = useState({
-    page: 1,
-    size: 50,
-    totalElements: 'totalElements',
-    totalPages: 'totalPages',
-  });
+  const [allData, setAllData] = useState([]);
+  const [activeTab, setActiveTab] = useState('all');
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
   const fetchParties = async (page, status) => {
     try {
+      setLoading(true);
       const response = await instance.get(
-        `/v1/parties?page=${page}&size=50&status=${status}`
+        `/v1/parties?page=${page}&size=500&status=${status}`
       );
       const { data } = response;
-      const recruitingParties = data.data.filter(
-        (party) => party.partyStatus === 'PARTY_OPENED'
-      );
-      const completedParties = data.data.filter(
-        (party) => party.partyStatus === 'PARTY_CLOSED'
-      );
-      //     if (status === 'recruiting' && activeTab === 'recruiting') {
-      //       // 중복 데이터 필터링
-      //       setRecruitingData((prevData) => [
-      //         ...prevData,
-      //         ...recruitingParties.filter(
-      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
-      //         ),
-      //       ]);
-      //     } else if (status === 'completed' && activeTab === 'completed') {
-      //       // 중복 데이터 필터링
-      //       setCompletedData((prevData) => [
-      //         ...prevData,
-      //         ...completedParties.filter(
-      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
-      //         ),
-      //       ]);
-      //     }
-      //     if (status === 'completed' && activeTab === 'recruiting') {
-      //       // 중복 데이터 필터링
-      //       setRecruitingData((prevData) => [
-      //         ...prevData,
-      //         ...recruitingParties.filter(
-      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
-      //         ),
-      //       ]);
-      //       setCompletedData((prevData) => [
-      //         ...prevData,
-      //         ...completedParties.filter(
-      //           (newParty) => !prevData.some((party) => party.id === newParty.id)
-      //         ),
-      //       ]);
-      //     }
+      const partiesToShow =
+        status === 'all'
+          ? data.data
+          : data.data.filter((party) => party.partyStatus === 'PARTY_OPENED');
 
-      //     // 페이지 정보 업데이트
-      //     setPageInfo((prevPageInfo) => ({
-      //       ...prevPageInfo,
-      //       page: page + 1,
-      //     }));
-      //   } catch (error) {
-      //     console.error('데이터를 불러오는 중 에러 발생:', error);
-      //   }
-      // };
-
-      if (status === 'recruiting' && activeTab === 'recruiting') {
-        setRecruitingData((prevData) => [
-          ...prevData.filter((party) => party.partyStatus === 'PARTY_OPENED'),
-          ...recruitingParties,
-        ]);
-      } else if (status === 'completed' && activeTab === 'completed') {
-        setCompletedData((prevData) => [...prevData, ...completedParties]);
-      }
-      if (status === 'completed' && activeTab === 'recruiting') {
-        setRecruitingData((prevData) => [
-          ...prevData.filter((party) => party.partyStatus === 'PARTY_OPENED'),
-          ...recruitingParties,
-        ]);
-        setCompletedData((prevData) => [...prevData, ...completedParties]);
-      }
+      setAllData((prevData) =>
+        page === 1 ? partiesToShow : [...prevData, ...partiesToShow]
+      );
+      setHasMore(data.page < data.totalPages);
     } catch (error) {
       console.error('데이터를 불러오는 중 에러 발생:', error);
+    } finally {
+      setLoading(false);
     }
   };
-  const handlePageChange = () => {
-    fetchParties(pageInfo.page + 1, activeTab);
-  };
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    if (tab === 'recruiting') {
-      setRecruitingData([]);
-    } else if (tab === 'completed') {
-      setCompletedData([]);
-    }
+    setAllData([]);
+    setPage(1);
     fetchParties(1, tab);
   };
+
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 10 && !loading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
   useEffect(() => {
-    fetchParties(pageInfo.page, activeTab);
-  }, [activeTab, pageInfo.page]);
+    handleTabChange('all');
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [page, activeTab, loading]);
+
+  useEffect(() => {
+    fetchParties(page, activeTab);
+  }, [page, activeTab]);
 
   return (
     <div className={classes.categoryTab}>
       <section className={classes.tab}>
+        <div
+          onClick={() => handleTabChange('all')}
+          style={{
+            fontWeight: activeTab === 'all' ? 'bold' : '600',
+            background: 'transparent',
+            color: activeTab === 'all' ? 'black' : 'gray',
+          }}
+          className={activeTab === 'all' ? 'active' : ''}
+        >
+          <span className={classes.all}>전체</span>
+        </div>
         <div
           onClick={() => handleTabChange('recruiting')}
           style={{
@@ -117,32 +87,11 @@ const CategoryTab = () => {
           }}
           className={activeTab === 'recruiting' ? 'active' : ''}
         >
-          <span className={classes.join}>모집중</span>
-        </div>
-        <div
-          onClick={() => handleTabChange('completed')}
-          style={{
-            fontWeight: activeTab === 'completed' ? 'bold' : '600',
-            background: 'transparent',
-            color: activeTab === 'completed' ? 'black' : 'gray',
-          }}
-          className={activeTab === 'completed' ? 'active' : ''}
-        >
-          <span className={classes.end}>모집완료</span>
+          <span className={classes.join}>모집 중</span>
         </div>
       </section>
-      {activeTab === 'recruiting' && (
-        <>
-          <CategoryBox categoryData={recruitingData} />
-          <InfiniteScroll onScrollEnd={handlePageChange} />
-        </>
-      )}
-      {activeTab === 'completed' && (
-        <>
-          <CategoryBox categoryData={completedData} />
-          <InfiniteScroll onScrollEnd={handlePageChange} />
-        </>
-      )}
+      <CategoryBox categoryData={allData} />
+      {loading && <h4>Loading...</h4>}
     </div>
   );
 };

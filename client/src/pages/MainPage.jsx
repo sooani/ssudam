@@ -6,6 +6,8 @@ import CategoryTab from '../components/MainPage/CategoryTab';
 import ScrollToTopButton from '../components/MainPage/ScrollToTopButton';
 import classes from '../styles/pages/MainPage.module.css';
 import { useAxiosInterceptors } from '../axios';
+// import RecruitingComponent from '../components/MainPage/RecruitingComponent';
+// import RecruitmentCompletedComponent from '../components/MainPage/RecruitmentCompletedComponent';
 
 /*
     헤더는 컴포넌트로 불러온다.
@@ -17,7 +19,6 @@ import { useAxiosInterceptors } from '../axios';
 
 const MainPage = () => {
   const instance = useAxiosInterceptors();
-  const scrollRef = useRef(null);
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
   const [page, setPage] = useState(1);
@@ -30,7 +31,7 @@ const MainPage = () => {
       .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
         setData(response.data.data);
-        // setPage(response.data.pageInfo);
+        setPage(response.data.pageInfo);
       })
       .catch((error) => {
         console.error('Error party data:', error);

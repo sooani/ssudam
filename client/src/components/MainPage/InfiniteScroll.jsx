@@ -1,35 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 const InfiniteScroll = ({ onScrollEnd }) => {
-  const containerRef = useRef(null);
-
   const handleScroll = () => {
-    const container = containerRef.current;
-    if (container) {
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollTop + clientHeight >= scrollHeight - 10) {
-        // 스크롤이 끝에 도달했을 때 onScrollEnd 함수 호출
-        onScrollEnd();
-      }
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    // 스크롤이 화면 하단에 닿았을 때 (끝에 도달하면 추가 데이터 로딩)
+    if (scrollTop + clientHeight >= scrollHeight - 1) {
+      onScrollEnd();
     }
   };
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => {
-        container.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [onScrollEnd]);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [onScrollEnd]); // onScrollEnd가 변경될 때마다 리스너를 갱신
 
-  return (
-    <div
-      ref={containerRef}
-      style={{ overflowY: 'auto', maxHeight: '500px' /* 원하는 높이 설정 */ }}
-    />
-  );
+  return null;
 };
 
 export default InfiniteScroll;
