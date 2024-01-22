@@ -1,13 +1,13 @@
 .todoListSection {
   width: 15vw;
-  max-width: 1200px; /* 추가: 최대 너비 설정 */
+  max-width: 1200px;
   height: 50%;
   text-align: center;
   position: relative;
   margin-top: 6%;
   border: 2px solid black;
   border-radius: 20px;
-  overflow: hidden; /* 추가: 내용이 넘칠 경우 숨김 처리 */
+  overflow: hidden;
 }
 .todoTitle {
   margin-top: 10px;
@@ -17,7 +17,7 @@
 
 .todoList {
   font-weight: 600;
-  padding-left: 0; /* 추가: 기본 패딩 제거 */
+  padding-left: 0;
 }
 
 .todoList li {
@@ -25,11 +25,13 @@
   width: 80%;
   font-size: 1.1rem;
   padding-left: 10%;
-  margin: 0px 0; /* 추가: 각 아이템 간격 설정 */
+  margin: 0px 0;
   text-align: left;
+
+  padding: 0.5rem 1rem;
 }
 
 .todoList li::marker {
-  font-size: 40px;
+  font-size: 25px;
   color: black;
 }
