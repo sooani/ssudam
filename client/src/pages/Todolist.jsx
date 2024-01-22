@@ -65,7 +65,7 @@ const Todolist = () => {
   const addTodo = () => {
     if (totalLength === 3) {
       alert(
-        "최대 3개를 등록하여 더 이상 등록할 수 없습니다! 기존 목록을 수정하거나 삭제하고 등록해주세요!"
+        "최대 3개를 등록하여 더 이상 등록할 수 없습니다!\n기존 목록을 수정하거나 삭제하고 등록해주세요!"
       );
       setEntered("");
       setOrder("");
