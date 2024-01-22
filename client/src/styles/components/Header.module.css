@@ -61,12 +61,15 @@ button {
 .login {
   font-weight: 600;
   padding: 0;
+  background-color: white;
+  font-size: 1.2rem;
 }
 .join {
   font-weight: 600;
   /* font-size: 1rem; */
   padding: 0;
   background-color: white;
+  font-size: 1.2rem;
 }
 
 /* 로그인 했을때 헤더에 보이는 버튼(관리자, 게시판, 새글쓰기, 로그아웃, 마이페이지아이콘)*/

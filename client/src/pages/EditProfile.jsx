@@ -107,7 +107,7 @@ function EditProfile() {
       }
     } catch (error) {
       console.error('사용자 프로필 업데이트 오류:', error);
-      alert('이미 존재하는 닉네임입니다!');
+      alert('모든 입력란을 양식에 맞게 입력해주세요.');
     }
   };
 

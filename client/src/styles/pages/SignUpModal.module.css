@@ -13,10 +13,13 @@
     top: 40px;
     background-color: rgb(238, 245, 255);
     width: 450px; /* 모달의 너비 조절 */
-    height: 700px;
+    height: 650px;
     margin: auto; /* 수평 가운데 정렬 */
     padding: 20px; /* 내용과 모서리 사이 간격 조절 */
     border-radius: 5px; /* 둥글게 모서리 조절 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .signupForm {
@@ -38,6 +41,7 @@
     color: rgb(134, 182, 246);
     text-align: center;
     margin: 0px;
+    margin-top: 50px;
     margin-bottom: 15px;
 }
 
