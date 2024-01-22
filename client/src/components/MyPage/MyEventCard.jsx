@@ -157,10 +157,14 @@ function MyEventCard() {
             },
           })
           .then((response) => {
-            const totalEvents = response.data.total;
+            const totalEvents = response.data.total || 0; // total이 정의되지 않았을 때 0 사용
             const numPages = Math.ceil(totalEvents / eventsPerPage);
-            setPage(page);
             setTotalPages(numPages);
+            setPage(page);
+            console.log("토탈미팅:",totalEvents);
+            console.log("페이지 당 이벤트:",eventsPerPage);
+            console.log("페이지넘버:",numPages);
+
 
             // Extract events for the current page
             const startIndex = (page - 1) * eventsPerPage;
@@ -206,7 +210,7 @@ function MyEventCard() {
         ) : (
           <>
             {events.map((event) => (
-              <div key={event.partyId} onClick={() => EventPostClick(event)}>
+              <div key={event.partymemberId} onClick={() => EventPostClick(event)}>
                 <div className={classes.Statuscontainer}>
                   <p className={`${classes.Status} ${event.partyStatus === "PARTY_OPENED" ? classes.OpenStatus : classes.ClosedStatus}`}>
                     {event.partyStatus === "PARTY_OPENED" ? " 모집중" : " 모집완료"}
