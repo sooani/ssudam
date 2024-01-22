@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import classes from "../../styles/components/ListCard.module.css";
-import SignUpModal from "../../pages/SignUpModal";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../features/userSlice";
-import { AiFillAlert } from "react-icons/ai";
-import { FaBookmark } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import classes from '../../styles/components/ListCard.module.css';
+import SignUpModal from '../../pages/SignUpModal';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
+import { AiFillAlert } from 'react-icons/ai';
+import { FaBookmark } from 'react-icons/fa';
 
 /*
     게시글 컴포넌트
@@ -12,7 +12,7 @@ import { FaBookmark } from "react-icons/fa";
     제목, 내용, 작성일 출력
 */
 
-const ListCard = ({ party, meetingId, loggedInUser }) => {
+const ListCard = ({ party }) => {
   // 게시물이 생성된 후 2일 이내인지 여부
   const [isNewPost, setIsNewPost] = useState(false);
   // 회원 가입 모달창
@@ -49,11 +49,11 @@ const ListCard = ({ party, meetingId, loggedInUser }) => {
       const daysLeft = Math.floor(timeDifference / (1000 * 3600 * 24));
       // 마감이 지났는지 확인
       const isClosed = timeDifference < 0;
-      let timeLeftText = "";
+      let timeLeftText = '';
       if (isClosed) {
-        timeLeftText = "모집 마감";
+        timeLeftText = '모집 마감';
       } else if (daysLeft === 0) {
-        timeLeftText = "오늘 마감";
+        timeLeftText = '오늘 마감';
       } else {
         timeLeftText = `마감 ${daysLeft}일 전`;
       }
@@ -80,7 +80,7 @@ const ListCard = ({ party, meetingId, loggedInUser }) => {
   const extractDate = (fullDate) => {
     const dateObject = new Date(fullDate);
     // 날짜를 'YYYY-MM-DD' 형식으로 변환
-    const formattedDate = dateObject.toISOString().split("T")[0];
+    const formattedDate = dateObject.toISOString().split('T')[0];
     return formattedDate;
   };
   return (

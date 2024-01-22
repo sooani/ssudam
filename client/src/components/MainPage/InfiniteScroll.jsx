@@ -1,29 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 const InfiniteScroll = ({ onScrollEnd }) => {
-  const loadingRef = useRef(null);
-
   const handleScroll = () => {
-    if (
-      loadingRef.current &&
-      loadingRef.current.getBoundingClientRect().bottom <= window.innerHeight
-    ) {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    // 스크롤이 바닥에 닿았는지 여부를 계산
+    const bottomOfWindow = scrollTop + clientHeight >= scrollHeight;
+
+    if (bottomOfWindow) {
       onScrollEnd();
     }
   };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [onScrollEnd]);
 
-  return (
-    <div ref={loadingRef} style={{ display: 'none' }}>
-      로딩 중.
-    </div>
-  );
+  return null;
 };
 
 export default InfiniteScroll;
