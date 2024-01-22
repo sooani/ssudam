@@ -70,7 +70,7 @@ function MyBookmark() {
     <div className={classes.EventCardContainer}>
       <div className={classes.EventCardMain}>
         {events.length === 0 ? (
-          <p>아직 북마크한 모임이 없어요!</p>
+          <p className={classes.EmptyBookmarkMessage}>아직 북마크한 모임이 없습니다!😊</p>
         ) : (
           <>
             {events.map((event) => (

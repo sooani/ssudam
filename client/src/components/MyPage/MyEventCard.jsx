@@ -262,7 +262,7 @@ function MyEventCard() {
   const { partyMemberId } = useParams();
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
-  const eventsPerPage = 4;
+  const eventsPerPage = 8;
   const [totalPages, setTotalPages] = useState(0);
   const instance = useAxiosInterceptors();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -328,7 +328,7 @@ function MyEventCard() {
     <div className={classes.EventCardContainer}>
       <div className={classes.EventCardMain}>
         {events.length === 0 ? (
-          <p>아직 참여한 모임이 없어요!</p>
+          <p className={classes.EmptyEventMessage}>아직 참여한 모임이 없습니다!😊</p>
         ) : (
           <>
             {events.map((event) => (

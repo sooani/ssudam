@@ -17,6 +17,19 @@
     flex-wrap: wrap;
     overflow-x: auto;
 }
+
+.EmptyBookmarkMessage{
+  display: flex;
+  border: 1px solid rgb(238, 245, 255);
+  border-radius: 20px;
+  background-color: rgb(238, 245, 255);
+  font-size: 1.2rem; 
+  height: 5rem;
+  width: 20rem;
+  justify-content: center;
+  align-items: center;
+}
+
 .EventCardMain > div {
   margin-right: 1rem; 
   border: 2px solid rgb(186, 186, 186);
