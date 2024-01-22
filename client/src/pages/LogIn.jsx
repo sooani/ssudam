@@ -6,12 +6,6 @@ import classes from "../styles/pages/LogIn.module.css";
 import { jwtDecode } from "jwt-decode";
 import { useAxiosInterceptors } from "../axios";
 
-// 해결할 문제
-// 오류메시지 css 수정
-// 이메일 또는 비밀번호 입력하지 않고 로그인 버튼 눌렀을 때 나오는 css 수정
-// 유효성검사 뭘 할지 결정 (후순위 개발)
-// 더 추가될 수 있음
-
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

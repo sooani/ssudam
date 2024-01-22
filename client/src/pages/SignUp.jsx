@@ -3,12 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAxiosInterceptors } from "../axios";
 import classes from "../styles/pages/SignUp.module.css";
 
-// 해결할 문제
-// 오류메시지 css 수정
-// 빈 칸이 있을 때 회원가입 버튼 누르면 나오는 css 수정
-// 유효성 검사 뭘 할지 결정(예시. 이메일, 닉네임 중복) (후순위 개발)
-// 더 추가될 수도 있음
-
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
