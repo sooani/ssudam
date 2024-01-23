@@ -60,6 +60,7 @@
   align-items: center;
   text-align: center;
   @media screen and (max-width: 1070px) {
+    /* flex-direction: column; */
   }
 }
 .writerAndDate {
@@ -67,6 +68,11 @@
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  @media screen and (max-width: 1070px) {
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: flex-start;
+  }
 }
 .writerAndDate h4 {
   margin: 0rem auto;
@@ -75,22 +81,34 @@
   /* border: 1px solid pink; */
   border-right: 2px solid gray;
   padding-right: 1rem;
+  @media screen and (max-width: 1070px) {
+    /* border-right: none; */
+  }
 }
 
 .date {
   /* border: 1px solid skyblue; */
   border-right: 2px solid gray;
   padding-right: 1rem;
+  @media screen and (max-width: 1070px) {
+    /* border-right: none; */
+  }
 }
 .isRecruiting h4 {
   color: #86b6f6;
   border-right: 2px solid gray;
   padding-right: 1rem;
+  @media screen and (max-width: 1070px) {
+    /* border-right: none; */
+  }
 }
 .isNotRecruiting h4 {
   color: red;
   border-right: 2px solid gray;
   padding-right: 1rem;
+  @media screen and (max-width: 1070px) {
+    /* border-right: none; */
+  }
 }
 .hits {
 }
