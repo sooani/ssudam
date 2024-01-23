@@ -237,6 +237,7 @@ const EditPost = () => {
                   onChange={contactHandler}
                   required
                   title="000-0000-0000 형식으로 입력해주세요!"
+                  placeholder="000-0000-0000 형식으로 입력"
                 />
               </div>
             </div>

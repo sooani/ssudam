@@ -225,8 +225,8 @@ const MakePost = () => {
                   pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
                   required
                   name="contact"
-                  title="000-000-0000 형식으로 입력해주세요!"
-                  placeholder="000-000-0000 형식으로 입력"
+                  title="000-0000-0000 형식으로 입력해주세요!"
+                  placeholder="000-0000-0000 형식으로 입력"
                   // onChange={handleInputChange}
                   // value={contact}
                 />
