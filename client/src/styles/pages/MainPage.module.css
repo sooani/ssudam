@@ -19,6 +19,12 @@
   z-index: 999; /* 스크롤바 옆에 표시되도록 z-index 값 조정 */
 }
 
+@media screen and (max-width: 576px) {
+  .scrollToTargetSection {
+    display: none;
+  }
+}
+
 .scrollToTargetSection input {
   width: 55px;
   margin-right: 2px;
@@ -49,4 +55,10 @@
   color: #fff;
   padding: 5px;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 576px) {
+  .scrollPositionInfo {
+    display: none;
+  }
 }

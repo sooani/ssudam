@@ -61,42 +61,39 @@ const NewListCard = ({ party }) => {
     return formattedDate;
   };
   return (
-    <div
-      className={classes.newWrapper}
-      style={{ width: '100%', display: 'inline-block' }}
-    >
-      <div className={classes.listCard} onClick={handlePostClick}>
-        <div className={classes.top}>
-          <div className={classes.new}>
-            <div className={classes.newPost}>
-              <FaRegLightbulb className={classes.faRegLightbulb} />
-              <span>NEW</span>
-            </div>
-            {/* 남은 날짜 및 시간 표시 */}
-            <div className={classes.listCardTimeLeft}>
-              <AiFillAlert className={classes.aiFillAlert} />
-              {timeLeft !== null && <span>{timeLeft}</span>}
-            </div>
+    // <div className={classes.newWrapper}>
+    <div className={classes.newListCard} onClick={handlePostClick}>
+      <div className={classes.top}>
+        <div className={classes.new}>
+          <div className={classes.newPost}>
+            <FaRegLightbulb className={classes.faRegLightbulb} />
+            <span>NEW</span>
           </div>
-        </div>
-        <div className={classes.listCardMeetingDate}>
-          <span>모임날짜 | {extractDate(party?.meetingDate)}</span>
-        </div>
-        <div className={classes.listCardClosingDate}>
-          <span>마감일 | {extractDate(party?.closingDate)}</span>
-        </div>
-        {/* <div className={classes.listCardTitle}> */}
-        <h1 className={classes.title}>{party?.title}</h1>
-        {/* </div> */}
-        <div className={classes.bottom}>
-          <div className={classes.capacity}>
-            <span className={classes.capacityNum}>모집인원 :</span>
-            <div className={classes.current}>
-              {party?.currentCapacity} / {party?.maxCapacity}
-            </div>
+          {/* 남은 날짜 및 시간 표시 */}
+          <div className={classes.listCardTimeLeft}>
+            <AiFillAlert className={classes.aiFillAlert} />
+            {timeLeft !== null && <span>{timeLeft}</span>}
           </div>
         </div>
       </div>
+      <div className={classes.listCardMeetingDate}>
+        <span>모임날짜 | {extractDate(party?.meetingDate)}</span>
+      </div>
+      <div className={classes.listCardClosingDate}>
+        <span>마감일 | {extractDate(party?.closingDate)}</span>
+      </div>
+      {/* <div className={classes.listCardTitle}> */}
+      <h1 className={classes.title}>{party?.title}</h1>
+      {/* </div> */}
+      <div className={classes.bottom}>
+        <div className={classes.capacity}>
+          <span className={classes.capacityNum}>모집인원 :</span>
+          <div className={classes.current}>
+            {party?.currentCapacity} / {party?.maxCapacity}
+          </div>
+        </div>
+      </div>
+      {/* </div> */}
       <SignUpModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
     </div>
   );

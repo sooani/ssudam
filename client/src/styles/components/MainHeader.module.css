@@ -9,14 +9,14 @@
   background-size: 100% 100%;
   display: flex;
   height: 400px; */
-  background-image: url("../../images/green_1.png");
+  background-image: url('../../images/green_1.png');
   background-size: cover;
   background-position: center;
   display: flex;
   height: 400px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 567px) {
   /* 768px 이하일 때의 스타일 조정 */
   .header {
     height: 150px; /* 필요에 따라 조절 */
@@ -29,8 +29,17 @@
   font-size: 2.1rem;
   height: 45px;
   display: flex;
-  font-family: "Cafe", sans-serif;
+  font-family: 'Cafe', sans-serif;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 567px) {
+  .logo {
+    position: relative;
+    font-size: 1.5rem;
+    width: 20%;
+    height: auto;
+  }
 }
 
 /* 새 글 쓰기, 로그인, 회원가입 버튼 관련 */
@@ -43,6 +52,16 @@
   font-weight: 700;
   font-size: 1.3rem;
   height: auto;
+}
+
+@media only screen and (max-width: 567px) {
+  .loginElement {
+    margin: 10px;
+    font-size: 0.9rem;
+    width: 100%;
+    position: relative;
+    height: auto;
+  }
 }
 
 /* 검색창 관련 */
@@ -60,6 +79,12 @@
   height: 35px;
   margin-top: 20px;
 }
+@media only screen and (max-width: 567px) {
+  .search {
+    display: none;
+  }
+}
+
 .search input {
   border: none;
   padding: 0.5rem;

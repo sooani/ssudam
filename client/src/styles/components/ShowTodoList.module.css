@@ -9,6 +9,13 @@
   border-radius: 20px;
   overflow: hidden;
 }
+
+@media only screen and (max-width: 567px) {
+  .todoListSection {
+    display: none;
+  }
+}
+
 .todoTitle {
   margin-top: 10px;
   font-weight: 600;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from '../../styles/components/ListSlider.module.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -11,29 +11,60 @@ import NewListCard from '../MainPage/NewListCard';
 */
 
 const ListSlider = ({ latest }) => {
+  const [maxWidth, setMaxWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMaxWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트 언마운트 시 리스너 제거
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const settings = {
-    dots: false, // 페이지 점 표시 여부
-    infinite: true, // 무한 반복 여부
-    speed: 1000, // 전환 속도
-    slidesToShow: 4, // 보여질 슬라이드 수
-    slidesToScroll: 4, // 스크롤 시 이동할 슬라이드 수
-    arrows: true, // 화살표 표시 여부
-    accessibility: true, // 접근성 활성화 여부
-    autoplay: true, // 자동 재생 여부
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: maxWidth >= 576 ? 4 : 1,
+    slidesToScroll: maxWidth >= 576 ? 4 : 1,
+    arrows: true,
+    accessibility: true,
+    autoplay: true,
   };
 
   return (
     <div className={classes.slider}>
-      {/* 제목을 나타내는 h1 태그, 스타일은 글자 크기와 색상 설정 */}
       <h2 className={classes.sliderName}>새로운 모임</h2>
-      {/* react-slick의 Slider 컴포넌트, 설정은 settings 객체로 전달 */}
-      <Slider {...settings}>
-        {/* 각각의 아이템에 대해 ItemCard 컴포넌트를 렌더링 */}
-        {latest.map((party) => (
-          <NewListCard key={party.partyId} party={party} />
-        ))}
-      </Slider>
+      {maxWidth >= 576 ? (
+        <Slider
+          {...settings}
+          style={{ overflow: 'hidden' /* 기타 스타일 속성 */ }}
+        >
+          {latest.map((party) => (
+            <div key={party.partyId}>
+              <NewListCard party={party} />
+            </div>
+          ))}
+        </Slider>
+      ) : (
+        <Slider
+          {...settings}
+          style={{ overflow: 'hidden' /* 기타 스타일 속성 */ }}
+        >
+          {latest.map((party) => (
+            <div key={party.partyId}>
+              <NewListCard party={party} />
+            </div>
+          ))}
+        </Slider>
+      )}
     </div>
   );
 };
+
 export default ListSlider;

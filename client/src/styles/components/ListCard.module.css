@@ -17,11 +17,33 @@
   cursor: pointer;
 }
 
+/* 타블렛 */
+@media screen and (max-width: 576px) {
+  .listCard {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2%;
+  }
+}
+
+/* 데스크탑 */
+@media screen and (max-width: 768px) {
+  .listCard {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2%;
+  }
+}
+
+/* 큰 데스크탑 */
+@media screen and (max-width: 1200px) {
+  .listCard {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .new {
-  /* display: flex;
-  height: 26px;
-  align-items: center;
-  font-size: 1.5rem; */
   display: flex;
   height: 26px;
   -webkit-box-pack: justify;
