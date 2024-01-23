@@ -47,6 +47,7 @@
     border-radius: 20px;
     height: 30vh;
     width: 200px;
+    cursor: pointer;
   }
   .EventCard0{   
     width: 20vw;
@@ -111,13 +112,13 @@
   /* 모집중 모집완료 */
   .OpenStatus{
     display: flex;
-    font-size: 0.9rem; 
+    font-size: 0.8rem; 
     border: 1px solid #B4D4FF;
     border-radius: 20px;
     background-color: #B4D4FF;
-    width: 4vw;
+    width: 50px;
     text-align: center;
-    font-weight: bold; 
+    /* font-weight: bold;  */
     align-items: center;
     justify-content: center;
     /* width: 3rem; */
@@ -126,16 +127,18 @@
     padding: 0.3px;
     flex-wrap: nowrap;
     white-space: nowrap;
+    font-weight: 700;
   }
   .ClosedStatus{    
     display: flex;
-    font-size: 0.9rem; 
-    border: 1px solid #4f5255;
+    font-size: 0.7rem; 
+    border: 1px solid #88898a;
     border-radius: 20px;
-    background-color: #4f5255;
-    width: 4vw;
+    background-color: #88898a;
+    font-weight: 700;
+    width: 50px;
     text-align: center;
-    font-weight: bold; 
+    /* font-weight: bold;  */
     align-items: center;
     justify-content: center;
     /* width: 3rem; */
@@ -144,6 +147,7 @@
     padding: 0.3px;
     flex-wrap: nowrap;
     white-space: nowrap;
+    color:rgb(238, 245, 255);
   
   }
   

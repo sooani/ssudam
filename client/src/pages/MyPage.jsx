@@ -99,7 +99,7 @@ const MyPage = () => {
           </div>
           <div className={classes.MyBookmark}>
             <h1 className={classes.MyBookmarkHeader}>나의 북마크</h1>
-            <MyBookmark memberId={userData.id} />
+            <MyBookmark className={classes.MyBookmarkcontainer}memberId={userData.id} />
           </div>
           <div className={classes.MyContents}>
             <div className={classes.MyPostContainer}>

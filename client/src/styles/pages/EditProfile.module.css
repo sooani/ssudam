@@ -2,6 +2,15 @@
 /* 프로필 수정 페이지 입니다.(작업자: 안민주) */
 
 /* EditProfile.module.css */
+
+@font-face {
+    font-family: "Cafe";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
+
+
 .Main {
     position: relative;
     display: block;
