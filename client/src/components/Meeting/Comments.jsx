@@ -344,8 +344,7 @@ const Comments = (props) => {
                   <div className={classes.user}>
                     <div>{comment.nickname}</div>
                     <div>
-                      {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
-                      작성됨
+                      {new Date(comment.createdAt).toLocaleString()} 작성됨
                       {/* {comment.createdAt !== comment.modifiedAt && " (수정됨)"} */}
                     </div>
                   </div>
@@ -489,9 +488,10 @@ const Comments = (props) => {
                       <div className={classes.user}>
                         <div>{comment.reply.nickname}</div>
                         <div>
-                          {new Date(comment.reply.createdAt).toLocaleString(
-                            "ko-KR"
-                          )}{" "}
+                          {new Date(comment.reply.createdAt)
+                            .toLocaleString
+                            // "ko-KR"
+                            ()}{" "}
                           작성됨
                           {/* {comment.reply.createdAt !==
                             comment.reply.modifiedAt && " (수정됨)"} */}
