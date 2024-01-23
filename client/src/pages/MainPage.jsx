@@ -10,11 +10,10 @@ import { useAxiosInterceptors } from '../axios';
 // import RecruitmentCompletedComponent from '../components/MainPage/RecruitmentCompletedComponent';
 
 /*
-    헤더는 컴포넌트로 불러온다.
-    배너 구역에 이미지 삽입
-    투두 리스트 출력 화면을 왼쪽에 표시 그 옆에 새로운 모임 슬라이드 형태로 출력
-    모임중, 모집 완료 탭이 보이고 탭에 따른 게시글 출력
-    게시글은 페이지네이션 처리
+    헤더는 컴포넌트로 불러온다. 이미지가 배경
+    투두 리스트 출력 화면을 헤더 왼쪽에 표시
+    전체, 모집중 탭이 보이고 탭에 따른 게시글 출력
+    게시글은 스크롤
 */
 
 const MainPage = () => {
