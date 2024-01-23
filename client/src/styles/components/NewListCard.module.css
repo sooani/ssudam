@@ -61,15 +61,32 @@
   background: white;
   color: black;
 }
-/* 모바일 */
-@media screen and (max-width: 576px) {
+
+/* 데스크탑 */
+@media screen and (max-width: 1199.98px) {
   .newListCard {
-    width: 410px;
+    width: 220px;
     max-width: 100%;
     margin-bottom: 10px;
   }
 }
 
+/* 테블릿 */
+@media screen and (max-width: 991.98px) {
+  .newListCard {
+    width: 170px;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+}
+/* 모바일 */
+@media screen and (max-width: 575.98px) {
+  .newListCard {
+    width: 480px;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+}
 .newListCard:hover {
   cursor: pointer;
 }

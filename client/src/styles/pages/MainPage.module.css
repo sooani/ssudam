@@ -19,7 +19,13 @@
   z-index: 999; /* 스크롤바 옆에 표시되도록 z-index 값 조정 */
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575.98px) {
+  .scrollToTargetSection {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
   .scrollToTargetSection {
     display: none;
   }
@@ -57,7 +63,13 @@
   border-radius: 5px;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575.98px) {
+  .scrollPositionInfo {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
   .scrollPositionInfo {
     display: none;
   }
