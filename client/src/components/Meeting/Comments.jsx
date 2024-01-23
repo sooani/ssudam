@@ -344,9 +344,15 @@ const Comments = (props) => {
                   <div className={classes.user}>
                     <div>{comment.nickname}</div>
                     <div>
-                      {new Date(comment.createdAt).toLocaleString("ko-KR", {
-                        timeZone: "Asia/Seoul",
-                      })}{" "}
+                      {new Date(
+                        new Date(comment.createdAt).getTime() +
+                          9 * 60 * 60 * 1000
+                      )
+                        .toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
+                        .replace(/\./g, "-")
+                        .replace(/,/g, " ")
+                        .replace("오후", "오후 ")
+                        .replace("오전", "오전 ")}{" "}
                       작성됨
                       {/* {comment.createdAt !== comment.modifiedAt && " (수정됨)"} */}
                     </div>
@@ -491,10 +497,15 @@ const Comments = (props) => {
                       <div className={classes.user}>
                         <div>{comment.reply.nickname}</div>
                         <div>
-                          {new Date(comment.reply.createdAt).toLocaleString(
-                            "ko-KR",
-                            { timeZone: "Asia/Seoul" }
-                          )}
+                          {new Date(
+                            new Date(comment.reply.createdAt).getTime() +
+                              9 * 60 * 60 * 1000
+                          )
+                            .toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
+                            .replace(/\./g, "-")
+                            .replace(/,/g, " ")
+                            .replace("오후", "오후 ")
+                            .replace("오전", "오전 ")}{" "}
                           작성됨
                           {/* {comment.reply.createdAt !==
                             comment.reply.modifiedAt && " (수정됨)"} */}
