@@ -204,7 +204,7 @@ function EditProfile() {
                 type="password"
                 {...register('ConfirmPassword', {
                   required: '새 비밀번호를 한번 더 입력해주세요.',
-                  validate: (value) => value === watch('NewPassword') || '비밀번호가 일치하지 않습니다.2',
+                  validate: (value) => value === watch('NewPassword') || '비밀번호가 일치하지 않습니다.',
                 })}
                 defaultValue={''}
                 className={classes.UserConfirmPassword}
