@@ -7,6 +7,10 @@
   border-radius: 5px;
   padding: 0.5rem;
   margin: 1rem 2rem;
+  @media screen and (max-width: 1070px) {
+    gap: 1rem;
+    flex-direction: column;
+  }
 }
 
 .rightSidebar {
@@ -21,6 +25,12 @@
   height: 37vh;
   /* gap: 0; */
   /* padding: 10px 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 1070px) {
+    height: auto;
+  }
 }
 
 .sidebar {
@@ -34,6 +44,9 @@
   max-height: 37vh;
   overflow-y: auto;
   text-align: center;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+  }
 }
 
 .sidebarItem {

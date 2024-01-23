@@ -6,18 +6,18 @@ import CategoryTab from '../components/MainPage/CategoryTab';
 import ScrollToTopButton from '../components/MainPage/ScrollToTopButton';
 import classes from '../styles/pages/MainPage.module.css';
 import { useAxiosInterceptors } from '../axios';
+// import RecruitingComponent from '../components/MainPage/RecruitingComponent';
+// import RecruitmentCompletedComponent from '../components/MainPage/RecruitmentCompletedComponent';
 
 /*
-    헤더는 컴포넌트로 불러온다.
-    배너 구역에 이미지 삽입
-    투두 리스트 출력 화면을 왼쪽에 표시 그 옆에 새로운 모임 슬라이드 형태로 출력
-    모임중, 모집 완료 탭이 보이고 탭에 따른 게시글 출력
-    게시글은 페이지네이션 처리
+    헤더는 컴포넌트로 불러온다. 이미지가 배경
+    투두 리스트 출력 화면을 헤더 왼쪽에 표시
+    전체, 모집중 탭이 보이고 탭에 따른 게시글 출력
+    게시글은 스크롤
 */
 
 const MainPage = () => {
   const instance = useAxiosInterceptors();
-  const scrollRef = useRef(null);
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState([]);
   const [page, setPage] = useState(1);
@@ -30,7 +30,7 @@ const MainPage = () => {
       .get(`/v1/parties?page=${page}&size=12`)
       .then((response) => {
         setData(response.data.data);
-        // setPage(response.data.pageInfo);
+        setPage(response.data.pageInfo);
       })
       .catch((error) => {
         console.error('Error party data:', error);

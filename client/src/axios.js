@@ -1,7 +1,7 @@
-import axios from "axios";
-import { logout } from "./features/userSlice";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import axios from 'axios';
+import { logout } from './features/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // const instance = axios.create({
 //   baseURL: "http://localhost:8080",
@@ -42,13 +42,14 @@ const useAxiosInterceptors = () => {
   const dispatch = useDispatch();
 
   const instance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: 'http://localhost:8080',
+    // baseURL: 'http://43.203.65.150:8080',
     withCredentials: true,
   });
 
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("Authorization");
+      const token = localStorage.getItem('Authorization');
 
       if (token) {
         config.headers.Authorization = token;
@@ -73,12 +74,12 @@ const useAxiosInterceptors = () => {
       if (error.response) {
         if (
           error.response.status === 401 &&
-          originalRequest !== "/v1/auth/login"
+          originalRequest !== '/v1/auth/login'
         ) {
-          alert("세션이 만료되어 로그아웃 되었습니다!");
-          localStorage.removeItem("Authorization");
+          alert('세션이 만료되어 로그아웃 되었습니다!');
+          localStorage.removeItem('Authorization');
           dispatch(logout());
-          navigate("/");
+          navigate('/');
         }
       }
 

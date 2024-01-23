@@ -20,12 +20,13 @@
 }
 
 .scrollToTargetSection input {
-  width: 60px;
-  margin-right: 5px;
+  width: 55px;
+  margin-right: 2px;
+  border-radius: 10px;
 }
 
 .scrollToTargetSection button {
-  background-color: #000000;
+  background-color: #98caff;
   z-index: 999;
   bottom: 40px;
   color: #fff;
@@ -36,7 +37,7 @@
 }
 
 .scrollToTargetSection button:hover {
-  background-color: #0056b3;
+  background-color: #007bff;
 }
 
 .scrollPositionInfo {

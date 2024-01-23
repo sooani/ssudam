@@ -184,7 +184,10 @@ const Comments = (props) => {
   // 대댓글을 등록하는 핸들러
   const replyHandler = (e, commentId) => {
     e.preventDefault();
-
+    if (replies[commentId].reply === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     let replyDTO = {
       commentId: commentId,
       memberId: loggedInUser.memberId,
@@ -235,6 +238,10 @@ const Comments = (props) => {
   };
   // 대댓글을 수정하는 핸들러
   const replyEditHandler = (commentId, replyId) => {
+    if (replies[commentId].reply === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     const updatedDTO = {
       replyId: replyId,
 
@@ -337,8 +344,9 @@ const Comments = (props) => {
                   <div className={classes.user}>
                     <div>{comment.nickname}</div>
                     <div>
-                      {new Date(comment.createdAt).toLocaleString("ko-KR")}
-                      {comment.createdAt !== comment.modifiedAt && " (수정됨)"}
+                      {new Date(comment.createdAt).toLocaleString("ko-KR")}{" "}
+                      작성됨
+                      {/* {comment.createdAt !== comment.modifiedAt && " (수정됨)"} */}
                     </div>
                   </div>
                 </div>
@@ -483,9 +491,10 @@ const Comments = (props) => {
                         <div>
                           {new Date(comment.reply.createdAt).toLocaleString(
                             "ko-KR"
-                          )}
-                          {comment.reply.createdAt !==
-                            comment.reply.modifiedAt && " (수정됨)"}
+                          )}{" "}
+                          작성됨
+                          {/* {comment.reply.createdAt !==
+                            comment.reply.modifiedAt && " (수정됨)"} */}
                         </div>
                       </div>
                     </div>

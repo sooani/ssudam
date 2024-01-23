@@ -71,6 +71,10 @@ const DetailPost = () => {
   // 코멘트 등록 핸들러
   const commentSubmitHandler = (e) => {
     e.preventDefault();
+    if (enteredComment === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     let commentDTO = {
       partyId: meetingId,
       memberId: loggedInUser.memberId,
@@ -152,6 +156,10 @@ const DetailPost = () => {
   }, [comments]);
   // 나의 코멘트를 수정하는 핸들러
   const commentEditHandler = () => {
+    if (myComment.comment === "") {
+      alert("공백을 입력할 수 없습니다!");
+      return;
+    }
     const userConfirmed = window.confirm("댓글을 수정하시겠습니까?");
     let updatedDTO = {
       comment: myComment.comment,
@@ -657,6 +665,7 @@ const DetailPost = () => {
                   lat={meetingInfo.latitude}
                   lng={meetingInfo.longitude}
                 />
+
                 {/* 내 포스트일 경우 수정/삭제가 가능함, 수정버튼을 클릭 시 수정 페이지로 이동 */}
                 {isMyPost && (
                   <div className={classes.btnCon_1}>

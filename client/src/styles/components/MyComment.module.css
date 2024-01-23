@@ -5,6 +5,7 @@
     height: 120vh;
     /* border: 1px solid seagreen; */
     margin-top : 1rem;
+    cursor: pointer;
 }
 
 .MyCommentMSG{
