@@ -1,0 +1,47 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    hibernate:
+      ddl-auto: create  # (1) ??? ?? ??
+    show-sql: true      # (2) SQL ?? ??
+    properties:
+      hibernate:
+        format_sql: true  # (3) SQL pretty print
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: choijh0309@naver.com
+  smtp:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    auth: true
+    starttls:
+      enable: true
+  subject:
+    member:
+      registration: Thank you for joining our site!
+  template:
+    name:
+      member:
+        join: email-registration-member
+owmApiKey: ${OWM_API_KEY}

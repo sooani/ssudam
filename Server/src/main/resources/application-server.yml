@@ -1,0 +1,53 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ssudam?serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD}
+  thymeleaf:
+    cache: false
+  jpa:
+    hibernate:
+      ddl-auto: update  # (1) ??? ?? ??
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: admin@gmail.com # 필요한 지 확인 필요
+  smtp:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}  # 민감한 정보는 시스템 환경 변수로..
+    password: ${EMAIL_PASSWORD}  # 민감한 정보는 시스템 환경 변수로..
+    auth: true
+    starttls:
+      enable: true
+  subject:
+    member:
+      registration: Thank you for joining our site!
+  template:
+    name:
+      member:
+        join: email-registration-member
+owmApiKey: ${OWM_API_KEY}
