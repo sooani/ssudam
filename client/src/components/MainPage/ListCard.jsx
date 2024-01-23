@@ -4,7 +4,6 @@ import SignUpModal from '../../pages/SignUpModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { AiFillAlert } from 'react-icons/ai';
-import { FaBookmark } from 'react-icons/fa';
 
 /*
     게시글 컴포넌트
