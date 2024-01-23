@@ -2,7 +2,7 @@
 
 .MyCommentContainer{
     width: 30vw;
-    height: 120vh;
+    /* height: 120vh; */
     /* border: 1px solid seagreen; */
     margin-top : 1rem;
     cursor: pointer;

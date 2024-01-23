@@ -83,8 +83,8 @@
 }
 
 .ProfileImageContainer {
-    height: 25vh; 
-    width: 15vw;
+    height: 200px; 
+    width: 100vw;
     overflow: hidden;
     /* border: 1px solid black; */
     margin-top: 1rem;
@@ -105,16 +105,20 @@
     display: flex;
     width: 100%;
     max-width:60rem;
+    width: 80vw;
     height: 50vh;
     margin:0 auto;
-    
-
     flex-direction: column;
     /* align-items: center;  */
-    padding-left:3vw;
+    padding-left:100px;
     /* margin-top:5vw; */
     gap: 2rem;
     position: relative;
+    /*border: 1px solid red*/
+    @media screen and (max-width: 1070px) {
+        align-items: center; 
+        padding-left:0;
+    }
 }
 
 /* 닉네임 입력란 */
@@ -124,11 +128,12 @@
     align-items: center;
     /* justify-content: center; */
     /* border: 1px solid green; */
-    margin-top: 6rem;
+    margin-top: 10rem;
     /* position: absolute; */
     position: relative;
     @media screen and (max-width: 1070px) {
         flex-direction: column;
+        margin-top: 40px;
     }
 }
 .EmailContainer{
@@ -182,19 +187,21 @@
     display: flex; 
     /* align-items: center;  */
     width: 80vw;
-    height: auto;
+    /* height: auto; */
     flex-direction: column;
         /* position: absolute;
         position: relative; */
+    margin-top: 2rem;
     @media screen and (max-width: 1070px) {
         flex-direction: column;
+        margin-top: 4rem;
     }
 }
 
 .MyBookmark{
     display: flex; 
     width: 80vw;
-    height: 100vh;
+    /* height: 100vh; */
     flex-direction: column;
     /* position: absolute; */
     position: relative;
@@ -221,7 +228,7 @@
     display: flex; 
     align-items: center; 
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
     flex-direction: row;
     justify-content: space-between;
         /* position: absolute; */
@@ -245,13 +252,14 @@
     display: flex;
     margin-top:5rem;
     width: 50%;
-    height: 180vh;
+    /* height: 180vh; */
     /* border: 1px solid blue; */
     flex-direction: column;
         /* position: absolute; */
         position: relative;
     @media screen and (max-width: 1070px) {
         flex-direction: column;
+        width: 100%;
     }
 }
 
@@ -265,13 +273,15 @@
 
 .ModalContainer{
     display: flex;
-    width:80vw;
-    height: 15vh;
+    /* width:80vw; */
+    height: 30vh;
     /* border: 1px solid black; */
     align-items: center;
-    justify-content: right;
+    justify-content: flex-end;
+
     @media screen and (max-width: 1070px) {
         flex-direction: column;
+        margin-top: 2rem;
     }
 }
 
@@ -280,13 +290,26 @@
     border: 1px solid red;
 } */
 
-.MypageFooter{
+/* .MypageFooter{
     position: fixed;
     bottom: 0;
     width: 100%;
     @media screen and (max-width: 767px) {
         .MypageFooter {
-            position: static; /* 또는 원하는 흐름 속성으로 변경 */
+            position: static; 
+            position: fixed;
+            bottom: 0;
+        }
+    }
+} */
+
+.MypageFooter {
+    /* .MypageFooter가 푸터를 나타내는 클래스로 가정합니다. */
+    position: relative; /* 고정 위치 제거 */
+    width: 100%;
+    @media screen and (max-width: 767px) {
+        .MypageFooter {
+            position: static; 
         }
     }
 }

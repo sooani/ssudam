@@ -49,6 +49,12 @@
   /* border: 2px solid blue; */
   width: 100%;
   height: 13vh;
+  @media screen and (max-width: 1070px) {
+    flex-direction: column;
+    margin-top: 30px;
+    align-items: flex-start;
+
+}
 }
 
 .Nickname,
@@ -62,6 +68,7 @@
 .UserNewPassword,
 .UserConfirmPassword {
     margin-right: 1rem; 
+
 }
 
 .Nickname,
@@ -73,6 +80,9 @@
     height: 5vh;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 1070px) {
+        align-items: center;
+    }
 }
 
 .NewPassword,
@@ -84,7 +94,11 @@
     height: 8vh;
     display: flex;
     /* align-items: center; */
+    /* @media screen and (max-width: 1070px) {
+        align-items: left;
+    } */
 }
+
 
 .CurrentPassword{
     font-weight: 700;
@@ -182,6 +196,7 @@
     color: red;
     font-size: 14px;
     margin: 0;
+    bottom: -1rem;
 }
 
 .UserConfirmPassword {
@@ -204,6 +219,7 @@
     color: red;
     font-size: 14px;
     margin: 0;
+    bottom: -1rem;
 }
 
 .ConfirmCurrentPasswordContainer {

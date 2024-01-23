@@ -54,9 +54,9 @@ const MyPage = () => {
 
   //깃 푸시할때 아래부분 주석 꼭 해제하기!
   // 로그인아닐때 로그인 페이지로 이동 (로그인 상태유지 부분)
-  // if (!user) {
-  //     navigate('/login');
-  // }
+  if (!user) {
+      navigate('/login');
+  }
 
   return (
       <div className={classes.Mypageroom}>
