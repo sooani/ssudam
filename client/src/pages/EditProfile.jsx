@@ -145,6 +145,10 @@ function EditProfile() {
                     value: 12,
                     message: '최대 12글자까지 입력 가능합니다.',
                   },
+                  pattern: {
+                    value: /^[a-zA-Z0-9가-힣]*$/,
+                    message: '특수문자는 사용할 수 없습니다.',
+                  },
                 })}
                 className={classes.UserNickname}
                 onBlur={handleNicknameBlur}

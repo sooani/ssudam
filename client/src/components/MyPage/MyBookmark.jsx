@@ -2,11 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAxiosInterceptors } from "../../axios";
-// import useAxiosInstance from "../../axios";
 import classes from "../../styles/components/MyBookmark.module.css";
 import ssudamhand from "../../images/ssudamhand.png";
 import Pagination from "./Pagination";
-
 import SignUpModal from "../../pages/SignUpModal";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
@@ -17,23 +15,23 @@ function MyBookmark() {
   const [page, setPage] = useState(1);
   const eventsPerPage = 4;
   const instance = useAxiosInterceptors();
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const user = useSelector(selectUser);
+  const [totalElements, setTotalElements] = useState(0);
 
   useEffect(() => {
     const fetchEvents = () => {
       instance
-        .get("/v1/parties/bookmarks", {
+        .get(`/v1/parties/bookmarks`, {
           params: {
             memberId,
             page,
             size: eventsPerPage,
           },
-        //   /v1/parties/bookmarks?memberId=1&page=1&size=5
         })
         .then((response) => {
           setEvents(response.data.data);
+          setTotalElements(response.data.pageInfo.totalElements);
         })
         .catch((error) => {
           console.error("나의 모임 받아오기 오류:", error);
@@ -43,10 +41,13 @@ function MyBookmark() {
     fetchEvents();
   }, [page, memberId]);
 
+  useEffect(() => {
+    console.log("북마크 총 갯수:", totalElements);
+  }, [totalElements]);
 
-  // console.log("북마크 현재페이지:",page);
-  // console.log("북마크된 글 수:",events.length);
-  // console.log("페이지당 이벤트",eventsPerPage);
+  console.log("북마크 현재페이지:",page);
+  console.log("북마크된 글 수:",events.length);
+  console.log("페이지당 이벤트",eventsPerPage);
 
     //날짜 형식 표시
     const extractDate = (fullDate) => {
@@ -95,7 +96,7 @@ function MyBookmark() {
       </div>
       <div className={classes.CardPagination}>
         <Pagination
-          total={events.length}
+          total={totalElements}
           limit={eventsPerPage}
           page={page}
           setPage={setPage}
