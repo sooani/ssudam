@@ -68,13 +68,20 @@ const SignUpModal = ({ isOpen, onClose }) => {
       setEmailError(false);
     }
 
-    // 닉네임 길이 검증
+    // 닉네임 검증
     if (nickname.length < 2 || nickname.length > 12) {
       setNicknameError(true);
       setError("닉네임은 2~12자여야 합니다.");
       return;
     } else {
       setNicknameError(false);
+    }
+
+    const nicknameRegex = /^[a-zA-Z0-9가-힣]*$/;
+    if (!nicknameRegex.test(nickname)) {
+      setNicknameError(true);
+      setError("특수문자는 입력할 수 없습니다.")
+      return;
     }
 
     // 비밀번호 요구사항 검증
