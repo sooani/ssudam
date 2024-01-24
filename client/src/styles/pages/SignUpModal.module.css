@@ -1,0 +1,125 @@
+.page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.modal {
+    position: relative;
+    top: 40px;
+    background-color: rgb(238, 245, 255);
+    width: 450px; /* 모달의 너비 조절 */
+    height: 650px;
+    margin: auto; /* 수평 가운데 정렬 */
+    padding: 20px; /* 내용과 모서리 사이 간격 조절 */
+    border-radius: 5px; /* 둥글게 모서리 조절 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signupForm {
+    width: 100%; /* 또는 다른 값을 지정하여 가로 크기 조절 */
+    max-width: 600px; /* 예시로 최대 가로 크기 지정 */
+    margin: 0 auto; /* 수평 가운데 정렬을 위해 margin을 auto로 설정 */
+}
+
+.exit {
+    position: absolute;
+    top: 10px; /* 상단 여백 조절 */
+    right: 10px; /* 오른쪽 여백 조절 */
+    background-color: rgb(238, 245, 255);
+    font-size: 30px;
+}
+
+.signupForm h1{
+    font-size: 30px; 
+    color: rgb(134, 182, 246);
+    text-align: center;
+    margin: 0px;
+    margin-top: 50px;
+    margin-bottom: 15px;
+}
+
+.signupForm h3{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.inputArea {
+    width: 425px;
+    position: relative;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.inputArea input {
+    width: 100%;
+    padding: 20px 10px 10px;
+    border: 1.5px solid black;
+    border-radius: 10px;
+}
+
+.inputArea label {
+    position: absolute; 
+    padding-top: 3px;
+    left: 10px;
+    top: 12px;
+    font-size: 20px;
+    transition: all .5s ease;
+}
+
+.inputArea label.warning {
+    animation: warning .3s ease 3; /* animation-iteration-count를 animation 속성에 직접 설정 */
+}
+
+@keyframes warning {
+    0%, 50%, 100% {
+        transform: translateX(0);     
+        color: red;
+    }
+    25%, 75% {
+        transform: translateX(8px);    
+        color: red;
+    }
+}
+
+.inputArea input:focus + label,
+.inputArea input:valid + label {
+    top: 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(134, 182, 246);
+}
+
+.btnArea {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.btnArea button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(134, 182, 246);
+    color: white;
+    font-size: 20px;
+    font-weight: 550;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.caption {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.loginLink {
+    color: rgb(134, 182, 246);
+}

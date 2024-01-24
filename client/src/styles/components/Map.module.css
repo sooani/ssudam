@@ -1,0 +1,77 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  /* width: 100%; */
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin: 1rem 2rem;
+  @media screen and (max-width: 1070px) {
+    gap: 1rem;
+    flex-direction: column;
+  }
+}
+
+.rightSidebar {
+  /* margin-left: auto; */
+}
+.mapContainer {
+  /* border: 1px solid red; */
+  /* flex-basis: 60%; */
+  width: 100%;
+  /* flex-grow: 1; */
+  /* height: 500px; */
+  height: 37vh;
+  /* gap: 0; */
+  /* padding: 10px 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 1070px) {
+    height: auto;
+  }
+}
+
+.sidebar {
+  width: 40%;
+  height: 100%;
+  /* flex-grow: 1; */
+  /* padding: 10px 0; */
+  background-color: #eef5ff;
+  border-radius: 5px;
+  overflow-y: auto;
+  max-height: 37vh;
+  overflow-y: auto;
+  text-align: center;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+  }
+}
+
+.sidebarItem {
+  color: black;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #b4d4ff;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.sidebarItem:hover {
+  background-color: #b4d4ff;
+}
+
+/* Add this media query to adjust the layout on smaller screens */
+@media screen and (max-width: 1070px) {
+  .container {
+    /* flex-direction: column; */
+    /* align-items: center; */
+  }
+
+  .rightSidebar {
+    /* margin-left: 0; */
+    margin-top: 2rem;
+  }
+}

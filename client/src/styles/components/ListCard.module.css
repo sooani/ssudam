@@ -1,0 +1,128 @@
+.listCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 25px 0;
+  width: 300px;
+  height: 280px;
+  background: #fff;
+  border: 2px solid #868686;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  box-sizing: inherit;
+}
+
+.listCard:hover {
+  cursor: pointer;
+}
+
+/* 타블렛 */
+@media screen and (max-width: 576px) {
+  .listCard {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2%;
+  }
+}
+
+/* 데스크탑 */
+@media screen and (max-width: 768px) {
+  .listCard {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2%;
+  }
+}
+
+/* 큰 데스크탑 */
+@media screen and (max-width: 1200px) {
+  .listCard {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.new {
+  display: flex;
+  height: 26px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  -webkit-box-align: center;
+}
+
+.newPost {
+  padding: 2px 0;
+  border-radius: 20px;
+  color: rgb(255, 204, 0);
+  font-size: 1rem;
+  font-weight: bolder;
+  line-height: normal;
+  /* letter-spacing: -0.56px; */
+  text-align: center;
+}
+
+.aiFillAlert {
+  text-align: left;
+  margin-right: 3px;
+  font-size: 13px;
+}
+
+.listCardTimeLeft {
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid rgb(252, 88, 85);
+  color: rgb(252, 88, 85);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.56px;
+  text-align: center;
+}
+
+.title {
+  font-size: 17px;
+  min-height: 50px;
+  line-height: 28px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  margin: 7px 0 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.listCardMeetingDate {
+  color: rgb(98, 98, 98);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding-top: 2vh;
+  text-align: left;
+}
+.listCardClosingDate {
+  color: rgb(98, 98, 98);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.capacityNum {
+  padding-right: 10px;
+  margin-top: 10px;
+}
+.current {
+  margin-top: 10px;
+}
+.capacity {
+  display: flex;
+  border-top: 1px solid rgb(197, 197, 197);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1px;
+  text-align: left;
+}

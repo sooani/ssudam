@@ -1,0 +1,108 @@
+.page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(238, 245, 255);
+}
+
+.loginForm {
+    width: 100%; /* 또는 다른 값을 지정하여 가로 크기 조절 */
+    max-width: 425px; /* 예시로 최대 가로 크기 지정 */
+    margin: 0 auto; /* 수평 가운데 정렬을 위해 margin을 auto로 설정 */
+}
+
+@font-face {
+    font-family: "Cafe";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../../public/fonts/Cafe24Moyamoya-Face-v1.0.ttf");
+}
+
+.loginForm h1{
+    font-size: 55px; 
+    color: rgb(134, 182, 246);
+    text-align: center;
+    margin-bottom: 15px;
+    font-family:  "Cafe", sans-serif;
+}
+
+.loginForm h3{
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.inputArea {
+    width: 400px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.inputArea input {
+    width: 100%;
+    padding: 20px 10px 10px;
+    border: 1.5px solid black;
+    border-radius: 10px;
+}
+
+.inputArea label {
+    position: absolute; 
+    padding-top: 3px;
+    left: 10px;
+    top: 12px;
+    font-size: 20px;
+    transition: all .5s ease;
+}
+
+.inputArea label.warning {
+    animation: warning .3s ease 3; /* animation-iteration-count를 animation 속성에 직접 설정 */
+}
+
+@keyframes warning {
+    0%, 50%, 100% {
+        transform: translateX(0);     
+        color: red;
+    }
+    25%, 75% {
+        transform: translateX(8px);    
+        color: red;
+    }
+}
+
+
+.inputArea input:focus + label,
+.inputArea input:valid + label {
+    top: 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(134, 182, 246);
+}
+
+.btnArea {
+    margin-top: 30px;
+}
+
+.btnArea button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(134, 182, 246);
+    color: white;
+    font-size: 20px;
+    font-weight: 550;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.caption {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.signupLink {
+    color: rgb(134, 182, 246);
+}

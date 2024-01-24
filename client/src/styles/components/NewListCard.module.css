@@ -1,0 +1,137 @@
+/* .newWrapper {
+  width: 324px;
+  display: inline-block;
+  box-sizing: inherit;
+} */
+
+.new {
+  display: flex;
+  height: 26px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  -webkit-box-align: center;
+}
+
+.faRegLightbulb {
+  text-align: left;
+  margin-right: 3px;
+  font-size: 13px;
+}
+
+.newPost {
+  padding: 2px 8px;
+  border-radius: 20px;
+  color: rgb(255, 204, 0);
+  border: 1px solid rgb(255, 204, 0);
+  font-size: 1rem;
+  font-weight: bolder;
+  line-height: normal;
+  letter-spacing: -0.56px;
+  text-align: center;
+}
+
+.aiFillAlert {
+  text-align: left;
+  margin-right: 3px;
+  font-size: 13px;
+}
+
+.listCardTimeLeft {
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid rgb(252, 88, 85);
+  color: rgb(252, 88, 85);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.56px;
+  text-align: center;
+}
+
+/* 게시글 하나하나 */
+.newListCard {
+  min-height: 200px;
+  padding: 25px 25px;
+  margin: 0px 12px;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 2px solid rgb(186, 186, 186);
+  background: white;
+  color: black;
+}
+
+/* 데스크탑 */
+@media screen and (max-width: 1199.98px) {
+  .newListCard {
+    width: 220px;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* 테블릿 */
+@media screen and (max-width: 991.98px) {
+  .newListCard {
+    width: 170px;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+}
+/* 모바일 */
+@media screen and (max-width: 575.98px) {
+  .newListCard {
+    width: 480px;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+}
+.newListCard:hover {
+  cursor: pointer;
+}
+
+.title {
+  font-size: 17px;
+  min-height: 50px;
+  line-height: 28px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  margin: 7px 0 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.listCardMeetingDate {
+  color: rgb(98, 98, 98);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding-top: 2vh;
+  text-align: left;
+}
+.listCardClosingDate {
+  color: rgb(98, 98, 98);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.capacityNum {
+  padding-right: 10px;
+  margin-top: 10px;
+}
+.current {
+  margin-top: 10px;
+}
+.capacity {
+  display: flex;
+  border-top: 1px solid rgb(197, 197, 197);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1px;
+  text-align: left;
+}

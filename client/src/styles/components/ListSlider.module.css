@@ -1,0 +1,47 @@
+.slider {
+  width: 100%;
+  max-width: 1300px;
+  padding: 0px 15px;
+  margin: 100px auto 60px;
+  box-sizing: inherit;
+  overflow: hidden;
+}
+
+/* 데스크탑 */
+@media screen and (max-width: 1199.98px) {
+  .slider {
+    width: 100%;
+    max-width: 100%;
+    padding: 0px 0px;
+    margin: 50px auto 60px;
+  }
+}
+
+/* 테블릿 */
+@media screen and (max-width: 991.98px) {
+  .slider {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+/* 모바일 */
+@media screen and (max-width: 575.95px) {
+  .slider {
+    width: 1000px;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.sliderName {
+  display: flex;
+  padding-left: 15px;
+  box-sizing: inherit;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  background-color: rgb(0, 0, 0);
+  left: 25%;
+}

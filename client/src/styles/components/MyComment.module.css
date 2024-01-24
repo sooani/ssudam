@@ -1,0 +1,33 @@
+/* MyComment.module.css */
+
+.MyCommentContainer{
+    width: 30vw;
+    /* height: 120vh; */
+    /* border: 1px solid seagreen; */
+    margin-top : 1rem;
+    cursor: pointer;
+}
+
+.MyCommentMSG{
+    width: 20vw;
+    text-align: center;
+    /* border: 1px solid rgb(93, 0, 255); */
+    padding: 3rem;
+    background-color: rgb(238, 245, 255);
+    border-radius: 20px;
+    margin : 3rem;
+    font-size: 1.2rem; 
+}
+
+/* .CommentKey{ */
+    /* border: 1px solid blue; */
+    /* background-color: rgb(238, 245, 255); */
+/* } */
+
+.Comment {
+    margin: 1rem;
+    border: 1px solid rgb(238, 245, 255);
+    background-color: rgb(238, 245, 255);
+    padding: 1rem;
+    border-radius: 3rem;
+}
