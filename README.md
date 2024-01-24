@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://ifh.cc/g/foMwhL.jpg">
+  <img src="https://github.com/codestates-seb/abc02_002/assets/118452650/ee677d7e-7f19-499e-a74d-9dc2ad0263a5">
 </p>
 <h3 align='center'> 쓰담(SSUDAM)은 쓰레기 담기의 줄인말로 
 <br>
@@ -66,10 +66,6 @@
 
 ## 🧰 백엔드 아키텍처
 <img width="575" alt="Untitled" src="https://github.com/codestates-seb/abc02_002/assets/118452650/9f3d09b9-a135-456f-b237-08e392fc254c">
-
-<br>
-
-## 🧰 프론트 아키텍처
 
 <br>
 
