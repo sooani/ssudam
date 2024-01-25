@@ -11,8 +11,9 @@
 - 프로젝트 이름 : 쓰담 (SSUDAM)
 - 프로젝트 기간 : 2023.12.22 ~ 2024.01.23
 - 배포주소 : ~~*[쓰담✨ 배포중지](http://ssdam.s3-website.ap-northeast-2.amazonaws.com/)*~~
+- 백엔드 서비스 메뉴얼 : [SSUDAM 백엔드 서비스 메뉴얼 ✨](https://gregarious-diagram-be0.notion.site/SSUDAM-a654f4266fcf4111b404737bf1ff1b31?pvs=4)
 
-<br><br>
+<br>
 
 ## 🖥 Pages Preview
 
@@ -112,21 +113,7 @@
 
 <br><br>
 
-## 📋 백엔드 서비스 메뉴얼
-[SSUDAM 백엔드 서비스 메뉴얼 ✨](https://gregarious-diagram-be0.notion.site/SSUDAM-a654f4266fcf4111b404737bf1ff1b31?pvs=4)
-
-<br><br>
-
 ---------
-
-### **✔ branch 규칙**
-
-- `main` : 메인 브랜치  
-- `dev` : 개발 병합 브랜치  
-- `be` : 백엔드 브랜치  
-- `be+xx` : 백엔드 개인 브랜치  
-- `fe` : 프론트 브랜치
-- `fe+xx` : 프론트엔드 개인 브랜치  
 
 <br>
 
