@@ -9,6 +9,7 @@ import com.ssudam.party.entity.PartyMember;
 import com.ssudam.party.repository.PartyMemberRepository;
 import com.ssudam.party.repository.PartyRepository;
 import com.ssudam.party.weather.WeatherService;
+import com.ssudam.utils.CustomBeanUtils;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +25,15 @@ public class PartyService {
     private final PartyMemberRepository partyMemberRepository;
     private final WeatherService weatherService;
     private final MemberService memberService;
+    private final CustomBeanUtils<Party> beanUtils;
 
     public PartyService(PartyRepository partyRepository, PartyMemberRepository partyMemberRepository,
-                        WeatherService weatherService, MemberService memberService) {
+                        WeatherService weatherService, MemberService memberService, CustomBeanUtils<Party> beanUtils) {
         this.partyRepository = partyRepository;
         this.partyMemberRepository = partyMemberRepository;
         this.weatherService = weatherService;
         this.memberService = memberService;
+        this.beanUtils = beanUtils;
     }
 
     // 파티 생성
@@ -94,6 +97,7 @@ public class PartyService {
                 Sort.by("partyId").descending()));
 
     }
+
     //특정 회원이 북마크한 모든 모집글 조회
     @Transactional(readOnly = true)
     public Page<Party> findPartiesByBookmarkByMember(long memberId, int page, int size) {
@@ -114,31 +118,9 @@ public class PartyService {
     // 파티 수정 , 작성한 사람만 수정하게 해야함
     public Party updateParty(Party party) {
         Party findParty = findVerifiedParty(party.getPartyId());
+        Party updatingParty = beanUtils.copyNonNullProperties(party, findParty);
 
-        Optional.ofNullable(party.getMeetingDate())
-                .ifPresent(findParty::setMeetingDate);
-        Optional.ofNullable(party.getClosingDate())
-                .ifPresent(findParty::setClosingDate);
-        Optional.ofNullable(party.getPhoneNumber())
-                .ifPresent(findParty::setPhoneNumber);
-        Optional.ofNullable(party.getLongitude())
-                .ifPresent(findParty::setLongitude);
-        Optional.ofNullable(party.getLatitude())
-                .ifPresent(findParty::setLatitude);
-        Optional.ofNullable(party.getAddress())
-                .ifPresent(findParty::setAddress);
-        Optional.ofNullable(party.getTitle())
-                .ifPresent(findParty::setTitle);
-        Optional.ofNullable(party.getContent())
-                .ifPresent(findParty::setContent);
-        Optional.ofNullable(party.getMaxCapacity())
-                .ifPresent(findParty::setMaxCapacity);
-        Optional.ofNullable(party.getCurrentCapacity())
-                .ifPresent(findParty::setCurrentCapacity);
-        Optional.ofNullable(party.getPartyStatus())
-                .ifPresent(findParty::setPartyStatus);
-
-        return partyRepository.save(findParty);
+        return partyRepository.save(updatingParty);
     }
 
     // 파티 삭제, 작성한 사람이 삭제하게 해야함
