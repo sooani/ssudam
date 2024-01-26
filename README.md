@@ -115,21 +115,20 @@
 
 ---------
 
-<br>
+# 💖 담당 역할
 
-### 🌟 커밋 컨벤션
-|이름|내용|
-|:--:|:--:|
-|✨ feat| 새로운 기능 추가|
-|🐛 fix| 버그 수정|
-|📝 docs| 문서 수정|
-|💡 comment| 필요한 주석 추가 및 변경|
-|🎨 style| 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우|
-|♻️ refactor| 코드 리팩토링|
-|🔧 update| 코드 업데이트 및 수정|
-|✅ test| 테스트 코드|
-|📦 chore| 빌드 업무 수정, 패키지 매니저 수정|
-|🔥 remove| 파일을 삭제하는 작업만 수행|
-|🚚 rename| 파일 혹은 폴더명을 수정하거나 옮김|
-|🚑 !HOTFIX| 급하게 치명적인 버그 고침|
-|💥 !BREAKING CHANGE| 커다란 API 변경|  
+- Restful Api를 활용한 모임글 CRUD 기능 구현
+- 모임글 참여/취소 기능
+- Scheduler를 활용한 모집상태 변경 기능
+- 모임글 조회수 기능
+- 최신글 조회 기능
+- 제목과 내용 키워드 검색 기능
+- 슬라이스 테스트에 Mockito 적용
+- MySQL을 통한 데이터베이스 관리
+- AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
+- Swap Memory 적용을 통한 EC2 메모리 부족 해결
+- Apache Benchmarking tool을 활용한 성능 테스트
+- Apache Jmeter를 활용한 성능 테스트
+- Spring Rest Docs를 이용한 API 문서 작성
+- 깃허브 관리
+
