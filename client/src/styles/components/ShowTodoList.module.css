@@ -1,0 +1,84 @@
+.todoListSection {
+  width: 15vw;
+  max-width: 1200px;
+  height: 50%;
+  text-align: center;
+  position: relative;
+  margin-top: 6%;
+  border: 2px solid black;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* 데스크탑 */
+@media screen and (max-width: 1199.98px) {
+  .todoListSection {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 20vw;
+    text-align: center;
+    height: auto;
+  }
+}
+
+/* 테블릿 */
+@media only screen and (max-width: 991.98px) {
+  .todoListSection {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 150px;
+    width: 23vw;
+    text-align: center;
+    height: auto;
+  }
+}
+/* 모바일 */
+@media only screen and (max-width: 575.98px) {
+  .todoListSection {
+    display: none;
+  }
+}
+
+.todoTitle {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.todoList {
+  font-weight: 600;
+  padding-left: 0;
+}
+
+.todoList li {
+  list-style-type: circle;
+  width: 80%;
+  font-size: 1.1rem;
+  padding-left: 10%;
+  margin: 0px 0;
+  text-align: left;
+  padding: 0.5rem 1rem;
+}
+
+/* 테블릿 */
+@media only screen and (max-width: 991.98px) {
+  .todoList li {
+    list-style-type: none;
+    width: 80%;
+    font-size: 1.1rem;
+    padding-left: 10%;
+    margin: 0px 0;
+    text-align: left;
+    /* padding: 0.5rem 1rem; */
+  }
+}
+
+.todoList li::marker {
+  font-size: 25px;
+  color: black;
+}

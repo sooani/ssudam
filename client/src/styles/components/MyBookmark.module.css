@@ -1,0 +1,131 @@
+/* MyBookmark.module.css */
+
+
+.EventCardContainer {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* border: 2px solid black; */
+    cursor: pointer;
+}
+.EventCardMain{
+    display: flex;
+    flex-direction: row;
+    /* border: 2px solid red; */
+    /* border: 2px solid black; */
+    border-radius: 5px;
+    margin : 3rem;
+    flex-wrap: wrap;
+    overflow-x: auto;
+}
+
+.EmptyBookmarkMessage{
+  display: flex;
+  border: 1px solid rgb(238, 245, 255);
+  border-radius: 20px;
+  background-color: rgb(238, 245, 255);
+  font-size: 1.2rem; 
+  height: 5rem;
+  width: 20rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.EventCardMain > div {
+  margin-right: 1rem; 
+  border: 2px solid rgb(186, 186, 186);
+  border-radius: 20px;
+  height: 30vh;
+  width: 200px;
+}
+  /* Style for the last child to prevent extra margin */
+  .EventCardMain > div:last-child {
+    margin-right: 0;
+  }
+  
+  .EventTitleBox {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    margin-bottom: 1rem; 
+    margin: 1rem;
+  }
+  
+  .Title {
+    font-size: 1.5rem; 
+    font-weight: bold; 
+  }
+  
+  .Statuscontainer{
+    display: flex;
+    /* border: 1px solid black; */
+    justify-content: right;
+    /* height:4vh; */
+    margin:0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  /* 모집중 모집완료 */
+  /* .Status {
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #86B6F6;
+    border-radius: 10px;
+    background-color: #86B6F6;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
+    height:3vh;
+    margin:0;
+  } */
+  .OpenStatus{
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #B4D4FF;
+    border-radius: 20px;
+    background-color: #B4D4FF;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
+    /* width: 3rem; */
+    height:3vh;
+    margin:0;
+    padding: 0.3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  .ClosedStatus{    
+    display: flex;
+    font-size: 0.9rem; 
+    border: 1px solid #4f5255;
+    border-radius: 20px;
+    background-color: #4f5255;
+    width: 4vw;
+    text-align: center;
+    font-weight: bold; 
+    align-items: center;
+    justify-content: center;
+    /* width: 3rem; */
+    height:3vh;
+    margin:0;
+    padding: 0.3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  
+  /* .Img {
+    width: 2vw; 
+    height: 2vh; 
+    margin-bottom: 5px; 
+  } */
+  
+  .Date {
+    font-size: 1rem; 
+    margin-bottom: 5px; 
+  }
+  

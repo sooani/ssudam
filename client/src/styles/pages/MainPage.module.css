@@ -1,0 +1,76 @@
+.pageWrapper {
+  /* width: 100%; */
+  min-height: 100%;
+}
+
+.mainContainer {
+  min-height: 60rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-sizing: inherit;
+}
+
+.scrollToTargetSection {
+  position: fixed;
+  bottom: 80px; /* 스크롤바에서 떨어진 거리 조정 */
+  right: 20px;
+  z-index: 999; /* 스크롤바 옆에 표시되도록 z-index 값 조정 */
+}
+
+@media screen and (max-width: 575.98px) {
+  .scrollToTargetSection {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
+  .scrollToTargetSection {
+    display: none;
+  }
+}
+
+.scrollToTargetSection input {
+  width: 55px;
+  margin-right: 2px;
+  border-radius: 10px;
+}
+
+.scrollToTargetSection button {
+  background-color: #98caff;
+  z-index: 999;
+  bottom: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.scrollToTargetSection button:hover {
+  background-color: #007bff;
+}
+
+.scrollPositionInfo {
+  position: fixed;
+  bottom: 120px; /* 스크롤바에서 떨어진 거리 조정 */
+  right: 20px; /* 스크롤바에서 떨어진 거리 및 위치 조정 */
+  z-index: 999; /* 스크롤바 옆에 표시되도록 z-index 값 조정 */
+  background-color: #98caff;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 575.98px) {
+  .scrollPositionInfo {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
+  .scrollPositionInfo {
+    display: none;
+  }
+}
