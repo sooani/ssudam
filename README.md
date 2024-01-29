@@ -15,6 +15,29 @@
 
 <br>
 
+## 🧩 담당 역할
+
+- Restful Api를 활용한 모임글 CRUD 기능 구현
+- 모임글 참여/취소 기능
+- Scheduler를 활용한 모집상태 변경 기능
+- 모임글 조회수 기능
+- 최신글 조회 기능
+- 제목과 내용 키워드 검색 기능
+- 슬라이스 테스트에 Mockito 적용
+- MySQL을 통한 데이터베이스 관리
+- AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
+- Swap Memory 적용을 통한 EC2 메모리 부족 해결
+- Apache Benchmarking tool을 활용한 성능 테스트
+- Apache Jmeter를 활용한 성능 테스트
+- Spring Rest Docs를 이용한 API 문서 작성
+- 깃허브 관리
+
+<br>
+
+------
+
+<br>
+
 ## 🖥 Pages Preview
 
 | 메인 : 일반유저 | 메인 : 관리자 |
@@ -57,7 +80,7 @@
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/7dda3383-2f5b-42f7-9274-031ab859841b" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b1a2c74b-7f78-4d94-a0c9-6d86531b2809" width="370" height="200"/> |
 
-<br><br>
+<br>
 
 ## 👀 Team list
 
@@ -113,22 +136,5 @@
 
 <br><br>
 
----------
 
-# 💖 담당 역할
-
-- Restful Api를 활용한 모임글 CRUD 기능 구현
-- 모임글 참여/취소 기능
-- Scheduler를 활용한 모집상태 변경 기능
-- 모임글 조회수 기능
-- 최신글 조회 기능
-- 제목과 내용 키워드 검색 기능
-- 슬라이스 테스트에 Mockito 적용
-- MySQL을 통한 데이터베이스 관리
-- AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
-- Swap Memory 적용을 통한 EC2 메모리 부족 해결
-- Apache Benchmarking tool을 활용한 성능 테스트
-- Apache Jmeter를 활용한 성능 테스트
-- Spring Rest Docs를 이용한 API 문서 작성
-- 깃허브 관리
 
