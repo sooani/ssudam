@@ -39,9 +39,9 @@
 
 ## 🖥 Pages Preview
 
-| 메인 : 검색 | 내가 참여한 모임 조회 (모집중,모집완료) |
+| 메인 : 모임 검색 | 최신 모임글 조회 |
 | :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/99bb458d-5676-4d2d-be5c-09d3cf7f61c0" width="370" height="200"/> | <img src="https://github.com/sooani/ssudam/assets/118452650/6aee3da1-aedd-43eb-ba08-e459b7834f72" width="370" height="200"/> |
+| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/99bb458d-5676-4d2d-be5c-09d3cf7f61c0" width="370" height="200"/> | <img src="https://github.com/YunHanKIM/-codestates_ABC-Lab_final/assets/88180966/9f7c4337-06ed-43f2-b7fe-4520764e75d8" width="370" height="200"/> |
 
 | 모임글 등록 | 모임 참여/참여취소 기능 |
 | :---: | :---: |
@@ -51,8 +51,16 @@
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/88f257c8-4720-4d81-91e0-dc953035eafa" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/0dd96fbf-3576-40b2-bcc7-dd7ccf8d28c3" width="370" height="200"/> |
 
+| 모집 상태 변경 | 모집중인 모임글 조회 |
+| :---: | :---: |
+| <img src="https://github.com/sooani/ssudam/assets/118452650/991b0850-ef0b-4ca2-9fd8-da94b11adcf0" width="370" height="200"/> | <img src="https://github.com/sooani/ssudam/assets/118452650/95f8fb26-03da-4d74-a987-2ad561abc9a8" width="370" height="200"/> |
 
-<br>
+| 내가 참여한 모임글 조회 | 내가 작성한 모임글 조회 |
+| :---: | :---: |
+| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/40b9a0ac-0e36-4456-8975-b57cdff6b4f8" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b0bb509d-9f65-4be3-87ee-ca94558d8487" width="370" height="200"/> |
+
+
+
 
 ## 👀 Team list
 
