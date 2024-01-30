@@ -17,33 +17,19 @@
 
 ## 🧩 담당 역할
 
-### Restful Api를 활용한 모임글 CRUD 기능 구현
-   - `Party` 도메인 작성
-   - JPA 쿼리 메서드를 활용하여 특정 조건의 모임 조회기능
-     - 키워드로 제목,글내용 검색기능
-     - 최신글 조회 기능
-   - 조인테이블 `PartyMember` 를 사용해 `Party` 와 `Member`를 연결
-   - 모임글 조회수 기능
-### 모임글 참여/취소 기능
-   - 해당 멤버의 모임 가입 여부를 확인 후 모임의 참가인원을 증가
-### Scheduler를 활용한 모집상태 변경 기능
-   - 모임일자와 모집마감일자가 지난 모임글을 `Scheduler` 를 활용해 일정시간마다 확인 후 모집종료로 상태변경
-### MySQL을 통한 데이터베이스 관리
-   - `AWS RDS`와 `MySQL`연동을 통해 안정적인 데이터베이스 저장환경 구성
-### AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
-   - AWS의 배포환경과 `EC2`를 사용하여 서버 배포
-### Swap Memory 적용을 통한 EC2 메모리 부족 해결
-   - AWS 프리티어 `t2.micro` 램 부족 현상을 리눅스 `SWAP` 메모리 설정으로 해결
-### Apache Benchmarking tool을 활용한 성능 테스트
-   - `Gnuplot`을 사용해서 결과파일과 그래프이미지 생성
-### Apache Jmeter를 활용한 성능 테스트
-   - `Jmeter` 를 사용해 서버 부하테스트 진행 후 안전성 확인
-### 슬라이스 테스트에 Mockito 적용
-   - `PartyController` 클래스의 `test case` 구현
-### Spring Rest Docs를 이용한 API 문서 작성
-   - 테스트 실행 후 성공하는 경우 자동으로 문서스니펫을 생성하여 API문서를 구축
-### 깃허브 관리
-   - 이슈와 칸반에 계획일정들을 세분화하여 등록 후 관리
+- Restful Api를 활용한 모임글 CRUD 기능 구현
+- 모임글 참여/취소 기능
+- Scheduler를 활용한 모집상태 변경 기능
+- 최신글 조회 기능
+- 제목과 내용 키워드 검색 기능
+- 슬라이스 테스트에 Mockito 적용
+- MySQL을 통한 데이터베이스 관리
+- AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
+- Swap Memory 적용을 통한 EC2 메모리 부족 해결
+- Apache Benchmarking tool을 활용한 성능 테스트
+- Apache Jmeter를 활용한 성능 테스트
+- Spring Rest Docs를 이용한 API 문서 작성
+- 깃허브 관리
 
 <br>
 
@@ -73,25 +59,7 @@
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/cc36ec60-e84c-4af4-9f7c-91cb85699c3d" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/ff6af06f-2e82-4909-93de-946d5230f56c" width="370" height="200"/> |
 
-| 댓글 삭제 | 대댓글 등록 |
-| :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/1eb14cbc-7adb-4ea7-8404-e7f0185f1213" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/8e56e3f4-f719-4731-a59a-db9b4f3ea6f2" width="370" height="200"/> |
 
-| 후기 등록 | 후기 조회 |
-| :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/7398a83a-60b1-440f-91d2-f1a239fad495" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/d3f1dd7f-1fae-4b56-b6de-a9039019315b" width="370" height="200"/> |
-
-| 후기 수정 삭제 | 관리자 페이지 |
-| :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/f0801cec-58ef-437d-b8cd-091d76696f16" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/9c9a63a0-e57e-448a-bc28-76847f324cf6" width="370" height="200"/> |
-
-| 마이페이지 : 나의모임 | 마이페이지 : 나의 글/댓글 |
-| :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/40b9a0ac-0e36-4456-8975-b57cdff6b4f8" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b0bb509d-9f65-4be3-87ee-ca94558d8487" width="370" height="200"/> |
-
-| 마이페이지 : 북마크 | 회원 탈퇴 |
-| :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/7dda3383-2f5b-42f7-9274-031ab859841b" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b1a2c74b-7f78-4d94-a0c9-6d86531b2809" width="370" height="200"/> |
 
 <br>
 
