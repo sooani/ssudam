@@ -39,22 +39,17 @@
 
 ## 🖥 Pages Preview
 
-| 메인 : 검색 | 메인 : 비로그인 |
+| 메인 : 검색 | 내가 참여한 모임 조회 (모집중,모집완료) |
 | :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/99bb458d-5676-4d2d-be5c-09d3cf7f61c0" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/48a7a7d7-3ea5-4776-b13a-6df2f63d2e72" width="370" height="200"/> |
+| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/99bb458d-5676-4d2d-be5c-09d3cf7f61c0" width="370" height="200"/> | <img src="https://github.com/sooani/ssudam/assets/118452650/6aee3da1-aedd-43eb-ba08-e459b7834f72" width="370" height="200"/> |
 
-| 모임글 등록 | 북마크 기능 |
+| 모임글 등록 | 모임 참여/참여취소 기능 |
 | :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/03daf867-43ad-4d3d-97b7-1939f8d779dd" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/1de7774d-d871-41f1-b614-3aad6cabc1ce" width="370" height="200"/> |
+| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/03daf867-43ad-4d3d-97b7-1939f8d779dd" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/cc36ec60-e84c-4af4-9f7c-91cb85699c3d" width="370" height="200"/> |
 
 | 모임글 수정 | 모임글 삭제 |
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/88f257c8-4720-4d81-91e0-dc953035eafa" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/0dd96fbf-3576-40b2-bcc7-dd7ccf8d28c3" width="370" height="200"/> |
-
-| 참여 기능 | 댓글 등록 |
-| :---: | :---: |
-| <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/cc36ec60-e84c-4af4-9f7c-91cb85699c3d" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/ff6af06f-2e82-4909-93de-946d5230f56c" width="370" height="200"/> |
-
 
 
 <br>
