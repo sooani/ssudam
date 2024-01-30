@@ -10,8 +10,8 @@
 ## 🚩 개요
 - 프로젝트 이름 : 쓰담 (SSUDAM)
 - 프로젝트 기간 : 2023.12.22 ~ 2024.01.23
-- 배포주소 : ~~*[쓰담✨ 배포중지](http://ssdam.s3-website.ap-northeast-2.amazonaws.com/)*~~
-- 백엔드 서비스 메뉴얼 : [SSUDAM 백엔드 서비스 메뉴얼 ✨](https://gregarious-diagram-be0.notion.site/SSUDAM-a654f4266fcf4111b404737bf1ff1b31?pvs=4)
+- 배포주소 : ~~*[쓰담 메인✨](https://github.com/codestates-seb/abc02_002)*~~
+- 백엔드 서비스 메뉴얼 : [백엔드 서비스 메뉴얼 ✨](https://gregarious-diagram-be0.notion.site/SSUDAM-a654f4266fcf4111b404737bf1ff1b31?pvs=4)
 
 <br>
 
@@ -59,8 +59,7 @@
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/40b9a0ac-0e36-4456-8975-b57cdff6b4f8" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b0bb509d-9f65-4be3-87ee-ca94558d8487" width="370" height="200"/> |
 
-
-
+<br>
 
 ## 👀 Team list
 
@@ -70,7 +69,7 @@
 |BE(팀장)|BE|BE|BE|
 |[hyezuu](https://github.com/hyezuu)|[sooani](https://github.com/sooani)|[choijh0309](https://github.com/choijh0309)|[eunhee78](https://github.com/eunhee78)|
 
-<br><br>
+<br>
 
 |**배정현**|**이혜원**|**안민주**|**김윤한**|
 |:--:|:--:|:--:|:--:|
@@ -115,6 +114,3 @@
 <img width="575" alt="Untitled" src="https://github.com/codestates-seb/abc02_002/assets/118452650/9f3d09b9-a135-456f-b237-08e392fc254c">
 
 <br><br>
-
-
-
