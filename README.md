@@ -3,15 +3,31 @@
 </p>
 <h3 align='center'> 쓰담(SSUDAM)은 쓰레기 담기의 줄인말로 
 <br>
-  지역 생태계 보호와 걷기를 통한 주민들의 건강 증진을 돕는 커뮤니티 사이트입니다. </h3>
-  
+  함께 플로깅을 할 사람을 모집하는 플로깅 커뮤니티 사이트입니다. </h3>
+<p align="center">  
+  <em> * 플로깅(Plogging)은 '줍다'라는 뜻의 스웨덴어 플로카 업(plocka up)과</em>
 <br>
+  <em>'달리다'라는 뜻의 영어 조깅(Jogging)을 합성한 단어로,</em>
+<br>
+  <em>쓰레기를 주우며 조깅하는 행동을 의미합니다</em>
+<br>
+</p>
 
 ## 🚩 개요
 - 프로젝트 이름 : 쓰담 (SSUDAM)
 - 프로젝트 기간 : 2023.12.22 ~ 2024.01.23
 - 배포주소 : ~~*[쓰담 메인✨](https://github.com/codestates-seb/abc02_002)*~~
 - 백엔드 서비스 메뉴얼 : [백엔드 서비스 메뉴얼 ✨](https://gregarious-diagram-be0.notion.site/SSUDAM-a654f4266fcf4111b404737bf1ff1b31?pvs=4)
+
+### 🤷‍♀️ 기획의도
+- 코로나로 인한 비대면 상황을 거친 후 줄어든 사람들 간의 소통
+- 점점 더 악화되는 환경 문제에 이바지하기 위함
+- 운동은 하고싶은데 동기가 부족하거나, 작게나마 뿌듯함을 느끼고 싶은 분들, 지역 주민들과 함께 참여하고 건강 증진을 위한 운동 기회를 제공하기 위함
+
+### 💡 목표 및 기대효과
+- 사회적으로 소통하며 활동량을 높인다.
+- 환경보호와 건강을 동시에 고려하는 활동으로 사용자들에게 지속 가능한 라이프 스타일의 중요성을 일깨운다.
+- 사용자들은 쓰레기 수거와 운동의 조합으로 건강한 라이프스타일을 즐기며 만족감을 느낄 수 있다.
 
 <br>
 
@@ -59,7 +75,7 @@
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/40b9a0ac-0e36-4456-8975-b57cdff6b4f8" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b0bb509d-9f65-4be3-87ee-ca94558d8487" width="370" height="200"/> |
 
-<br>
+<br><br>
 
 ## 👀 Team list
 
@@ -113,4 +129,4 @@
 ## 🧰 백엔드 아키텍처
 <img width="575" alt="Untitled" src="https://github.com/codestates-seb/abc02_002/assets/118452650/9f3d09b9-a135-456f-b237-08e392fc254c">
 
-<br><br>
+<br>
