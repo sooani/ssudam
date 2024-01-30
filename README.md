@@ -19,7 +19,9 @@
 - 배포주소 : ~~*[쓰담 메인✨](https://github.com/codestates-seb/abc02_002)*~~
 - 백엔드 서비스 메뉴얼 : [백엔드 서비스 메뉴얼 ✨](https://gregarious-diagram-be0.notion.site/SSUDAM-a654f4266fcf4111b404737bf1ff1b31?pvs=4)
 
-### 🤷‍♀️ 기획의도
+<br>
+
+### 🤷‍♀️ 기획 의도
 - 코로나로 인한 비대면 상황을 거친 후 줄어든 사람들 간의 소통
 - 점점 더 악화되는 환경 문제에 이바지하기 위함
 - 운동은 하고싶은데 동기가 부족하거나, 작게나마 뿌듯함을 느끼고 싶은 분들, 지역 주민들과 함께 참여하고 건강 증진을 위한 운동 기회를 제공하기 위함
@@ -31,35 +33,76 @@
 
 <br>
 
-## 🧩 담당 역할
-
-- Restful Api를 활용한 모임글 CRUD 기능 구현
-- 모임글 참여/취소 기능
-- Scheduler를 활용한 모집상태 변경 기능
-- 최신글 조회 기능
-- 제목과 내용 키워드 검색 기능
-- 슬라이스 테스트에 Mockito 적용
-- MySQL을 통한 데이터베이스 관리
-- AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
-- Swap Memory 적용을 통한 EC2 메모리 부족 해결
-- Apache Benchmarking tool을 활용한 성능 테스트
-- Apache Jmeter를 활용한 성능 테스트
-- Spring Rest Docs를 이용한 API 문서 작성
-- 깃허브 관리
+## 🦾 프로젝트 진행 과정
+1. `Restful Api`를 활용한 모임글 CRUD 기능 구현
+2. `Spring Rest Docs`를 이용한 API 문서 작성
+3. `AWS(EC2,RDS-MySQL)` 배포환경 구축 및 배포
+4. 프론트엔드와 서버 테스트 2회 진행
+5. `Apache Jmeter`를 활용한 성능 테스트
 
 <br>
+   
+## 🧩 담당 역할
 
-------
+<details>
+<summary>
+Restful Api를 활용한 모임글 CRUD 기능 구현
+</summary>
+  
+ - `Party` 도메인 작성
+ - 모임글 참여/취소
+ - `Scheduler`를 활용한 모집상태 변경
+ - 최신 모임글 조회
+ - 제목과 내용 키워드 검색
+    
+</details>
+
+<details>
+<summary>
+Spring Rest Docs를 이용한 API 문서 작성
+</summary>
+  
+ - `PartyController` 클래스의 test case 구현
+ - 슬라이스 테스트에 Mockito 적용
+ - 테스트 실행 후 성공하는 경우 문서스니펫을 생성하여 자동으로 API문서를 구축
+    
+  </details>
+
+<details>
+<summary>
+AWS(EC2,RDS-MySQL) 배포환경 구축 및 배포
+</summary>
+  
+ - `RDS`와 `MySQL`연동을 통한 안정적인 데이터베이스 저장환경 구성
+ - AWS의 배포환경과 EC2를 사용하여 서버 배포
+ - `Swap Memory` 적용을 통한 EC2 메모리 부족 해결
+    
+  </details>
+
+<details>
+<summary>
+Apache Jmeter를 활용한 성능 테스트
+</summary>
+  
+ - `Jmeter` 를 사용해 서버 부하테스트 진행 후 안전성 확인
+ - `Gnuplot`을 사용해서 결과파일과 그래프이미지 생성
+ - Apache Benchmarking tool을 활용한 성능 테스트
+    
+  </details>
 
 <br>
 
 ## 🖥 Pages Preview
-
+<details>
+<summary>
+🎯 자세히 보기
+</summary>
+  
 | 메인 : 모임 검색 | 최신 모임글 조회 |
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/99bb458d-5676-4d2d-be5c-09d3cf7f61c0" width="370" height="200"/> | <img src="https://github.com/YunHanKIM/-codestates_ABC-Lab_final/assets/88180966/9f7c4337-06ed-43f2-b7fe-4520764e75d8" width="370" height="200"/> |
 
-| 모임글 등록 | 모임 참여/참여취소 기능 |
+| 모임글 등록 | 모임 참여/참여 취소 |
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/03daf867-43ad-4d3d-97b7-1939f8d779dd" width="370" height="200"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/cc36ec60-e84c-4af4-9f7c-91cb85699c3d" width="370" height="200"/> |
 
@@ -74,8 +117,12 @@
 | 내가 참여한 모임글 조회 | 내가 작성한 모임글 조회 |
 | :---: | :---: |
 | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/40b9a0ac-0e36-4456-8975-b57cdff6b4f8" width="370" height="210"/> | <img src="https://github.com/codestates-seb/abc02_002/assets/147456219/b0bb509d-9f65-4be3-87ee-ca94558d8487" width="370" height="200"/> |
+</details>
+<br>
 
-<br><br>
+-----
+
+<br>
 
 ## 👀 Team list
 
@@ -93,7 +140,7 @@
 |FE(팀장)|FE|FE|FE|
 |[bjh0524](https://github.com/bjh0524)|[hyehye225](https://github.com/hyehye225)|[anminjoo](https://github.com/anminjoo)|[YunHanKIM](https://github.com/YunHanKIM)|
 
-<br><br>
+<br>
 
 ## 🛠 기술 스택
 ![image](https://github.com/codestates-seb/abc02_002/assets/118452650/60fc2529-6f19-4a69-932a-75c0549433e3)
@@ -128,5 +175,21 @@
 
 ## 🧰 백엔드 아키텍처
 <img width="575" alt="Untitled" src="https://github.com/codestates-seb/abc02_002/assets/118452650/9f3d09b9-a135-456f-b237-08e392fc254c">
+
+<br><br>
+
+## 🎠 회고
+- 테스트 케이스 작성과 API 문서 자동화에 성공했습니다.
+- 보안 취약점 테스트를 수행해 안전성을 강조했습니다.
+- Apache Benchmark 툴을 이용한 성능테스트를 통해 성능향상을 확인하고 개선했습니다.
+- 수강 기간동안 배운 기본 지식을 활용하여 간결하고 가독성 있는 코드를 구현했습니다.
+
+### 🍭 개선방향
+1. 비즈니스 로직에 대한 단위 테스트 작성
+2. API 문서에 Spring Security를 통한 JWT 부분을 추가
+3. Spring MVC의 캐싱기능이나 JPA의 2차캐시를 활용해서 성능 보완
+4. QueryDSL과 검색엔진을 적용해서 효과적으로 데이터 검색 진행
+5. Java record를 이용해 간단한 매핑으로 불변 객체 구현
+6. 도메인 위주의 비즈니스 로직 구현
 
 <br>
