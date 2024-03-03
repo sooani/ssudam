@@ -136,7 +136,7 @@ Apache Jmeter를 활용한 성능 테스트
 
 |**배정현**|**이혜원**|**안민주**|**김윤한**|
 |:--:|:--:|:--:|:--:|
-|<img src="https://i.namu.wiki/i/dCfctGiBtIhlNvrYVKHez9BMIyUZAwd5-N35oTRXxuZs_KRkDOK9laZuXxcf2IJmlA6kVInSeQ7h5XjGS3MUuc_eAanFwTPQ1OkuuS80kwp8gYrbYIguJMvLqlxYntSMRY2UFlZLuSk8erpT40dfNw.webp" width="150px" height="150px">|<img src="https://i.namu.wiki/i/srbCqpZfNdcLJfOm91Z9BAncS862x9vsQPx0U5l62Y7yBz23iexnelKuZ8916D2NkEtQv5emlPMUGZczv6gZTelexPgnJSSdXbntOUtMUaxQrkpNUnCWv2GwM-FGQm4h76CWIy8i2RJX39Y-cA3qOg.webp" width="150px" height="150px"> |<img src="https://static.wikia.nocookie.net/catchteeniepin/images/5/58/Sandping_render_1.png/revision/latest?cb=20231104013915" width="140px" height="140px"> |<img src="https://github.com/sooani/ssudam/assets/118452650/abd055e3-bcdc-4eec-815e-3188f37da66d" width="150px" height="150px">|
+|<img src="https://github.com/codestates-seb/abc02_002/assets/118452650/378c3d41-d1c9-47f2-98e6-9962c9776f0d" width="150px" height="150px">|<img src="https://github.com/codestates-seb/abc02_002/assets/118452650/f1eb2e43-2565-4da2-ae1c-182852581ea4" width="150px" height="150px"> |<img src="https://static.wikia.nocookie.net/catchteeniepin/images/5/58/Sandping_render_1.png/revision/latest?cb=20231104013915" width="140px" height="140px"> |<img src="https://github.com/sooani/ssudam/assets/118452650/abd055e3-bcdc-4eec-815e-3188f37da66d" width="150px" height="150px">|
 |FE(팀장)|FE|FE|FE|
 |[bjh0524](https://github.com/bjh0524)|[hyehye225](https://github.com/hyehye225)|[anminjoo](https://github.com/anminjoo)|[YunHanKIM](https://github.com/YunHanKIM)|
 
